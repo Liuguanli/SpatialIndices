@@ -2,9 +2,8 @@ package com.unimelb.cis;
 
 import com.unimelb.cis.node.Point;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.math.BigInteger;
+import java.util.*;
 
 public class HilbertCurve extends Curve {
 
@@ -20,13 +19,13 @@ public class HilbertCurve extends Curve {
 //        }
         for (int i = 0; i < points.size(); i++) {
             Point point = points.get(i);
-            long result = get2DHilbertCurve(point.getxIndex(), point.getyIndex(), bitNum);
+            long result = getHilbertValue(point.getxIndex(), point.getyIndex(), bitNum);
             point.setzCurveValue(result);
 //            if (i % 10000 == 0) {
 //                System.out.println("cal ing");
 //            }
         }
-        System.out.println("cal HilbertValue finish");
+
         Collections.sort(points, new Comparator<Point>() {
             public int compare(Point o1, Point o2) {
                 if (o1.getzCurveValue() > o2.getzCurveValue()) {
@@ -99,27 +98,67 @@ public class HilbertCurve extends Curve {
         return result;
     }
 
-    public static String getlocation(long zValue, int length) {
+    public static long[] get2Dlocation(long hValue, int length) {
         long x = 0;
         long y = 0;
         for (int i = 0; i < length; i++) {
             long xSeed = 1L << (2 * i + 0);
             long ySeed = 1L << (2 * i + 1);
 
-            if ((zValue & xSeed) > 0) {
+            if ((hValue & xSeed) > 0) {
                 x += Math.pow(2, i);
             }
-            if ((zValue & ySeed) > 0) {
+            if ((hValue & ySeed) > 0) {
                 y += Math.pow(2, i);
             }
         }
-        String xx = Long.toBinaryString(x);
-        String yy = Long.toBinaryString(y);
-        return x + "_" + y;
+        long[] result = new long[2];
+        result[0] = x;
+        result[1] = y;
+        return result;
     }
 
+    // the following codes are copied from https://github.com/davidmoten/hilbert-curve/blob/master/src/main/java/org/davidmoten/hilbert/HilbertCurve.java
+
+
+
+    public static long getHilbertValue(int bits, long... point) {
+        HilbertCurveLib c =
+                HilbertCurveLib.bits(bits).dimensions(point.length);
+        BigInteger index = c.index(point);
+        return index.longValue();
+    }
+
+    public static long[] getlocation(long hValue, int length, int dim) {
+        HilbertCurveLib c =
+                HilbertCurveLib.bits(length).dimensions(dim);
+        return c.point(hValue);
+    }
+
+
     public static void main(String args[]) {
-        System.out.println(get2DHilbertCurve(5, 2, 16));
+//        System.out.println(get2DHilbertCurve(5, 2, 16));
+//
+//        int length = 8;
+//        for (int i = 0; i < 8; i++) {
+//            for (int j = 0; j < 8; j++) {
+//                long h1 = get2DHilbertCurve(i, j, length) + 1;
+//                long h2 = getHilbertValue(length, i, j) + 1;
+//                System.out.println("(" + i + "," + j + ") " + "h1:" + h1 + " h2:" + h2);
+//            }
+//        }
+//
+//        List<Long> xs = new ArrayList<>();
+//        List<Long> ys = new ArrayList<>();
+//        for (int i = 0; i < 64; i++) {
+//            long[] locations1 = get2Dlocation(i, length);
+//            long[] locations3 = getlocation(i, length, 2);
+//            xs.add(locations3[0]);
+//            ys.add(locations3[1]);
+//        }
+//        System.out.println(xs);
+//        System.out.println(ys);
+
     }
 
 }

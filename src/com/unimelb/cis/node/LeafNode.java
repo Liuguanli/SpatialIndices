@@ -3,7 +3,7 @@ package com.unimelb.cis.node;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LeafNode extends Node{
+public class LeafNode extends Node {
 
     private List<Point> children;
 
@@ -11,8 +11,8 @@ public class LeafNode extends Node{
         children = new ArrayList<>();
     }
 
-    public LeafNode(int pageSize) {
-        super(pageSize);
+    public LeafNode(int pageSize, int dim) {
+        super(pageSize, dim);
         children = new ArrayList<>();
     }
 
@@ -21,7 +21,8 @@ public class LeafNode extends Node{
             return false;
         }
         children.add(point);
-        updateMbr(point);
+//        updateMbr(point);
+        updateMbr(point, dim);
         return true;
     }
 
@@ -30,8 +31,9 @@ public class LeafNode extends Node{
             return false;
         }
         children.addAll(points);
-        for (Point point: points) {
-            updateMbr(point);
+        for (Point point : points) {
+            updateMbr(point, dim);
+//            updateMbr(point);
         }
         return true;
     }
@@ -55,15 +57,31 @@ public class LeafNode extends Node{
         float y = point.getY();
         if (mbr.getX1() > x) {
             mbr.setX1(x);
+            mbr.getLocation()[0] = x;
         }
         if (mbr.getX2() < x) {
             mbr.setX2(x);
+            mbr.getLocation()[2] = x;
         }
         if (mbr.getY1() > y) {
             mbr.setY1(y);
+            mbr.getLocation()[1] = y;
         }
         if (mbr.getY2() < y) {
             mbr.setY2(y);
+            mbr.getLocation()[3] = y;
+        }
+    }
+
+    private void updateMbr(Point point, int dim) {
+        for (int i = 0; i < dim; i++) {
+            float val = point.getLocation()[i];
+            if (mbr.getLocation()[i] > val) {
+                mbr.getLocation()[i] = val;
+            }
+            if (mbr.getLocation()[i + dim] < val) {
+                mbr.getLocation()[i + dim] = val;
+            }
         }
     }
 
@@ -74,9 +92,9 @@ public class LeafNode extends Node{
     public LeafNode split() {
         // right part
         LeafNode leafNode = new LeafNode();
-        leafNode.add(new ArrayList<Point>(children.subList(pageSize/2, pageSize)));
+        leafNode.add(new ArrayList<Point>(children.subList(pageSize / 2, pageSize)));
         // left part
-        List<Point> temp = new ArrayList<>(children.subList(0, pageSize/2));
+        List<Point> temp = new ArrayList<>(children.subList(0, pageSize / 2));
         children.clear();
         this.add(temp);
         return leafNode;

@@ -6,8 +6,6 @@ import org.junit.Test;
 import org.junit.Before;
 import org.junit.After;
 
-import static com.unimelb.cis.Constant.PAGE_SIZE;
-
 /**
  * ZRtree Tester.
  *
@@ -16,6 +14,8 @@ import static com.unimelb.cis.Constant.PAGE_SIZE;
  * @since <pre>Jul 29, 2019</pre>
  */
 public class ZRtreeTest {
+
+    int PAGE_SIZE = 100;
 
     @Before
     public void before() throws Exception {

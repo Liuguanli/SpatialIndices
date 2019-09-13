@@ -30,6 +30,12 @@ public class Point extends Node implements Comparable {
         return locationOrder;
     }
 
+    public Point(float... location) {
+        this.location = location;
+        this.dimension = location.length;
+        locationOrder = new int[dimension];
+    }
+
     public Point(int index, float... location) {
         this.index = index;
         this.location = location;
@@ -233,6 +239,9 @@ public class Point extends Node implements Comparable {
         while (temp != root) {
             builder.append(",").append(temp.getOrderInLevel());
             temp = temp.getParent();
+        }
+        if (temp.getOrderInLevel() == 0) {
+            builder.append(",").append(0);
         }
         return builder.toString();
     }

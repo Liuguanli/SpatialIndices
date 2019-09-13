@@ -12,6 +12,8 @@ public abstract class Node implements Comparable {
 
     protected int orderInLevel;
 
+    protected int dim;
+
     public int getOrderInLevel() {
         return orderInLevel;
     }
@@ -49,6 +51,12 @@ public abstract class Node implements Comparable {
     public Node(int pageSize) {
         mbr = new Mbr();
         this.pageSize = pageSize;
+    }
+
+    public Node(int pageSize, int dim) {
+        mbr = new Mbr(dim);
+        this.pageSize = pageSize;
+        this.dim = dim;
     }
 
     protected double dist;

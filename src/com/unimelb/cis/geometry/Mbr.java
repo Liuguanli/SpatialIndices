@@ -3,22 +3,81 @@ package com.unimelb.cis.geometry;
 
 import com.unimelb.cis.node.Point;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class Mbr {
+
+    static Random random = new Random(42);
+
+    static Map<Integer, Map<Float, List<Mbr>>> mbrCache = new HashMap<>();
 
     private float x1;
     private float x2;
     private float y1;
     private float y2;
+    private float z1;
+    private float z2;
+
+    private float[] location;
 
     public Mbr() {
         x1 = Float.MAX_VALUE;
         x2 = Float.MIN_VALUE;
         y1 = Float.MAX_VALUE;
         y2 = Float.MIN_VALUE;
+        location = new float[4];
+        location[0] = x1;
+        location[1] = y1;
+        location[2] = x2;
+        location[3] = y2;
+    }
+
+    public Mbr(float x1, float x2, float y1, float y2, float z1, float z2) {
+        this.x1 = x1;
+        this.x2 = x2;
+        this.y1 = y1;
+        this.y2 = y2;
+        this.z1 = z1;
+        this.z2 = z2;
+        location = new float[6];
+        location[0] = x1;
+        location[1] = y1;
+        location[2] = z1;
+        location[3] = x2;
+        location[4] = y2;
+        location[5] = z2;
+    }
+
+    public Mbr(int dim) {
+        location = new float[dim * 2];
+        if (dim == 2) {
+            x1 = Float.MAX_VALUE;
+            x2 = Float.MIN_VALUE;
+            y1 = Float.MAX_VALUE;
+            y2 = Float.MIN_VALUE;
+            location[0] = x1;
+            location[1] = y1;
+            location[2] = x2;
+            location[3] = y2;
+        } else if (dim == 3) {
+            this.x1 = Float.MAX_VALUE;
+            this.x2 = Float.MIN_VALUE;
+            this.y1 = Float.MAX_VALUE;
+            this.y2 = Float.MIN_VALUE;
+            this.z1 = Float.MAX_VALUE;
+            this.z2 = Float.MIN_VALUE;
+            location[0] = x1;
+            location[1] = y1;
+            location[2] = z1;
+            location[3] = x2;
+            location[4] = y2;
+            location[5] = z2;
+        } else {
+            for (int i = 0; i < location.length; i++) {
+                location[i] = Float.MAX_VALUE;
+                location[i + dim] = Float.MIN_VALUE;
+            }
+        }
     }
 
     public Mbr(float x1, float x2, float y1, float y2) {
@@ -26,6 +85,37 @@ public class Mbr {
         this.x2 = x2;
         this.y1 = y1;
         this.y2 = y2;
+        location = new float[4];
+        location[0] = x1;
+        location[1] = y1;
+        location[2] = x2;
+        location[3] = y2;
+    }
+
+    public Mbr(float... location) {
+        if (location.length == 4) {
+            this.x1 = location[0];
+            this.y1 = location[1];
+            this.x2 = location[2];
+            this.y2 = location[3];
+        } else if (location.length == 6) {
+            this.x1 = location[0];
+            this.y1 = location[1];
+            this.z1 = location[2];
+            this.x2 = location[3];
+            this.y2 = location[4];
+            this.z2 = location[5];
+        } else {
+            this.location = location;
+        }
+    }
+
+    public float[] getLocation() {
+        return location;
+    }
+
+    public void setLocation(float[] location) {
+        this.location = location;
     }
 
     public float getX1() {
@@ -105,37 +195,88 @@ public class Mbr {
         return result;
     }
 
-    public boolean interact(Mbr mbr) {
-        if (this.contains(new Point(mbr.x1, mbr.y1))
-                || this.contains(new Point(mbr.x1, mbr.y2))
-                || this.contains(new Point(mbr.x2, mbr.y1))
-                || this.contains(new Point(mbr.x2, mbr.y2))) {
-            return true;
+    public void getAllVertexs(Mbr mbr, int index, int dim, float[] locations, List<Point> points) {
+
+        if (index == dim){
+            points.add(new Point(locations.clone()));
+            return;
         }
 
-        if (mbr.contains(new Point(this.x1, this.y1))
-                || mbr.contains(new Point(this.x1, this.y2))
-                || mbr.contains(new Point(this.x2, this.y1))
-                || mbr.contains(new Point(this.x2, this.y2))) {
-            return true;
+        locations[index] = mbr.location[index];
+
+        getAllVertexs(mbr, index+1, dim, locations, points);
+
+        locations[index] = mbr.location[index + dim];
+
+        getAllVertexs(mbr, index+1, dim, locations, points);
+
+    }
+
+    public boolean interact(Mbr mbr) {
+        float[] mbrLocations = mbr.getLocation();
+        int dim = mbrLocations.length / 2;
+
+        float[] locations1 = new float[dim];
+        float[] locations2 = new float[dim];
+
+        for (int i = 0; i < dim; i++) {
+            locations1[i] = mbrLocations[i];
+            locations2[i] = mbrLocations[i + dim];
         }
+
+        List<Point> points = new ArrayList<>();
+        getAllVertexs(mbr, 0, dim, new float[dim], points);
+
+        for (int i = 0; i < points.size(); i++) {
+            Point point = points.get(i);
+            if (interact(point))
+                return true;
+            else
+                continue;
+        }
+//        if (this.contains(new Point(mbr.x1, mbr.y1))
+//                || this.contains(new Point(mbr.x1, mbr.y2))
+//                || this.contains(new Point(mbr.x2, mbr.y1))
+//                || this.contains(new Point(mbr.x2, mbr.y2))) {
+//            return true;
+//        }
+//
+//        if (mbr.contains(new Point(this.x1, this.y1))
+//                || mbr.contains(new Point(this.x1, this.y2))
+//                || mbr.contains(new Point(this.x2, this.y1))
+//                || mbr.contains(new Point(this.x2, this.y2))) {
+//            return true;
+//        }
         return false;
     }
 
     public boolean interact(Point point) {
-        float x = point.getX();
-        float y = point.getY();
-        if (x >= this.getX1() && x <= this.getX2() && y >= this.getY1() && y <= this.getY2()) {
-            return true;
+//        float x = point.getX();
+//        float y = point.getY();
+//        if (x >= this.getX1() && x <= this.getX2() && y >= this.getY1() && y <= this.getY2()) {
+//            return true;
+//        }
+        int dim = this.location.length / 2;
+        for (int i = 0; i < dim; i++) {
+            if (point.getLocation()[i] < this.location[i] || point.getLocation()[i] > this.location[i + dim])
+                return false;
+            else
+                continue;
         }
-        return false;
+
+        return true;
     }
 
     public boolean contains(Point point) {
-        if (x1 < point.getX() && x2 > point.getX() && y1 < point.getY() && y2 > point.getY()) {
-            return true;
+        int dim = this.location.length / 2;
+        for (int i = 0; i < dim; i++) {
+            if (point.getLocation()[i] <= this.location[i] || point.getLocation()[i] >= this.location[i + dim])
+                return false;
+            else
+                continue;
         }
-        return false;
+
+        return true;
     }
 
     public boolean contains(Mbr mbr) {
@@ -273,10 +414,106 @@ public class Mbr {
     @Override
     public String toString() {
         return "Mbr{" +
-                "x1=" + x1 +
-                ", x2=" + x2 +
-                ", y1=" + y1 +
-                ", y2=" + y2 +
+                "location=" + Arrays.toString(location) +
                 '}';
     }
+
+    public static Mbr getMbr(float side, int dim) {
+        side = side / 2;
+
+        float[] locations = new float[dim];
+        float[] result = new float[dim * 2];
+        for (int i = 0; i < dim; i++) {
+            locations[i] = random.nextFloat();
+            if (locations[i] - side > 0 && locations[i] + side < 1) {
+                continue;
+            } else {
+                i--;
+            }
+        }
+        for (int i = 0; i < dim; i++) {
+            result[i] = locations[i] - side;
+            result[i + dim] = locations[i] + side;
+        }
+        return new Mbr(result);
+    }
+
+    public static Mbr getMbr2D(float side) {
+        side = side / 2;
+        float x = random.nextFloat();
+        float y = random.nextFloat();
+        while (true) {
+            if (x - side > 0 && x + side < 1 && y - side > 0 && y + side < 1) {
+                return new Mbr(x - side, x + side, y - side, y + side);
+            } else {
+                x = random.nextFloat();
+                y = random.nextFloat();
+            }
+        }
+    }
+
+    public static Mbr getMbr3D(float side) {
+        side = side / 2;
+        float x = random.nextFloat();
+        float y = random.nextFloat();
+        float z = random.nextFloat();
+        while (true) {
+            if (x - side > 0 && x + side < 1 && y - side > 0 && y + side < 1 && z - side > 0 && z + side < 1) {
+                return new Mbr(x - side, x + side, y - side, y + side, z - side, z + side);
+            } else {
+                x = random.nextFloat();
+                y = random.nextFloat();
+                z = random.nextFloat();
+            }
+        }
+    }
+
+    public static List<Mbr> getMbrs(float side, int num, int dim) {
+        List<Mbr> mbrs = new ArrayList<>(num);
+        if (mbrCache.containsKey(dim)) {
+            if (mbrCache.get(dim).containsKey(side)) {
+                List<Mbr> temp = mbrCache.get(dim).get(side);
+                if (temp != null && temp.size() >= num) {
+                    mbrs = temp.subList(0, num);
+                    return mbrs;
+                }
+            }
+        }
+        if (dim == 2) {
+            for (int i = 0; i < num; i++) {
+                mbrs.add(getMbr2D(side));
+            }
+        } else if (dim == 3) {
+            for (int i = 0; i < num; i++) {
+                mbrs.add(getMbr3D(side));
+            }
+        } else {
+            for (int i = 0; i < num; i++) {
+                mbrs.add(getMbr(side, dim));
+            }
+        }
+        Map temp = new HashMap<>();
+        temp.put(side, mbrs);
+        mbrCache.put(dim, temp);
+        return mbrs;
+    }
+
+//    public static List<Mbr> getMbrs(float[] sides, int dim) {
+//        List<Mbr> mbrs = new ArrayList<>(sides.length);
+//        if (dim == 2) {
+//            for (int i = 0; i < sides.length; i++) {
+//                mbrs.add(getMbr2D(sides[i]));
+//            }
+//        } else if (dim == 3) {
+//            for (int i = 0; i < sides.length; i++) {
+//                mbrs.add(getMbr3D(sides[i]));
+//            }
+//        } else {
+//            for (int i = 0; i < sides.length; i++) {
+//                mbrs.add(getMbr(sides[i], dim));
+//            }
+//        }
+//        return mbrs;
+//    }
+
 }

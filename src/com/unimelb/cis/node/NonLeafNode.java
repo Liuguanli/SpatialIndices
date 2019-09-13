@@ -9,8 +9,13 @@ public class NonLeafNode extends Node {
 
     private List<Node> children;
 
-    public NonLeafNode(int pageSize) {
-        super(pageSize);
+    public NonLeafNode() {
+        super();
+        children = new ArrayList<>();
+    }
+
+    public NonLeafNode(int pageSize, int dim) {
+        super(pageSize, dim);
         children = new ArrayList<>();
     }
 
@@ -31,7 +36,21 @@ public class NonLeafNode extends Node {
     public void add(Node node) {
         node.parent = this;
         children.add(node);
-        updateMbr(node);
+        updateMbr(node, dim);
+//        updateMbr(node);
+    }
+
+    private void updateMbr(Node node, int dim) {
+        for (int i = 0; i < dim; i++) {
+            float val = node.mbr.getLocation()[i];
+            if (mbr.getLocation()[i] > val) {
+                mbr.getLocation()[i] = val;
+            }
+            val = node.mbr.getLocation()[i + dim];
+            if (mbr.getLocation()[i + dim] < val) {
+                mbr.getLocation()[i + dim] = val;
+            }
+        }
     }
 
     private void updateMbr(Node node) {

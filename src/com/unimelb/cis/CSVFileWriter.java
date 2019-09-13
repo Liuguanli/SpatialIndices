@@ -10,7 +10,7 @@ import java.util.List;
 
 public class CSVFileWriter {
 
-    public static void write(ZRtree rtree, String fileName) {
+    public static void write(List<String> lines, String fileName) {
         File csv = new File(fileName);  // CSV文件路径
         FileWriter fw = null;
         try {
@@ -21,11 +21,11 @@ public class CSVFileWriter {
             e.printStackTrace();
         }
 
-        List<String> lines = rtree.getOutput();
         try {
             for (int i = 0; i < lines.size(); i++) {
                 String line = lines.get(i);
                 fw.write(line + "\r\n");
+                fw.flush();
             }
         } catch (IOException e) {
             e.printStackTrace();
