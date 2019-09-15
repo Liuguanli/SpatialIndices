@@ -9,6 +9,11 @@ public class NonLeafNode extends Node {
 
     private List<Node> children;
 
+    @Override
+    public boolean isFull() {
+        return children.size() == pageSize;
+    }
+
     public NonLeafNode() {
         super();
         children = new ArrayList<>();
@@ -27,10 +32,36 @@ public class NonLeafNode extends Node {
         this.children = children;
     }
 
+
     public void addAll(List<Node> nodes) {
         for (int i = 0; i < nodes.size(); i++) {
             add(nodes.get(i));
         }
+    }
+
+    public boolean contains(Node child) {
+        return this.children.contains(child);
+    }
+
+    public NonLeafNode splitBybisection() {
+
+        // right part
+        NonLeafNode nonLeafNode = new NonLeafNode(pageSize, dim);
+        nonLeafNode.addAll(new ArrayList(children.subList(pageSize / 2, pageSize)));
+        nonLeafNode.setParent(this.parent);
+        nonLeafNode.setLevel(this.getLevel());
+
+        // left part
+        List<Node> temp = new ArrayList<>(children.subList(0, pageSize / 2));
+        children.clear();
+        this.addAll(temp);
+        return nonLeafNode;
+    }
+
+    public void add(int index, Node node) {
+        node.parent = this;
+        children.add(index, node);
+        updateMbr(node, dim);
     }
 
     public void add(Node node) {
@@ -38,6 +69,12 @@ public class NonLeafNode extends Node {
         children.add(node);
         updateMbr(node, dim);
 //        updateMbr(node);
+    }
+
+    public void addAfterSplit(Node originalNode, Node newNode) {
+        int index = children.indexOf(originalNode);
+        index++;
+        add(index, newNode);
     }
 
     private void updateMbr(Node node, int dim) {

@@ -19,19 +19,12 @@ import static com.unimelb.cis.CSVFileReader.read;
 
 public class HRtree extends IRtree {
 
-    private NonLeafNode root;
-
-    private List<Node> leafNodes;
-
-    String dataFile;
-
-    int pagesize;
 
     public HRtree() {
     }
 
     public HRtree(int pagesize) {
-        this.pagesize = pagesize;
+        super(pagesize);
     }
 
     public NonLeafNode getRoot() {

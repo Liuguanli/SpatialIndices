@@ -114,6 +114,11 @@ public class Point extends Node implements Comparable {
         return 0;
     }
 
+    @Override
+    public boolean isFull() {
+        return true;
+    }
+
     public double calDist(Point point) {
         double result = 0;
         for (int i = 0; i < dimension; i++) {

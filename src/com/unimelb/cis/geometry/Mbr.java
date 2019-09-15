@@ -20,33 +20,33 @@ public class Mbr {
 
     private float[] location;
 
-    public Mbr() {
-        x1 = Float.MAX_VALUE;
-        x2 = Float.MIN_VALUE;
-        y1 = Float.MAX_VALUE;
-        y2 = Float.MIN_VALUE;
-        location = new float[4];
-        location[0] = x1;
-        location[1] = y1;
-        location[2] = x2;
-        location[3] = y2;
-    }
+//    public Mbr() {
+//        x1 = Float.MAX_VALUE;
+//        x2 = Float.MIN_VALUE;
+//        y1 = Float.MAX_VALUE;
+//        y2 = Float.MIN_VALUE;
+//        location = new float[4];
+//        location[0] = x1;
+//        location[1] = y1;
+//        location[2] = x2;
+//        location[3] = y2;
+//    }
 
-    public Mbr(float x1, float x2, float y1, float y2, float z1, float z2) {
-        this.x1 = x1;
-        this.x2 = x2;
-        this.y1 = y1;
-        this.y2 = y2;
-        this.z1 = z1;
-        this.z2 = z2;
-        location = new float[6];
-        location[0] = x1;
-        location[1] = y1;
-        location[2] = z1;
-        location[3] = x2;
-        location[4] = y2;
-        location[5] = z2;
-    }
+//    public Mbr(float x1, float x2, float y1, float y2, float z1, float z2) {
+//        this.x1 = x1;
+//        this.x2 = x2;
+//        this.y1 = y1;
+//        this.y2 = y2;
+//        this.z1 = z1;
+//        this.z2 = z2;
+//        location = new float[6];
+//        location[0] = x1;
+//        location[1] = y1;
+//        location[2] = z1;
+//        location[3] = x2;
+//        location[4] = y2;
+//        location[5] = z2;
+//    }
 
     public Mbr(int dim) {
         location = new float[dim * 2];
@@ -80,17 +80,17 @@ public class Mbr {
         }
     }
 
-    public Mbr(float x1, float x2, float y1, float y2) {
-        this.x1 = x1;
-        this.x2 = x2;
-        this.y1 = y1;
-        this.y2 = y2;
-        location = new float[4];
-        location[0] = x1;
-        location[1] = y1;
-        location[2] = x2;
-        location[3] = y2;
-    }
+//    public Mbr(float x1, float x2, float y1, float y2) {
+//        this.x1 = x1;
+//        this.x2 = x2;
+//        this.y1 = y1;
+//        this.y2 = y2;
+//        location = new float[4];
+//        location[0] = x1;
+//        location[1] = y1;
+//        location[2] = x2;
+//        location[3] = y2;
+//    }
 
     public Mbr(float... location) {
         if (location.length == 4) {
@@ -98,6 +98,7 @@ public class Mbr {
             this.y1 = location[1];
             this.x2 = location[2];
             this.y2 = location[3];
+            this.location = location;
         } else if (location.length == 6) {
             this.x1 = location[0];
             this.y1 = location[1];
@@ -105,6 +106,7 @@ public class Mbr {
             this.x2 = location[3];
             this.y2 = location[4];
             this.z2 = location[5];
+            this.location = location;
         } else {
             this.location = location;
         }
@@ -159,12 +161,24 @@ public class Mbr {
         return result;
     }
 
-    public float area() {
-        return (y2 - y1) * (x2 - x1);
+    public float volume() {
+        float volume = 1f;
+        int dim = location.length / 2;
+        for (int i = 0; i < dim; i++) {
+            volume *= (location[dim + i] - location[i]);
+        }
+        return volume;
     }
 
-    public float peremeter() {
-        return (y2 - y1 + x2 - x1) * 2;
+    public float perimeter() {
+        float perimeter = 0;
+        int dim = location.length / 2;
+        for (int i = 0; i < dim; i++) {
+            perimeter += (location[dim + i] - location[i]);
+        }
+        // perimeter is not the real result because there must be a parameter n to multiple perimeter.
+        // While n is not that important.
+        return perimeter;
     }
 
     public void merge(float x, float y) {
@@ -174,41 +188,20 @@ public class Mbr {
         y2 = y > y2 ? y : y2;
     }
 
-    public Mbr getOverlap(Mbr another) {
-
-        List<Float> latis = new ArrayList<>();
-        List<Float> longis = new ArrayList<>();
-        latis.add(this.getY1());
-        latis.add(this.getY2());
-        latis.add(another.getY1());
-        latis.add(another.getY2());
-
-        longis.add(this.getX1());
-        longis.add(this.getX2());
-        longis.add(another.getX1());
-        longis.add(another.getX2());
-
-        Collections.sort(latis);
-        Collections.sort(longis);
-        Mbr result = new Mbr(longis.get(1), longis.get(2), latis.get(1), latis.get(2));
-
-        return result;
-    }
-
     public void getAllVertexs(Mbr mbr, int index, int dim, float[] locations, List<Point> points) {
 
-        if (index == dim){
+        if (index == dim) {
             points.add(new Point(locations.clone()));
             return;
         }
 
         locations[index] = mbr.location[index];
 
-        getAllVertexs(mbr, index+1, dim, locations, points);
+        getAllVertexs(mbr, index + 1, dim, locations, points);
 
         locations[index] = mbr.location[index + dim];
 
-        getAllVertexs(mbr, index+1, dim, locations, points);
+        getAllVertexs(mbr, index + 1, dim, locations, points);
 
     }
 
@@ -378,6 +371,53 @@ public class Mbr {
         return dist;
     }
 
+    public float getOverlapVol(Mbr mbr) {
+        if (interact(mbr)) {
+            float overlap = 1;
+            int dim = location.length / 2;
+            for (int i = 0; i < dim; i++) {
+                overlap *= (Math.min(this.location[i + dim], mbr.location[i + dim]) - Math.max(this.location[i], mbr.location[i]));
+            }
+            return overlap;
+        } else {
+            return 0;
+        }
+    }
+
+    public float getOverlapPerim(Mbr mbr) {
+        if (interact(mbr)) {
+            float overlap = 0;
+            int dim = location.length / 2;
+            for (int i = 0; i < dim; i++) {
+                overlap += (Math.min(this.location[i + dim], mbr.location[i + dim]) - Math.max(this.location[i], mbr.location[i]));
+            }
+            return overlap;
+        } else {
+            return 0;
+        }
+    }
+
+//    public Mbr getOverlap(Mbr another) {
+//
+//        List<Float> latis = new ArrayList<>();
+//        List<Float> longis = new ArrayList<>();
+//        latis.add(this.getY1());
+//        latis.add(this.getY2());
+//        latis.add(another.getY1());
+//        latis.add(another.getY2());
+//
+//        longis.add(this.getX1());
+//        longis.add(this.getX2());
+//        longis.add(another.getX1());
+//        longis.add(another.getX2());
+//
+//        Collections.sort(latis);
+//        Collections.sort(longis);
+//        Mbr result = new Mbr(longis.get(1), longis.get(2), latis.get(1), latis.get(2));
+//
+//        return result;
+//    }
+
     public float calInteract(Mbr mbr) {
         return (this.getX2() + mbr.getX2() - this.getX1() - mbr.getX1()) * (this.getY2() + mbr.getY2() - this.getY1() - mbr.getY1());
     }
@@ -498,7 +538,25 @@ public class Mbr {
         return mbrs;
     }
 
-//    public static List<Mbr> getMbrs(float[] sides, int dim) {
+    public void updateMbr(Point point, int dim) {
+        for (int i = 0; i < dim; i++) {
+            float val = point.getLocation()[i];
+            if (this.getLocation()[i] > val) {
+                this.getLocation()[i] = val;
+            }
+            if (this.getLocation()[i + dim] < val) {
+                this.getLocation()[i + dim] = val;
+            }
+        }
+    }
+
+    public Mbr clone() {
+        float[] copiedLocation = new float[this.location.length];
+        System.arraycopy(location, 0, copiedLocation, 0, this.location.length);
+        return new Mbr(copiedLocation);
+    }
+
+    //    public static List<Mbr> getMbrs(float[] sides, int dim) {
 //        List<Mbr> mbrs = new ArrayList<>(sides.length);
 //        if (dim == 2) {
 //            for (int i = 0; i < sides.length; i++) {

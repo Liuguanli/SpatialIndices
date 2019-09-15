@@ -20,28 +20,13 @@ import static com.unimelb.cis.CSVFileReader.read;
 
 public class ZRtree extends IRtree {
 
-    private NonLeafNode root;
-
-    private List<Node> leafNodes;
-
-    String dataFile;
-
-    int pagesize;
-
     public ZRtree() {
     }
 
     public ZRtree(int pagesize) {
-        this.pagesize = pagesize;
+        super(pagesize);
     }
 
-    public NonLeafNode getRoot() {
-        return root;
-    }
-
-    public List<Node> getLeafNodes() {
-        return leafNodes;
-    }
 
     public void sortDimensiont(List<Point> points, int dimension) {
         Collections.sort(points, new Comparator<Point>() {
@@ -263,9 +248,11 @@ public class ZRtree extends IRtree {
         zRtree.buildRtreeAfterTuning("/Users/guanli/Documents/datasets/RLRtree/trees/Z_uniform_10000_1_3_.csv", zRtree.getDim(), zRtree.getLevel());
 //        zRtree.getRoot();
 
-        System.out.println(zRtree.windowQuery(Mbr.getMbrs(0.01f, 10, 3).get(0)));
-        System.out.println(zRtree.windowQuery(Mbr.getMbrs(0.01f, 9, 3).get(0)));
-        System.out.println(zRtree.windowQuery(Mbr.getMbrs(0.01f, 11, 3).get(0)));
+//        System.out.println(zRtree.windowQuery(Mbr.getMbrs(0.01f, 10, 3).get(0)));
+//        System.out.println(zRtree.windowQuery(Mbr.getMbrs(0.01f, 9, 3).get(0)));
+//        System.out.println(zRtree.windowQuery(Mbr.getMbrs(0.01f, 11, 3).get(0)));
+
+        zRtree.visualize(600,600).save("test.png");
 
 //        Mbr mbr = new Mbr(1,2,3,4);
 

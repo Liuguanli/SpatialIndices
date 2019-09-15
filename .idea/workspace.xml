@@ -7,12 +7,46 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ba9c8980-c90e-48aa-8dfb-ac39a52585ec" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/com/unimelb/cis/HilbertCurveLib.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Rstar/Rstar.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Rstar/src/Q1.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Rstar/src/rstar/RStarTree.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Rstar/src/rstar/StorageManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Rstar/src/rstar/dto/AbstractDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Rstar/src/rstar/dto/MbrDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Rstar/src/rstar/dto/NodeDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Rstar/src/rstar/dto/PointDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Rstar/src/rstar/dto/TreeDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Rstar/src/rstar/interfaces/IDiskQuery.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Rstar/src/rstar/interfaces/IDtoConvertible.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Rstar/src/rstar/interfaces/IRStarNode.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Rstar/src/rstar/interfaces/ISpatialQuery.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Rstar/src/rstar/nodes/RStarInternal.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Rstar/src/rstar/nodes/RStarLeaf.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Rstar/src/rstar/nodes/RStarNode.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Rstar/src/rstar/nodes/RStarSplit.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Rstar/src/rstar/spatial/HyperRectangle.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Rstar/src/rstar/spatial/SpatialComparator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Rstar/src/rstar/spatial/SpatialPoint.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Rstar/src/util/Constants.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Rstar/src/util/Trace.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Rstar/src/util/Utils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/unimelb/cis/structures/rstar/RstarTree.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/unimelb/cis/utils/ImageSaver.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/unimelb/cis/utils/RectangleDepth.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/unimelb/cis/utils/Visualizer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SpatialIndices.iml" beforeDir="false" afterPath="$PROJECT_DIR$/SpatialIndices.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/CSVFileWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/CSVFileWriter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/Constant.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/Constant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/HilbertCurve.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/HilbertCurve.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SpatialIndices/META-INF/SpatialIndices.kotlin_module" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SpatialIndices/META-INF/SpatialIndices.kotlin_module" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/geometry/Mbr.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/geometry/Mbr.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/node/LeafNode.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/node/LeafNode.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/node/Node.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/node/Node.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/node/NonLeafNode.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/node/NonLeafNode.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/node/Point.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/node/Point.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/structures/IRtree.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/structures/IRtree.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/structures/hrtree/HRtree$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/structures/hrtree/HRtree$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/structures/hrtree/HRtree.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/structures/hrtree/HRtree.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/structures/zrtree/ZRtree$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/structures/zrtree/ZRtree$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/structures/zrtree/ZRtree.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/structures/zrtree/ZRtree.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/geometry/Mbr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/geometry/Mbr.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/node/LeafNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/node/LeafNode.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/node/Node.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/node/Node.java" afterDir="false" />
@@ -21,8 +55,6 @@
       <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/structures/IRtree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/structures/IRtree.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/structures/hrtree/HRtree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/structures/hrtree/HRtree.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/structures/zrtree/ZRtree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/structures/zrtree/ZRtree.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/utils/ExpReturn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/utils/ExpReturn.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/com/unimelb/cis/structures/zrtree/ZRtreeTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/com/unimelb/cis/structures/zrtree/ZRtreeTest.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -48,10 +80,10 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectFrameBounds" fullScreen="true">
+  <component name="ProjectFrameBounds" extendedState="6" fullScreen="true">
     <option name="x" value="-1295" />
     <option name="y" value="-1080" />
-    <option name="width" value="1920" />
+    <option name="width" value="954" />
     <option name="height" value="1080" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -67,21 +99,21 @@
     <property name="Repository.Attach.JavaDocs" value="false" />
     <property name="Repository.Attach.Sources" value="false" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/Rstar/src" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.4678309" />
     <property name="settings.editor.selected.configurable" value="com.intellij.jarRepository.settings.RemoteRepositoriesConfigurable" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/datasets" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Rstar/src" />
+      <recent name="$PROJECT_DIR$/src/com/unimelb/cis/structures" />
       <recent name="$PROJECT_DIR$/src/com/unimelb/cis/structures/hrtree" />
       <recent name="$PROJECT_DIR$/src/com/unimelb/cis/structures/zrtree" />
-      <recent name="$PROJECT_DIR$/datasets" />
-      <recent name="$PROJECT_DIR$/src/com/unimelb/cis" />
-      <recent name="$PROJECT_DIR$/src/com/unimelb/cis/node" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/datasets" />
     </key>
   </component>
@@ -97,7 +129,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.HilbertCurve (1)">
+  <component name="RunManager" selected="Application.ZRtree">
     <configuration name="HilbertCurve (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.unimelb.cis.HilbertCurve" />
       <module name="SpatialIndices" />
@@ -117,6 +149,19 @@
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.unimelb.cis.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="RstarTree" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.unimelb.cis.structures.rstar.RstarTree" />
+      <module name="SpatialIndices" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.unimelb.cis.structures.rstar.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -150,29 +195,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ZRtreeTest.testBuildRtree" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="SpatialIndices" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="test.com.unimelb.cis.structures.zrtree.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="test.com.unimelb.cis.structures.zrtree" />
-      <option name="MAIN_CLASS_NAME" value="test.com.unimelb.cis.structures.zrtree.ZRtreeTest" />
-      <option name="METHOD_NAME" value="testBuildRtree" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.ZRtree" />
+        <item itemvalue="Application.RstarTree" />
         <item itemvalue="Application.HilbertCurve (1)" />
         <item itemvalue="Application.HilbertCurveLib" />
         <item itemvalue="Application.ZCurve" />
-        <item itemvalue="Application.ZRtree" />
-        <item itemvalue="JUnit.ZRtreeTest.testBuildRtree" />
       </list>
     </recent_temporary>
   </component>
@@ -254,40 +283,40 @@
       <breakpoints>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/geometry/Mbr.java</url>
-          <line>501</line>
+          <line>559</line>
           <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/geometry/Mbr.java</url>
-          <line>503</line>
+          <line>561</line>
           <option name="timeStamp" value="6" />
-        </line-breakpoint>
-        <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/unimelb/cis/node/NonLeafNode.java</url>
-          <line>36</line>
-          <option name="timeStamp" value="18" />
-        </line-breakpoint>
-        <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/unimelb/cis/node/NonLeafNode.java</url>
-          <line>43</line>
-          <option name="timeStamp" value="19" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <condition expression="items.length &lt;= dim + j" language="JAVA" />
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/structures/zrtree/ZRtree.java</url>
-          <line>204</line>
+          <line>189</line>
           <option name="timeStamp" value="32" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/structures/zrtree/ZRtree.java</url>
-          <line>140</line>
+          <line>125</line>
           <option name="timeStamp" value="42" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/unimelb/cis/structures/rstar/RstarTree.java</url>
+          <line>251</line>
+          <option name="timeStamp" value="58" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="breakpointCondition">
+      <expression>
+        <expression-string>i==4</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>i==9955</expression-string>
         <language-id>JAVA</language-id>

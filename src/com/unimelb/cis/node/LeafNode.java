@@ -1,5 +1,7 @@
 package com.unimelb.cis.node;
 
+import com.unimelb.cis.geometry.Mbr;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +16,13 @@ public class LeafNode extends Node {
     public LeafNode(int pageSize, int dim) {
         super(pageSize, dim);
         children = new ArrayList<>();
+    }
+
+    public boolean addForChooseSub(Point point) {
+        children.add(point);
+//        updateMbr(point);
+        updateMbr(point, dim);
+        return true;
     }
 
     public boolean add(Point point) {
@@ -52,51 +61,69 @@ public class LeafNode extends Node {
         return children;
     }
 
-    private void updateMbr(Point point) {
-        float x = point.getX();
-        float y = point.getY();
-        if (mbr.getX1() > x) {
-            mbr.setX1(x);
-            mbr.getLocation()[0] = x;
-        }
-        if (mbr.getX2() < x) {
-            mbr.setX2(x);
-            mbr.getLocation()[2] = x;
-        }
-        if (mbr.getY1() > y) {
-            mbr.setY1(y);
-            mbr.getLocation()[1] = y;
-        }
-        if (mbr.getY2() < y) {
-            mbr.setY2(y);
-            mbr.getLocation()[3] = y;
+    private void updateMbr() {
+        mbr = new Mbr(dim);
+        for (int i = 0; i < children.size(); i++) {
+            updateMbr(children.get(i), dim);
         }
     }
+//
+//    private void updateMbr(Point point) {
+//        float x = point.getX();
+//        float y = point.getY();
+//        if (mbr.getX1() > x) {
+//            mbr.setX1(x);
+//            mbr.getLocation()[0] = x;
+//        }
+//        if (mbr.getX2() < x) {
+//            mbr.setX2(x);
+//            mbr.getLocation()[2] = x;
+//        }
+//        if (mbr.getY1() > y) {
+//            mbr.setY1(y);
+//            mbr.getLocation()[1] = y;
+//        }
+//        if (mbr.getY2() < y) {
+//            mbr.setY2(y);
+//            mbr.getLocation()[3] = y;
+//        }
+//    }
 
     private void updateMbr(Point point, int dim) {
-        for (int i = 0; i < dim; i++) {
-            float val = point.getLocation()[i];
-            if (mbr.getLocation()[i] > val) {
-                mbr.getLocation()[i] = val;
-            }
-            if (mbr.getLocation()[i + dim] < val) {
-                mbr.getLocation()[i + dim] = val;
-            }
-        }
+//        for (int i = 0; i < dim; i++) {
+//            float val = point.getLocation()[i];
+//            if (mbr.getLocation()[i] > val) {
+//                mbr.getLocation()[i] = val;
+//            }
+//            if (mbr.getLocation()[i + dim] < val) {
+//                mbr.getLocation()[i + dim] = val;
+//            }
+//        }
+        this.getMbr().updateMbr(point, dim);
     }
 
     public boolean isFull() {
         return children.size() == pageSize;
     }
 
-    public LeafNode split() {
+    /**
+     * split the node from middle
+     *
+     * @return
+     */
+    public LeafNode splitBybisection() {
         // right part
-        LeafNode leafNode = new LeafNode();
-        leafNode.add(new ArrayList<Point>(children.subList(pageSize / 2, pageSize)));
+        LeafNode leafNode = new LeafNode(pageSize, dim);
+        leafNode.add(new ArrayList<>(children.subList(pageSize / 2, pageSize)));
+        leafNode.setParent(this.parent);
+        leafNode.setLevel(this.getLevel());
+
         // left part
         List<Point> temp = new ArrayList<>(children.subList(0, pageSize / 2));
         children.clear();
         this.add(temp);
+        // TODO here is a bug!!!
+        this.updateMbr();
         return leafNode;
     }
 

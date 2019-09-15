@@ -1,14 +1,41 @@
 package com.unimelb.cis.structures;
 
 import com.unimelb.cis.geometry.Mbr;
+import com.unimelb.cis.node.Node;
 import com.unimelb.cis.node.NonLeafNode;
 import com.unimelb.cis.utils.ExpReturn;
+import com.unimelb.cis.utils.Visualizer;
+
+import java.util.List;
 
 public abstract class IRtree {
 
-    private int level;
+    public IRtree() {
+    }
 
-    private int dim;
+    public IRtree(int pagesize) {
+        this.pagesize = pagesize;
+    }
+
+    protected NonLeafNode root;
+
+    protected List<Node> leafNodes;
+
+    protected String dataFile;
+
+    protected int pagesize;
+
+    public NonLeafNode getRoot() {
+        return root;
+    }
+
+    public List<Node> getLeafNodes() {
+        return leafNodes;
+    }
+
+    protected int level;
+
+    protected int dim;
 
     public int getDim() {
         return dim;
@@ -35,5 +62,10 @@ public abstract class IRtree {
     public abstract void output(String file);
 
     public abstract NonLeafNode buildRtreeAfterTuning(String path, int dim, int level);
+
+    public Visualizer visualize(int width, int height) {
+        Mbr view = new Mbr(1, 1, 1, 1);
+        return new Visualizer(this, width, height, view);
+    }
 
 }
