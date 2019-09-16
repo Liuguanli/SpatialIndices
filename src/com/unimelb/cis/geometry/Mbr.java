@@ -18,6 +18,8 @@ public class Mbr {
     private float z1;
     private float z2;
 
+    private int dim;
+
     private float[] location;
 
 //    public Mbr() {
@@ -50,6 +52,7 @@ public class Mbr {
 
     public Mbr(int dim) {
         location = new float[dim * 2];
+        this.dim = dim;
         if (dim == 2) {
             x1 = Float.MAX_VALUE;
             x2 = Float.MIN_VALUE;
@@ -110,6 +113,17 @@ public class Mbr {
         } else {
             this.location = location;
         }
+        dim = location.length / 2;
+    }
+
+    public static Mbr getMbrFromPoint(Point point) {
+        int pointDim = point.getDim();
+        float[] tempLocation = new float[pointDim * 2];
+        for (int i = 0; i < pointDim; i++) {
+            tempLocation[i] = point.getLocation()[i];
+            tempLocation[i + pointDim] = point.getLocation()[i];
+        }
+        return new Mbr(tempLocation);
     }
 
     public float[] getLocation() {
@@ -121,7 +135,7 @@ public class Mbr {
     }
 
     public float getX1() {
-        return x1;
+        return location[0];
     }
 
     public void setX1(float x1) {
@@ -129,7 +143,7 @@ public class Mbr {
     }
 
     public float getX2() {
-        return x2;
+        return location[dim];
     }
 
     public void setX2(float x2) {
@@ -137,7 +151,7 @@ public class Mbr {
     }
 
     public float getY1() {
-        return y1;
+        return location[1];
     }
 
     public void setY1(float y1) {
@@ -145,7 +159,7 @@ public class Mbr {
     }
 
     public float getY2() {
-        return y2;
+        return location[1 + dim];
     }
 
     public void setY2(float y2) {

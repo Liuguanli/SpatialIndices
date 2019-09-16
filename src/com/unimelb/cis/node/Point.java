@@ -1,10 +1,10 @@
 package com.unimelb.cis.node;
 
+import com.unimelb.cis.geometry.Mbr;
+
 import java.util.Arrays;
 
 public class Point extends Node implements Comparable {
-
-    private int dimension = 2;
 
     private float x;
 
@@ -32,15 +32,17 @@ public class Point extends Node implements Comparable {
 
     public Point(float... location) {
         this.location = location;
-        this.dimension = location.length;
-        locationOrder = new int[dimension];
+        this.dim = location.length;
+        locationOrder = new int[dim];
+        mbr = Mbr.getMbrFromPoint(this);
     }
 
     public Point(int index, float... location) {
         this.index = index;
         this.location = location;
-        this.dimension = location.length;
-        locationOrder = new int[dimension];
+        this.dim = location.length;
+        locationOrder = new int[dim];
+        mbr = Mbr.getMbrFromPoint(this);
     }
 
     public Point(String line) {
@@ -51,39 +53,43 @@ public class Point extends Node implements Comparable {
         }
         this.index = Integer.parseInt(items[items.length - 1]);
         this.location = location;
-        this.dimension = location.length;
-        locationOrder = new int[dimension];
+        this.dim = location.length;
+        locationOrder = new int[dim];
+        mbr = Mbr.getMbrFromPoint(this);
     }
 
     public Point(float x, float y) {
         this.x = x;
         this.y = y;
-        this.location = new float[dimension];
+        this.location = new float[dim];
         location[0] = x;
         location[1] = y;
-        locationOrder = new int[dimension];
+        locationOrder = new int[dim];
+        mbr = Mbr.getMbrFromPoint(this);
     }
 
     public Point(float x, float y, int index) {
         this.x = x;
         this.y = y;
         this.index = index;
-        this.location = new float[dimension];
+        this.location = new float[dim];
         location[0] = x;
         location[1] = y;
-        locationOrder = new int[dimension];
+        locationOrder = new int[dim];
+        mbr = Mbr.getMbrFromPoint(this);
     }
 
     public Point(float x, float y, float z) {
         this.x = x;
         this.y = y;
         this.z = z;
-        this.dimension = 3;
-        this.location = new float[dimension];
+        this.dim = 3;
+        this.location = new float[dim];
         location[0] = x;
         location[1] = y;
         location[2] = z;
-        locationOrder = new int[dimension];
+        locationOrder = new int[dim];
+        mbr = Mbr.getMbrFromPoint(this);
     }
 
     public Point(float x, float y, float z, int index) {
@@ -91,18 +97,19 @@ public class Point extends Node implements Comparable {
         this.y = y;
         this.z = z;
         this.index = index;
-        this.dimension = 3;
-        this.location = new float[dimension];
+        this.dim = 3;
+        this.location = new float[dim];
         location[0] = x;
         location[1] = y;
         location[2] = z;
-        locationOrder = new int[dimension];
+        locationOrder = new int[dim];
+        mbr = Mbr.getMbrFromPoint(this);
     }
 
 
     public int compareTo(Object o) {
         Point p = (Point) o;
-        for (int i = 0; i < dimension; i++) {
+        for (int i = 0; i < dim; i++) {
             if (this.location[i] > p.location[i]) {
                 return 1;
             } else if (this.location[i] < p.location[i]) {
@@ -121,18 +128,10 @@ public class Point extends Node implements Comparable {
 
     public double calDist(Point point) {
         double result = 0;
-        for (int i = 0; i < dimension; i++) {
+        for (int i = 0; i < dim; i++) {
             result += (point.location[i] - this.location[i]) * (point.location[i] - this.location[i]);
         }
         return Math.sqrt(result);
-    }
-
-    public int getDimension() {
-        return dimension;
-    }
-
-    public void setDimension(int dimension) {
-        this.dimension = dimension;
     }
 
     public float getX() {

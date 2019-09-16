@@ -64,7 +64,7 @@ public abstract class IRtree {
     public abstract NonLeafNode buildRtreeAfterTuning(String path, int dim, int level);
 
     public Visualizer visualize(int width, int height) {
-        Mbr view = new Mbr(1, 1, 1, 1);
+        Mbr view = new Mbr(0, 0, 1, 1);
         return new Visualizer(this, width, height, view);
     }
 

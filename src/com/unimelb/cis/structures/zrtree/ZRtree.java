@@ -63,7 +63,7 @@ public class ZRtree extends IRtree {
             points.add(point);
         }
 
-        int dimension = points.get(0).getDimension();
+        int dimension = points.get(0).getDim();
         for (int i = 0; i < dimension; i++) {
             sortDimensiont(points, i);
         }
@@ -107,6 +107,7 @@ public class ZRtree extends IRtree {
         }
 
         root = (NonLeafNode) childrenNodes.get(0);
+        root.setLevel(currentLevel);
         this.setLevel(currentLevel);
         this.setDim(dimension);
         return true;
@@ -241,11 +242,11 @@ public class ZRtree extends IRtree {
     public static void main(String[] args) {
         ZRtree zRtree = new ZRtree(100);
 
-        zRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_10000_1_3_.csv");
+        zRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_10000_1_2_.csv");
 
-        zRtree.output("/Users/guanli/Documents/datasets/RLRtree/trees/Z_uniform_10000_1_3_.csv");
+//        zRtree.output("/Users/guanli/Documents/datasets/RLRtree/trees/Z_uniform_10000_1_2_.csv");
 
-        zRtree.buildRtreeAfterTuning("/Users/guanli/Documents/datasets/RLRtree/trees/Z_uniform_10000_1_3_.csv", zRtree.getDim(), zRtree.getLevel());
+//        zRtree.buildRtreeAfterTuning("/Users/guanli/Documents/datasets/RLRtree/trees/Z_uniform_10000_1_3_.csv", zRtree.getDim(), zRtree.getLevel());
 //        zRtree.getRoot();
 
 //        System.out.println(zRtree.windowQuery(Mbr.getMbrs(0.01f, 10, 3).get(0)));

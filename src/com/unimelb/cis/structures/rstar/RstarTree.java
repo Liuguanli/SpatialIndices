@@ -40,7 +40,7 @@ public class RstarTree extends IRtree {
             Point point = new Point(line);
             points.add(point);
         }
-        int dimension = points.get(0).getDimension();
+        int dimension = points.get(0).getDim();
         this.setDim(dimension);
         for (int i = 0; i < points.size(); i++) {
             System.out.println("insert index: " + i);
@@ -106,8 +106,8 @@ public class RstarTree extends IRtree {
 
     private LeafNode chooseSubTree(Node tempRoot, Point point) {
         if (tempRoot == null) {
-            root = new NonLeafNode(pagesize, point.getDimension());
-            LeafNode temp = new LeafNode(pagesize, point.getDimension());
+            root = new NonLeafNode(pagesize, point.getDim());
+            LeafNode temp = new LeafNode(pagesize, point.getDim());
             temp.setParent(root);
             root.add(temp);
             tempRoot = temp;

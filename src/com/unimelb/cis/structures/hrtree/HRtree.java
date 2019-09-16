@@ -70,7 +70,7 @@ public class HRtree extends IRtree {
             points.add(point);
         }
 
-        int dimension = points.get(0).getDimension();
+        int dimension = points.get(0).getDim();
         for (int i = 0; i < dimension; i++) {
             sortDimensiont(points, i);
         }

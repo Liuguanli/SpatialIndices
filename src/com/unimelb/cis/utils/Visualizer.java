@@ -59,7 +59,7 @@ public class Visualizer {
         if (node instanceof LeafNode) {
             final LeafNode leaf = (LeafNode) node;
             for (int i = 0; i < leaf.getChildren().size(); i++) {
-                list.add(new RectangleDepth(leaf.getMbr(), depth + 2));
+                list.add(new RectangleDepth(leaf.getChildren().get(i).getMbr(), depth + 2));
             }
         } else {
             final NonLeafNode n = (NonLeafNode) node;
