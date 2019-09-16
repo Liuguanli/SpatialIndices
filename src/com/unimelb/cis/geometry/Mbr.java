@@ -50,6 +50,15 @@ public class Mbr {
 //        location[5] = z2;
 //    }
 
+    public Mbr(Point point) {
+        dim = point.getDim();
+        location = new float[dim * 2];
+        for (int i = 0; i < dim; i++) {
+            location[i] = point.getLocation()[i];
+            location[i + dim] = point.getLocation()[i];
+        }
+    }
+
     public Mbr(int dim) {
         location = new float[dim * 2];
         this.dim = dim;
@@ -568,6 +577,14 @@ public class Mbr {
         float[] copiedLocation = new float[this.location.length];
         System.arraycopy(location, 0, copiedLocation, 0, this.location.length);
         return new Mbr(copiedLocation);
+    }
+
+    public float getCenterByAxis(int axis) {
+        return (location[axis] + location[axis + dim]) / 2;
+    }
+
+    public float getProjectionByAxis(int axis) {
+        return location[axis + dim] + location[axis];
     }
 
     //    public static List<Mbr> getMbrs(float[] sides, int dim) {

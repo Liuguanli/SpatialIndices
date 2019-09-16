@@ -53,8 +53,6 @@ public abstract class IRtree {
         this.level = level;
     }
 
-    public abstract String getDataFile();
-
     public abstract boolean buildRtree(String path);
 
     public abstract ExpReturn windowQuery(Mbr window);

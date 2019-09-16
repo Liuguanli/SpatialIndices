@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.function.Consumer;
 
 import static com.unimelb.cis.CSVFileReader.read;
 
@@ -44,11 +43,6 @@ public class ZRtree extends IRtree {
         for (int i = 0; i < points.size(); i++) {
             points.get(i).getLocationOrder()[dimension] = (i + 1);
         }
-    }
-
-    @Override
-    public String getDataFile() {
-        return dataFile;
     }
 
     @Override

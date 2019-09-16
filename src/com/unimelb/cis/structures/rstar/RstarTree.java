@@ -9,24 +9,18 @@ import com.unimelb.cis.structures.IRtree;
 import com.unimelb.cis.utils.ExpReturn;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 import static com.unimelb.cis.CSVFileReader.read;
 
 public class RstarTree extends IRtree {
 
-
-    public RstarTree() {
-    }
+    private int m;
 
     public RstarTree(int pagesize) {
         super(pagesize);
-    }
-
-    @Override
-    public String getDataFile() {
-        return null;
+        // TODO from paper m=40%M
+        m = (int) (pagesize * 0.4);
     }
 
     @Override
@@ -65,34 +59,59 @@ public class RstarTree extends IRtree {
         return null;
     }
 
+//    private boolean splitAndInsert(LeafNode insertTarget, Point point) {
+//        // TODO check whether two nodes are right
+//        Node insertTargetSplit = insertTarget.splitBybisection();
+//        // TODO pick one leaf node to add.  I just put it into the target
+//        // no matter what, add the point first!!
+//        insertTarget.add(point);
+//        NonLeafNode parent = (NonLeafNode) insertTarget.getParent();
+//
+//        while (parent.isFull()) {
+//            if (parent == root) {
+//                NonLeafNode newRoot = new NonLeafNode(pagesize, root.getDim());
+//                newRoot.add(parent);
+//                root = newRoot;
+//            }
+//            NonLeafNode parentSplit = parent.splitBybisection();
+//            if (parent.contains(insertTarget)) {
+//                parent.addAfterSplit(insertTarget, insertTargetSplit);
+//            } else {
+//                parentSplit.addAfterSplit(insertTarget, insertTargetSplit);
+//            }
+//            parent = (NonLeafNode) parent.getParent();
+//            insertTargetSplit = parentSplit;
+//        }
+//        parent.addAfterSplit(insertTarget, insertTargetSplit);
+//        // TODO Updata MBR
+//
+//        return false;
+//    }
 
+    /**
+     * insertTargetSplit and insertTarget at the same level.
+     *
+     * @param insertTarget
+     * @param point
+     * @return
+     */
     private boolean splitAndInsert(LeafNode insertTarget, Point point) {
         // TODO check whether two nodes are right
-        Node insertTargetSplit = insertTarget.splitBybisection();
-        // TODO pick one leaf node to add.  I just put it into the target
+        Node insertTargetSplit = insertTarget.splitRStar(m, point);
         // no matter what, add the point first!!
-        insertTarget.add(point);
         NonLeafNode parent = (NonLeafNode) insertTarget.getParent();
-
         while (parent.isFull()) {
             if (parent == root) {
                 NonLeafNode newRoot = new NonLeafNode(pagesize, root.getDim());
                 newRoot.add(parent);
                 root = newRoot;
             }
-            NonLeafNode parentSplit = parent.splitBybisection();
-            if (parent.contains(insertTarget)) {
-                parent.addAfterSplit(insertTarget, insertTargetSplit);
-            } else {
-                parentSplit.addAfterSplit(insertTarget, insertTargetSplit);
-            }
+            NonLeafNode parentSplit = parent.splitRStar(m, insertTargetSplit);
             parent = (NonLeafNode) parent.getParent();
             insertTargetSplit = parentSplit;
         }
-        parent.addAfterSplit(insertTarget, insertTargetSplit);
-        // TODO Updata MBR
-
-        return false;
+        parent.add(insertTargetSplit);
+        return true;
     }
 
     public boolean insert(Point point) {
@@ -107,18 +126,21 @@ public class RstarTree extends IRtree {
     private LeafNode chooseSubTree(Node tempRoot, Point point) {
         if (tempRoot == null) {
             root = new NonLeafNode(pagesize, point.getDim());
+            root.setOMbr(point);
             LeafNode temp = new LeafNode(pagesize, point.getDim());
+            temp.setOMbr(point);
             temp.setParent(root);
             root.add(temp);
             tempRoot = temp;
         }
         if (tempRoot instanceof LeafNode) {
             return (LeafNode) tempRoot;
-        } else {
-            //
+        } else if (tempRoot instanceof NonLeafNode) {
             List<Node> children = ((NonLeafNode) tempRoot).getChildren();
-
             if (children.get(0) instanceof LeafNode) {
+                if (children.size() == 1) {
+                    return (LeafNode) children.get(0);
+                }
                 List<LeafNode> COV = new ArrayList<>();
                 for (int i = 0; i < children.size(); i++) {
                     LeafNode child = (LeafNode) children.get(i);
@@ -186,7 +208,7 @@ public class RstarTree extends IRtree {
                             CAND.sort((o1, o2) -> {
                                 if (o1.getDeltaOvlpVol(point) > o2.getDeltaOvlpVol(point)) {
                                     return 1;
-                                } else if(o1.getDeltaOvlpVol(point) < o2.getDeltaOvlpVol(point)) {
+                                } else if (o1.getDeltaOvlpVol(point) < o2.getDeltaOvlpVol(point)) {
                                     return -1;
                                 } else {
                                     return 0;
@@ -199,11 +221,11 @@ public class RstarTree extends IRtree {
 
                 }
 
-            } else {
+            } else if(children.get(0) instanceof NonLeafNode) {
                 children.sort((o1, o2) -> {
                     if (o1.getDeltaOvlpVol(point) > o2.getDeltaOvlpVol(point)) {
                         return 1;
-                    } else if(o1.getDeltaOvlpVol(point) < o2.getDeltaOvlpVol(point)) {
+                    } else if (o1.getDeltaOvlpVol(point) < o2.getDeltaOvlpVol(point)) {
                         return -1;
                     } else {
                         return 0;
@@ -213,6 +235,7 @@ public class RstarTree extends IRtree {
             }
 
         }
+        return null;
     }
 
     private LeafNode checkComp(int t, List<LeafNode> entries, List<LeafNode> CAND, String func) {
@@ -242,7 +265,6 @@ public class RstarTree extends IRtree {
         }
 
     }
-
 
     public static void main(String[] args) {
         RstarTree rstarTree = new RstarTree(100);

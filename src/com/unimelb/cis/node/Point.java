@@ -22,7 +22,6 @@ public class Point extends Node implements Comparable {
 
     private long zCurveValue;
 
-    private float[] location;
 
     private int[] locationOrder;
 
@@ -196,14 +195,6 @@ public class Point extends Node implements Comparable {
 
     public void setzCurveValue(long zCurveValue) {
         this.zCurveValue = zCurveValue;
-    }
-
-    public float[] getLocation() {
-        return location;
-    }
-
-    public void setLocation(float[] location) {
-        this.location = location;
     }
 
     @Override

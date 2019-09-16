@@ -2,9 +2,14 @@ package com.unimelb.cis.node;
 
 import com.unimelb.cis.geometry.Mbr;
 
+import static java.lang.Math.E;
+
 public abstract class Node implements Comparable {
 
     protected Mbr mbr;
+
+    // original Box->OBox , for the calculation of wf
+    protected Mbr oMbr;
 
     protected Node parent;
 
@@ -13,6 +18,20 @@ public abstract class Node implements Comparable {
     protected int orderInLevel;
 
     protected int dim;
+
+    protected float[] location;
+
+    public Mbr getoMbr() {
+        return oMbr;
+    }
+
+    public float[] getLocation() {
+        return location;
+    }
+
+    public void setLocation(float[] location) {
+        this.location = location;
+    }
 
     public int getDim() {
         return dim;
@@ -69,6 +88,12 @@ public abstract class Node implements Comparable {
         this.dim = dim;
     }
 
+    public void setOMbr(Point point) {
+        if (oMbr == null) {
+            oMbr = new Mbr(point);
+        }
+    }
+
     protected double dist;
 
     public double calDist(Point point) {
@@ -103,6 +128,18 @@ public abstract class Node implements Comparable {
         } else {
             return this.getMbr().getOverlapVol(node.getMbr());
         }
+    }
+
+    // wf   leafNode is this.
+    protected double weightFunction(int m, int i, double s, int axis) {
+        double y1 = Math.pow(E, -1 / (Math.pow(s, 2)));
+        double ys = 1 / (1 - y1);
+        double asym = 2 * (1 - this.getoMbr().getCenterByAxis(axis) / this.getMbr().getCenterByAxis(axis));
+        double miu = (1 - 2 * m / (pageSize + 1)) * asym;
+        double theta = s * (1 - Math.abs(miu));
+        double xi = 2 * i / (pageSize + 1) - 1;
+        double result = ys * (Math.pow(E, (-Math.pow((xi - miu) / theta, 2))) - y1);
+        return result;
     }
 
     @Override

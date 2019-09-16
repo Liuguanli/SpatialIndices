@@ -54,11 +54,6 @@ public class HRtree extends IRtree {
     }
 
     @Override
-    public String getDataFile() {
-        return dataFile;
-    }
-
-    @Override
     public boolean buildRtree(String path) {
         this.dataFile = path;
         List<String> lines = read(path);
