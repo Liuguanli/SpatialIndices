@@ -6,22 +6,9 @@ import java.util.Arrays;
 
 public class Point extends Node implements Comparable {
 
-    private float x;
-
-    private float y;
-
-    private float z;
-
     private int index;
 
-    private int xIndex;
-
-    private int yIndex;
-
-    private int zIndex;
-
     private long zCurveValue;
-
 
     private int[] locationOrder;
 
@@ -58,8 +45,7 @@ public class Point extends Node implements Comparable {
     }
 
     public Point(float x, float y) {
-        this.x = x;
-        this.y = y;
+        dim = 2;
         this.location = new float[dim];
         location[0] = x;
         location[1] = y;
@@ -68,9 +54,8 @@ public class Point extends Node implements Comparable {
     }
 
     public Point(float x, float y, int index) {
-        this.x = x;
-        this.y = y;
         this.index = index;
+        dim = 2;
         this.location = new float[dim];
         location[0] = x;
         location[1] = y;
@@ -79,9 +64,6 @@ public class Point extends Node implements Comparable {
     }
 
     public Point(float x, float y, float z) {
-        this.x = x;
-        this.y = y;
-        this.z = z;
         this.dim = 3;
         this.location = new float[dim];
         location[0] = x;
@@ -92,9 +74,6 @@ public class Point extends Node implements Comparable {
     }
 
     public Point(float x, float y, float z, int index) {
-        this.x = x;
-        this.y = y;
-        this.z = z;
         this.index = index;
         this.dim = 3;
         this.location = new float[dim];
@@ -134,27 +113,16 @@ public class Point extends Node implements Comparable {
     }
 
     public float getX() {
-        return x;
+        return location[0];
     }
 
-    public void setX(float x) {
-        this.x = x;
-    }
 
     public float getY() {
-        return y;
-    }
-
-    public void setY(float y) {
-        this.y = y;
+        return location[1];
     }
 
     public float getZ() {
-        return z;
-    }
-
-    public void setZ(float z) {
-        this.z = z;
+        return location[2];
     }
 
     public int getIndex() {
@@ -166,27 +134,27 @@ public class Point extends Node implements Comparable {
     }
 
     public int getxIndex() {
-        return xIndex;
+        return locationOrder[0];
     }
 
     public void setxIndex(int xIndex) {
-        this.xIndex = xIndex;
+        locationOrder[0] = xIndex;
     }
 
     public int getyIndex() {
-        return yIndex;
+        return locationOrder[1];
     }
 
     public void setyIndex(int yIndex) {
-        this.yIndex = yIndex;
+        locationOrder[1] = yIndex;
     }
 
     public int getzIndex() {
-        return zIndex;
+        return locationOrder[2];
     }
 
     public void setzIndex(int zIndex) {
-        this.zIndex = zIndex;
+        locationOrder[2] = zIndex;
     }
 
     public long getzCurveValue() {
@@ -219,6 +187,12 @@ public class Point extends Node implements Comparable {
                 '}';
     }
 
+    public Point clone() {
+        float[] copiedLocation = new float[this.location.length];
+        System.arraycopy(location, 0, copiedLocation, 0, this.location.length);
+        return new Point(copiedLocation);
+    }
+
     public String getOutPutString(Node root) {
         StringBuilder builder = new StringBuilder();
 
@@ -229,7 +203,7 @@ public class Point extends Node implements Comparable {
                 builder.append(",").append(location[i]);
             }
         }
-        
+
         Node temp = this.getParent();
         while (temp != root) {
             builder.append(",").append(temp.getOrderInLevel());
