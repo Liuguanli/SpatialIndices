@@ -163,15 +163,19 @@ public class NonLeafNode extends Node {
             minI = minOverlap == 0 ? minPerimI : minOvlpI;
             //  For revisited R*tree minI is not the final result. w = wg * wf;  minI is the wg
             double wf = weightFunction(m, i, 0.5, minAxis);
-            double wg = minI;
-            double w = minOverlap == 0 ? wf * wg : wg / wf;
-            if (w < minW) {
-                minWI = i;
+            if (wf < 0) {
+                // use the original R*tree method.
+                minWI = minI;
+            } else {
+                double wg = minI;
+                double w = minOverlap == 0 ? wf * wg : wg / wf;
+                if (w < minW) {
+                    minWI = i;
+                }
             }
-            // TODO is minW < 0 we have to consider this.
         }
         minI = minWI;
-
+        System.out.println("NonLeafNode minI:" + minI);
         // right part
         result = new NonLeafNode(pageSize, dim);
         result.addAll(new ArrayList(children.subList(minI, pageSize)));

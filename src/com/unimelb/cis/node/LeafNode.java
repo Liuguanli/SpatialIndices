@@ -234,15 +234,21 @@ public class LeafNode extends Node {
             minI = minOverlap == 0 ? minPerimI : minOvlpI;
             //  For revisited R*tree minI is not the final result. w = wg * wf;  minI is the wg
             double wf = weightFunction(m, i, 0.5, minAxis);
-            double wg = minI;
-            double w = minOverlap == 0 ? wf * wg : wg / wf;
-            if (w < minW) {
-                minWI = i;
+            if (wf < 0) {
+                // use the original R*tree method.
+                minWI = minI;
+            } else {
+                double wg = minI;
+                double w = minOverlap == 0 ? wf * wg : wg / wf;
+                if (w < minW) {
+                    minW = w;
+                    minWI = i;
+                }
             }
-            // TODO is minW < 0 we have to consider this.
         }
         minI = minWI;
-
+        // TODO why the result always this -> minI:60 points.size():101 m:40 ???
+        System.out.println("LeafNode minI:" + minI + " points.size():" + points.size() + " m:" + m);
         // right part
         result = new LeafNode(pageSize, dim);
         result.addAll(new ArrayList<>(points.subList(minI, pageSize)));

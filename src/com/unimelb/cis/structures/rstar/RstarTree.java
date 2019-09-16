@@ -37,7 +37,7 @@ public class RstarTree extends IRtree {
         int dimension = points.get(0).getDim();
         this.setDim(dimension);
         for (int i = 0; i < points.size(); i++) {
-            System.out.println("insert index: " + i);
+//            System.out.println("insert index: " + i);
             insert(points.get(i));
         }
 
@@ -132,6 +132,8 @@ public class RstarTree extends IRtree {
             temp.setParent(root);
             root.add(temp);
             tempRoot = temp;
+            root.setLevel(2);
+            temp.setLevel(1);
         }
         if (tempRoot instanceof LeafNode) {
             return (LeafNode) tempRoot;
@@ -269,9 +271,11 @@ public class RstarTree extends IRtree {
     public static void main(String[] args) {
         RstarTree rstarTree = new RstarTree(100);
 
-        rstarTree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_10000_1_3_.csv");
+        rstarTree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_10000_1_2_.csv");
 
         System.out.println(rstarTree.root);
+
+        rstarTree.visualize(600,600).save("test.png");
 
 //        rstarTree.output("/Users/guanli/Documents/datasets/RLRtree/trees/Z_uniform_10000_1_3_.csv");
 //
