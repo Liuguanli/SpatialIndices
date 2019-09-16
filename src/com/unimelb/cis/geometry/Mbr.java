@@ -11,12 +11,12 @@ public class Mbr {
 
     static Map<Integer, Map<Float, List<Mbr>>> mbrCache = new HashMap<>();
 
-    private float x1;
-    private float x2;
-    private float y1;
-    private float y2;
-    private float z1;
-    private float z2;
+//    private float x1;
+//    private float x2;
+//    private float y1;
+//    private float y2;
+//    private float z1;
+//    private float z2;
 
     private int dim;
 
@@ -62,34 +62,34 @@ public class Mbr {
     public Mbr(int dim) {
         location = new float[dim * 2];
         this.dim = dim;
-        if (dim == 2) {
-            x1 = Float.MAX_VALUE;
-            x2 = Float.MIN_VALUE;
-            y1 = Float.MAX_VALUE;
-            y2 = Float.MIN_VALUE;
-            location[0] = x1;
-            location[1] = y1;
-            location[2] = x2;
-            location[3] = y2;
-        } else if (dim == 3) {
-            this.x1 = Float.MAX_VALUE;
-            this.x2 = Float.MIN_VALUE;
-            this.y1 = Float.MAX_VALUE;
-            this.y2 = Float.MIN_VALUE;
-            this.z1 = Float.MAX_VALUE;
-            this.z2 = Float.MIN_VALUE;
-            location[0] = x1;
-            location[1] = y1;
-            location[2] = z1;
-            location[3] = x2;
-            location[4] = y2;
-            location[5] = z2;
-        } else {
-            for (int i = 0; i < location.length; i++) {
-                location[i] = Float.MAX_VALUE;
-                location[i + dim] = Float.MIN_VALUE;
-            }
+//        if (dim == 2) {
+//            x1 = Float.MAX_VALUE;
+//            x2 = Float.MIN_VALUE;
+//            y1 = Float.MAX_VALUE;
+//            y2 = Float.MIN_VALUE;
+//            location[0] = x1;
+//            location[1] = y1;
+//            location[2] = x2;
+//            location[3] = y2;
+//        } else if (dim == 3) {
+//            this.x1 = Float.MAX_VALUE;
+//            this.x2 = Float.MIN_VALUE;
+//            this.y1 = Float.MAX_VALUE;
+//            this.y2 = Float.MIN_VALUE;
+//            this.z1 = Float.MAX_VALUE;
+//            this.z2 = Float.MIN_VALUE;
+//            location[0] = x1;
+//            location[1] = y1;
+//            location[2] = z1;
+//            location[3] = x2;
+//            location[4] = y2;
+//            location[5] = z2;
+//        } else {
+        for (int i = 0; i < dim; i++) {
+            location[i] = Float.MAX_VALUE;
+            location[i + dim] = Float.MIN_VALUE;
         }
+//        }
     }
 
 //    public Mbr(float x1, float x2, float y1, float y2) {
@@ -106,18 +106,18 @@ public class Mbr {
 
     public Mbr(float... location) {
         if (location.length == 4) {
-            this.x1 = location[0];
-            this.y1 = location[1];
-            this.x2 = location[2];
-            this.y2 = location[3];
+//            this.x1 = location[0];
+//            this.y1 = location[1];
+//            this.x2 = location[2];
+//            this.y2 = location[3];
             this.location = location;
         } else if (location.length == 6) {
-            this.x1 = location[0];
-            this.y1 = location[1];
-            this.z1 = location[2];
-            this.x2 = location[3];
-            this.y2 = location[4];
-            this.z2 = location[5];
+//            this.x1 = location[0];
+//            this.y1 = location[1];
+//            this.z1 = location[2];
+//            this.x2 = location[3];
+//            this.y2 = location[4];
+//            this.z2 = location[5];
             this.location = location;
         } else {
             this.location = location;
@@ -147,40 +147,23 @@ public class Mbr {
         return location[0];
     }
 
-    public void setX1(float x1) {
-        this.x1 = x1;
-    }
-
     public float getX2() {
         return location[dim];
-    }
-
-    public void setX2(float x2) {
-        this.x2 = x2;
     }
 
     public float getY1() {
         return location[1];
     }
 
-    public void setY1(float y1) {
-        this.y1 = y1;
-    }
-
     public float getY2() {
         return location[1 + dim];
     }
 
-    public void setY2(float y2) {
-        this.y2 = y2;
-    }
-
     public int hashCode() {
         int result = 1;
-        result = 31 * result + Float.floatToIntBits(this.x1);
-        result = 31 * result + Float.floatToIntBits(this.x2);
-        result = 31 * result + Float.floatToIntBits(this.y1);
-        result = 31 * result + Float.floatToIntBits(this.y2);
+        for (int i = 0; i < location.length; i++) {
+            result = 31 * result + Float.floatToIntBits(location[i]);
+        }
         return result;
     }
 
@@ -202,13 +185,6 @@ public class Mbr {
         // perimeter is not the real result because there must be a parameter n to multiple perimeter.
         // While n is not that important.
         return perimeter;
-    }
-
-    public void merge(float x, float y) {
-        x1 = x < x1 ? x : x1;
-        y1 = y < y1 ? y : y1;
-        x2 = x > x2 ? x : x2;
-        y2 = y > y2 ? y : y2;
     }
 
     public void getAllVertexs(Mbr mbr, int index, int dim, float[] locations, List<Point> points) {
@@ -295,12 +271,12 @@ public class Mbr {
         return true;
     }
 
-    public boolean contains(Mbr mbr) {
-        if (x1 < mbr.x1 && x2 > mbr.x2 && y1 < mbr.x1 && y2 > mbr.y2) {
-            return true;
-        }
-        return false;
-    }
+//    public boolean contains(Mbr mbr) {
+//        if (x1 < mbr.x1 && x2 > mbr.x2 && y1 < mbr.x1 && y2 > mbr.y2) {
+//            return true;
+//        }
+//        return false;
+//    }
 
 
     @Override
@@ -308,10 +284,12 @@ public class Mbr {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Mbr mbr = (Mbr) o;
-        return Float.compare(mbr.x1, x1) == 0 &&
-                Float.compare(mbr.x2, x2) == 0 &&
-                Float.compare(mbr.y1, y1) == 0 &&
-                Float.compare(mbr.y2, y2) == 0;
+        for (int i = 0; i < location.length; i++) {
+            if (this.location[i] != mbr.location[i]) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public double calMINMAXDIST(Point point) {
@@ -445,29 +423,25 @@ public class Mbr {
         return (this.getX2() + mbr.getX2() - this.getX1() - mbr.getX1()) * (this.getY2() + mbr.getY2() - this.getY1() - mbr.getY1());
     }
 
-    public double claDist(Point point) {
-        if (interact(point))
-            return 0;
-        float a1 = point.getX();
-        float a2 = point.getX();
-        float b1 = point.getY();
-        float b2 = point.getY();
-        boolean xyMostLeft = x1 < a1;
-        float mostLeftX1 = xyMostLeft ? x1 : a1;
-        float mostRightX1 = xyMostLeft ? a1 : x1;
-        float mostLeftX2 = xyMostLeft ? x2 : a2;
-        double xDifference = (double) Math.max(0.0F, mostLeftX1 == mostRightX1 ? 0.0F : mostRightX1 - mostLeftX2);
-        boolean xyMostDown = y1 < b1;
-        float mostDownY1 = xyMostDown ? y1 : b1;
-        float mostUpY1 = xyMostDown ? b1 : y1;
-        float mostDownY2 = xyMostDown ? y2 : b2;
-        double yDifference = (double) Math.max(0.0F, mostDownY1 == mostUpY1 ? 0.0F : mostUpY1 - mostDownY2);
-        return Math.sqrt(xDifference * xDifference + yDifference * yDifference);
-    }
-
-    public String printFormat() {
-        return x1 + "," + x2 + "," + y1 + "," + y2;
-    }
+//    public double claDist(Point point) {
+//        if (interact(point))
+//            return 0;
+//        float a1 = point.getX();
+//        float a2 = point.getX();
+//        float b1 = point.getY();
+//        float b2 = point.getY();
+//        boolean xyMostLeft = x1 < a1;
+//        float mostLeftX1 = xyMostLeft ? x1 : a1;
+//        float mostRightX1 = xyMostLeft ? a1 : x1;
+//        float mostLeftX2 = xyMostLeft ? x2 : a2;
+//        double xDifference = (double) Math.max(0.0F, mostLeftX1 == mostRightX1 ? 0.0F : mostRightX1 - mostLeftX2);
+//        boolean xyMostDown = y1 < b1;
+//        float mostDownY1 = xyMostDown ? y1 : b1;
+//        float mostUpY1 = xyMostDown ? b1 : y1;
+//        float mostDownY2 = xyMostDown ? y2 : b2;
+//        double yDifference = (double) Math.max(0.0F, mostDownY1 == mostUpY1 ? 0.0F : mostUpY1 - mostDownY2);
+//        return Math.sqrt(xDifference * xDifference + yDifference * yDifference);
+//    }
 
     public static Mbr genMbr(String s, String separator) {
         String[] xys = s.split(separator);

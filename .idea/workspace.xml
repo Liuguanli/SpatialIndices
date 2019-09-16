@@ -7,12 +7,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ba9c8980-c90e-48aa-8dfb-ac39a52585ec" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/geometry/Mbr.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/geometry/Mbr.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/node/Point.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/node/Point.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/structures/zrtree/ZRtree.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/structures/zrtree/ZRtree.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/node/Point.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/node/Point.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/geometry/Mbr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/geometry/Mbr.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/structures/zrtree/ZRtree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/structures/zrtree/ZRtree.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.png" beforeDir="false" afterPath="$PROJECT_DIR$/test.png" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -67,7 +65,7 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/node/Point.java">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="187">
@@ -83,11 +81,11 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="false">
+          <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/zrtree/ZRtree.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="11">
-                  <caret line="213" column="25" lean-forward="true" selection-start-line="213" selection-start-column="25" selection-end-line="213" selection-end-column="25" />
+                <state relative-caret-position="154">
+                  <caret line="238" column="89" selection-start-line="238" selection-start-column="89" selection-end-line="238" selection-end-column="89" />
                 </state>
               </provider>
             </entry>
@@ -109,22 +107,17 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/geometry/Mbr.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="245">
-                  <caret line="575" selection-start-line="575" selection-end-line="579" selection-end-column="5" />
+                <state relative-caret-position="441">
+                  <caret line="87" column="31" selection-start-line="87" selection-start-column="31" selection-end-line="87" selection-end-column="31" />
                   <folding>
-                    <element signature="e#3829#3830#0" expanded="true" />
-                    <element signature="e#3918#3919#0" expanded="true" />
-                    <element signature="e#3980#3981#0" expanded="true" />
-                    <element signature="e#4043#4044#0" expanded="true" />
-                    <element signature="e#4107#4108#0" expanded="true" />
-                    <element signature="e#4170#4171#0" expanded="true" />
-                    <element signature="e#4232#4233#0" expanded="true" />
-                    <element signature="e#4295#4296#0" expanded="true" />
-                    <element signature="e#4363#4364#0" expanded="true" />
-                    <element signature="e#4426#4427#0" expanded="true" />
-                    <element signature="e#14511#14512#0" expanded="true" />
-                    <element signature="e#18204#18205#0" expanded="true" />
-                    <element signature="e#18314#18315#0" expanded="true" />
+                    <element signature="e#3881#3882#0" expanded="true" />
+                    <element signature="e#3970#3971#0" expanded="true" />
+                    <element signature="e#4032#4033#0" expanded="true" />
+                    <element signature="e#4096#4097#0" expanded="true" />
+                    <element signature="e#4158#4159#0" expanded="true" />
+                    <element signature="e#4226#4227#0" expanded="true" />
+                    <element signature="e#17661#17662#0" expanded="true" />
+                    <element signature="e#17771#17772#0" expanded="true" />
                   </folding>
                 </state>
               </provider>
@@ -203,9 +196,9 @@
         <option value="$PROJECT_DIR$/src/com/unimelb/cis/node/NonLeafNode.java" />
         <option value="$PROJECT_DIR$/src/com/unimelb/cis/structures/rstar/RstarTree.java" />
         <option value="$PROJECT_DIR$/src/com/unimelb/cis/node/LeafNode.java" />
+        <option value="$PROJECT_DIR$/src/com/unimelb/cis/node/Point.java" />
         <option value="$PROJECT_DIR$/src/com/unimelb/cis/geometry/Mbr.java" />
         <option value="$PROJECT_DIR$/src/com/unimelb/cis/structures/zrtree/ZRtree.java" />
-        <option value="$PROJECT_DIR$/src/com/unimelb/cis/node/Point.java" />
       </list>
     </option>
   </component>
@@ -479,21 +472,22 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-1295" y="-1080" width="1920" height="1080" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Image Layers" order="0" />
       <window_info id="Designer" order="1" />
       <window_info id="Capture Tool" order="2" />
-      <window_info content_ui="combo" id="Project" order="3" weight="0.24973376" />
+      <window_info active="true" content_ui="combo" id="Project" order="3" visible="true" weight="0.24973376" />
       <window_info id="Structure" order="4" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="5" side_tool="true" />
       <window_info id="Learn" order="6" weight="0.32960597" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="0" visible="true" weight="0.20364742" />
+      <window_info anchor="bottom" id="Terminal" order="0" weight="0.5775076" />
       <window_info anchor="bottom" id="Event Log" order="1" side_tool="true" />
       <window_info anchor="bottom" id="Messages" order="2" weight="0.32928064" />
       <window_info anchor="bottom" id="Message" order="3" />
       <window_info anchor="bottom" id="Version Control" order="4" weight="0.32928064" />
       <window_info anchor="bottom" id="Find" order="5" weight="0.20567375" />
-      <window_info anchor="bottom" id="Run" order="6" weight="0.28267476" />
+      <window_info anchor="bottom" id="Run" order="6" visible="true" weight="0.28267476" />
       <window_info anchor="bottom" id="Debug" order="7" weight="0.18338399" />
       <window_info anchor="bottom" id="Cvs" order="8" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="9" weight="0.4" />
@@ -545,13 +539,13 @@
       <breakpoints>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/geometry/Mbr.java</url>
-          <line>590</line>
+          <line>564</line>
           <properties />
           <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/geometry/Mbr.java</url>
-          <line>592</line>
+          <line>566</line>
           <properties />
           <option name="timeStamp" value="6" />
         </line-breakpoint>
@@ -884,38 +878,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/geometry/Mbr.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="245">
-          <caret line="575" selection-start-line="575" selection-end-line="579" selection-end-column="5" />
-          <folding>
-            <element signature="e#3829#3830#0" expanded="true" />
-            <element signature="e#3918#3919#0" expanded="true" />
-            <element signature="e#3980#3981#0" expanded="true" />
-            <element signature="e#4043#4044#0" expanded="true" />
-            <element signature="e#4107#4108#0" expanded="true" />
-            <element signature="e#4170#4171#0" expanded="true" />
-            <element signature="e#4232#4233#0" expanded="true" />
-            <element signature="e#4295#4296#0" expanded="true" />
-            <element signature="e#4363#4364#0" expanded="true" />
-            <element signature="e#4426#4427#0" expanded="true" />
-            <element signature="e#14511#14512#0" expanded="true" />
-            <element signature="e#18204#18205#0" expanded="true" />
-            <element signature="e#18314#18315#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/zrtree/ZRtree.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="11">
-          <caret line="213" column="25" lean-forward="true" selection-start-line="213" selection-start-column="25" selection-end-line="213" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/node/Point.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
@@ -927,6 +889,40 @@
             <element signature="e#3707#3708#0" expanded="true" />
             <element signature="e#3741#3742#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/ZCurve.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/geometry/Mbr.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="441">
+          <caret line="87" column="31" selection-start-line="87" selection-start-column="31" selection-end-line="87" selection-end-column="31" />
+          <folding>
+            <element signature="e#3881#3882#0" expanded="true" />
+            <element signature="e#3970#3971#0" expanded="true" />
+            <element signature="e#4032#4033#0" expanded="true" />
+            <element signature="e#4096#4097#0" expanded="true" />
+            <element signature="e#4158#4159#0" expanded="true" />
+            <element signature="e#4226#4227#0" expanded="true" />
+            <element signature="e#17661#17662#0" expanded="true" />
+            <element signature="e#17771#17772#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/zrtree/ZRtree.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="238" column="89" selection-start-line="238" selection-start-column="89" selection-end-line="238" selection-end-column="89" />
         </state>
       </provider>
     </entry>
