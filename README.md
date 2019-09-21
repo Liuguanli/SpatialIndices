@@ -9,6 +9,13 @@
 - [ ] KD-tree
 - [ ] KDB-tree
 
+## TODO
+- [ ] Figures
+- [ ] Data Generators
+- [ ] Unit Test
+- [ ] Comments
+
+
 ## References
 
 ### Existing R*tree repos:
