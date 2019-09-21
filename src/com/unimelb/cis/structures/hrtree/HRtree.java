@@ -27,7 +27,7 @@ public class HRtree extends IRtree {
         super(pagesize);
     }
 
-    public NonLeafNode getRoot() {
+    public Node getRoot() {
         return root;
     }
 

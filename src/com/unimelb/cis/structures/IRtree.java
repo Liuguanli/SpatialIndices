@@ -17,7 +17,7 @@ public abstract class IRtree {
         this.pagesize = pagesize;
     }
 
-    protected NonLeafNode root;
+    protected Node root;
 
     protected List<Node> leafNodes;
 
@@ -25,7 +25,7 @@ public abstract class IRtree {
 
     protected int pagesize;
 
-    public NonLeafNode getRoot() {
+    public Node getRoot() {
         return root;
     }
 

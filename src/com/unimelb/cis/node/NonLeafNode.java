@@ -25,6 +25,18 @@ public class NonLeafNode extends Node {
         children = new ArrayList<>();
     }
 
+    @Override
+    public void adjust() {
+        updateMbr();
+    }
+
+    private void updateMbr() {
+        mbr = new Mbr(dim);
+        for (int i = 0; i < children.size(); i++) {
+            updateMbr(children.get(i), dim);
+        }
+    }
+
     public List<Node> getChildren() {
         return children;
     }
@@ -65,6 +77,7 @@ public class NonLeafNode extends Node {
         List<Node> temp = new ArrayList<>(children.subList(0, splitPosition));
         children.clear();
         this.addAll(temp);
+        nonLeafNode.setLevel(this.getLevel());
         return nonLeafNode;
     }
 
@@ -106,7 +119,7 @@ public class NonLeafNode extends Node {
             float tempPerimeter = 0;
             for (int i = m; i < nodes.size() - m; i++) {
                 List<Node> left = nodes.subList(0, i);
-                List<Node> right = nodes.subList(i, pageSize);
+                List<Node> right = nodes.subList(i, nodes.size());
 
                 NonLeafNode leafNode = new NonLeafNode(pageSize, dim);
                 leafNode.addAll(new ArrayList<>(left));
@@ -131,11 +144,11 @@ public class NonLeafNode extends Node {
         int minPerimI = -1;
         nodes.sort(getComparator(minAxis));
         int minWI = 0;
-        int minI;
+        int minI = 0;
         double minW = Double.MAX_VALUE;
         for (int i = m; i < nodes.size() - m; i++) {
             List<Node> left = nodes.subList(0, i);
-            List<Node> right = nodes.subList(i, pageSize);
+            List<Node> right = nodes.subList(i, nodes.size());
 
             NonLeafNode leafNode = new NonLeafNode(pageSize, dim);
             leafNode.addAll(new ArrayList<>(left));
@@ -162,30 +175,31 @@ public class NonLeafNode extends Node {
             // if only use the original R*tree, only the following line is enough
             minI = minOverlap == 0 ? minPerimI : minOvlpI;
             //  For revisited R*tree minI is not the final result. w = wg * wf;  minI is the wg
-            double wf = weightFunction(m, i, 0.5, minAxis);
-            if (wf < 0) {
-                // use the original R*tree method.
-                minWI = minI;
-            } else {
-                double wg = minI;
-                double w = minOverlap == 0 ? wf * wg : wg / wf;
-                if (w < minW) {
-                    minWI = i;
-                }
-            }
+//            double wf = weightFunction(m, i, 0.5, minAxis);
+//            if (wf < 0) {
+//                // use the original R*tree method.
+//                minWI = minI;
+//            } else {
+//                double wg = minI;
+//                double w = minOverlap == 0 ? wf * wg : wg / wf;
+//                if (w < minW) {
+//                    minWI = i;
+//                }
+//            }
         }
-        minI = minWI;
+//        minI = minWI;
         System.out.println("NonLeafNode minI:" + minI);
         // right part
         result = new NonLeafNode(pageSize, dim);
-        result.addAll(new ArrayList(children.subList(minI, pageSize)));
+        result.addAll(new ArrayList(nodes.subList(minI, nodes.size())));
         result.setParent(this.parent);
-        result.setLevel(this.getLevel());
+        result.setLevel(result.getChildren().get(0).getLevel());
 
         // left part
-        List<Node> temp = new ArrayList<>(children.subList(0, minI));
+        List<Node> temp = new ArrayList<>(nodes.subList(0, minI));
         children.clear();
         this.addAll(temp);
+        this.adjust();
         return result;
     }
 

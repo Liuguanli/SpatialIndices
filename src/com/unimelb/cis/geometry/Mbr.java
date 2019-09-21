@@ -561,6 +561,14 @@ public class Mbr {
         return location[axis + dim] + location[axis];
     }
 
+    public double getDistToCenter(Point point) {
+        float result = 0;
+        for (int i = 0; i < dim; i++) {
+            result += Math.pow(((location[i] + location[i + dim]) / 2 - point.getLocation()[i]), 2);
+        }
+        return Math.sqrt(result);
+    }
+
     //    public static List<Mbr> getMbrs(float[] sides, int dim) {
 //        List<Mbr> mbrs = new ArrayList<>(sides.length);
 //        if (dim == 2) {

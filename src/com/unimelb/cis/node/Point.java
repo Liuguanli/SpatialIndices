@@ -112,6 +112,15 @@ public class Point extends Node implements Comparable {
         return Math.sqrt(result);
     }
 
+    @Override
+    public void adjust() {
+        Node parent = this.getParent();
+        while (parent != null) {
+            parent.adjust();
+            parent = parent.getParent();
+        }
+    }
+
     public float getX() {
         return location[0];
     }

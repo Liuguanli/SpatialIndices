@@ -61,11 +61,14 @@ public class Visualizer {
             for (int i = 0; i < leaf.getChildren().size(); i++) {
                 list.add(new RectangleDepth(leaf.getChildren().get(i).getMbr(), depth + 2));
             }
-        } else {
+            System.out.println("LeafNode");
+        } else if (node instanceof NonLeafNode){
             final NonLeafNode n = (NonLeafNode) node;
             for (int i = 0; i < n.getChildren().size(); i++) {
+
                 list.addAll(getRectangleDepths(n.getChildren().get(i), depth + 1));
             }
+            System.out.println("NonLeafNode");
         }
         return list;
     }

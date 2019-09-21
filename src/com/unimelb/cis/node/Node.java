@@ -2,6 +2,10 @@ package com.unimelb.cis.node;
 
 import com.unimelb.cis.geometry.Mbr;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Consumer;
+
 import static java.lang.Math.E;
 
 public abstract class Node implements Comparable {
@@ -96,6 +100,12 @@ public abstract class Node implements Comparable {
 
     protected double dist;
 
+    public float getVolume(Point point) {
+        Mbr mbr = this.getMbr().clone();
+        mbr.updateMbr(point, dim);
+        return mbr.volume();
+    }
+
     public double calDist(Point point) {
         if (this instanceof Point) {
             return ((Point) this).calDist(point);
@@ -104,16 +114,36 @@ public abstract class Node implements Comparable {
         }
     }
 
+    public float getDeltaOvlpPerim(Point point, List<LeafNode> leafNodes) {
+        Mbr mbr = this.getMbr().clone();
+        mbr.updateMbr(point, dim);
+        float result = 0;
+        for (int i = 0; i < leafNodes.size(); i++) {
+            LeafNode leafNode = leafNodes.get(i);
+            if (this == leafNode) {
+                continue;
+            }
+            result += mbr.getOverlapPerim(leafNode.getMbr());
+        }
+        return result;
+    }
+
     public float getDeltaOvlpPerim(Point point) {
+        if (getMbr().contains(point)) {
+            return 0;
+        }
         Mbr mbr = this.getMbr().clone();
         mbr.updateMbr(point, dim);
         return mbr.perimeter() - this.getMbr().perimeter();
     }
 
     public float getDeltaOvlpVol(Point point) {
+        if (getMbr().contains(point)) {
+            return 0;
+        }
         Mbr mbr = this.getMbr().clone();
         mbr.updateMbr(point, dim);
-        return mbr.perimeter() - this.getMbr().perimeter();
+        return mbr.volume() - this.getMbr().volume();
     }
 
     public float getDeltaOvlp(Node node) {
@@ -142,6 +172,8 @@ public abstract class Node implements Comparable {
         return result;
     }
 
+    public abstract void adjust();
+
     @Override
     public int compareTo(Object o) {
         Node node = (Node) o;
@@ -154,5 +186,12 @@ public abstract class Node implements Comparable {
             return -1;
         }
         return 0;
+    }
+
+    @Override
+    public String toString() {
+        return "Node{" +
+                "location=" + Arrays.toString(location) +
+                '}';
     }
 }

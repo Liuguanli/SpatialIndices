@@ -247,7 +247,7 @@ public class ZRtree extends IRtree {
 //        System.out.println(zRtree.windowQuery(Mbr.getMbrs(0.01f, 9, 3).get(0)));
 //        System.out.println(zRtree.windowQuery(Mbr.getMbrs(0.01f, 11, 3).get(0)));
 
-        zRtree.visualize(600,600).save("test.png");
+        zRtree.visualize(600,600).save("ztree.png");
 
 //        Mbr mbr = new Mbr(1,2,3,4);
 

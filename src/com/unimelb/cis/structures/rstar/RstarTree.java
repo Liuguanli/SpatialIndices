@@ -8,19 +8,20 @@ import com.unimelb.cis.node.Point;
 import com.unimelb.cis.structures.IRtree;
 import com.unimelb.cis.utils.ExpReturn;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static com.unimelb.cis.CSVFileReader.read;
 
 public class RstarTree extends IRtree {
 
     private int m;
+    private int p;
 
     public RstarTree(int pagesize) {
         super(pagesize);
-        // TODO from paper m=40%M
+        // TODO from paper m=40%M  from paper p=30%M
         m = (int) (pagesize * 0.4);
+        p = (int) (pagesize * 0.3);
     }
 
     @Override
@@ -32,6 +33,7 @@ public class RstarTree extends IRtree {
         for (int i = 0; i < lines.size(); i++) {
             String line = lines.get(i);
             Point point = new Point(line);
+            point.setzCurveValue(i);
             points.add(point);
         }
         int dimension = points.get(0).getDim();
@@ -39,6 +41,9 @@ public class RstarTree extends IRtree {
         for (int i = 0; i < points.size(); i++) {
 //            System.out.println("insert index: " + i);
             insert(points.get(i));
+//            if (i == 60) {
+//                return true;
+//            }
         }
 
         return true;
@@ -97,43 +102,81 @@ public class RstarTree extends IRtree {
      */
     private boolean splitAndInsert(LeafNode insertTarget, Point point) {
         // TODO check whether two nodes are right
+        System.out.println("splitAndInsert");
+        System.out.println(insertTarget.getMbr());
         Node insertTargetSplit = insertTarget.splitRStar(m, point);
+        System.out.println(insertTarget.getMbr() + " " + insertTargetSplit.getMbr());
         // no matter what, add the point first!!
         NonLeafNode parent = (NonLeafNode) insertTarget.getParent();
-        while (parent.isFull()) {
-            if (parent == root) {
-                NonLeafNode newRoot = new NonLeafNode(pagesize, root.getDim());
-                newRoot.add(parent);
-                root = newRoot;
+        if (parent == null) {
+            // insertTarget is the root.
+            NonLeafNode newRoot = new NonLeafNode(pagesize, root.getDim());
+            newRoot.setLevel(insertTarget.getLevel() + 1);
+            newRoot.add(insertTarget);
+            newRoot.add(insertTargetSplit);
+            root = newRoot;
+        } else {
+            while (parent.isFull()) {
+                if (parent == root) {
+                    NonLeafNode newRoot = new NonLeafNode(pagesize, root.getDim());
+                    newRoot.setLevel(parent.getLevel() + 1);
+                    newRoot.add(parent);
+                    root = newRoot;
+                    level++;
+                }
+                NonLeafNode parentSplit = parent.splitRStar(m, insertTargetSplit);
+                parent = (NonLeafNode) parent.getParent();
+                insertTargetSplit = parentSplit;
             }
-            NonLeafNode parentSplit = parent.splitRStar(m, insertTargetSplit);
-            parent = (NonLeafNode) parent.getParent();
-            insertTargetSplit = parentSplit;
+            parent.add(insertTargetSplit);
         }
-        parent.add(insertTargetSplit);
         return true;
     }
 
     public boolean insert(Point point) {
         LeafNode insertTarget = chooseSubTree(root, point);
         if (insertTarget.add(point)) {
+            point.adjust();
             return true;
         } else {
+            return overflowtreatment(insertTarget, point);
+        }
+    }
+
+    private Set<Integer> overflowtreatmentSet = new HashSet<>();
+
+    private boolean overflowtreatment(LeafNode insertTarget, Point point) {
+        // level I use level, because when level changed, overflowtreatmentSet does not contain level.
+        // I do not have to adjust the value of level.
+        if (overflowtreatmentSet.contains(level)) {
             return splitAndInsert(insertTarget, point);
+        } else {
+            System.out.println("overflowtreatment");
+            overflowtreatmentSet.add(level);
+            point.adjust();
+            List<Point> reInsertPoints = new ArrayList<>(insertTarget.reInsert(p, point));
+            for (int i = 0; i < reInsertPoints.size(); i++) {
+                insert(new Point(reInsertPoints.get(i).getIndex(), reInsertPoints.get(i).getLocation()));
+            }
+            return true;
         }
     }
 
     private LeafNode chooseSubTree(Node tempRoot, Point point) {
         if (tempRoot == null) {
-            root = new NonLeafNode(pagesize, point.getDim());
+//            root = new NonLeafNode(pagesize, point.getDim());
+//            root.setOMbr(point);
+//            LeafNode temp = new LeafNode(pagesize, point.getDim());
+//            temp.setOMbr(point);
+//            temp.setParent(root);
+//            root.add(temp);
+//            root.setLevel(temp.getLevel() + 1);
+//            tempRoot = temp;
+
+            root = new LeafNode(pagesize, point.getDim());
             root.setOMbr(point);
-            LeafNode temp = new LeafNode(pagesize, point.getDim());
-            temp.setOMbr(point);
-            temp.setParent(root);
-            root.add(temp);
-            tempRoot = temp;
-            root.setLevel(2);
-            temp.setLevel(1);
+            root.setParent(null);
+            tempRoot = root;
         }
         if (tempRoot instanceof LeafNode) {
             return (LeafNode) tempRoot;
@@ -151,22 +194,29 @@ public class RstarTree extends IRtree {
                     }
                 }
                 if (COV.size() > 0) {
-                    COV.sort((o1, o2) -> {
-                        if (o1.getMbr().volume() > o2.getMbr().volume()) {
+                    Iterator<LeafNode> iterator = COV.stream().filter(o -> o.getMbr().volume() == 0).sorted((o1, o2) -> {
+                        if (o1.getMbr().perimeter() > o2.getMbr().perimeter()) {
                             return 1;
-                        } else if (o1.getMbr().volume() < o2.getMbr().volume()) {
+                        } else if (o1.getMbr().perimeter() < o2.getMbr().perimeter()) {
                             return -1;
                         } else {
-                            if (o1.getMbr().perimeter() > o2.getMbr().perimeter()) {
+                            return 0;
+                        }
+                    }).iterator();
+                    if (iterator.hasNext()) {
+                        return iterator.next();
+                    } else {
+                        COV.sort((o1, o2) -> {
+                            if (o1.getMbr().volume() > o2.getMbr().volume()) {
                                 return 1;
-                            } else if (o1.getMbr().perimeter() < o2.getMbr().perimeter()) {
+                            } else if (o1.getMbr().volume() < o2.getMbr().volume()) {
                                 return -1;
                             } else {
                                 return 0;
                             }
-                        }
-                    });
-                    return COV.get(0);
+                        });
+                        return COV.get(0);
+                    }
                 } else {
                     // sort entries in ascending order of their deltaPerim.
                     // TODO entries are inserted！！！
@@ -183,17 +233,18 @@ public class RstarTree extends IRtree {
                         }
                     });
                     LeafNode first = entries.get(0);
+                    if (first.getDeltaOvlpPerim(point, entries) == 0) {
+                        return first;
+                    }
+//                    List<LeafNode> finalEntries = entries;
+//
                     List<LeafNode> CAND = new ArrayList<>();
                     CAND.add(first);
-                    float maxDeltaOvlp = Float.MIN_VALUE;
                     int p = 0;
                     for (int i = 1; i < entries.size(); i++) {
                         float deltaOvlp = first.getDeltaOvlp(entries.get(i));
                         if (deltaOvlp != 0) {
                             CAND.clear();
-                        }
-                        if (maxDeltaOvlp < deltaOvlp) {
-                            maxDeltaOvlp = deltaOvlp;
                             p = i;
                         }
                     }
@@ -202,35 +253,59 @@ public class RstarTree extends IRtree {
                     } else {
                         // consider only the first p entries in the remaining steps
                         entries = entries.subList(0, p);
-                        LeafNode result = checkComp(0, entries, CAND, "vol");
+                        Iterator<LeafNode> iterator = entries.stream().filter(o -> o.getVolume(point) == 0).iterator();
+                        float[] deltaOvlp = new float[p];
+                        LeafNode result;
+                        if (iterator.hasNext()) {
+                            result = checkComp(0, entries, CAND, "perim", deltaOvlp);
+                        } else {
+                            result = checkComp(0, entries, CAND, "vol", deltaOvlp);
+                        }
                         if (result != null) {
                             return result;
                         } else {
                             // return armin{Delta ovlp[i]i belongs to CAND}
-                            CAND.sort((o1, o2) -> {
-                                if (o1.getDeltaOvlpVol(point) > o2.getDeltaOvlpVol(point)) {
-                                    return 1;
-                                } else if (o1.getDeltaOvlpVol(point) < o2.getDeltaOvlpVol(point)) {
-                                    return -1;
-                                } else {
-                                    return 0;
+                            float minDeltaOvlp = Float.MAX_VALUE;
+                            int minDeltaOvlpI = 0;
+                            for (int i = 0; i < deltaOvlp.length; i++) {
+                                if (CAND.contains(entries.get(i))) {
+                                    if (deltaOvlp[i] < minDeltaOvlp) {
+                                        minDeltaOvlp = deltaOvlp[i];
+                                        minDeltaOvlpI = i;
+                                    }
                                 }
-                            });
-                            return CAND.get(0);
-                        }
+                            }
 
+//                            CAND.sort((o1, o2) -> {
+//                                if (o1.getDeltaOvlpVol(point) > o2.getDeltaOvlpVol(point)) {
+//                                    return 1;
+//                                } else if (o1.getDeltaOvlpVol(point) < o2.getDeltaOvlpVol(point)) {
+//                                    return -1;
+//                                } else {
+//                                    return 0;
+//                                }
+//                            });
+                            return entries.get(minDeltaOvlpI);
+                        }
                     }
 
                 }
 
-            } else if(children.get(0) instanceof NonLeafNode) {
+            } else if (children.get(0) instanceof NonLeafNode) {
                 children.sort((o1, o2) -> {
                     if (o1.getDeltaOvlpVol(point) > o2.getDeltaOvlpVol(point)) {
                         return 1;
                     } else if (o1.getDeltaOvlpVol(point) < o2.getDeltaOvlpVol(point)) {
                         return -1;
                     } else {
-                        return 0;
+                        // Resolve ties by choosing the entry with the rectangle
+                        if (o1.getMbr().volume() > o2.getMbr().volume()) {
+                            return 1;
+                        } else if (o1.getMbr().volume() < o2.getMbr().volume()) {
+                            return -1;
+                        } else {
+                            return 0;
+                        }
                     }
                 });
                 return chooseSubTree(children.get(0), point);
@@ -240,32 +315,24 @@ public class RstarTree extends IRtree {
         return null;
     }
 
-    private LeafNode checkComp(int t, List<LeafNode> entries, List<LeafNode> CAND, String func) {
-        LeafNode temp = entries.get(t);
-        CAND.add(temp);
-
-        float deltaOvlp = 0;
+    private LeafNode checkComp(int t, List<LeafNode> entries, List<LeafNode> CAND, String func, float[] deltaOvlp) {
+        CAND.add(entries.get(t));
+        deltaOvlp[t] = 0;
         for (int j = 0; j < entries.size(); j++) {
             if (j == t) {
                 continue;
             }
-            deltaOvlp += temp.getDeltaOvlp(entries.get(j), func);
-            if (deltaOvlp != 0 && !CAND.contains(entries.get(j))) {
-                return checkComp(j, entries, CAND, func);
+            float deltaOvlpJ = entries.get(t).getDeltaOvlp(entries.get(j), func);
+            deltaOvlp[t] += deltaOvlpJ;
+            if (deltaOvlpJ != 0 && !CAND.contains(entries.get(j))) {
+                return checkComp(j, entries, CAND, func, deltaOvlp);
             }
         }
-        if (deltaOvlp == 0) {
-            return temp;
+        if (deltaOvlp[t] == 0) {
+            return entries.get(t);
         } else {
-            LeafNode minOvlp = CAND.get(0);
-            for (int i = 1; i < CAND.size(); i++) {
-                if (minOvlp.getDeltaOvlp(temp, func) > CAND.get(i).getDeltaOvlp(temp, func)) {
-                    minOvlp = CAND.get(i);
-                }
-            }
-            return minOvlp;
+            return null;
         }
-
     }
 
     public static void main(String[] args) {
@@ -275,7 +342,7 @@ public class RstarTree extends IRtree {
 
         System.out.println(rstarTree.root);
 
-        rstarTree.visualize(600,600).save("test.png");
+        rstarTree.visualize(600, 600).save("rstar.png");
 
 //        rstarTree.output("/Users/guanli/Documents/datasets/RLRtree/trees/Z_uniform_10000_1_3_.csv");
 //

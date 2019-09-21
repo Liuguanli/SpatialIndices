@@ -14,11 +14,18 @@ public class LeafNode extends Node {
 
     public LeafNode() {
         children = new ArrayList<>();
+        this.level = 1;
     }
 
     public LeafNode(int pageSize, int dim) {
         super(pageSize, dim);
         children = new ArrayList<>();
+        this.level = 1;
+    }
+
+    @Override
+    public void adjust() {
+        updateMbr();
     }
 
     public boolean addForChooseSub(Point point) {
@@ -38,6 +45,7 @@ public class LeafNode extends Node {
         if (oMbr == null) {
             oMbr = mbr.clone();
         }
+        point.setParent(this);
         return true;
     }
 
@@ -135,6 +143,7 @@ public class LeafNode extends Node {
         children.clear();
         this.addAll(temp);
         this.updateMbr();
+        leafNode.setLevel(this.getLevel());
         return leafNode;
     }
 
@@ -146,14 +155,13 @@ public class LeafNode extends Node {
         return (o1, o2) -> {
             if (o1.getLocation()[index] > o2.getLocation()[index]) {
                 return 1;
-            } else if (o1.getLocation()[index] > o2.getLocation()[index]) {
+            } else if (o1.getLocation()[index] < o2.getLocation()[index]) {
                 return -1;
             } else {
                 return 0;
             }
         };
     }
-
 
     /**
      * original R*tree split
@@ -176,7 +184,7 @@ public class LeafNode extends Node {
             float tempPerimeter = 0;
             for (int i = m; i < points.size() - m; i++) {
                 List<Point> left = points.subList(0, i);
-                List<Point> right = points.subList(i, pageSize);
+                List<Point> right = points.subList(i, points.size());
 
                 LeafNode leafNode = new LeafNode(pageSize, dim);
                 leafNode.addAll(new ArrayList<>(left));
@@ -202,11 +210,11 @@ public class LeafNode extends Node {
         int minPerimI = -1;
         points.sort(getComparator(minAxis));
         int minWI = 0;
-        int minI;
+        int minI = 0;
         double minW = Double.MAX_VALUE;
         for (int i = m; i < points.size() - m; i++) {
             List<Point> left = points.subList(0, i);
-            List<Point> right = points.subList(i, pageSize);
+            List<Point> right = points.subList(i, points.size());
 
             LeafNode leafNode = new LeafNode(pageSize, dim);
             leafNode.addAll(new ArrayList<>(left));
@@ -233,25 +241,25 @@ public class LeafNode extends Node {
             // if only use the original R*tree, only the following line is enough
             minI = minOverlap == 0 ? minPerimI : minOvlpI;
             //  For revisited R*tree minI is not the final result. w = wg * wf;  minI is the wg
-            double wf = weightFunction(m, i, 0.5, minAxis);
-            if (wf < 0) {
-                // use the original R*tree method.
-                minWI = minI;
-            } else {
-                double wg = minI;
-                double w = minOverlap == 0 ? wf * wg : wg / wf;
-                if (w < minW) {
-                    minW = w;
-                    minWI = i;
-                }
-            }
+//            double wf = weightFunction(m, i, 0.5, minAxis);
+//            if (wf < 0) {
+//                // use the original R*tree method.
+//                minWI = minI;
+//            } else {
+//                double wg = minI;
+//                double w = minOverlap == 0 ? wf * wg : wg / wf;
+//                if (w < minW) {
+//                    minW = w;
+//                    minWI = i;
+//                }
+//            }
         }
-        minI = minWI;
+//        minI = minWI;
         // TODO why the result always this -> minI:60 points.size():101 m:40 ???
         System.out.println("LeafNode minI:" + minI + " points.size():" + points.size() + " m:" + m);
         // right part
         result = new LeafNode(pageSize, dim);
-        result.addAll(new ArrayList<>(points.subList(minI, pageSize)));
+        result.addAll(new ArrayList<>(points.subList(minI, points.size())));
         result.setParent(this.parent);
         result.setLevel(this.getLevel());
 
@@ -260,7 +268,41 @@ public class LeafNode extends Node {
         children.clear();
         this.addAll(temp);
         this.updateMbr();
+        result.setLevel(this.getLevel());
+
+        if (result.getChildren().contains(insertedPoint)) {
+            insertedPoint.setParent(result);
+        } else {
+            insertedPoint.setParent(this);
+        }
+
         return result;
+    }
+
+    public List<Point> reInsert(int p, Point insertedPoint) {
+        List<Point> points = new ArrayList<>(children);
+        points.add(insertedPoint);
+        // descending order
+        points.sort((o1, o2) -> {
+            double d1 = getMbr().getDistToCenter(o1);
+            double d2 = getMbr().getDistToCenter(o1);
+            if (d1 > d2) {
+                return -1;
+            } else if (d1 < d2) {
+                return 1;
+            } else {
+                return 0;
+            }
+        });
+        List<Point> removed = points.subList(0, p);
+        children.clear();
+        children = points.subList(p, points.size());
+        this.updateMbr();
+
+        if (children.contains(insertedPoint)) {
+            insertedPoint.setParent(this);
+        }
+        return removed;
     }
 
     @Override
