@@ -56,11 +56,8 @@ public class LeafNode extends Node {
         children.addAll(points);
         for (Point point : points) {
             updateMbr(point, dim);
-//            updateMbr(point);
         }
-        if (oMbr == null) {
-            oMbr = mbr.clone();
-        }
+        setOMbr(mbr.clone(), true);
         return true;
     }
 
@@ -70,9 +67,6 @@ public class LeafNode extends Node {
         result.parent = this.parent;
         for (int i = 0; i < children.size(); i++) {
             result.add(children.get(i));
-        }
-        if (oMbr == null) {
-            oMbr = mbr.clone();
         }
         return result;
     }
@@ -241,20 +235,20 @@ public class LeafNode extends Node {
             // if only use the original R*tree, only the following line is enough
             minI = minOverlap == 0 ? minPerimI : minOvlpI;
             //  For revisited R*tree minI is not the final result. w = wg * wf;  minI is the wg
-//            double wf = weightFunction(m, i, 0.5, minAxis);
-//            if (wf < 0) {
-//                // use the original R*tree method.
-//                minWI = minI;
-//            } else {
-//                double wg = minI;
-//                double w = minOverlap == 0 ? wf * wg : wg / wf;
-//                if (w < minW) {
-//                    minW = w;
-//                    minWI = i;
-//                }
-//            }
+            double wf = weightFunction(m, i, 0.5, minAxis);
+            if (wf < 0) {
+                // use the original R*tree method.
+                minWI = minI;
+            } else {
+                double wg = minI;
+                double w = minOverlap == 0 ? wf * wg : wg / wf;
+                if (w < minW) {
+                    minW = w;
+                    minWI = i;
+                }
+            }
         }
-//        minI = minWI;
+        minI = minWI;
         // TODO why the result always this -> minI:60 points.size():101 m:40 ???
         System.out.println("LeafNode minI:" + minI + " points.size():" + points.size() + " m:" + m);
         // right part
@@ -268,6 +262,7 @@ public class LeafNode extends Node {
         children.clear();
         this.addAll(temp);
         this.updateMbr();
+        this.updateOMbr();
         result.setLevel(this.getLevel());
 
         if (result.getChildren().contains(insertedPoint)) {
@@ -298,11 +293,21 @@ public class LeafNode extends Node {
         children.clear();
         children = points.subList(p, points.size());
         this.updateMbr();
+        this.updateOMbr();
 
         if (children.contains(insertedPoint)) {
             insertedPoint.setParent(this);
         }
         return removed;
+    }
+
+    public Mbr genNewMbr() {
+        Mbr temp = new Mbr(2);
+        for (int i = 0; i < children.size(); i++) {
+            Point point = children.get(i);
+            temp.updateMbr(point, dim);
+        }
+        return temp;
     }
 
     @Override

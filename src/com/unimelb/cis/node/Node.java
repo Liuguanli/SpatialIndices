@@ -92,10 +92,28 @@ public abstract class Node implements Comparable {
         this.dim = dim;
     }
 
+    public void setOMbr(Mbr mbr, boolean force) {
+        if (force) {
+            oMbr = mbr;
+        } else {
+            if (oMbr == null) {
+                oMbr = mbr;
+            }
+        }
+    }
+
+    public void setOMbr(Mbr mbr) {
+        setOMbr(mbr, false);
+    }
+
     public void setOMbr(Point point) {
         if (oMbr == null) {
             oMbr = new Mbr(point);
         }
+    }
+
+    public void updateOMbr() {
+        oMbr = mbr.clone();
     }
 
     protected double dist;
@@ -108,7 +126,7 @@ public abstract class Node implements Comparable {
 
     public double calDist(Point point) {
         if (this instanceof Point) {
-            return ((Point) this).calDist(point);
+            return this.calDist(point);
         } else {
             return mbr.calMINDIST(point);
         }
@@ -153,7 +171,7 @@ public abstract class Node implements Comparable {
     public float getDeltaOvlp(Node node, String func) {
         if (func.equals("vol")) {
             return this.getMbr().getOverlapVol(node.getMbr());
-        } else if (func.equals("perim")){
+        } else if (func.equals("perim")) {
             return this.getMbr().getOverlapPerim(node.getMbr());
         } else {
             return this.getMbr().getOverlapVol(node.getMbr());
@@ -169,6 +187,7 @@ public abstract class Node implements Comparable {
         double theta = s * (1 - Math.abs(miu));
         double xi = 2 * i / (pageSize + 1) - 1;
         double result = ys * (Math.pow(E, (-Math.pow((xi - miu) / theta, 2))) - y1);
+        System.out.println("weightFunction asym:" + asym);
         return result;
     }
 

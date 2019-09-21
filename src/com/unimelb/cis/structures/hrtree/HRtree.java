@@ -36,16 +36,13 @@ public class HRtree extends IRtree {
     }
 
     public void sortDimensiont(List<Point> points, int dimension) {
-        Collections.sort(points, new Comparator<Point>() {
-            @Override
-            public int compare(Point p1, Point p2) {
-                if (p1.getLocation()[dimension] > p2.getLocation()[dimension]) {
-                    return 1;
-                } else if (p1.getLocation()[dimension] < p2.getLocation()[dimension]) {
-                    return -1;
-                } else {
-                    return 0;
-                }
+        Collections.sort(points, (p1, p2) -> {
+            if (p1.getLocation()[dimension] > p2.getLocation()[dimension]) {
+                return 1;
+            } else if (p1.getLocation()[dimension] < p2.getLocation()[dimension]) {
+                return -1;
+            } else {
+                return 0;
             }
         });
         for (int i = 0; i < points.size(); i++) {
@@ -108,7 +105,7 @@ public class HRtree extends IRtree {
             nonLeafNodes.clear();
         }
 
-        root = (NonLeafNode) childrenNodes.get(0);
+        root = childrenNodes.get(0);
         this.setLevel(currentLevel);
         this.setDim(dimension);
         return true;
@@ -156,7 +153,6 @@ public class HRtree extends IRtree {
         this.setDim(dim);
         this.setLevel(level);
         List<String> lines = read(path);
-//        List<Point> points = new ArrayList<>(lines.size());
         int[] levelIndex = new int[level];
         Node[] nodes = new Node[level];
         NonLeafNode root = new NonLeafNode(pagesize, dim);
@@ -165,9 +161,6 @@ public class HRtree extends IRtree {
             nodes[i] = new NonLeafNode(pagesize, dim);
         }
 
-//        for (int i = 0; i < level - 1; i++) {
-//            ((NonLeafNode) nodes[i + 1]).add(nodes[i]);
-//        }
         root.add(nodes[level - 1]);
         for (int i = 0; i < lines.size(); i++) {
             String line = lines.get(i);
@@ -215,7 +208,6 @@ public class HRtree extends IRtree {
                     }
                 }
             }
-//            points.add(point);
         }
         root.add(nodes[level - 1]);
         this.root = root;

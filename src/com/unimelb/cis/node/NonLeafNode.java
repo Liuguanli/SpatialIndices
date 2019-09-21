@@ -35,6 +35,7 @@ public class NonLeafNode extends Node {
         for (int i = 0; i < children.size(); i++) {
             updateMbr(children.get(i), dim);
         }
+        setOMbr(mbr.clone());
     }
 
     public List<Node> getChildren() {
@@ -50,9 +51,7 @@ public class NonLeafNode extends Node {
         for (int i = 0; i < nodes.size(); i++) {
             add(nodes.get(i));
         }
-        if (oMbr == null) {
-            oMbr = mbr.clone();
-        }
+        setOMbr(mbr.clone(), true);
     }
 
     public boolean contains(Node child) {
@@ -175,20 +174,19 @@ public class NonLeafNode extends Node {
             // if only use the original R*tree, only the following line is enough
             minI = minOverlap == 0 ? minPerimI : minOvlpI;
             //  For revisited R*tree minI is not the final result. w = wg * wf;  minI is the wg
-//            double wf = weightFunction(m, i, 0.5, minAxis);
-//            if (wf < 0) {
-//                // use the original R*tree method.
-//                minWI = minI;
-//            } else {
-//                double wg = minI;
-//                double w = minOverlap == 0 ? wf * wg : wg / wf;
-//                if (w < minW) {
-//                    minWI = i;
-//                }
-//            }
+            double wf = weightFunction(m, i, 0.5, minAxis);
+            if (wf < 0) {
+                // use the original R*tree method.
+                minWI = minI;
+            } else {
+                double wg = minI;
+                double w = minOverlap == 0 ? wf * wg : wg / wf;
+                if (w < minW) {
+                    minWI = i;
+                }
+            }
         }
-//        minI = minWI;
-        System.out.println("NonLeafNode minI:" + minI);
+        minI = minWI;
         // right part
         result = new NonLeafNode(pageSize, dim);
         result.addAll(new ArrayList(nodes.subList(minI, nodes.size())));
@@ -207,34 +205,12 @@ public class NonLeafNode extends Node {
         node.parent = this;
         children.add(index, node);
         updateMbr(node, dim);
-        if (oMbr == null) {
-            oMbr = mbr.clone();
-        }
     }
 
     public void add(Node node) {
         node.parent = this;
         children.add(node);
         updateMbr(node, dim);
-//        updateMbr(node);
-        if (oMbr == null) {
-            oMbr = mbr.clone();
-        }
-    }
-
-    /**
-     * add the split node to their parents
-     *
-     * @param originalNode
-     * @param newNode
-     */
-    public void addAfterSplit(Node originalNode, Node newNode) {
-        int index = children.indexOf(originalNode);
-        index++;
-        add(index, newNode);
-        if (oMbr == null) {
-            oMbr = mbr.clone();
-        }
     }
 
     private void updateMbr(Node node, int dim) {

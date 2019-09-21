@@ -39,11 +39,7 @@ public class RstarTree extends IRtree {
         int dimension = points.get(0).getDim();
         this.setDim(dimension);
         for (int i = 0; i < points.size(); i++) {
-//            System.out.println("insert index: " + i);
             insert(points.get(i));
-//            if (i == 60) {
-//                return true;
-//            }
         }
 
         return true;
@@ -63,35 +59,6 @@ public class RstarTree extends IRtree {
     public NonLeafNode buildRtreeAfterTuning(String path, int dim, int level) {
         return null;
     }
-
-//    private boolean splitAndInsert(LeafNode insertTarget, Point point) {
-//        // TODO check whether two nodes are right
-//        Node insertTargetSplit = insertTarget.splitBybisection();
-//        // TODO pick one leaf node to add.  I just put it into the target
-//        // no matter what, add the point first!!
-//        insertTarget.add(point);
-//        NonLeafNode parent = (NonLeafNode) insertTarget.getParent();
-//
-//        while (parent.isFull()) {
-//            if (parent == root) {
-//                NonLeafNode newRoot = new NonLeafNode(pagesize, root.getDim());
-//                newRoot.add(parent);
-//                root = newRoot;
-//            }
-//            NonLeafNode parentSplit = parent.splitBybisection();
-//            if (parent.contains(insertTarget)) {
-//                parent.addAfterSplit(insertTarget, insertTargetSplit);
-//            } else {
-//                parentSplit.addAfterSplit(insertTarget, insertTargetSplit);
-//            }
-//            parent = (NonLeafNode) parent.getParent();
-//            insertTargetSplit = parentSplit;
-//        }
-//        parent.addAfterSplit(insertTarget, insertTargetSplit);
-//        // TODO Updata MBR
-//
-//        return false;
-//    }
 
     /**
      * insertTargetSplit and insertTarget at the same level.
@@ -156,7 +123,7 @@ public class RstarTree extends IRtree {
             point.adjust();
             List<Point> reInsertPoints = new ArrayList<>(insertTarget.reInsert(p, point));
             for (int i = 0; i < reInsertPoints.size(); i++) {
-                insert(new Point(reInsertPoints.get(i).getIndex(), reInsertPoints.get(i).getLocation()));
+                insert(reInsertPoints.get(i));
             }
             return true;
         }
@@ -164,15 +131,6 @@ public class RstarTree extends IRtree {
 
     private LeafNode chooseSubTree(Node tempRoot, Point point) {
         if (tempRoot == null) {
-//            root = new NonLeafNode(pagesize, point.getDim());
-//            root.setOMbr(point);
-//            LeafNode temp = new LeafNode(pagesize, point.getDim());
-//            temp.setOMbr(point);
-//            temp.setParent(root);
-//            root.add(temp);
-//            root.setLevel(temp.getLevel() + 1);
-//            tempRoot = temp;
-
             root = new LeafNode(pagesize, point.getDim());
             root.setOMbr(point);
             root.setParent(null);
@@ -236,8 +194,6 @@ public class RstarTree extends IRtree {
                     if (first.getDeltaOvlpPerim(point, entries) == 0) {
                         return first;
                     }
-//                    List<LeafNode> finalEntries = entries;
-//
                     List<LeafNode> CAND = new ArrayList<>();
                     CAND.add(first);
                     int p = 0;
@@ -335,14 +291,15 @@ public class RstarTree extends IRtree {
         }
     }
 
+
     public static void main(String[] args) {
         RstarTree rstarTree = new RstarTree(100);
 
-        rstarTree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_10000_1_2_.csv");
+        rstarTree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_160000_1_2_.csv");
 
         System.out.println(rstarTree.root);
 
-        rstarTree.visualize(600, 600).save("rstar.png");
+        rstarTree.visualize(1600, 1600).save("rstar.png");
 
 //        rstarTree.output("/Users/guanli/Documents/datasets/RLRtree/trees/Z_uniform_10000_1_3_.csv");
 //
