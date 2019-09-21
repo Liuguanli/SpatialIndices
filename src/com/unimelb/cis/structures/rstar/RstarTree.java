@@ -118,7 +118,6 @@ public class RstarTree extends IRtree {
         if (overflowtreatmentSet.contains(level)) {
             return splitAndInsert(insertTarget, point);
         } else {
-            System.out.println("overflowtreatment");
             overflowtreatmentSet.add(level);
             point.adjust();
             List<Point> reInsertPoints = new ArrayList<>(insertTarget.reInsert(p, point));

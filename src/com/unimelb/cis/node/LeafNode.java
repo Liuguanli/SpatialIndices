@@ -249,8 +249,7 @@ public class LeafNode extends Node {
             }
         }
         minI = minWI;
-        // TODO why the result always this -> minI:60 points.size():101 m:40 ???
-        System.out.println("LeafNode minI:" + minI + " points.size():" + points.size() + " m:" + m);
+//        System.out.println("LeafNode minI:" + minI + " points.size():" + points.size() + " m:" + m);
         // right part
         result = new LeafNode(pageSize, dim);
         result.addAll(new ArrayList<>(points.subList(minI, points.size())));

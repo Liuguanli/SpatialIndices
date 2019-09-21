@@ -187,7 +187,6 @@ public abstract class Node implements Comparable {
         double theta = s * (1 - Math.abs(miu));
         double xi = 2 * i / (pageSize + 1) - 1;
         double result = ys * (Math.pow(E, (-Math.pow((xi - miu) / theta, 2))) - y1);
-        System.out.println("weightFunction asym:" + asym);
         return result;
     }
 
