@@ -15,6 +15,10 @@
 - [ ] Unit Test
 - [ ] Comments
 
+## Figures
+|  num=1000   | num=10000  | num=160000  |
+|  ----  | ----  | ----  |
+| ![R*-tree](doc/figs/rstar_1000.png) | ![R*-tree](doc/figs/rstar_10000.png) | ![R*-tree](doc/figs/rstar_160000.png) |
 
 ## References
 
