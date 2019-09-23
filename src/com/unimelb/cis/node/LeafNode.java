@@ -164,10 +164,11 @@ public class LeafNode extends Node {
      * @param insertedPoint
      * @return
      */
-    public LeafNode splitRStar(int m, Point insertedPoint) {
+    public LeafNode splitRStar(int m, Point insertedPoint, boolean isRevisited) {
         int minAxis = Integer.MAX_VALUE;
         float minPerim = Float.MAX_VALUE;
-        float minOverlap = Float.MAX_VALUE;
+        float minOverlapVol = Float.MAX_VALUE;
+        float minOverlapPerim = Float.MAX_VALUE;
         LeafNode result;
         List<Point> points = new ArrayList<>(children);
         points.add(insertedPoint);
@@ -191,7 +192,6 @@ public class LeafNode extends Node {
                 rightNode.setLevel(this.getLevel());
 
                 tempPerimeter += leafNode.getMbr().perimeter() + rightNode.getMbr().perimeter();
-
             }
             if (tempPerimeter < minPerim) {
                 minPerim = tempPerimeter;
@@ -200,57 +200,100 @@ public class LeafNode extends Node {
         }
 
         minPerim = Float.MAX_VALUE;
-        int minOvlpI = -1;
+        int minOvlpPerimI = -1;
+        int minOvlpVolI = -1;
         int minPerimI = -1;
         points.sort(getComparator(minAxis));
-        int minWI = 0;
         int minI = 0;
         double minW = Double.MAX_VALUE;
+        boolean isSwitchToPerim = false;
+
+        List<Point> left = points.subList(0, m);
+        List<Point> right = points.subList(m, points.size());
+        LeafNode leftNode = new LeafNode(pageSize, dim);
+        leftNode.addAll(new ArrayList<>(left));
+        LeafNode rightNode = new LeafNode(pageSize, dim);
+        rightNode.addAll(new ArrayList<>(right));
+
+        if (isRevisited) {
+            if ((leftNode.getMbr().volume() == 0 || rightNode.getMbr().volume() == 0)) {
+                isSwitchToPerim = true;
+            }
+        }
+
+        LeafNode tempForPerimMax = new LeafNode(points.size(), dim);
+        tempForPerimMax.addAll(points);
+        float maxPerim = tempForPerimMax.getMbr().getPerimMax();
+
         for (int i = m; i < points.size() - m; i++) {
-            List<Point> left = points.subList(0, i);
-            List<Point> right = points.subList(i, points.size());
+            left = points.subList(0, i);
+            right = points.subList(i, points.size());
 
-            LeafNode leafNode = new LeafNode(pageSize, dim);
-            leafNode.addAll(new ArrayList<>(left));
-            leafNode.setParent(this.parent);
-            leafNode.setLevel(this.getLevel());
+            leftNode = new LeafNode(pageSize, dim);
+            leftNode.addAll(new ArrayList<>(left));
+            leftNode.setParent(this.parent);
+            leftNode.setLevel(this.getLevel());
 
-            LeafNode rightNode = new LeafNode(pageSize, dim);
+            rightNode = new LeafNode(pageSize, dim);
             rightNode.addAll(new ArrayList<>(right));
             rightNode.setParent(this.parent);
             rightNode.setLevel(this.getLevel());
 
-            float tempOverlap = leafNode.getMbr().getOverlapVol(rightNode.getMbr());
-            float tempPerim = leafNode.getMbr().perimeter() + rightNode.getMbr().perimeter();
-            if (tempOverlap < minOverlap || tempOverlap == 0) {
-                minOverlap = tempOverlap;
-                minOvlpI = i;
-                if (minOverlap == 0) {
-                    if (tempPerim < minPerim) {
-                        minPerim = tempPerim;
-                        minPerimI = i;
+            // from Revisited. Last line of section 4.1
+            float tempOverlapPerim = leftNode.getMbr().getOverlapPerim(rightNode.getMbr());
+            float tempOverlapVol = leftNode.getMbr().getOverlapVol(rightNode.getMbr());
+            float tempPerim = leftNode.getMbr().perimeter() + rightNode.getMbr().perimeter();
+
+            if (tempOverlapVol == 0) {
+                minOverlapVol = 0;
+                if (tempPerim < minPerim) {
+                    minPerim = tempPerim;
+                    minPerimI = i;
+                }
+            } else {
+                if (isSwitchToPerim) {
+                    if (tempOverlapPerim < minOverlapPerim) {
+                        minOverlapPerim = tempOverlapPerim;
+                        minOvlpPerimI = i;
+                    }
+                } else {
+                    if (tempOverlapVol < minOverlapVol) {
+                        minOverlapVol = tempOverlapVol;
+                        minOvlpVolI = i;
                     }
                 }
             }
-            // if only use the original R*tree, only the following line is enough
-            minI = minOverlap == 0 ? minPerimI : minOvlpI;
-            //  For revisited R*tree minI is not the final result. w = wg * wf;  minI is the wg
-            double wf = weightFunction(m, i, 0.5, minAxis);
-            if (wf < 0) {
-                // use the original R*tree method.
-                minWI = minI;
+            if (minOverlapVol == 0) {
+                minI = minPerimI;
             } else {
-                double wg = minI;
-                double w = minOverlap == 0 ? wf * wg : wg / wf;
-                if (w < minW) {
-                    minW = w;
-                    minWI = i;
-                }
+//                if (isSwitchToPerim) {
+//                    minI = minOvlpPerimI;
+//                } else {
+//                    minI = minOvlpVolI;
+//                }
+                minI = minOvlpVolI;
             }
+//            if (isRevisited) {
+//                double wf = weightFunction(m, i, 0.5, minAxis);
+//                if (wf < 0) {
+//                    // use the original R*tree method.
+//                } else {
+//                    double wg;
+//                    double w;
+//                    if (minOverlapVol == 0) {
+//                        wg = tempPerim - maxPerim;
+//                        w = wg * wf;
+//                    } else {
+//                        wg = minOverlapVol;
+//                        w = wg/wf;
+//                    }
+//                    if (w < minW) {
+//                        minI = i;
+//                    }
+//                }
+//            }
         }
-        minI = minWI;
-        // TODO why the result always this -> minI:60 points.size():101 m:40 ???
-        System.out.println("LeafNode minI:" + minI + " points.size():" + points.size() + " m:" + m);
+//        System.out.println("LeafNode minI:" + minI + " points.size():" + points.size() + " m:" + m);
         // right part
         result = new LeafNode(pageSize, dim);
         result.addAll(new ArrayList<>(points.subList(minI, points.size())));

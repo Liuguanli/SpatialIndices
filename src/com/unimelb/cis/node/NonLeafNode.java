@@ -104,10 +104,11 @@ public class NonLeafNode extends Node {
      * @param insertedNode
      * @return
      */
-    public NonLeafNode splitRStar(int m, Node insertedNode) {
+    public NonLeafNode splitRStar(int m, Node insertedNode, boolean isRevisited) {
         int minAxis = m;
         float minPerim = Float.MAX_VALUE;
-        float minOverlap = Float.MAX_VALUE;
+        float minOverlapPerim = Float.MAX_VALUE;
+        float minOverlapVol = Float.MAX_VALUE;
         NonLeafNode result;
         List<Node> nodes = new ArrayList<>(children);
         nodes.add(insertedNode);
@@ -120,17 +121,17 @@ public class NonLeafNode extends Node {
                 List<Node> left = nodes.subList(0, i);
                 List<Node> right = nodes.subList(i, nodes.size());
 
-                NonLeafNode leafNode = new NonLeafNode(pageSize, dim);
-                leafNode.addAll(new ArrayList<>(left));
-                leafNode.setParent(this.parent);
-                leafNode.setLevel(this.getLevel());
+                NonLeafNode leftNode = new NonLeafNode(pageSize, dim);
+                leftNode.addAll(new ArrayList<>(left));
+                leftNode.setParent(this.parent);
+                leftNode.setLevel(this.getLevel());
 
                 NonLeafNode rightNode = new NonLeafNode(pageSize, dim);
                 rightNode.addAll(new ArrayList<>(right));
                 rightNode.setParent(this.parent);
                 rightNode.setLevel(this.getLevel());
 
-                tempPerimeter += leafNode.getMbr().perimeter() + rightNode.getMbr().perimeter();
+                tempPerimeter += leftNode.getMbr().perimeter() + rightNode.getMbr().perimeter();
             }
             if (tempPerimeter < minPerim) {
                 minPerim = tempPerimeter;
@@ -139,54 +140,102 @@ public class NonLeafNode extends Node {
         }
 
         minPerim = Float.MAX_VALUE;
-        int minOvlpI = -1;
+        int minOvlpPerimI = -1;
+        int minOvlpVolI = -1;
         int minPerimI = -1;
         nodes.sort(getComparator(minAxis));
-        int minWI = 0;
         int minI = 0;
         double minW = Double.MAX_VALUE;
+        boolean isSwitchToPerim = false;
+
+        List<Node> left = nodes.subList(0, m);
+        List<Node> right = nodes.subList(m, nodes.size());
+        NonLeafNode leftNode = new NonLeafNode(pageSize, dim);
+        leftNode.addAll(new ArrayList<>(left));
+        NonLeafNode rightNode = new NonLeafNode(pageSize, dim);
+        rightNode.addAll(new ArrayList<>(right));
+
+        if (isRevisited) {
+            if ((leftNode.getMbr().volume() == 0 || rightNode.getMbr().volume() == 0)) {
+                isSwitchToPerim = true;
+            }
+        }
+
+        NonLeafNode tempForPerimMax = new NonLeafNode(nodes.size(), dim);
+        tempForPerimMax.addAll(nodes);
+        float maxPerim = tempForPerimMax.getMbr().getPerimMax();
+
         for (int i = m; i < nodes.size() - m; i++) {
-            List<Node> left = nodes.subList(0, i);
-            List<Node> right = nodes.subList(i, nodes.size());
+            left = nodes.subList(0, i);
+            right = nodes.subList(i, nodes.size());
 
-            NonLeafNode leafNode = new NonLeafNode(pageSize, dim);
-            leafNode.addAll(new ArrayList<>(left));
-            leafNode.setParent(this.parent);
-            leafNode.setLevel(this.getLevel());
+            leftNode = new NonLeafNode(pageSize, dim);
+            leftNode.addAll(new ArrayList<>(left));
+            leftNode.setParent(this.parent);
+            leftNode.setLevel(this.getLevel());
 
-            NonLeafNode rightNode = new NonLeafNode(pageSize, dim);
+            rightNode = new NonLeafNode(pageSize, dim);
             rightNode.addAll(new ArrayList<>(right));
             rightNode.setParent(this.parent);
             rightNode.setLevel(this.getLevel());
 
-            float tempOverlap = leafNode.getMbr().getOverlapVol(rightNode.getMbr());
-            float tempPerim = leafNode.getMbr().perimeter() + rightNode.getMbr().perimeter();
-            if (tempOverlap < minOverlap || tempOverlap == 0) {
-                minOverlap = tempOverlap;
-                minOvlpI = i;
-                if (minOverlap == 0) {
-                    if (tempPerim < minPerim) {
-                        minPerim = tempPerim;
-                        minPerimI = i;
+            // from Revisited. Last line of section 4.1
+            float tempOverlapPerim = leftNode.getMbr().getOverlapPerim(rightNode.getMbr());
+            float tempOverlapVol = leftNode.getMbr().getOverlapVol(rightNode.getMbr());
+            float tempPerim = leftNode.getMbr().perimeter() + rightNode.getMbr().perimeter();
+
+
+            if (tempOverlapVol == 0) {
+                minOverlapVol = 0;
+                if (tempPerim < minPerim) {
+                    minPerim = tempPerim;
+                    minPerimI = i;
+                }
+            } else {
+                if (isSwitchToPerim) {
+                    if (tempOverlapPerim < minOverlapPerim) {
+                        minOverlapPerim = tempOverlapPerim;
+                        minOvlpPerimI = i;
+                    }
+                } else {
+                    if (tempOverlapVol < minOverlapVol) {
+                        minOverlapVol = tempOverlapVol;
+                        minOvlpVolI = i;
                     }
                 }
             }
-            // if only use the original R*tree, only the following line is enough
-            minI = minOverlap == 0 ? minPerimI : minOvlpI;
-            //  For revisited R*tree minI is not the final result. w = wg * wf;  minI is the wg
-            double wf = weightFunction(m, i, 0.5, minAxis);
-            if (wf < 0) {
-                // use the original R*tree method.
-                minWI = minI;
+            if (minOverlapVol == 0) {
+                minI = minPerimI;
             } else {
-                double wg = minI;
-                double w = minOverlap == 0 ? wf * wg : wg / wf;
-                if (w < minW) {
-                    minWI = i;
-                }
+                // for isRevisited=false, isSwitchToPerim must be false. Thus, we only use isSwitchToPerim.
+                // Ref from the last six lines in the Paper before section 4.2
+//                if (isSwitchToPerim) {
+//                    minI = minOvlpPerimI;
+//                } else {
+//                    minI = minOvlpVolI;
+//                }
+                minI = minOvlpVolI;
             }
+//            if (isRevisited) {
+//                double wf = weightFunction(m, i, 0.5, minAxis);
+//                if (wf < 0) {
+//                    // use the original R*tree method.
+//                } else {
+//                    double wg;
+//                    double w;
+//                    if (minOverlapVol == 0) {
+//                        wg = tempPerim - maxPerim;
+//                        w = wg * wf;
+//                    } else {
+//                        wg = minOverlapVol;
+//                        w = wg/wf;
+//                    }
+//                    if (w < minW) {
+//                        minI = i;
+//                    }
+//                }
+//            }
         }
-        minI = minWI;
         // right part
         result = new NonLeafNode(pageSize, dim);
         result.addAll(new ArrayList(nodes.subList(minI, nodes.size())));

@@ -132,7 +132,7 @@ public abstract class Node implements Comparable {
         }
     }
 
-    public float getDeltaOvlpPerim(Point point, List<LeafNode> leafNodes) {
+    public float getDeltaPerim(Point point, List<LeafNode> leafNodes) {
         Mbr mbr = this.getMbr().clone();
         mbr.updateMbr(point, dim);
         float result = 0;
@@ -146,7 +146,7 @@ public abstract class Node implements Comparable {
         return result;
     }
 
-    public float getDeltaOvlpPerim(Point point) {
+    public float getDeltaPerim(Point point) {
         if (getMbr().contains(point)) {
             return 0;
         }
@@ -155,7 +155,7 @@ public abstract class Node implements Comparable {
         return mbr.perimeter() - this.getMbr().perimeter();
     }
 
-    public float getDeltaOvlpVol(Point point) {
+    public float getDeltaVol(Point point) {
         if (getMbr().contains(point)) {
             return 0;
         }
@@ -182,12 +182,13 @@ public abstract class Node implements Comparable {
     protected double weightFunction(int m, int i, double s, int axis) {
         double y1 = Math.pow(E, -1 / (Math.pow(s, 2)));
         double ys = 1 / (1 - y1);
-        double asym = 2 * (1 - this.getoMbr().getCenterByAxis(axis) / this.getMbr().getCenterByAxis(axis));
+        double asym = 2 * (this.getMbr().getCenterByAxis(axis) - this.getoMbr().getCenterByAxis(axis) / this.getMbr().getLambdaByAxis(axis));
+        asym = asym > 1 ? 1 : asym;
+        asym = asym < -1 ? -1 : asym;
         double miu = (1 - 2 * m / (pageSize + 1)) * asym;
         double theta = s * (1 - Math.abs(miu));
         double xi = 2 * i / (pageSize + 1) - 1;
         double result = ys * (Math.pow(E, (-Math.pow((xi - miu) / theta, 2))) - y1);
-        System.out.println("weightFunction asym:" + asym);
         return result;
     }
 
