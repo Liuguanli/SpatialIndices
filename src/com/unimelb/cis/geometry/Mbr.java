@@ -553,6 +553,25 @@ public class Mbr {
         return new Mbr(copiedLocation);
     }
 
+    public float getLambdaByAxis(int axis) {
+        return location[axis + dim] - location[axis];
+    }
+
+    public float getPerimMax() {
+        float lambdaMin = Float.MAX_VALUE;
+        float sum = 0;
+        for (int i = 0; i < dim; i++) {
+            float lambdaD = location[i + dim] - location[i];
+            if (lambdaD < lambdaMin) {
+                lambdaMin = lambdaD;
+            }
+            sum += lambdaD;
+        }
+        sum = sum * 2 - lambdaMin;
+        return sum;
+
+    }
+
     public float getCenterByAxis(int axis) {
         return (location[axis] + location[axis + dim]) / 2;
     }

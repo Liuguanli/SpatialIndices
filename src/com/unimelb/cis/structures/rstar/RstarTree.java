@@ -17,11 +17,22 @@ public class RstarTree extends IRtree {
     private int m;
     private int p;
 
+    private boolean isRevisited;
+
     public RstarTree(int pagesize) {
         super(pagesize);
         // TODO from paper m=40%M  from paper p=30%M
         m = (int) (pagesize * 0.4);
         p = (int) (pagesize * 0.3);
+        this.isRevisited = false;
+    }
+
+    public RstarTree(int pagesize, boolean isRevisited) {
+        super(pagesize);
+        // TODO from paper m=40%M  from paper p=30%M
+        m = (int) (pagesize * 0.4);
+        p = (int) (pagesize * 0.3);
+        this.isRevisited = isRevisited;
     }
 
     @Override
@@ -69,10 +80,9 @@ public class RstarTree extends IRtree {
      */
     private boolean splitAndInsert(LeafNode insertTarget, Point point) {
         // TODO check whether two nodes are right
-        System.out.println("splitAndInsert");
-        System.out.println(insertTarget.getMbr());
-        Node insertTargetSplit = insertTarget.splitRStar(m, point);
-        System.out.println(insertTarget.getMbr() + " " + insertTargetSplit.getMbr());
+//        System.out.println(insertTarget.getMbr());
+        Node insertTargetSplit = insertTarget.splitRStar(m, point, isRevisited);
+//        System.out.println(insertTarget.getMbr() + " " + insertTargetSplit.getMbr());
         // no matter what, add the point first!!
         NonLeafNode parent = (NonLeafNode) insertTarget.getParent();
         if (parent == null) {
@@ -91,7 +101,7 @@ public class RstarTree extends IRtree {
                     root = newRoot;
                     level++;
                 }
-                NonLeafNode parentSplit = parent.splitRStar(m, insertTargetSplit);
+                NonLeafNode parentSplit = parent.splitRStar(m, insertTargetSplit, isRevisited);
                 parent = (NonLeafNode) parent.getParent();
                 insertTargetSplit = parentSplit;
             }
@@ -128,7 +138,100 @@ public class RstarTree extends IRtree {
         }
     }
 
+    private LeafNode ChooseSubtreeOriginal(Node tempRoot, Point point) {
+        if (tempRoot == null) {
+            root = new LeafNode(pagesize, point.getDim());
+            root.setOMbr(point);
+            root.setParent(null);
+            tempRoot = root;
+        }
+        if (tempRoot instanceof LeafNode) {
+            return (LeafNode) tempRoot;
+        } else if (tempRoot instanceof NonLeafNode) {
+            List<Node> children = ((NonLeafNode) tempRoot).getChildren();
+            if (children.get(0) instanceof LeafNode) {
+                if (children.size() == 1) {
+                    return (LeafNode) children.get(0);
+                }
+                List<LeafNode> COV = new ArrayList<>();
+                for (int i = 0; i < children.size(); i++) {
+                    LeafNode child = (LeafNode) children.get(i);
+                    if (child.getMbr().contains(point)) {
+                        COV.add(child);
+                    }
+                }
+                if (COV.size() > 0) {
+                    COV.sort((o1, o2) -> {
+                        if (o1.getMbr().volume() > o2.getMbr().volume()) {
+                            return 1;
+                        } else if (o1.getMbr().volume() < o2.getMbr().volume()) {
+                            return -1;
+                        } else {
+                            return 0;
+                        }
+                    });
+                    return COV.get(0);
+                }
+                children.sort((o1, o2) -> {
+                    if (o1.getDeltaOvlp(point) > o2.getDeltaOvlp(point)) {
+                        return 1;
+                    } else if (o1.getDeltaOvlp(point) < o2.getDeltaOvlp(point)) {
+                        return -1;
+                    } else {
+                        if (o1.getDeltaVol(point) > o2.getDeltaVol(point)) {
+                            return 1;
+                        } else if (o1.getDeltaVol(point) < o2.getDeltaVol(point)) {
+                            return -1;
+                        } else {
+                            return 0;
+                        }
+                    }
+                });
+                return (LeafNode) children.get(0);
+//                float minDeltaOvlp = Float.MAX_VALUE;
+//                int minDeltaOvlpIndex = 0;
+//                for (int i = 0; i < children.size(); i++) {
+//                    float temp = 0;
+//                    for (int j = 0; j < children.size(); j++) {
+//                        if (i == j)
+//                            continue;
+//                        temp += children.get(i).getDeltaOvlp(children.get(j));
+//                    }
+//                    if (temp == 0) {
+//                        return (LeafNode) children.get(i);
+//                    }
+//                    if (temp < minDeltaOvlp) {
+//                        minDeltaOvlp = temp;
+//                        minDeltaOvlpIndex = i;
+//                    }
+//                }
+//                return (LeafNode) children.get(minDeltaOvlpIndex);
+            } else {
+                // the entries of N do not refer to leaves
+                children.sort((o1, o2) -> {
+                    if (o1.getDeltaVol(point) > o2.getDeltaVol(point)) {
+                        return 1;
+                    } else if (o1.getDeltaVol(point) < o2.getDeltaVol(point)) {
+                        return -1;
+                    } else {
+                        return 0;
+                    }
+                });
+                return ChooseSubtreeOriginal(children.get(0), point);
+            }
+        }
+        return null;
+    }
+
     private LeafNode chooseSubTree(Node tempRoot, Point point) {
+        if (isRevisited) {
+            return chooseSubTreeRevisited(tempRoot, point);
+        } else {
+            return ChooseSubtreeOriginal(tempRoot, point);
+        }
+    }
+
+    private LeafNode chooseSubTreeRevisited(Node tempRoot, Point point) {
         if (tempRoot == null) {
             root = new LeafNode(pagesize, point.getDim());
             root.setOMbr(point);
@@ -179,8 +282,8 @@ public class RstarTree extends IRtree {
                     // TODO entries are inserted！！！
                     List<LeafNode> entries = new ArrayList(children);
                     entries.sort((o1, o2) -> {
-                        float delta1 = o1.getDeltaOvlpPerim(point);
-                        float delta2 = o2.getDeltaOvlpPerim(point);
+                        float delta1 = o1.getDeltaPerim(point);
+                        float delta2 = o2.getDeltaPerim(point);
                         if (delta1 > delta2) {
                             return 1;
                         } else if (delta1 < delta2) {
@@ -190,7 +293,7 @@ public class RstarTree extends IRtree {
                         }
                     });
                     LeafNode first = entries.get(0);
-                    if (first.getDeltaOvlpPerim(point, entries) == 0) {
+                    if (first.getDeltaPerim(point, entries) == 0) {
                         return first;
                     }
                     List<LeafNode> CAND = new ArrayList<>();
@@ -232,9 +335,9 @@ public class RstarTree extends IRtree {
                             }
 
 //                            CAND.sort((o1, o2) -> {
-//                                if (o1.getDeltaOvlpVol(point) > o2.getDeltaOvlpVol(point)) {
+//                                if (o1.getDeltaVol(point) > o2.getDeltaVol(point)) {
 //                                    return 1;
-//                                } else if (o1.getDeltaOvlpVol(point) < o2.getDeltaOvlpVol(point)) {
+//                                } else if (o1.getDeltaVol(point) < o2.getDeltaVol(point)) {
 //                                    return -1;
 //                                } else {
 //                                    return 0;
@@ -248,9 +351,9 @@ public class RstarTree extends IRtree {
 
             } else if (children.get(0) instanceof NonLeafNode) {
                 children.sort((o1, o2) -> {
-                    if (o1.getDeltaOvlpVol(point) > o2.getDeltaOvlpVol(point)) {
+                    if (o1.getDeltaVol(point) > o2.getDeltaVol(point)) {
                         return 1;
-                    } else if (o1.getDeltaOvlpVol(point) < o2.getDeltaOvlpVol(point)) {
+                    } else if (o1.getDeltaVol(point) < o2.getDeltaVol(point)) {
                         return -1;
                     } else {
                         // Resolve ties by choosing the entry with the rectangle
@@ -290,16 +393,14 @@ public class RstarTree extends IRtree {
         }
     }
 
-
     public static void main(String[] args) {
-        RstarTree rstarTree = new RstarTree(100);
+        RstarTree rstarTree = new RstarTree(8, true);
 
-        rstarTree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_160000_1_2_.csv");
+        rstarTree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_1000_1_2_.csv");
 
-        System.out.println(rstarTree.root);
+//        System.out.println(rstarTree.root);
 
-        rstarTree.visualize(1600, 1600).save("rstar.png");
-
+        rstarTree.visualize(600, 600).save("rstar_revisit.png");
 //        rstarTree.output("/Users/guanli/Documents/datasets/RLRtree/trees/Z_uniform_10000_1_3_.csv");
 //
 //        rstarTree.buildRtreeAfterTuning("/Users/guanli/Documents/datasets/RLRtree/trees/Z_uniform_10000_1_3_.csv", rstarTree.getDim(), rstarTree.getLevel());
@@ -307,7 +408,6 @@ public class RstarTree extends IRtree {
 //        System.out.println(rstarTree.windowQuery(Mbr.getMbrs(0.01f, 10, 3).get(0)));
 //        System.out.println(rstarTree.windowQuery(Mbr.getMbrs(0.01f, 9, 3).get(0)));
 //        System.out.println(rstarTree.windowQuery(Mbr.getMbrs(0.01f, 11, 3).get(0)));
-
     }
 
 }
