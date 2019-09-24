@@ -47,12 +47,17 @@ public class RstarTree extends IRtree {
             point.setzCurveValue(i);
             points.add(point);
         }
+        return buildRtree(points);
+    }
+
+    @Override
+    public boolean buildRtree(List<Point> points) {
         int dimension = points.get(0).getDim();
         this.setDim(dimension);
+        this.points = points;
         for (int i = 0; i < points.size(); i++) {
             insert(points.get(i));
         }
-
         return true;
     }
 

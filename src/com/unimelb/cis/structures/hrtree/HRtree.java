@@ -51,23 +51,15 @@ public class HRtree extends IRtree {
     }
 
     @Override
-    public boolean buildRtree(String path) {
-        this.dataFile = path;
-        List<String> lines = read(path);
-
-        List<Point> points = new ArrayList<>(lines.size());
-        for (int i = 0; i < lines.size(); i++) {
-            String line = lines.get(i);
-            Point point = new Point(line);
-            points.add(point);
-        }
-
+    public boolean buildRtree(List<Point> points) {
         int dimension = points.get(0).getDim();
         for (int i = 0; i < dimension; i++) {
             sortDimensiont(points, i);
         }
 
         points = HilbertCurve.hilbertCurve(points);
+
+        this.points = points;
 
         LeafNode leafNode = null;
         List<Node> childrenNodes = new ArrayList<>();
@@ -109,6 +101,21 @@ public class HRtree extends IRtree {
         this.setLevel(currentLevel);
         this.setDim(dimension);
         return true;
+    }
+
+    @Override
+    public boolean buildRtree(String path) {
+        this.dataFile = path;
+        List<String> lines = read(path);
+
+        List<Point> points = new ArrayList<>(lines.size());
+        for (int i = 0; i < lines.size(); i++) {
+            String line = lines.get(i);
+            Point point = new Point(line);
+            points.add(point);
+        }
+
+        return buildRtree(points);
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.unimelb.cis.structures;
 import com.unimelb.cis.geometry.Mbr;
 import com.unimelb.cis.node.Node;
 import com.unimelb.cis.node.NonLeafNode;
+import com.unimelb.cis.node.Point;
 import com.unimelb.cis.utils.ExpReturn;
 import com.unimelb.cis.utils.Visualizer;
 
@@ -20,6 +21,8 @@ public abstract class IRtree {
     protected Node root;
 
     protected List<Node> leafNodes;
+
+    protected List<Point> points;
 
     protected String dataFile;
 
@@ -53,7 +56,17 @@ public abstract class IRtree {
         this.level = level;
     }
 
+    public List<Point> getPoints() {
+        return points;
+    }
+
+    public void setPoints(List<Point> points) {
+        this.points = points;
+    }
+
     public abstract boolean buildRtree(String path);
+
+    public abstract boolean buildRtree(List<Point> points);
 
     public abstract ExpReturn windowQuery(Mbr window);
 
