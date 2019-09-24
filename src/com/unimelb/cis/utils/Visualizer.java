@@ -55,12 +55,14 @@ public class Visualizer {
     private List<RectangleDepth> getRectangleDepths(Node node,
                                                     int depth) {
         final List<RectangleDepth> list = new ArrayList();
-        list.add(new RectangleDepth(node.getMbr(), depth));
+        if (node instanceof NonLeafNode) {
+            list.add(new RectangleDepth(node.getMbr(), depth));
+        }
         if (node instanceof LeafNode) {
-            final LeafNode leaf = (LeafNode) node;
-            for (int i = 0; i < leaf.getChildren().size(); i++) {
-                list.add(new RectangleDepth(leaf.getChildren().get(i).getMbr(), depth + 2));
-            }
+//            final LeafNode leaf = (LeafNode) node;
+//            for (int i = 0; i < leaf.getChildren().size(); i++) {
+//                list.add(new RectangleDepth(leaf.getChildren().get(i).getMbr(), depth + 2));
+//            }
         } else if (node instanceof NonLeafNode){
             final NonLeafNode n = (NonLeafNode) node;
             for (int i = 0; i < n.getChildren().size(); i++) {
@@ -70,7 +72,6 @@ public class Visualizer {
         }
         return list;
     }
-
 
     private void drawNode(Graphics2D g, List<RectangleDepth> nodes) {
         for (final RectangleDepth node : nodes) {

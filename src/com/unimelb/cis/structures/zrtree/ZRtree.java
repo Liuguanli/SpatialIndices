@@ -57,12 +57,19 @@ public class ZRtree extends IRtree {
             points.add(point);
         }
 
+        return buildRtree(points);
+    }
+
+    @Override
+    public boolean buildRtree(List<Point> points) {
         int dimension = points.get(0).getDim();
         for (int i = 0; i < dimension; i++) {
             sortDimensiont(points, i);
         }
 
         points = ZCurve.zCurve(points);
+
+        this.points = points;
 
         LeafNode leafNode = null;
         List<Node> childrenNodes = new ArrayList<>();
@@ -236,7 +243,7 @@ public class ZRtree extends IRtree {
     public static void main(String[] args) {
         ZRtree zRtree = new ZRtree(100);
 
-        zRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_10000_1_2_.csv");
+        zRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/skewed_160000_9_2_.csv");
 
 //        zRtree.output("/Users/guanli/Documents/datasets/RLRtree/trees/Z_uniform_10000_1_2_.csv");
 
@@ -247,7 +254,7 @@ public class ZRtree extends IRtree {
 //        System.out.println(zRtree.windowQuery(Mbr.getMbrs(0.01f, 9, 3).get(0)));
 //        System.out.println(zRtree.windowQuery(Mbr.getMbrs(0.01f, 11, 3).get(0)));
 
-        zRtree.visualize(600,600).save("ztree.png");
+        zRtree.visualize(600,600).save("ztree_skewed.png");
 
 //        Mbr mbr = new Mbr(1,2,3,4);
 

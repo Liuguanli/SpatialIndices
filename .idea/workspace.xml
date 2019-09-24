@@ -7,16 +7,41 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ba9c8980-c90e-48aa-8dfb-ac39a52585ec" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/node/LeafNode.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/node/LeafNode.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/node/Node.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/node/Node.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/node/NonLeafNode.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/node/NonLeafNode.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rstar/src/Q1.java" beforeDir="false" afterPath="$PROJECT_DIR$/Rstar/src/Q1.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rstar/src/rstar/RStarTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/Rstar/src/rstar/RStarTree.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rstar/src/rstar/StorageManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/Rstar/src/rstar/StorageManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rstar/src/rstar/dto/AbstractDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Rstar/src/rstar/dto/AbstractDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rstar/src/rstar/dto/MbrDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Rstar/src/rstar/dto/MbrDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rstar/src/rstar/dto/NodeDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Rstar/src/rstar/dto/NodeDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rstar/src/rstar/dto/PointDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Rstar/src/rstar/dto/PointDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rstar/src/rstar/dto/TreeDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Rstar/src/rstar/dto/TreeDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rstar/src/rstar/interfaces/IDiskQuery.java" beforeDir="false" afterPath="$PROJECT_DIR$/Rstar/src/rstar/interfaces/IDiskQuery.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rstar/src/rstar/interfaces/IDtoConvertible.java" beforeDir="false" afterPath="$PROJECT_DIR$/Rstar/src/rstar/interfaces/IDtoConvertible.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rstar/src/rstar/interfaces/IRStarNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/Rstar/src/rstar/interfaces/IRStarNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rstar/src/rstar/interfaces/ISpatialQuery.java" beforeDir="false" afterPath="$PROJECT_DIR$/Rstar/src/rstar/interfaces/ISpatialQuery.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rstar/src/rstar/nodes/RStarInternal.java" beforeDir="false" afterPath="$PROJECT_DIR$/Rstar/src/rstar/nodes/RStarInternal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rstar/src/rstar/nodes/RStarLeaf.java" beforeDir="false" afterPath="$PROJECT_DIR$/Rstar/src/rstar/nodes/RStarLeaf.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rstar/src/rstar/nodes/RStarNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/Rstar/src/rstar/nodes/RStarNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rstar/src/rstar/nodes/RStarSplit.java" beforeDir="false" afterPath="$PROJECT_DIR$/Rstar/src/rstar/nodes/RStarSplit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rstar/src/rstar/spatial/HyperRectangle.java" beforeDir="false" afterPath="$PROJECT_DIR$/Rstar/src/rstar/spatial/HyperRectangle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rstar/src/rstar/spatial/SpatialComparator.java" beforeDir="false" afterPath="$PROJECT_DIR$/Rstar/src/rstar/spatial/SpatialComparator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rstar/src/rstar/spatial/SpatialPoint.java" beforeDir="false" afterPath="$PROJECT_DIR$/Rstar/src/rstar/spatial/SpatialPoint.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rstar/src/util/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/Rstar/src/util/Constants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rstar/src/util/Trace.java" beforeDir="false" afterPath="$PROJECT_DIR$/Rstar/src/util/Trace.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rstar/src/util/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/Rstar/src/util/Utils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/SpatialIndices_jar/SpatialIndices.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/SpatialIndices_jar/SpatialIndices.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/structures/IRtree.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/structures/IRtree.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/structures/hrtree/HRtree.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/structures/hrtree/HRtree.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/structures/rstar/RstarTree.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/structures/rstar/RstarTree.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rstar.png" beforeDir="false" afterPath="$PROJECT_DIR$/rstar.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/geometry/Mbr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/geometry/Mbr.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/node/LeafNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/node/LeafNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/node/Node.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/node/Node.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/node/NonLeafNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/node/NonLeafNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/structures/zrtree/ZRtree.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/structures/zrtree/ZRtree.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/utils/Visualizer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/utils/Visualizer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/structures/IRtree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/structures/IRtree.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/structures/hrtree/HRtree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/structures/hrtree/HRtree.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/structures/rstar/RstarTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/structures/rstar/RstarTree.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/structures/zrtree/ZRtree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/structures/zrtree/ZRtree.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/utils/Visualizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/utils/Visualizer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ztree.png" beforeDir="false" afterPath="$PROJECT_DIR$/ztree.png" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -24,113 +49,11 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
+  </component>
   <component name="DefaultGradleProjectSettings">
     <option name="isMigrated" value="true" />
-  </component>
-  <component name="FileEditorManager">
-    <leaf>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/rstar/RstarTree.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="263">
-              <caret line="394" lean-forward="true" selection-start-line="394" selection-end-line="394" />
-              <folding>
-                <element signature="e#1321#1322#0" expanded="true" />
-                <element signature="e#1348#1349#0" expanded="true" />
-                <element signature="e#1503#1504#0" expanded="true" />
-                <element signature="e#1530#1531#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/node/LeafNode.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="244">
-              <caret line="272" column="19" lean-forward="true" selection-start-line="268" selection-start-column="18" selection-end-line="272" selection-end-column="19" />
-              <folding>
-                <element signature="e#532#533#0" expanded="true" />
-                <element signature="e#559#560#0" expanded="true" />
-                <element signature="e#1683#1684#0" expanded="true" />
-                <element signature="e#1714#1715#0" expanded="true" />
-                <element signature="e#2930#2931#0" expanded="true" />
-                <element signature="e#2980#2981#0" expanded="true" />
-                <element signature="e#3657#3658#0" expanded="true" />
-                <element signature="e#3709#3710#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/geometry/Mbr.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="229">
-              <caret line="374" column="17" selection-start-line="374" selection-start-column="17" selection-end-line="374" selection-end-column="17" />
-              <folding>
-                <element signature="e#17595#17596#0" expanded="true" />
-                <element signature="e#17647#17648#0" expanded="true" />
-                <element signature="e#17595#17596#0" expanded="true" />
-                <element signature="e#17661#17662#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/node/Node.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="186">
-              <caret line="157" column="17" selection-start-line="157" selection-start-column="17" selection-end-line="157" selection-end-column="17" />
-              <folding>
-                <element signature="e#511#512#0" expanded="true" />
-                <element signature="e#538#539#0" expanded="true" />
-                <element signature="e#574#575#0" expanded="true" />
-                <element signature="e#605#606#0" expanded="true" />
-                <element signature="e#654#655#0" expanded="true" />
-                <element signature="e#694#695#0" expanded="true" />
-                <element signature="e#721#722#0" expanded="true" />
-                <element signature="e#747#748#0" expanded="true" />
-                <element signature="e#782#783#0" expanded="true" />
-                <element signature="e#812#813#0" expanded="true" />
-                <element signature="e#887#888#0" expanded="true" />
-                <element signature="e#922#923#0" expanded="true" />
-                <element signature="e#975#976#0" expanded="true" />
-                <element signature="e#1023#1024#0" expanded="true" />
-                <element signature="e#1054#1055#0" expanded="true" />
-                <element signature="e#1083#1084#0" expanded="true" />
-                <element signature="e#1125#1126#0" expanded="true" />
-                <element signature="e#1161#1162#0" expanded="true" />
-                <element signature="e#1190#1191#0" expanded="true" />
-                <element signature="e#1218#1219#0" expanded="true" />
-                <element signature="e#1257#1258#0" expanded="true" />
-                <element signature="e#1291#1292#0" expanded="true" />
-                <element signature="e#1318#1319#0" expanded="true" />
-                <element signature="e#1344#1345#0" expanded="true" />
-                <element signature="e#1394#1395#0" expanded="true" />
-                <element signature="e#1425#1426#0" expanded="true" />
-                <element signature="e#1896#1897#0" expanded="true" />
-                <element signature="e#1931#1932#0" expanded="true" />
-                <element signature="e#2082#2083#0" expanded="true" />
-                <element signature="e#2116#2117#0" expanded="true" />
-                <element signature="e#3517#3518#0" expanded="true" />
-                <element signature="e#3565#3566#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/node/NonLeafNode.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="265">
-              <caret line="215" column="19" lean-forward="true" selection-start-line="211" selection-start-column="18" selection-end-line="215" selection-end-column="19" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -148,117 +71,12 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
-      <list>
-        <option value="$PROJECT_DIR$/src/com/unimelb/cis/node/Point.java" />
-        <option value="$PROJECT_DIR$/src/com/unimelb/cis/structures/IRtree.java" />
-        <option value="$PROJECT_DIR$/src/com/unimelb/cis/structures/hrtree/HRtree.java" />
-        <option value="$PROJECT_DIR$/src/com/unimelb/cis/utils/Visualizer.java" />
-        <option value="$PROJECT_DIR$/README.md" />
-        <option value="$PROJECT_DIR$/src/com/unimelb/cis/geometry/Mbr.java" />
-        <option value="$PROJECT_DIR$/src/com/unimelb/cis/node/Node.java" />
-        <option value="$PROJECT_DIR$/src/com/unimelb/cis/structures/rstar/RstarTree.java" />
-        <option value="$PROJECT_DIR$/src/com/unimelb/cis/node/NonLeafNode.java" />
-        <option value="$PROJECT_DIR$/src/com/unimelb/cis/node/LeafNode.java" />
-      </list>
-    </option>
-  </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-1295" />
-    <option name="y" value="-1057" />
-    <option name="width" value="1920" />
-    <option name="height" value="1057" />
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="1" />
   </component>
   <component name="ProjectId" id="1QxffiCJa2IRZHDUj6ehzm6NQaM" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
-  </component>
-  <component name="ProjectView">
-    <navigator proportions="" version="1">
-      <foldersAlwaysOnTop value="true" />
-    </navigator>
-    <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="SpatialIndices" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SpatialIndices" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SpatialIndices" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SpatialIndices" type="462c0819:PsiDirectoryNode" />
-              <item name="doc" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SpatialIndices" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SpatialIndices" type="462c0819:PsiDirectoryNode" />
-              <item name="doc" type="462c0819:PsiDirectoryNode" />
-              <item name="figs" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SpatialIndices" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SpatialIndices" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SpatialIndices" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SpatialIndices" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="cis" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SpatialIndices" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SpatialIndices" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="cis" type="462c0819:PsiDirectoryNode" />
-              <item name="geometry" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SpatialIndices" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SpatialIndices" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="cis" type="462c0819:PsiDirectoryNode" />
-              <item name="node" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SpatialIndices" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SpatialIndices" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="cis" type="462c0819:PsiDirectoryNode" />
-              <item name="structures" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SpatialIndices" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SpatialIndices" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="cis" type="462c0819:PsiDirectoryNode" />
-              <item name="structures" type="462c0819:PsiDirectoryNode" />
-              <item name="rstar" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SpatialIndices" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SpatialIndices" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="cis" type="462c0819:PsiDirectoryNode" />
-              <item name="structures" type="462c0819:PsiDirectoryNode" />
-              <item name="zrtree" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SpatialIndices" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SpatialIndices" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="cis" type="462c0819:PsiDirectoryNode" />
-              <item name="utils" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
-    </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="Downloaded.Files.Path.Enabled" value="false" />
@@ -300,7 +118,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.RstarTree">
+  <component name="RunManager" selected="Application.ZRtree">
     <configuration name="HilbertCurve (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.unimelb.cis.HilbertCurve" />
       <module name="SpatialIndices" />
@@ -368,8 +186,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.RstarTree" />
         <item itemvalue="Application.ZRtree" />
+        <item itemvalue="Application.RstarTree" />
         <item itemvalue="Application.HilbertCurve (1)" />
         <item itemvalue="Application.HilbertCurveLib" />
         <item itemvalue="Application.ZCurve" />
@@ -411,38 +229,6 @@
     <option name="localTasksCounter" value="4" />
     <servers />
   </component>
-  <component name="TestHistory">
-    <history-entry file="ZRtreeTest_testBuildRtree - 2019.07.29 at 21h 20m 58s.xml">
-      <configuration name="ZRtreeTest.testBuildRtree" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="ZRtreeTest_testBuildRtree - 2019.07.29 at 21h 22m 06s.xml">
-      <configuration name="ZRtreeTest.testBuildRtree" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="ZRtreeTest_testBuildRtree - 2019.07.29 at 21h 22m 46s.xml">
-      <configuration name="ZRtreeTest.testBuildRtree" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="ZRtreeTest_testBuildRtree - 2019.07.29 at 22h 15m 53s.xml">
-      <configuration name="ZRtreeTest.testBuildRtree" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="ZRtreeTest_testBuildRtree - 2019.07.29 at 22h 16m 29s.xml">
-      <configuration name="ZRtreeTest.testBuildRtree" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="ZRtreeTest_testBuildRtree - 2019.07.29 at 22h 18m 15s.xml">
-      <configuration name="ZRtreeTest.testBuildRtree" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="ZRtreeTest_testBuildRtree - 2019.07.29 at 22h 23m 09s.xml">
-      <configuration name="ZRtreeTest.testBuildRtree" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="ZRtreeTest_testBuildRtree - 2019.07.29 at 22h 23m 30s.xml">
-      <configuration name="ZRtreeTest.testBuildRtree" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="ZRtreeTest_testBuildRtree - 2019.07.29 at 22h 24m 29s.xml">
-      <configuration name="ZRtreeTest.testBuildRtree" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="ZRtreeTest_testBuildRtree - 2019.07.29 at 22h 25m 55s.xml">
-      <configuration name="ZRtreeTest.testBuildRtree" configurationId="JUnit" />
-    </history-entry>
-  </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
       <is-autoscroll-to-source value="true" />
@@ -452,49 +238,12 @@
       <is-autoscroll-to-source value="true" />
     </todo-panel>
   </component>
-  <component name="ToolWindowManager">
-    <frame x="-1295" y="-1057" width="1920" height="1057" extended-state="6" />
-    <editor active="true" />
-    <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.185836" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Capture Tool" order="2" />
-      <window_info id="Image Layers" order="3" />
-      <window_info id="Designer" order="4" />
-      <window_info id="Learn" order="5" />
-      <window_info id="Favorites" order="6" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.35774946" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.21974522" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.31528664" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" weight="0.32939634" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.26539278" />
-      <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="9" weight="0.32908705" />
-      <window_info anchor="bottom" id="Messages" order="10" weight="0.32908705" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Maven" order="3" />
-      <window_info anchor="right" id="Theme Preview" order="4" />
-      <window_info anchor="right" id="Capture Analysis" order="5" />
-      <window_info anchor="right" id="Palette&#9;" order="6" />
-    </layout>
-  </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
           <value>
             <State>
-              <option name="RECENTLY_FILTERED_USER_GROUPS">
-                <collection />
-              </option>
-              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
-                <collection />
-              </option>
               <option name="COLUMN_ORDER" />
             </State>
           </value>
@@ -528,110 +277,92 @@
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/geometry/Mbr.java</url>
           <line>591</line>
-          <properties />
           <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/geometry/Mbr.java</url>
           <line>593</line>
-          <properties />
           <option name="timeStamp" value="6" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/structures/zrtree/ZRtree.java</url>
-          <line>120</line>
-          <properties />
+          <line>127</line>
           <option name="timeStamp" value="42" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/utils/Visualizer.java</url>
           <line>37</line>
-          <properties />
           <option name="timeStamp" value="59" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/utils/Visualizer.java</url>
           <line>44</line>
-          <properties />
           <option name="timeStamp" value="63" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/utils/Visualizer.java</url>
-          <line>89</line>
-          <properties />
+          <line>90</line>
           <option name="timeStamp" value="67" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/structures/rstar/RstarTree.java</url>
-          <line>100</line>
-          <properties />
+          <line>105</line>
           <option name="timeStamp" value="91" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/node/NonLeafNode.java</url>
           <line>107</line>
-          <properties />
           <option name="timeStamp" value="92" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/node/NonLeafNode.java</url>
           <line>141</line>
-          <properties />
           <option name="timeStamp" value="93" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/node/NonLeafNode.java</url>
           <line>219</line>
-          <properties />
           <option name="timeStamp" value="96" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/node/LeafNode.java</url>
           <line>276</line>
-          <properties />
           <option name="timeStamp" value="105" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/node/LeafNode.java</url>
           <line>316</line>
-          <properties />
           <option name="timeStamp" value="116" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/structures/rstar/RstarTree.java</url>
-          <line>83</line>
-          <properties />
+          <line>88</line>
           <option name="timeStamp" value="117" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/structures/rstar/RstarTree.java</url>
-          <line>107</line>
-          <properties />
+          <line>112</line>
           <option name="timeStamp" value="118" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/utils/Visualizer.java</url>
-          <line>59</line>
-          <properties />
+          <line>61</line>
           <option name="timeStamp" value="131" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/utils/Visualizer.java</url>
-          <line>64</line>
-          <properties />
+          <line>66</line>
           <option name="timeStamp" value="132" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/structures/rstar/RstarTree.java</url>
-          <line>294</line>
-          <properties />
+          <line>299</line>
           <option name="timeStamp" value="138" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <condition expression="asym &lt; -1" language="JAVA" />
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/node/Node.java</url>
           <line>187</line>
-          <properties />
           <option name="timeStamp" value="145" />
         </line-breakpoint>
       </breakpoints>
@@ -732,195 +463,6 @@
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
     </expressions>
-  </component>
-  <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/utils/RectangleDepth.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="4" selection-start-line="8" selection-start-column="4" selection-end-line="8" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ztree.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk-12.0.1.jdk/Contents/Home/lib/src.zip!/java.base/java/util/ArrayList.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="202">
-          <caret line="1183" column="12" selection-start-line="1183" selection-start-column="12" selection-end-line="1183" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/node/Point.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="121" column="5" lean-forward="true" selection-start-line="121" selection-start-column="5" selection-end-line="121" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rstar_47.png" />
-    <entry file="file://$PROJECT_DIR$/rstar_48.png" />
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/IRtree.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="159">
-          <caret line="57" column="41" selection-start-line="57" selection-start-column="30" selection-end-line="57" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Rstar/src/util/Trace.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-181">
-          <caret line="37" column="37" lean-forward="true" selection-start-line="37" selection-start-column="37" selection-end-line="37" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rstar_160000.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rstar_10000.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rstar_1000.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk-12.0.1.jdk/Contents/Home/lib/src.zip!/java.desktop/java/awt/Graphics.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1901">
-          <caret line="395" lean-forward="true" selection-start-line="395" selection-end-line="395" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="514">
-          <caret line="35" column="84" lean-forward="true" selection-start-line="35" selection-start-column="84" selection-end-line="35" selection-end-column="84" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/utils/Visualizer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="339">
-          <caret line="89" column="14" selection-start-line="75" selection-start-column="34" selection-end-line="75" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/hrtree/HRtree.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="492">
-          <caret line="231" column="41" lean-forward="true" selection-start-line="231" selection-start-column="41" selection-end-line="231" selection-end-column="41" />
-          <folding>
-            <element signature="e#709#710#0" expanded="true" />
-            <element signature="e#736#737#0" expanded="true" />
-            <element signature="e#776#777#0" expanded="true" />
-            <element signature="e#808#809#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/zrtree/ZRtree.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="44" column="9" lean-forward="true" selection-start-line="44" selection-start-column="9" selection-end-line="44" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/geometry/Mbr.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="229">
-          <caret line="374" column="17" selection-start-line="374" selection-start-column="17" selection-end-line="374" selection-end-column="17" />
-          <folding>
-            <element signature="e#17595#17596#0" expanded="true" />
-            <element signature="e#17647#17648#0" expanded="true" />
-            <element signature="e#17595#17596#0" expanded="true" />
-            <element signature="e#17661#17662#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/node/Node.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="186">
-          <caret line="157" column="17" selection-start-line="157" selection-start-column="17" selection-end-line="157" selection-end-column="17" />
-          <folding>
-            <element signature="e#511#512#0" expanded="true" />
-            <element signature="e#538#539#0" expanded="true" />
-            <element signature="e#574#575#0" expanded="true" />
-            <element signature="e#605#606#0" expanded="true" />
-            <element signature="e#654#655#0" expanded="true" />
-            <element signature="e#694#695#0" expanded="true" />
-            <element signature="e#721#722#0" expanded="true" />
-            <element signature="e#747#748#0" expanded="true" />
-            <element signature="e#782#783#0" expanded="true" />
-            <element signature="e#812#813#0" expanded="true" />
-            <element signature="e#887#888#0" expanded="true" />
-            <element signature="e#922#923#0" expanded="true" />
-            <element signature="e#975#976#0" expanded="true" />
-            <element signature="e#1023#1024#0" expanded="true" />
-            <element signature="e#1054#1055#0" expanded="true" />
-            <element signature="e#1083#1084#0" expanded="true" />
-            <element signature="e#1125#1126#0" expanded="true" />
-            <element signature="e#1161#1162#0" expanded="true" />
-            <element signature="e#1190#1191#0" expanded="true" />
-            <element signature="e#1218#1219#0" expanded="true" />
-            <element signature="e#1257#1258#0" expanded="true" />
-            <element signature="e#1291#1292#0" expanded="true" />
-            <element signature="e#1318#1319#0" expanded="true" />
-            <element signature="e#1344#1345#0" expanded="true" />
-            <element signature="e#1394#1395#0" expanded="true" />
-            <element signature="e#1425#1426#0" expanded="true" />
-            <element signature="e#1896#1897#0" expanded="true" />
-            <element signature="e#1931#1932#0" expanded="true" />
-            <element signature="e#2082#2083#0" expanded="true" />
-            <element signature="e#2116#2117#0" expanded="true" />
-            <element signature="e#3517#3518#0" expanded="true" />
-            <element signature="e#3565#3566#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/node/NonLeafNode.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="265">
-          <caret line="215" column="19" lean-forward="true" selection-start-line="211" selection-start-column="18" selection-end-line="215" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/node/LeafNode.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="244">
-          <caret line="272" column="19" lean-forward="true" selection-start-line="268" selection-start-column="18" selection-end-line="272" selection-end-column="19" />
-          <folding>
-            <element signature="e#532#533#0" expanded="true" />
-            <element signature="e#559#560#0" expanded="true" />
-            <element signature="e#1683#1684#0" expanded="true" />
-            <element signature="e#1714#1715#0" expanded="true" />
-            <element signature="e#2930#2931#0" expanded="true" />
-            <element signature="e#2980#2981#0" expanded="true" />
-            <element signature="e#3657#3658#0" expanded="true" />
-            <element signature="e#3709#3710#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rstar_revisit.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rstar.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/rstar/RstarTree.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="263">
-          <caret line="394" lean-forward="true" selection-start-line="394" selection-end-line="394" />
-          <folding>
-            <element signature="e#1321#1322#0" expanded="true" />
-            <element signature="e#1348#1349#0" expanded="true" />
-            <element signature="e#1503#1504#0" expanded="true" />
-            <element signature="e#1530#1531#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
   </component>
   <component name="masterDetails">
     <states>
