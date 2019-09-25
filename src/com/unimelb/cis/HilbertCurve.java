@@ -8,6 +8,10 @@ import java.util.*;
 public class HilbertCurve extends Curve {
 
     public static List<Point> hilbertCurve(List<Point> points) {
+        int dimension = points.get(0).getDim();
+        for (int i = 0; i < dimension; i++) {
+            sortDimensiont(points, i);
+        }
         int length = points.size();
         int bitNum = (int) (Math.log(length) / Math.log(2.0)) + 1;
 

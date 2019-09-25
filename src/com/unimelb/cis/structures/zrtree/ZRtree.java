@@ -27,24 +27,6 @@ public class ZRtree extends IRtree {
     }
 
 
-    public void sortDimensiont(List<Point> points, int dimension) {
-        Collections.sort(points, new Comparator<Point>() {
-            @Override
-            public int compare(Point p1, Point p2) {
-                if (p1.getLocation()[dimension] > p2.getLocation()[dimension]) {
-                    return 1;
-                } else if (p1.getLocation()[dimension] < p2.getLocation()[dimension]) {
-                    return -1;
-                } else {
-                    return 0;
-                }
-            }
-        });
-        for (int i = 0; i < points.size(); i++) {
-            points.get(i).getLocationOrder()[dimension] = (i + 1);
-        }
-    }
-
     @Override
     public boolean buildRtree(String path) {
         this.dataFile = path;
@@ -63,14 +45,8 @@ public class ZRtree extends IRtree {
     @Override
     public boolean buildRtree(List<Point> points) {
         int dimension = points.get(0).getDim();
-        for (int i = 0; i < dimension; i++) {
-            sortDimensiont(points, i);
-        }
-
         points = ZCurve.zCurve(points);
-
         this.points = points;
-
         LeafNode leafNode = null;
         List<Node> childrenNodes = new ArrayList<>();
         int currentLevel = 0;
