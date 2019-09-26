@@ -27,6 +27,7 @@ public abstract class Model {
         this.index = index;
         this.name = name;
         this.children = new ArrayList<>();
+        this.mbr = new Mbr();
     }
 
     String name;
@@ -40,6 +41,8 @@ public abstract class Model {
     List<Point> children;
 
     int classNum;
+
+    Classifier classifier;
 
     public List<Point> getChildren() {
         return children;
@@ -67,6 +70,11 @@ public abstract class Model {
 
     public void add(Point point) {
         this.children.add(point);
+        if (mbr == null) {
+            mbr = new Mbr(point);
+        } else {
+            updateMbr(point);
+        }
     }
 
     public Instances getInstances(String name, List<Point> points) {
@@ -91,7 +99,7 @@ public abstract class Model {
             atts.addElement(new Attribute("att" + (i + 1)));
         }
         for (int i = 0; i < classNum; i++) {
-            attVals.addElement("" + (i));
+            attVals.addElement("" + i);
         }
         atts.addElement(new Attribute("index", attVals));
         Instances dataSet = new Instances("tree", atts, 0);
@@ -101,7 +109,8 @@ public abstract class Model {
             for (int j = 0; j < vals.length - 1; j++) {
                 vals[j] = point.getLocation()[j];
             }
-            vals[vals.length - 1] = attVals.indexOf("" + point.getIndex());
+            int index = attVals.indexOf("" + point.getIndex());
+            vals[vals.length - 1] = index;
             dataSet.add(new Instance(1.0, vals));
         }
         dataSet.setClassIndex(dataSet.numAttributes() - 1);
@@ -158,18 +167,22 @@ public abstract class Model {
         System.out.println("acc:" + ((double) accNum / results.size()) + " pageAccess:" + ((double) pageAccess / results.size()));
     }
 
-    public List<Double> getPredRes(Classifier classifier, Instances instances) {
-        List<Double> results = new ArrayList<>();
+    public void train(Classifier classifier, Instances instances) {
         try {
             classifier.buildClassifier(instances);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public List<Double> getPredVals(Classifier classifier, Instances instances) {
+        List<Double> results = new ArrayList<>();
+        try {
             for (int i = 0; i < instances.numInstances(); i++) {
                 Instance instance = instances.instance(i);
                 double value = classifier.classifyInstance(instance);
                 results.add(value);
-//                System.out.println(instance.classValue() + " " + value);
             }
-//            getStatistics(results, instances);
-            // put points into different buckets
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -177,5 +190,13 @@ public abstract class Model {
     }
 
     public abstract void build();
+
+    public abstract void pointQuery(Point point);
+
+    public abstract void pointQuery(List<Point> points);
+
+    public void updateMbr(Point point) {
+        this.getMbr().updateMbr(point, point.getDim());
+    }
 
 }

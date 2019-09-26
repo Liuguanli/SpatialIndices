@@ -44,6 +44,8 @@ public class RecursiveModelRtree {
 
     int pageSize;
 
+    Model root;
+
     public RecursiveModelRtree(int threshold, String curveType, int pageSize) {
         this.threshold = threshold;
         this.curveType = curveType;
@@ -72,7 +74,6 @@ public class RecursiveModelRtree {
                 break;
         }
 
-        Model root;
         int classNum = points.size() / threshold;
         if (classNum <= 1) {
             root = new LeafModel(- 1, name);
@@ -121,7 +122,13 @@ public class RecursiveModelRtree {
      */
     public static void main(String[] args) throws ParseException {
         RecursiveModelRtree recursiveModelRtree = new RecursiveModelRtree(10000, "H", 100);
-        recursiveModelRtree.buildRecursiveModel("D:\\datasets\\RLRtree\\raw\\normal_160000_1_2_.csv", "Logistic");
+        recursiveModelRtree.buildRecursiveModel("D:\\datasets\\RLRtree\\raw\\normal_160000_1_2_.csv", "LinearRegression");
+//        for (int i = 0; i < recursiveModelRtree.root.getChildren().size(); i++) {
+            recursiveModelRtree.root.pointQuery(recursiveModelRtree.root.getChildren());
+//        }
+        System.out.println(pageAccess);
     }
+
+    public static int pageAccess = 0;
 
 }

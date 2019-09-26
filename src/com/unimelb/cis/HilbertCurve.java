@@ -23,7 +23,7 @@ public class HilbertCurve extends Curve {
 //        }
         for (int i = 0; i < points.size(); i++) {
             Point point = points.get(i);
-            long result = getHilbertValue(point.getxIndex(), point.getyIndex(), bitNum);
+            long result = getHilbertValue(bitNum, point.getxIndex(), point.getyIndex());
             point.setzCurveValue(result);
 //            if (i % 10000 == 0) {
 //                System.out.println("cal ing");
