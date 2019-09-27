@@ -76,7 +76,7 @@ public class RecursiveModelRtree {
 
         int classNum = points.size() / threshold;
         if (classNum <= 1) {
-            root = new LeafModel(- 1, name);
+            root = new LeafModel(-1, name);
         } else {
             root = new NonLeafModel(-1, 100, name, threshold);
         }
@@ -105,9 +105,6 @@ public class RecursiveModelRtree {
 
     }
 
-    List<String> clas = Arrays.asList("Logistic");
-    List<String> regs = Arrays.asList("LinearRegression");
-
     /**
      * add data
      * https://waikato.github.io/weka-wiki/formats_and_processing/creating_arff_file/
@@ -121,13 +118,21 @@ public class RecursiveModelRtree {
      * @throws ParseException
      */
     public static void main(String[] args) throws ParseException {
-        RecursiveModelRtree recursiveModelRtree = new RecursiveModelRtree(10000, "H", 100);
-        recursiveModelRtree.buildRecursiveModel("D:\\datasets\\RLRtree\\raw\\normal_160000_1_2_.csv", "LinearRegression");
-//        for (int i = 0; i < recursiveModelRtree.root.getChildren().size(); i++) {
+        List<String> all = new ArrayList<>();
+        all.addAll(regs);
+        all.addAll(clas);
+        for (int i = 0; i < all.size(); i++) {
+            System.out.println("---------------" + all.get(i) + "---------------");
+            RecursiveModelRtree recursiveModelRtree = new RecursiveModelRtree(10000, "H", 100);
+            recursiveModelRtree.buildRecursiveModel("D:\\datasets\\RLRtree\\raw\\normal_160000_1_2_.csv", all.get(i));
             recursiveModelRtree.root.pointQuery(recursiveModelRtree.root.getChildren());
-//        }
-        System.out.println(pageAccess);
+            System.out.println(pageAccess);
+            pageAccess = 0;
+        }
     }
+
+    public static List<String> clas = Arrays.asList("Logistic", "NaiveBayes", "MultilayerPerceptron");
+    public static List<String> regs = Arrays.asList("LinearRegression");
 
     public static int pageAccess = 0;
 

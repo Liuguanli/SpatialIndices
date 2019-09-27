@@ -1,20 +1,20 @@
 package com.unimelb.cis.node;
 
 import com.unimelb.cis.geometry.Mbr;
+import com.unimelb.cis.structures.recursivemodel.RecursiveModelRtree;
 import weka.classifiers.Classifier;
+import weka.classifiers.bayes.NaiveBayes;
+import weka.classifiers.functions.LibSVM;
 import weka.classifiers.functions.LinearRegression;
 import weka.classifiers.functions.Logistic;
-import weka.core.Attribute;
-import weka.core.FastVector;
-import weka.core.Instance;
-import weka.core.Instances;
+import weka.classifiers.functions.MultilayerPerceptron;
+import weka.classifiers.meta.FilteredClassifier;
+import weka.classifiers.pmml.consumer.NeuralNetwork;
+import weka.core.*;
 
 import java.util.*;
 
 public abstract class Model {
-
-    List<String> clas = Arrays.asList("Logistic");
-    List<String> regs = Arrays.asList("LinearRegression");
 
     public Model(int index, int pageSize, String name) {
         this.index = index;
@@ -78,7 +78,7 @@ public abstract class Model {
     }
 
     public Instances getInstances(String name, List<Point> points) {
-        if (clas.contains(name)) {
+        if (RecursiveModelRtree.clas.contains(name)) {
             return prepareDataSetCla(points, classNum);
         } else {
             return prepareDataSetReg(points, classNum);
@@ -146,6 +146,39 @@ public abstract class Model {
                 break;
             case "LinearRegression":
                 classifier = new LinearRegression();
+                break;
+            case "MultilayerPerceptron":
+                classifier = new MultilayerPerceptron();
+                try {
+                    // https://sefiks.com/2017/02/20/building-neural-networks-with-weka/
+                    //https://www.programcreek.com/java-api-examples/?api=weka.classifiers.functions.MultilayerPerceptron
+                    //https://blog.csdn.net/qiao1245/article/details/50924242
+                    //setHiddenLayers(“4,5”) 或者 “… -H 4,5”
+                    //代表两个隐含层，第一层4个神经元，第二层5个神经元。
+                    // https://searchcode.com/codesearch/view/21712641/ line 1627 shows the meaning of a
+                    classifier.setOptions(Utils.splitOptions("-L 0.3 -M 0.2 -N 500 -V 0 -S 0 -E 20 -H a"));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+//            case "NeuralNetwork":
+//                classifier = new NeuralNetwork();
+//                break;
+            case "LibSVM":
+                LibSVM svm = new LibSVM();
+                svm.setKernelType(new SelectedTag(0, LibSVM.TAGS_KERNELTYPE));
+                svm.setSVMType(new SelectedTag(0, LibSVM.TAGS_SVMTYPE));
+                svm.setProbabilityEstimates(true);
+                // svm.buildClassifier(filterdInstances);
+
+                FilteredClassifier filteredClassifier = new FilteredClassifier();
+//                filteredClassifier.setFilter(stwvFilter);
+                filteredClassifier.setClassifier(svm);
+//                filteredClassifier.buildClassifier(this.trainingData);
+                classifier = filteredClassifier;
+                break;
+            case "NaiveBayes":
+                classifier = new NaiveBayes();
                 break;
         }
         return classifier;
