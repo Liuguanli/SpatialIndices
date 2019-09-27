@@ -13,6 +13,7 @@ import weka.classifiers.pmml.consumer.NeuralNetwork;
 import weka.core.*;
 
 import java.util.*;
+import java.util.function.Consumer;
 
 public abstract class Model {
 
@@ -50,6 +51,10 @@ public abstract class Model {
 
     public void setChildren(List<Point> children) {
         this.children = children;
+        if (mbr == null) {
+            mbr = new Mbr(children.get(0).getDim());
+        }
+        children.forEach(point -> updateMbr(point));
     }
 
     public Mbr getMbr() {

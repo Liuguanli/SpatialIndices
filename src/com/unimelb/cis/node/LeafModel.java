@@ -66,7 +66,7 @@ public class LeafModel extends Model {
 //        for (int i = 0; i < results.size(); i++) {
 //            add(results.get(i).intValue(), getChildren().get(i));
 //        }
-        Map<Integer, LeafNode> leafNodes = getLeafNodes();
+//        Map<Integer, LeafNode> leafNodes = getLeafNodes();
 //        leafNodes.forEach((integer, leafNode) -> System.out.println("LeafNode:" + integer + " " + leafNode.getMbr()));
     }
 

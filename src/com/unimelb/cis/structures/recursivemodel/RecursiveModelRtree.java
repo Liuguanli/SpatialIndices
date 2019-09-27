@@ -1,29 +1,18 @@
 package com.unimelb.cis.structures.recursivemodel;
 
-import com.unimelb.cis.HilbertCurve;
-import com.unimelb.cis.ZCurve;
+import com.unimelb.cis.Curve;
 import com.unimelb.cis.node.LeafModel;
 import com.unimelb.cis.node.Model;
 import com.unimelb.cis.node.NonLeafModel;
 import com.unimelb.cis.node.Point;
-
-import com.unimelb.cis.structures.IRtree;
 import weka.classifiers.Classifier;
 import weka.classifiers.functions.LinearRegression;
 import weka.classifiers.functions.Logistic;
-import weka.core.Attribute;
-import weka.core.FastVector;
-import weka.core.Instance;
-import weka.core.Instances;
 
-import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 import static com.unimelb.cis.CSVFileReader.read;
 
@@ -57,7 +46,7 @@ public class RecursiveModelRtree {
      *
      * @return
      */
-    public void buildRecursiveModel(String path, String name) {
+    public void build(String path, String algorithmName) {
         List<String> lines = read(path);
         List<Point> points = new ArrayList<>(lines.size());
         for (int i = 0; i < lines.size(); i++) {
@@ -65,44 +54,38 @@ public class RecursiveModelRtree {
             Point point = new Point(line);
             points.add(point);
         }
-        switch (this.curveType) {
-            case "Z":
-                points = ZCurve.zCurve(points);
-                break;
-            case "H":
-                points = HilbertCurve.hilbertCurve(points);
-                break;
-        }
-
+        points = Curve.getPointByCurve(points, this.curveType);
         int classNum = points.size() / threshold;
         if (classNum <= 1) {
-            root = new LeafModel(-1, name);
+            root = new LeafModel(-1, algorithmName);
         } else {
-            root = new NonLeafModel(-1, 100, name, threshold);
+            root = new NonLeafModel(-1, 100, algorithmName, threshold);
         }
         System.out.println("Root:" + root.getIndex());
         root.setChildren(points);
         root.build();
     }
 
-    /**
-     * step 3
-     */
-    public Classifier getModels(String name) {
-        Classifier classifier = null;
-        switch (name) {
-            case "Logistic":
-                classifier = new Logistic();
-                break;
-            case "LinearRegression":
-                classifier = new LinearRegression();
-                break;
+//    /**
+//     * step 3
+//     */
+//    public Classifier getModels(String name) {
+//        Classifier classifier = null;
+//        switch (name) {
+//            case "Logistic":
+//                classifier = new Logistic();
+//                break;
+//            case "LinearRegression":
+//                classifier = new LinearRegression();
+//                break;
+//        }
+//        return classifier;
+//    }
+
+    public void pointQuery(List<Point> points) {
+        if(root != null) {
+            root.pointQuery(points);
         }
-        return classifier;
-    }
-
-    public void trainRecursiveModel() {
-
     }
 
     /**
@@ -124,8 +107,8 @@ public class RecursiveModelRtree {
         for (int i = 0; i < all.size(); i++) {
             System.out.println("---------------" + all.get(i) + "---------------");
             RecursiveModelRtree recursiveModelRtree = new RecursiveModelRtree(10000, "H", 100);
-            recursiveModelRtree.buildRecursiveModel("D:\\datasets\\RLRtree\\raw\\normal_160000_1_2_.csv", all.get(i));
-            recursiveModelRtree.root.pointQuery(recursiveModelRtree.root.getChildren());
+            recursiveModelRtree.build("D:\\datasets\\RLRtree\\raw\\normal_160000_1_2_.csv", all.get(i));
+            recursiveModelRtree.pointQuery(recursiveModelRtree.root.getChildren());
             System.out.println(pageAccess);
             pageAccess = 0;
         }
