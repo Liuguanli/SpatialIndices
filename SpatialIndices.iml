@@ -17,5 +17,6 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="weka-3.7.0" level="project" />
   </component>
 </module>

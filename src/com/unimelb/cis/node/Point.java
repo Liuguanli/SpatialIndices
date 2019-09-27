@@ -1,6 +1,7 @@
 package com.unimelb.cis.node;
 
 import com.unimelb.cis.geometry.Mbr;
+import weka.core.Instance;
 
 import java.util.Arrays;
 
@@ -223,4 +224,16 @@ public class Point extends Node implements Comparable {
         }
         return builder.toString();
     }
+
+    public Instance pointToInstance() {
+        return null;
+    }
+
+    public static Point InstanceToPoint(Instance instance) {
+        int dim = instance.numAttributes() - 1;
+        float[] location = new float[dim];
+        return new Point(location);
+    }
+
+
 }
