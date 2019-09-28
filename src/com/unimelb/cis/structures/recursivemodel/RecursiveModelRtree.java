@@ -106,6 +106,7 @@ public class RecursiveModelRtree extends IRtree {
             Point point = new Point(line);
             points.add(point);
         }
+        dim = points.get(0).getDim();
         points = Curve.getPointByCurve(points, this.curveType);
         int classNum = points.size() / threshold;
         if (classNum <= 1) {
@@ -123,6 +124,7 @@ public class RecursiveModelRtree extends IRtree {
     public boolean buildRtree(List<Point> res) {
         this.points = res;
         int classNum = points.size() / threshold;
+        dim = points.get(0).getDim();
         if (classNum <= 1) {
             root = new LeafModel(-1, pageSize, algorithm);
         } else {

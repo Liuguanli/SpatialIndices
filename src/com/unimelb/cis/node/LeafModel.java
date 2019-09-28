@@ -64,7 +64,7 @@ public class LeafModel extends Model {
         classifier = getModels(name);
         train(classifier, instances);
         evaluate();
-        System.out.println("maxError:" + maxError + " minError:" + minError);
+//        System.out.println("maxError:" + maxError + " minError:" + minError);
     }
 
     @Override
@@ -120,10 +120,8 @@ public class LeafModel extends Model {
     @Override
     public ExpReturn windowQuery(Mbr window) {
 
-        ExpReturn old = windowQueryByScanAll(window);
-        System.out.println("windowQueryByScanAll:" + old.result.size());
-
-
+//        ExpReturn old = windowQueryByScanAll(window);
+//        System.out.println("windowQueryByScanAll:" + old.result.size());
         ExpReturn expReturn = new ExpReturn();
         final int[] pageAccessArray = {0};
         long begin = System.nanoTime();
@@ -145,11 +143,11 @@ public class LeafModel extends Model {
             }
 
         });
-        System.err.println(results);
+//        System.err.println(results);
         long end = System.nanoTime();
         expReturn.pageaccess = pageAccessArray[0];
         expReturn.time = end - begin;
-        System.out.println("windowQuery:" + expReturn.result.size());
+//        System.out.println("windowQuery:" + expReturn.result.size());
         return expReturn;
     }
 

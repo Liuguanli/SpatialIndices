@@ -163,16 +163,18 @@ public class PartitionModelRtree extends IRtree {
             Point point = new Point(line);
             points.add(point);
         }
-        points.sort(getComparator(points.get(0).getDim() - 1));
-        dataPartition(points, points.get(0).getDim());
+        dim = points.get(0).getDim();
+        points.sort(getComparator(dim - 1));
+        dataPartition(points, dim);
         return true;
     }
 
     @Override
     public boolean buildRtree(List<Point> res) {
         this.points = res;
-        points.sort(getComparator(points.get(0).getDim() - 1));
-        dataPartition(points, points.get(0).getDim());
+        dim = points.get(0).getDim();
+        points.sort(getComparator(dim - 1));
+        dataPartition(points, dim);
         return true;
     }
 
