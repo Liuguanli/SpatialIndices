@@ -8,6 +8,7 @@ import com.unimelb.cis.node.Node;
 import com.unimelb.cis.node.NonLeafNode;
 import com.unimelb.cis.node.Point;
 import com.unimelb.cis.structures.IRtree;
+import com.unimelb.cis.structures.RLRtree;
 import com.unimelb.cis.utils.ExpReturn;
 
 import java.util.ArrayList;
@@ -17,10 +18,10 @@ import java.util.List;
 
 import static com.unimelb.cis.CSVFileReader.read;
 
-public class ZRtree extends IRtree {
+public class ZRtree extends RLRtree {
 
-    public ZRtree() {
-    }
+//    public ZRtree() {
+//    }
 
     public ZRtree(int pagesize) {
         super(pagesize);
@@ -230,7 +231,7 @@ public class ZRtree extends IRtree {
 //        System.out.println(zRtree.windowQuery(Mbr.getMbrs(0.01f, 9, 3).get(0)));
 //        System.out.println(zRtree.windowQuery(Mbr.getMbrs(0.01f, 11, 3).get(0)));
 
-        zRtree.visualize(600,600).save("ztree_skewed.png");
+        zRtree.visualize(600, 600).save("ztree_skewed.png");
 
 //        Mbr mbr = new Mbr(1,2,3,4);
 

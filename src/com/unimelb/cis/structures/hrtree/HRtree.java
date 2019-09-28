@@ -8,6 +8,7 @@ import com.unimelb.cis.node.Node;
 import com.unimelb.cis.node.NonLeafNode;
 import com.unimelb.cis.node.Point;
 import com.unimelb.cis.structures.IRtree;
+import com.unimelb.cis.structures.RLRtree;
 import com.unimelb.cis.utils.ExpReturn;
 
 import java.util.ArrayList;
@@ -17,11 +18,11 @@ import java.util.List;
 
 import static com.unimelb.cis.CSVFileReader.read;
 
-public class HRtree extends IRtree {
+public class HRtree extends RLRtree {
 
-
-    public HRtree() {
-    }
+//
+//    public HRtree() {
+//    }
 
     public HRtree(int pagesize) {
         super(pagesize);

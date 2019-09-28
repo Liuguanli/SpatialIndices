@@ -6,13 +6,14 @@ import com.unimelb.cis.geometry.Line;
 import com.unimelb.cis.geometry.Mbr;
 import com.unimelb.cis.node.LeafModel;
 import com.unimelb.cis.node.Point;
+import com.unimelb.cis.structures.IRtree;
 import com.unimelb.cis.utils.ExpReturn;
 
 import java.util.*;
 
 import static com.unimelb.cis.CSVFileReader.read;
 
-public class PartitionModelRtree {
+public class PartitionModelRtree extends IRtree {
 
     private int threshold;
 
@@ -94,17 +95,17 @@ public class PartitionModelRtree {
 
     List<Point> points;
 
-    public void build(String path) {
-        List<String> lines = read(path);
-        points = new ArrayList<>(lines.size());
-        for (int i = 0; i < lines.size(); i++) {
-            String line = lines.get(i);
-            Point point = new Point(line);
-            points.add(point);
-        }
-        points.sort(getComparator(points.get(0).getDim() - 1));
-        dataPartition(points, points.get(0).getDim());
-    }
+//    public void build(String path) {
+//        List<String> lines = read(path);
+//        points = new ArrayList<>(lines.size());
+//        for (int i = 0; i < lines.size(); i++) {
+//            String line = lines.get(i);
+//            Point point = new Point(line);
+//            points.add(point);
+//        }
+//        points.sort(getComparator(points.get(0).getDim() - 1));
+//        dataPartition(points, points.get(0).getDim());
+//    }
 
     public int getModelIndex(Boundary boundary, Point point, int dim) {
         // first get LeafModel
@@ -150,6 +151,28 @@ public class PartitionModelRtree {
         return expReturn;
     }
 
+    @Override
+    public boolean buildRtree(String path) {
+        List<String> lines = read(path);
+        points = new ArrayList<>(lines.size());
+        for (int i = 0; i < lines.size(); i++) {
+            String line = lines.get(i);
+            Point point = new Point(line);
+            points.add(point);
+        }
+        points.sort(getComparator(points.get(0).getDim() - 1));
+        dataPartition(points, points.get(0).getDim());
+        return true;
+    }
+
+    @Override
+    public boolean buildRtree(List<Point> res) {
+        this.points = res;
+        points.sort(getComparator(points.get(0).getDim() - 1));
+        dataPartition(points, points.get(0).getDim());
+        return true;
+    }
+
     /**
      * This is for linear scan not binary search
      *
@@ -172,7 +195,7 @@ public class PartitionModelRtree {
 
     public static void main(String[] args) {
         PartitionModelRtree partitionModelRtree = new PartitionModelRtree(10000, "H", 100, "LinearRegression");
-        partitionModelRtree.build("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_10000_1_2_.csv");
+        partitionModelRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_10000_1_2_.csv");
 //        partitionModelRtree.build("D:\\datasets\\RLRtree\\raw\\normal_160000_1_2_.csv", all.get(i));
         System.out.println("build finish");
         partitionModelRtree.pointQuery(partitionModelRtree.points);

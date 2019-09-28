@@ -70,10 +70,6 @@ public abstract class IRtree {
 
     public abstract ExpReturn windowQuery(Mbr window);
 
-    public abstract void output(String file);
-
-    public abstract NonLeafNode buildRtreeAfterTuning(String path, int dim, int level);
-
     public Visualizer visualize(int width, int height) {
         Mbr view = new Mbr(0, 0, 1, 1);
         return new Visualizer(this, width, height, view);

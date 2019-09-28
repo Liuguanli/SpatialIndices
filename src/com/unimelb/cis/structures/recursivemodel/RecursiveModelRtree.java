@@ -6,10 +6,8 @@ import com.unimelb.cis.node.LeafModel;
 import com.unimelb.cis.node.Model;
 import com.unimelb.cis.node.NonLeafModel;
 import com.unimelb.cis.node.Point;
+import com.unimelb.cis.structures.IRtree;
 import com.unimelb.cis.utils.ExpReturn;
-import weka.classifiers.Classifier;
-import weka.classifiers.functions.LinearRegression;
-import weka.classifiers.functions.Logistic;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -27,7 +25,7 @@ import static com.unimelb.cis.CSVFileReader.read;
  * <p>
  * The model stop Until the sub data set less than a threshold.
  */
-public class RecursiveModelRtree {
+public class RecursiveModelRtree extends IRtree {
 
     int threshold;
 
@@ -37,10 +35,13 @@ public class RecursiveModelRtree {
 
     Model root;
 
-    public RecursiveModelRtree(int threshold, String curveType, int pageSize) {
+    String algorithm;
+
+    public RecursiveModelRtree(int threshold, String curveType, int pageSize, String algorithm) {
         this.threshold = threshold;
         this.curveType = curveType;
         this.pageSize = pageSize;
+        this.algorithm = algorithm;
     }
 
     /**
@@ -48,7 +49,7 @@ public class RecursiveModelRtree {
      *
      * @return
      */
-    public void build(String path, String algorithmName) {
+    public void build(String path) {
         List<String> lines = read(path);
         List<Point> points = new ArrayList<>(lines.size());
         for (int i = 0; i < lines.size(); i++) {
@@ -59,11 +60,11 @@ public class RecursiveModelRtree {
         points = Curve.getPointByCurve(points, this.curveType);
         int classNum = points.size() / threshold;
         if (classNum <= 1) {
-            root = new LeafModel(-1, pageSize, algorithmName);
+            root = new LeafModel(-1, pageSize, algorithm);
         } else {
-            root = new NonLeafModel(-1, pageSize, algorithmName, threshold);
+            root = new NonLeafModel(-1, pageSize, algorithm, threshold);
         }
-        System.out.println("Root:" + root.getIndex());
+//        System.out.println("Root:" + root.getIndex());
         root.setChildren(points);
         root.build();
     }
@@ -89,6 +90,43 @@ public class RecursiveModelRtree {
             return root.pointQuery(points);
         }
         return null;
+    }
+
+    @Override
+    public boolean buildRtree(String path) {
+        List<String> lines = read(path);
+        List<Point> points = new ArrayList<>(lines.size());
+        for (int i = 0; i < lines.size(); i++) {
+            String line = lines.get(i);
+            Point point = new Point(line);
+            points.add(point);
+        }
+        points = Curve.getPointByCurve(points, this.curveType);
+        int classNum = points.size() / threshold;
+        if (classNum <= 1) {
+            root = new LeafModel(-1, pageSize, algorithm);
+        } else {
+            root = new NonLeafModel(-1, pageSize, algorithm, threshold);
+        }
+//        System.out.println("Root:" + root.getIndex());
+        root.setChildren(points);
+        root.build();
+        return true;
+    }
+
+    @Override
+    public boolean buildRtree(List<Point> res) {
+        this.points = res;
+        int classNum = points.size() / threshold;
+        if (classNum <= 1) {
+            root = new LeafModel(-1, pageSize, algorithm);
+        } else {
+            root = new NonLeafModel(-1, pageSize, algorithm, threshold);
+        }
+//        System.out.println("Root:" + root.getIndex());
+        root.setChildren(points);
+        root.build();
+        return true;
     }
 
     public ExpReturn windowQuery(Mbr window) {
@@ -118,8 +156,8 @@ public class RecursiveModelRtree {
         for (int i = 0; i < all.size(); i++) {
             long begin = System.nanoTime();
             System.out.println("---------------" + all.get(i) + "---------------");
-            RecursiveModelRtree recursiveModelRtree = new RecursiveModelRtree(10000, "H", 100);
-            recursiveModelRtree.build("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_10000_1_2_.csv", all.get(i));
+            RecursiveModelRtree recursiveModelRtree = new RecursiveModelRtree(10000, "H", 100, all.get(i));
+            recursiveModelRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_10000_1_2_.csv");
 //            recursiveModelRtree.build("D:\\datasets\\RLRtree\\raw\\normal_160000_1_2_.csv", all.get(i));
             ExpReturn expReturn = recursiveModelRtree.pointQuery(recursiveModelRtree.root.getChildren());
             long end = System.nanoTime();

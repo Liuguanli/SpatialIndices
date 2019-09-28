@@ -6,13 +6,14 @@ import com.unimelb.cis.node.Node;
 import com.unimelb.cis.node.NonLeafNode;
 import com.unimelb.cis.node.Point;
 import com.unimelb.cis.structures.IRtree;
+import com.unimelb.cis.structures.RLRtree;
 import com.unimelb.cis.utils.ExpReturn;
 
 import java.util.*;
 
 import static com.unimelb.cis.CSVFileReader.read;
 
-public class RstarTree extends IRtree {
+public class RstarTree extends RLRtree {
 
     private int m;
     private int p;
