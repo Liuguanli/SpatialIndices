@@ -134,6 +134,13 @@ public class RecursiveModelRtree extends IRtree {
         return true;
     }
 
+    public ExpReturn windowQueryByScanAll(Mbr window) {
+        if (root != null) {
+            return root.windowQueryByScanAll(window);
+        }
+        return null;
+    }
+
     public ExpReturn windowQuery(Mbr window) {
         if (root != null) {
             return root.windowQuery(window);

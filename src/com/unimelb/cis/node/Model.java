@@ -256,6 +256,8 @@ public abstract class Model {
 
     public abstract ExpReturn windowQuery(Mbr window);
 
+    public abstract ExpReturn windowQueryByScanAll(Mbr window);
+
     public void updateMbr(Point point) {
         this.getMbr().updateMbr(point, point.getDim());
     }

@@ -153,6 +153,7 @@ public class LeafModel extends Model {
         return expReturn;
     }
 
+    @Override
     public ExpReturn windowQueryByScanAll(Mbr window) {
         ExpReturn expReturn = new ExpReturn();
         final int[] pageAccessArray = {0};

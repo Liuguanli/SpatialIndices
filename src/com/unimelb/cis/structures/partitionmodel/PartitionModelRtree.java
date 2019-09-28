@@ -196,6 +196,21 @@ public class PartitionModelRtree extends IRtree {
         return expReturn;
     }
 
+    public ExpReturn windowQueryByScanAll(Mbr window) {
+        ExpReturn expReturn = new ExpReturn();
+        long begin = System.nanoTime();
+        partitionModels.forEach((integer, leafModel) -> {
+            if (leafModel.getMbr().interact(window)) {
+                ExpReturn eachExpReturn = leafModel.windowQueryByScanAll(window);
+                expReturn.result.addAll(eachExpReturn.result);
+                expReturn.pageaccess += eachExpReturn.pageaccess;
+            }
+        });
+        long end = System.nanoTime();
+        expReturn.time = end - begin;
+        return expReturn;
+    }
+
     public static void main(String[] args) {
 
         List<String> all = new ArrayList<>();
