@@ -128,6 +128,16 @@ public class ZRtree extends RLRtree {
     }
 
     @Override
+    public ExpReturn pointQuery(List<Point> points) {
+        return null;
+    }
+
+    @Override
+    public ExpReturn pointQuery(Point point) {
+        return null;
+    }
+
+    @Override
     public NonLeafNode buildRtreeAfterTuning(String path, int dim, int level) {
         this.dataFile = path;
         this.setDim(dim);

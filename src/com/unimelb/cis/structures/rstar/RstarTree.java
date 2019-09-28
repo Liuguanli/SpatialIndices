@@ -68,6 +68,16 @@ public class RstarTree extends RLRtree {
     }
 
     @Override
+    public ExpReturn pointQuery(List<Point> points) {
+        return null;
+    }
+
+    @Override
+    public ExpReturn pointQuery(Point point) {
+        return null;
+    }
+
+    @Override
     public void output(String file) {
 
     }

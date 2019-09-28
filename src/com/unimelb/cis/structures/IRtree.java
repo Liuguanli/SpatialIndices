@@ -70,6 +70,10 @@ public abstract class IRtree {
 
     public abstract ExpReturn windowQuery(Mbr window);
 
+    public abstract ExpReturn pointQuery(List<Point> points);
+
+    public abstract ExpReturn pointQuery(Point point);
+
     public Visualizer visualize(int width, int height) {
         Mbr view = new Mbr(0, 0, 1, 1);
         return new Visualizer(this, width, height, view);

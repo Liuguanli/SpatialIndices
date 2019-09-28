@@ -93,8 +93,6 @@ public class PartitionModelRtree extends IRtree {
         }
     }
 
-    List<Point> points;
-
 //    public void build(String path) {
 //        List<String> lines = read(path);
 //        points = new ArrayList<>(lines.size());
@@ -149,6 +147,12 @@ public class PartitionModelRtree extends IRtree {
         long end = System.nanoTime();
         expReturn.time = end - begin;
         return expReturn;
+    }
+
+    @Override
+    public ExpReturn pointQuery(Point point) {
+        List<Point> points = Arrays.asList(point);
+        return pointQuery(points);
     }
 
     @Override

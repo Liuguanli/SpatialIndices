@@ -93,9 +93,15 @@ public class RecursiveModelRtree extends IRtree {
     }
 
     @Override
+    public ExpReturn pointQuery(Point point) {
+        List<Point> points = Arrays.asList(point);
+        return pointQuery(points);
+    }
+
+    @Override
     public boolean buildRtree(String path) {
         List<String> lines = read(path);
-        List<Point> points = new ArrayList<>(lines.size());
+        points = new ArrayList<>(lines.size());
         for (int i = 0; i < lines.size(); i++) {
             String line = lines.get(i);
             Point point = new Point(line);
