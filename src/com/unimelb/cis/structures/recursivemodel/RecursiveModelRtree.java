@@ -94,8 +94,7 @@ public class RecursiveModelRtree extends IRtree {
 
     @Override
     public ExpReturn pointQuery(Point point) {
-        List<Point> points = Arrays.asList(point);
-        return pointQuery(points);
+        return pointQuery(Arrays.asList(point));
     }
 
     @Override
