@@ -16,6 +16,9 @@ import java.util.*;
 
 public abstract class Model {
 
+    int maxError = 0;
+    int minError = 0;
+
     public Model(int index, int pageSize, String name) {
         this.index = index;
         this.pageSize = pageSize;
@@ -208,6 +211,26 @@ public abstract class Model {
             classifier.buildClassifier(instances);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public void evaluate() {
+        Instances instances = getInstances(name, getChildren());
+        List<Double> results = getPredVals(classifier, instances);
+        for (int i = 0; i < results.size(); i++) {
+            int result = results.get(i).intValue();
+            int real = (int) instances.instance(i).classValue();
+            if (result != real) {
+                if (real < result) {
+                    if (maxError < (result - real)) {
+                        maxError = result - real;
+                    }
+                } else {
+                    if (minError < (real - result)) {
+                        minError = real - result;
+                    }
+                }
+            }
         }
     }
 

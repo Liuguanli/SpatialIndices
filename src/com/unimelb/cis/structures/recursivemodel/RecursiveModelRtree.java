@@ -153,7 +153,7 @@ public class RecursiveModelRtree extends IRtree {
      * @param args
      * @throws ParseException
      */
-    public static void main(String[] args) throws ParseException {
+    public static void main(String[] args) {
         List<String> all = new ArrayList<>();
         all.addAll(regs);
         all.addAll(clas);
@@ -165,15 +165,16 @@ public class RecursiveModelRtree extends IRtree {
             recursiveModelRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_10000_1_2_.csv");
 //            recursiveModelRtree.build("D:\\datasets\\RLRtree\\raw\\normal_160000_1_2_.csv", all.get(i));
             ExpReturn expReturn = recursiveModelRtree.pointQuery(recursiveModelRtree.root.getChildren());
+            ExpReturn expReturn1 = recursiveModelRtree.windowQuery(new Mbr(0.1f, 0.1f, 0.6f, 0.6f));
             long end = System.nanoTime();
             System.out.println(end - begin);
-//            expReturn = recursiveModelRtree.windowQuery(new Mbr(0.1f, 0.1f, 0.6f, 0.6f));
             System.out.println(expReturn);
+            System.out.println(expReturn1);
+//            break;
         }
     }
 
-    public static List<String> clas = Arrays.asList("Logistic", "NaiveBayes", "MultilayerPerceptron");
+    public static List<String> clas = Arrays.asList("NaiveBayes", "MultilayerPerceptron");
     public static List<String> regs = Arrays.asList("LinearRegression");
-
 
 }
