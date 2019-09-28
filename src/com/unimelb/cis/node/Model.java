@@ -2,6 +2,7 @@ package com.unimelb.cis.node;
 
 import com.unimelb.cis.geometry.Mbr;
 import com.unimelb.cis.structures.recursivemodel.RecursiveModelRtree;
+import com.unimelb.cis.utils.ExpReturn;
 import weka.classifiers.Classifier;
 import weka.classifiers.bayes.NaiveBayes;
 import weka.classifiers.functions.LibSVM;
@@ -9,11 +10,9 @@ import weka.classifiers.functions.LinearRegression;
 import weka.classifiers.functions.Logistic;
 import weka.classifiers.functions.MultilayerPerceptron;
 import weka.classifiers.meta.FilteredClassifier;
-import weka.classifiers.pmml.consumer.NeuralNetwork;
 import weka.core.*;
 
 import java.util.*;
-import java.util.function.Consumer;
 
 public abstract class Model {
 
@@ -28,7 +27,6 @@ public abstract class Model {
         this.index = index;
         this.name = name;
         this.children = new ArrayList<>();
-        this.mbr = new Mbr();
     }
 
     String name;
@@ -229,9 +227,11 @@ public abstract class Model {
 
     public abstract void build();
 
-    public abstract void pointQuery(Point point);
+    public abstract ExpReturn pointQuery(Point point);
 
-    public abstract void pointQuery(List<Point> points);
+    public abstract ExpReturn pointQuery(List<Point> points);
+
+    public abstract ExpReturn windowQuery(Mbr window);
 
     public void updateMbr(Point point) {
         this.getMbr().updateMbr(point, point.getDim());

@@ -78,11 +78,9 @@ public abstract class Node implements Comparable {
     protected int pageSize;
 
     public Node() {
-        mbr = new Mbr();
     }
 
     public Node(int pageSize) {
-        mbr = new Mbr();
         this.pageSize = pageSize;
     }
 

@@ -1,13 +1,14 @@
 package com.unimelb.cis.structures.partitionmodel;
 
 import com.unimelb.cis.Curve;
+import com.unimelb.cis.geometry.Boundary;
 import com.unimelb.cis.geometry.Line;
+import com.unimelb.cis.geometry.Mbr;
 import com.unimelb.cis.node.LeafModel;
 import com.unimelb.cis.node.Point;
-import com.unimelb.cis.geometry.Boundary;
+import com.unimelb.cis.utils.ExpReturn;
 
 import java.util.*;
-import java.util.function.Consumer;
 
 import static com.unimelb.cis.CSVFileReader.read;
 
@@ -134,38 +135,51 @@ public class PartitionModelRtree {
         }
     }
 
-    public void pointQuery(List<Point> points) {
-        System.out.println("pointQuery");
-        for (int i = 0; i < points.size(); i++) {
-            Point point = points.get(i);
+    public ExpReturn pointQuery(List<Point> points) {
+        ExpReturn expReturn = new ExpReturn();
+        long begin = System.nanoTime();
+        points.forEach(point -> {
             int modelIndex = getModelIndex(boundary, point, point.getDim());
             LeafModel model = partitionModels.get(modelIndex);
-            if (model.getChildren().contains(point)) {
-//                System.out.println("right");
-//                System.out.println(i + "   " + modelIndex);
-            } else {
-                System.out.println("wrong");
-                System.out.println(i + "   " + modelIndex);
-            }
-        }
-//        points.forEach(point -> {
-//            int modelIndex = getModelIndex(boundary, point, point.getDim());
-//            LeafModel model = partitionModels.get(modelIndex);
-//            if (model.getChildren().contains(point)) {
-//                System.out.println("right");
-//            } else {
-//                System.out.println("wrong");
-//
-//            }
-//        });
+            // TODO for the experiment, we can change it to the list type
+            ExpReturn eachExpReturn = model.pointQuery(point);
+            expReturn.pageaccess += eachExpReturn.pageaccess;
+        });
+        long end = System.nanoTime();
+        expReturn.time = end - begin;
+        return expReturn;
     }
 
+    /**
+     * This is for linear scan not binary search
+     *
+     * @param window
+     */
+    public ExpReturn windowQuery(Mbr window) {
+        ExpReturn expReturn = new ExpReturn();
+        long begin = System.nanoTime();
+        partitionModels.forEach((integer, leafModel) -> {
+            if (leafModel.getMbr().interact(window)) {
+                ExpReturn eachExpReturn = leafModel.windowQuery(window);
+                expReturn.result.addAll(eachExpReturn.result);
+                expReturn.pageaccess += eachExpReturn.pageaccess;
+            }
+        });
+        long end = System.nanoTime();
+        expReturn.time = end - begin;
+        return expReturn;
+    }
 
     public static void main(String[] args) {
         PartitionModelRtree partitionModelRtree = new PartitionModelRtree(10000, "H", 100, "LinearRegression");
-        partitionModelRtree.build("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_160000_1_2_.csv");
+        partitionModelRtree.build("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_10000_1_2_.csv");
 //        partitionModelRtree.build("D:\\datasets\\RLRtree\\raw\\normal_160000_1_2_.csv", all.get(i));
+        System.out.println("build finish");
         partitionModelRtree.pointQuery(partitionModelRtree.points);
+        System.out.println("pointQuery finish");
+        ExpReturn expReturn = partitionModelRtree.windowQuery(new Mbr(0.1f, 0.1f, 0.6f, 0.6f));
+        System.out.println(expReturn);
+        System.out.println(expReturn.result);
     }
 
 }

@@ -1,7 +1,7 @@
 package com.unimelb.cis.node;
 
-import com.unimelb.cis.structures.recursivemodel.RecursiveModelRtree;
-import weka.classifiers.Classifier;
+import com.unimelb.cis.geometry.Mbr;
+import com.unimelb.cis.utils.ExpReturn;
 import weka.core.Instances;
 
 import java.util.ArrayList;
@@ -62,29 +62,25 @@ public class LeafModel extends Model {
         Instances instances = getInstances(name, points);
         classifier = getModels(name);
         train(classifier, instances);
-//        List<Double> results = getPredRes(classifier, instances);
-//        for (int i = 0; i < results.size(); i++) {
-//            add(results.get(i).intValue(), getChildren().get(i));
-//        }
-//        Map<Integer, LeafNode> leafNodes = getLeafNodes();
-//        leafNodes.forEach((integer, leafNode) -> System.out.println("LeafNode:" + integer + " " + leafNode.getMbr()));
     }
 
     @Override
-    public void pointQuery(Point point) {
+    public ExpReturn pointQuery(Point point) {
 //        System.out.println("LeafModel pointQuery->" + point);
         List<Point> points = new ArrayList<>();
         points.add(point);
-        pointQuery(points);
+        return pointQuery(points);
     }
 
     @Override
-    public void pointQuery(List<Point> points) {
+    public ExpReturn pointQuery(List<Point> points) {
 //        System.out.println("LeafNode pointQuery(List<Point> points)");
         Instances instances = getInstances(name, points);
         List<Double> results = getPredVals(classifier, instances);
         int max = leafNodes.size();
         int min = 0;
+        ExpReturn expReturn = new ExpReturn();
+        long begin = System.nanoTime();
         for (int i = 0; i < results.size(); i++) {
             int index = results.get(i).intValue();
             int gap = 1;
@@ -94,9 +90,7 @@ public class LeafModel extends Model {
             } else if (index >= leafNodes.size()) {
                 index = leafNodes.size() - 1;
             }
-            if (leafNodes.get(index).getChildren().contains(points.get(i))) {
-                break;
-            } else {
+            if (!leafNodes.get(index).getChildren().contains(points.get(i))) {
                 while (true) {
                     pageAccess++;
                     int real = index - gap;
@@ -113,7 +107,31 @@ public class LeafModel extends Model {
                     gap++;
                 }
             }
-            RecursiveModelRtree.pageAccess += pageAccess;
+            expReturn.pageaccess += pageAccess;
         }
+        long end = System.nanoTime();
+        expReturn.time = end - begin;
+        return expReturn;
+    }
+
+    @Override
+    public ExpReturn windowQuery(Mbr window) {
+        ExpReturn expReturn = new ExpReturn();
+        final int[] pageAccessArray = {0};
+        long begin = System.nanoTime();
+        leafNodes.forEach((integer, leafNode) -> {
+            if (leafNode.getMbr().interact(window)) {
+                pageAccessArray[0]++;
+                leafNode.getChildren().forEach(point -> {
+                    if (window.contains(point)) {
+                        expReturn.result.add(point);
+                    }
+                });
+            }
+        });
+        long end = System.nanoTime();
+        expReturn.pageaccess = pageAccessArray[0];
+        expReturn.time = end - begin;
+        return expReturn;
     }
 }
