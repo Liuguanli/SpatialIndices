@@ -118,6 +118,7 @@ public class NonLeafModel extends Model {
         List<Point> sameIndexPoints = new ArrayList<>();
         ExpReturn expReturn = new ExpReturn();
         long begin = System.nanoTime();
+        results.sort((Double::compareTo));
         for (int i = 0; i < results.size(); i++) {
 //            subModels.get(results.get(i).intValue()).pointQuery(points.get(i));
             if (results.get(i).intValue() == index.intValue()) {
@@ -158,4 +159,24 @@ public class NonLeafModel extends Model {
         expReturn.time = end - begin;
         return expReturn;
     }
+
+    @Override
+    public ExpReturn windowQueryByScanAll(Mbr window) {
+        ExpReturn expReturn = new ExpReturn();
+        final int[] pageAccessArray = {0};
+        long begin = System.nanoTime();
+        subModels.forEach((integer, leafModel) -> {
+            if (leafModel.getMbr().interact(window)) {
+                pageAccessArray[0]++;
+                ExpReturn eachExpReturn = leafModel.windowQueryByScanAll(mbr);
+                expReturn.pageaccess += eachExpReturn.pageaccess;
+                expReturn.result.addAll(eachExpReturn.result);
+            }
+        });
+        long end = System.nanoTime();
+        expReturn.pageaccess = pageAccessArray[0];
+        expReturn.time = end - begin;
+        return expReturn;
+    }
+
 }

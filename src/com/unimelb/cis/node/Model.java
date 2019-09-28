@@ -16,6 +16,9 @@ import java.util.*;
 
 public abstract class Model {
 
+    int maxError = 0;
+    int minError = 0;
+
     public Model(int index, int pageSize, String name) {
         this.index = index;
         this.pageSize = pageSize;
@@ -211,6 +214,26 @@ public abstract class Model {
         }
     }
 
+    public void evaluate() {
+        Instances instances = getInstances(name, getChildren());
+        List<Double> results = getPredVals(classifier, instances);
+        for (int i = 0; i < results.size(); i++) {
+            int result = results.get(i).intValue();
+            int real = (int) instances.instance(i).classValue();
+            if (result != real) {
+                if (real < result) {
+                    if (maxError < (result - real)) {
+                        maxError = result - real;
+                    }
+                } else {
+                    if (minError < (real - result)) {
+                        minError = real - result;
+                    }
+                }
+            }
+        }
+    }
+
     public List<Double> getPredVals(Classifier classifier, Instances instances) {
         List<Double> results = new ArrayList<>();
         try {
@@ -232,6 +255,8 @@ public abstract class Model {
     public abstract ExpReturn pointQuery(List<Point> points);
 
     public abstract ExpReturn windowQuery(Mbr window);
+
+    public abstract ExpReturn windowQueryByScanAll(Mbr window);
 
     public void updateMbr(Point point) {
         this.getMbr().updateMbr(point, point.getDim());

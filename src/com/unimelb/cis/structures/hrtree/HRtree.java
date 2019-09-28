@@ -8,20 +8,18 @@ import com.unimelb.cis.node.Node;
 import com.unimelb.cis.node.NonLeafNode;
 import com.unimelb.cis.node.Point;
 import com.unimelb.cis.structures.IRtree;
+import com.unimelb.cis.structures.RLRtree;
 import com.unimelb.cis.utils.ExpReturn;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 import static com.unimelb.cis.CSVFileReader.read;
 
-public class HRtree extends IRtree {
+public class HRtree extends RLRtree {
 
-
-    public HRtree() {
-    }
+//
+//    public HRtree() {
+//    }
 
     public HRtree(int pagesize) {
         super(pagesize);
@@ -131,6 +129,39 @@ public class HRtree extends IRtree {
         expReturn.pageaccess = pageAccessNum;
         expReturn.time = end - begin;
         return expReturn;
+    }
+
+    @Override
+    public ExpReturn pointQuery(List<Point> points) {
+        ExpReturn expReturn = new ExpReturn();
+        long begin = System.nanoTime();
+        points.forEach(point -> {
+            List<Node> nodes = new ArrayList<>();
+            nodes.add(root);
+            while (nodes.size() > 0) {
+                Node top = nodes.remove(0);
+                if (top instanceof NonLeafNode) {
+                    if (top.getMbr().contains(point)) {
+                        expReturn.pageaccess++;
+                        nodes.addAll(((NonLeafNode) top).getChildren());
+                    }
+                } else if (top instanceof LeafNode) {
+                    if (top.getMbr().contains(point)) {
+                        expReturn.pageaccess++;
+                        break;
+                    }
+                }
+
+            }
+        });
+        long end = System.nanoTime();
+        expReturn.time = end - begin;
+        return expReturn;
+    }
+
+    @Override
+    public ExpReturn pointQuery(Point point) {
+        return pointQuery(Arrays.asList(point));
     }
 
     @Override

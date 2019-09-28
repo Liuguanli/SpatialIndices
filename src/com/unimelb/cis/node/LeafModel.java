@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
 
 public class LeafModel extends Model {
 
@@ -62,6 +63,8 @@ public class LeafModel extends Model {
         Instances instances = getInstances(name, points);
         classifier = getModels(name);
         train(classifier, instances);
+        evaluate();
+        System.out.println("maxError:" + maxError + " minError:" + minError);
     }
 
     @Override
@@ -116,6 +119,42 @@ public class LeafModel extends Model {
 
     @Override
     public ExpReturn windowQuery(Mbr window) {
+
+        ExpReturn old = windowQueryByScanAll(window);
+        System.out.println("windowQueryByScanAll:" + old.result.size());
+
+
+        ExpReturn expReturn = new ExpReturn();
+        final int[] pageAccessArray = {0};
+        long begin = System.nanoTime();
+        List<Point> vertexes = window.getAllPoints();
+        Instances instances = getInstances(name, vertexes);
+        List<Double> results = getPredVals(classifier, instances);
+        int indexLow = results.get(0).intValue();
+        int indexHigh = results.get(results.size() - 1).intValue();
+        leafNodes.forEach((integer, leafNode) -> {
+            if (integer >= indexLow && integer < indexHigh) {
+                if (leafNode.getMbr().interact(window)) {
+                    pageAccessArray[0]++;
+                    leafNode.getChildren().forEach(point -> {
+                        if (window.contains(point)) {
+                            expReturn.result.add(point);
+                        }
+                    });
+                }
+            }
+
+        });
+        System.err.println(results);
+        long end = System.nanoTime();
+        expReturn.pageaccess = pageAccessArray[0];
+        expReturn.time = end - begin;
+        System.out.println("windowQuery:" + expReturn.result.size());
+        return expReturn;
+    }
+
+    @Override
+    public ExpReturn windowQueryByScanAll(Mbr window) {
         ExpReturn expReturn = new ExpReturn();
         final int[] pageAccessArray = {0};
         long begin = System.nanoTime();

@@ -117,7 +117,7 @@ public class Mbr {
 
     }
 
-    public boolean interact(Mbr mbr) {
+    public boolean mutualInteract(Mbr mbr) {
         float[] mbrLocations = mbr.getLocation();
         int dim = mbrLocations.length / 2;
 
@@ -139,28 +139,14 @@ public class Mbr {
             else
                 continue;
         }
-//        if (this.contains(new Point(mbr.x1, mbr.y1))
-//                || this.contains(new Point(mbr.x1, mbr.y2))
-//                || this.contains(new Point(mbr.x2, mbr.y1))
-//                || this.contains(new Point(mbr.x2, mbr.y2))) {
-//            return true;
-//        }
-//
-//        if (mbr.contains(new Point(this.x1, this.y1))
-//                || mbr.contains(new Point(this.x1, this.y2))
-//                || mbr.contains(new Point(this.x2, this.y1))
-//                || mbr.contains(new Point(this.x2, this.y2))) {
-//            return true;
-//        }
         return false;
     }
 
+    public boolean interact(Mbr mbr) {
+        return this.mutualInteract(mbr) || mbr.mutualInteract(this);
+    }
+
     public boolean interact(Point point) {
-//        float x = point.getX();
-//        float y = point.getY();
-//        if (x >= this.getX1() && x <= this.getX2() && y >= this.getY1() && y <= this.getY2()) {
-//            return true;
-//        }
         int dim = this.location.length / 2;
         for (int i = 0; i < dim; i++) {
             if (point.getLocation()[i] < this.location[i] || point.getLocation()[i] > this.location[i + dim])
@@ -499,6 +485,28 @@ public class Mbr {
             result += Math.pow(((location[i] + location[i + dim]) / 2 - point.getLocation()[i]), 2);
         }
         return Math.sqrt(result);
+    }
+
+    public Point getPointLow() {
+        float[] location = new float[dim];
+        for (int i = 0; i < dim; i++) {
+            location[i] = this.location[i];
+        }
+        return new Point(location);
+    }
+
+    public Point getPointHigh() {
+        float[] location = new float[dim];
+        for (int i = 0; i < dim; i++) {
+            location[i] = this.location[i + dim];
+        }
+        return new Point(location);
+    }
+
+    public List<Point> getAllPoints() {
+        List<Point> points = new ArrayList<>();
+        getAllVertexs(this, 0, dim, new float[dim], points);
+        return points;
     }
 
     //    public static List<Mbr> getMbrs(float[] sides, int dim) {

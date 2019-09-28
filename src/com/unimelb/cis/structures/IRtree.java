@@ -70,9 +70,9 @@ public abstract class IRtree {
 
     public abstract ExpReturn windowQuery(Mbr window);
 
-    public abstract void output(String file);
+    public abstract ExpReturn pointQuery(List<Point> points);
 
-    public abstract NonLeafNode buildRtreeAfterTuning(String path, int dim, int level);
+    public abstract ExpReturn pointQuery(Point point);
 
     public Visualizer visualize(int width, int height) {
         Mbr view = new Mbr(0, 0, 1, 1);
