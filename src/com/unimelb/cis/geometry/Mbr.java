@@ -11,44 +11,9 @@ public class Mbr {
 
     static Map<Integer, Map<Float, List<Mbr>>> mbrCache = new HashMap<>();
 
-//    private float x1;
-//    private float x2;
-//    private float y1;
-//    private float y2;
-//    private float z1;
-//    private float z2;
-
     private int dim;
 
     private float[] location;
-
-//    public Mbr() {
-//        x1 = Float.MAX_VALUE;
-//        x2 = Float.MIN_VALUE;
-//        y1 = Float.MAX_VALUE;
-//        y2 = Float.MIN_VALUE;
-//        location = new float[4];
-//        location[0] = x1;
-//        location[1] = y1;
-//        location[2] = x2;
-//        location[3] = y2;
-//    }
-
-//    public Mbr(float x1, float x2, float y1, float y2, float z1, float z2) {
-//        this.x1 = x1;
-//        this.x2 = x2;
-//        this.y1 = y1;
-//        this.y2 = y2;
-//        this.z1 = z1;
-//        this.z2 = z2;
-//        location = new float[6];
-//        location[0] = x1;
-//        location[1] = y1;
-//        location[2] = z1;
-//        location[3] = x2;
-//        location[4] = y2;
-//        location[5] = z2;
-//    }
 
     public Mbr(Point point) {
         dim = point.getDim();
@@ -62,66 +27,14 @@ public class Mbr {
     public Mbr(int dim) {
         location = new float[dim * 2];
         this.dim = dim;
-//        if (dim == 2) {
-//            x1 = Float.MAX_VALUE;
-//            x2 = Float.MIN_VALUE;
-//            y1 = Float.MAX_VALUE;
-//            y2 = Float.MIN_VALUE;
-//            location[0] = x1;
-//            location[1] = y1;
-//            location[2] = x2;
-//            location[3] = y2;
-//        } else if (dim == 3) {
-//            this.x1 = Float.MAX_VALUE;
-//            this.x2 = Float.MIN_VALUE;
-//            this.y1 = Float.MAX_VALUE;
-//            this.y2 = Float.MIN_VALUE;
-//            this.z1 = Float.MAX_VALUE;
-//            this.z2 = Float.MIN_VALUE;
-//            location[0] = x1;
-//            location[1] = y1;
-//            location[2] = z1;
-//            location[3] = x2;
-//            location[4] = y2;
-//            location[5] = z2;
-//        } else {
         for (int i = 0; i < dim; i++) {
             location[i] = Float.MAX_VALUE;
             location[i + dim] = Float.MIN_VALUE;
         }
-//        }
     }
 
-//    public Mbr(float x1, float x2, float y1, float y2) {
-//        this.x1 = x1;
-//        this.x2 = x2;
-//        this.y1 = y1;
-//        this.y2 = y2;
-//        location = new float[4];
-//        location[0] = x1;
-//        location[1] = y1;
-//        location[2] = x2;
-//        location[3] = y2;
-//    }
-
     public Mbr(float... location) {
-        if (location.length == 4) {
-//            this.x1 = location[0];
-//            this.y1 = location[1];
-//            this.x2 = location[2];
-//            this.y2 = location[3];
-            this.location = location;
-        } else if (location.length == 6) {
-//            this.x1 = location[0];
-//            this.y1 = location[1];
-//            this.z1 = location[2];
-//            this.x2 = location[3];
-//            this.y2 = location[4];
-//            this.z2 = location[5];
-            this.location = location;
-        } else {
-            this.location = location;
-        }
+        this.location = location;
         dim = location.length / 2;
     }
 

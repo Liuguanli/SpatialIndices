@@ -1,10 +1,12 @@
 package com.unimelb.cis.structures.recursivemodel;
 
 import com.unimelb.cis.Curve;
+import com.unimelb.cis.geometry.Mbr;
 import com.unimelb.cis.node.LeafModel;
 import com.unimelb.cis.node.Model;
 import com.unimelb.cis.node.NonLeafModel;
 import com.unimelb.cis.node.Point;
+import com.unimelb.cis.utils.ExpReturn;
 import weka.classifiers.Classifier;
 import weka.classifiers.functions.LinearRegression;
 import weka.classifiers.functions.Logistic;
@@ -57,9 +59,9 @@ public class RecursiveModelRtree {
         points = Curve.getPointByCurve(points, this.curveType);
         int classNum = points.size() / threshold;
         if (classNum <= 1) {
-            root = new LeafModel(-1, algorithmName);
+            root = new LeafModel(-1, pageSize, algorithmName);
         } else {
-            root = new NonLeafModel(-1, 100, algorithmName, threshold);
+            root = new NonLeafModel(-1, pageSize, algorithmName, threshold);
         }
         System.out.println("Root:" + root.getIndex());
         root.setChildren(points);
@@ -82,10 +84,18 @@ public class RecursiveModelRtree {
 //        return classifier;
 //    }
 
-    public void pointQuery(List<Point> points) {
-        if(root != null) {
-            root.pointQuery(points);
+    public ExpReturn pointQuery(List<Point> points) {
+        if (root != null) {
+            return root.pointQuery(points);
         }
+        return null;
+    }
+
+    public ExpReturn windowQuery(Mbr window) {
+        if (root != null) {
+            return root.windowQuery(window);
+        }
+        return null;
     }
 
     /**
@@ -104,19 +114,23 @@ public class RecursiveModelRtree {
         List<String> all = new ArrayList<>();
         all.addAll(regs);
         all.addAll(clas);
+
         for (int i = 0; i < all.size(); i++) {
+            long begin = System.nanoTime();
             System.out.println("---------------" + all.get(i) + "---------------");
             RecursiveModelRtree recursiveModelRtree = new RecursiveModelRtree(10000, "H", 100);
-            recursiveModelRtree.build("D:\\datasets\\RLRtree\\raw\\normal_160000_1_2_.csv", all.get(i));
-            recursiveModelRtree.pointQuery(recursiveModelRtree.root.getChildren());
-            System.out.println(pageAccess);
-            pageAccess = 0;
+            recursiveModelRtree.build("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_10000_1_2_.csv", all.get(i));
+//            recursiveModelRtree.build("D:\\datasets\\RLRtree\\raw\\normal_160000_1_2_.csv", all.get(i));
+            ExpReturn expReturn = recursiveModelRtree.pointQuery(recursiveModelRtree.root.getChildren());
+            long end = System.nanoTime();
+            System.out.println(end - begin);
+//            expReturn = recursiveModelRtree.windowQuery(new Mbr(0.1f, 0.1f, 0.6f, 0.6f));
+            System.out.println(expReturn);
         }
     }
 
     public static List<String> clas = Arrays.asList("Logistic", "NaiveBayes", "MultilayerPerceptron");
     public static List<String> regs = Arrays.asList("LinearRegression");
 
-    public static int pageAccess = 0;
 
 }
