@@ -40,8 +40,17 @@ public class ZRtree extends RLRtree {
 
     @Override
     public boolean buildRtree(List<Point> points) {
+        bitNum = (int) (Math.log(points.size()) / Math.log(2.0)) + 1;
         int dimension = points.get(0).getDim();
+        for (int i = 0; i < dim; i++) {
+            List<Float> locations = new ArrayList<>();
+            int finalI = i;
+            points.forEach(point -> locations.add(point.getLocation()[finalI]));
+            locations.sort(Float::compareTo);
+            axisLocations.put(i, locations);
+        }
         points = ZCurve.zCurve(points);
+        points.forEach(point -> curveValues.add(point.getCurveValue()));
         this.points = points;
         LeafNode leafNode = null;
         List<Node> childrenNodes = new ArrayList<>();
@@ -79,7 +88,7 @@ public class ZRtree extends RLRtree {
             nonLeafNodes.clear();
         }
 
-        root = (NonLeafNode) childrenNodes.get(0);
+        root = childrenNodes.get(0);
         root.setLevel(currentLevel);
         this.setLevel(currentLevel);
         this.setDim(dimension);

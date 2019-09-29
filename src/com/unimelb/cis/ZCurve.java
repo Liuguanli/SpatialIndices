@@ -19,14 +19,14 @@ public class ZCurve extends Curve {
         for (int i = 0; i < points.size(); i++) {
             Point point = points.get(i);
             long result = getZcurve(point.getLocationOrder(), bitNum);
-            point.setzCurveValue(result);
+            point.setCurveValue(result);
         }
 
         Collections.sort(points, new Comparator<Point>() {
             public int compare(Point o1, Point o2) {
-                if (o1.getzCurveValue() > o2.getzCurveValue()) {
+                if (o1.getCurveValue() > o2.getCurveValue()) {
                     return 1;
-                } else if (o1.getzCurveValue() < o2.getzCurveValue()) {
+                } else if (o1.getCurveValue() < o2.getCurveValue()) {
                     return -1;
                 } else {
                     return 0;
@@ -36,7 +36,7 @@ public class ZCurve extends Curve {
         return points;
     }
 
-    public static long getZcurve(int[] locationOrder, int length) {
+    public static long getZcurve(long[] locationOrder, int length) {
         long result = 0;
         for (int i = 0; i < length; i++) {
             long seed = (long) (Math.pow(2, i));

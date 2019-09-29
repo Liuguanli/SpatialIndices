@@ -19,12 +19,12 @@ public class HilbertCurve extends Curve {
 //        for (int i = 0; i < points.size(); i++) {
 //            Point point = points.get(i);
 //            int result = get2DZcurve(point.getxIndex(), point.getyIndex(), bitNum);
-//            point.setzCurveValue(result);
+//            point.setCurveValue(result);
 //        }
         for (int i = 0; i < points.size(); i++) {
             Point point = points.get(i);
-            long result = getHilbertValue(bitNum, point.getxIndex(), point.getyIndex());
-            point.setzCurveValue(result);
+            long result = getHilbertValue(bitNum, point.getLocationOrder());
+            point.setCurveValue(result);
 //            if (i % 10000 == 0) {
 //                System.out.println("cal ing");
 //            }
@@ -32,9 +32,9 @@ public class HilbertCurve extends Curve {
 
         Collections.sort(points, new Comparator<Point>() {
             public int compare(Point o1, Point o2) {
-                if (o1.getzCurveValue() > o2.getzCurveValue()) {
+                if (o1.getCurveValue() > o2.getCurveValue()) {
                     return 1;
-                } else if (o1.getzCurveValue() < o2.getzCurveValue()) {
+                } else if (o1.getCurveValue() < o2.getCurveValue()) {
                     return -1;
                 } else {
                     return 0;

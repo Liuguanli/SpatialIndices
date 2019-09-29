@@ -155,6 +155,27 @@ public class PartitionModelRtree extends IRtree {
     }
 
     @Override
+    public ExpReturn insert(List<Point> points) {
+        ExpReturn expReturn = new ExpReturn();
+        long begin = System.nanoTime();
+
+        points.forEach(point -> {
+            int modelIndex = getModelIndex(boundary, point, point.getDim());
+            LeafModel model = partitionModels.get(modelIndex);
+
+            model.insert(point);
+
+            ExpReturn eachExpReturn = model.pointQuery(point);
+            expReturn.pageaccess += eachExpReturn.pageaccess;
+        });
+
+
+        long end = System.nanoTime();
+        expReturn.time = end - begin;
+        return expReturn;
+    }
+
+    @Override
     public boolean buildRtree(String path) {
         List<String> lines = read(path);
         points = new ArrayList<>(lines.size());

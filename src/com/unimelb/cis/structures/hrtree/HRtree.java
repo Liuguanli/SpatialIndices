@@ -7,7 +7,6 @@ import com.unimelb.cis.node.LeafNode;
 import com.unimelb.cis.node.Node;
 import com.unimelb.cis.node.NonLeafNode;
 import com.unimelb.cis.node.Point;
-import com.unimelb.cis.structures.IRtree;
 import com.unimelb.cis.structures.RLRtree;
 import com.unimelb.cis.utils.ExpReturn;
 
@@ -35,8 +34,17 @@ public class HRtree extends RLRtree {
 
     @Override
     public boolean buildRtree(List<Point> points) {
+        bitNum = (int) (Math.log(points.size()) / Math.log(2.0)) + 1;
         int dimension = points.get(0).getDim();
+        for (int i = 0; i < dim; i++) {
+            List<Float> locations = new ArrayList<>();
+            int finalI = i;
+            points.forEach(point -> locations.add(point.getLocation()[finalI]));
+            locations.sort(Float::compareTo);
+            axisLocations.put(i, locations);
+        }
         points = HilbertCurve.hilbertCurve(points);
+        points.forEach(point -> curveValues.add(point.getCurveValue()));
         this.points = points;
         LeafNode leafNode = null;
         List<Node> childrenNodes = new ArrayList<>();
@@ -164,6 +172,7 @@ public class HRtree extends RLRtree {
         return pointQuery(Arrays.asList(point));
     }
 
+
     @Override
     public NonLeafNode buildRtreeAfterTuning(String path, int dim, int level) {
         this.dataFile = path;
@@ -229,6 +238,38 @@ public class HRtree extends RLRtree {
         root.add(nodes[level - 1]);
         this.root = root;
         return root;
+    }
+
+    public ExpReturn insert(List<Point> points) {
+        ExpReturn expReturn = new ExpReturn();
+        long begin = System.nanoTime();
+        points.forEach(point -> {
+            long[] indexOrder = new long[dim];
+            for (int i = 0; i < dim; i++) {
+                indexOrder[i] = binarySearch(axisLocations.get(i), point.getLocation()[i]);
+            }
+            int pos = binarySearch(curveValues, HilbertCurve.getHilbertValue(bitNum, indexOrder));
+            int index = pos / pagesize;
+            if (index > 0 && index < leafNodes.size()) {
+                LeafNode node = (LeafNode) leafNodes.get(index);
+                if (node.isFull()) {
+                    NonLeafNode parent = findNode(node);
+                    if (parent != null) {
+                        int nodeIndex = parent.getChildren().indexOf(node);
+                        LeafNode newLeafNode = node.split();
+                        NonLeafNode child = new NonLeafNode(pagesize, dim);
+                        child.add(node);
+                        child.add(newLeafNode);
+
+                        parent.getChildren().set(nodeIndex, child);
+                        leafNodes.add(index + 1, newLeafNode);
+                    }
+                }
+            }
+        });
+        long end = System.nanoTime();
+        expReturn.time = end - begin;
+        return expReturn;
     }
 
     @Override

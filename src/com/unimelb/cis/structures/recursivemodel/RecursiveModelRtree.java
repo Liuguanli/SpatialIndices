@@ -150,6 +150,17 @@ public class RecursiveModelRtree extends IRtree {
         return null;
     }
 
+    @Override
+    public ExpReturn insert(List<Point> points) {
+        ExpReturn expReturn = new ExpReturn();
+        long begin = System.nanoTime();
+
+        long end = System.nanoTime();
+        expReturn.time = end - begin;
+        return expReturn;
+    }
+
+
     /**
      * add data
      * https://waikato.github.io/weka-wiki/formats_and_processing/creating_arff_file/

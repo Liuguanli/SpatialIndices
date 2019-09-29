@@ -1,6 +1,7 @@
 package com.unimelb.cis.node;
 
 import com.unimelb.cis.geometry.Mbr;
+import com.unimelb.cis.utils.ExpReturn;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -351,6 +352,17 @@ public class LeafNode extends Node {
             temp.updateMbr(point, dim);
         }
         return temp;
+    }
+
+    public LeafNode split() {
+        //right part
+        LeafNode leafNode = new LeafNode();
+        leafNode.addAll(children.subList(pageSize / 2, pageSize));
+        // left part
+        List<Point> temp = new ArrayList<>(children.subList(0, pageSize / 2));
+        children.clear();
+        this.addAll(temp);
+        return leafNode;
     }
 
     @Override

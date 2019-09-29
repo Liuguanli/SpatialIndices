@@ -4,11 +4,9 @@ import com.unimelb.cis.geometry.Mbr;
 import com.unimelb.cis.utils.ExpReturn;
 import weka.core.Instances;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 public class LeafModel extends Model {
 
@@ -73,6 +71,36 @@ public class LeafModel extends Model {
         List<Point> points = new ArrayList<>();
         points.add(point);
         return pointQuery(points);
+    }
+
+    public ExpReturn insert(Point point) {
+        return insert(Arrays.asList(point));
+    }
+
+    public ExpReturn insert(List<Point> points) {
+        ExpReturn expReturn = new ExpReturn();
+        long begin = System.nanoTime();
+        Instances instances = getInstances(name, points);
+        List<Double> results = getPredVals(classifier, instances);
+        points.forEach(point -> results.forEach(aDouble -> {
+            int index = aDouble.intValue();
+            LeafNode target = leafNodes.get(index);
+            if (target.isFull()) {
+                LeafNode newLeafNode = target.split();
+                int last = leafNodes.size();
+                for (int i = last; i > index + 1; i--) {
+                    leafNodes.put(i, leafNodes.get(i - 1));
+                }
+                leafNodes.put(index + 1, newLeafNode);
+            } else {
+                target.add(point);
+            }
+        }));
+
+
+        long end = System.nanoTime();
+        expReturn.time = end - begin;
+        return expReturn;
     }
 
     @Override

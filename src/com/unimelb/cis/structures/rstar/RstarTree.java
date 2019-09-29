@@ -5,11 +5,11 @@ import com.unimelb.cis.node.LeafNode;
 import com.unimelb.cis.node.Node;
 import com.unimelb.cis.node.NonLeafNode;
 import com.unimelb.cis.node.Point;
-import com.unimelb.cis.structures.IRtree;
 import com.unimelb.cis.structures.RLRtree;
 import com.unimelb.cis.utils.ExpReturn;
 
 import java.util.*;
+import java.util.function.Consumer;
 
 import static com.unimelb.cis.CSVFileReader.read;
 
@@ -45,7 +45,7 @@ public class RstarTree extends RLRtree {
         for (int i = 0; i < lines.size(); i++) {
             String line = lines.get(i);
             Point point = new Point(line);
-            point.setzCurveValue(i);
+            point.setCurveValue(i);
             points.add(point);
         }
         return buildRtree(points);
@@ -98,6 +98,16 @@ public class RstarTree extends RLRtree {
     @Override
     public ExpReturn pointQuery(Point point) {
         return pointQuery(Arrays.asList(point));
+    }
+
+    @Override
+    public ExpReturn insert(List<Point> points) {
+        ExpReturn expReturn = new ExpReturn();
+        long begin = System.nanoTime();
+        points.forEach(point -> insert(point));
+        long end = System.nanoTime();
+        expReturn.time = end - begin;
+        return expReturn;
     }
 
     @Override
