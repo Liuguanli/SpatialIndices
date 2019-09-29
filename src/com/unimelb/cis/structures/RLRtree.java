@@ -10,6 +10,4 @@ public abstract class RLRtree extends IRtree {
 
     public abstract void output(String file);
 
-    public abstract NonLeafNode buildRtreeAfterTuning(String path, int dim, int level);
-
 }

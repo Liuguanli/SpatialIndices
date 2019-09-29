@@ -5,6 +5,7 @@ import com.unimelb.cis.geometry.Boundary;
 import com.unimelb.cis.geometry.Line;
 import com.unimelb.cis.geometry.Mbr;
 import com.unimelb.cis.node.LeafModel;
+import com.unimelb.cis.node.NonLeafNode;
 import com.unimelb.cis.node.Point;
 import com.unimelb.cis.structures.IRtree;
 import com.unimelb.cis.utils.ExpReturn;
@@ -173,6 +174,16 @@ public class PartitionModelRtree extends IRtree {
         long end = System.nanoTime();
         expReturn.time = end - begin;
         return expReturn;
+    }
+
+    @Override
+    public ExpReturn insert(Point point) {
+        return insert(Arrays.asList(point));
+    }
+
+    @Override
+    public NonLeafNode buildRtreeAfterTuning(String path, int dim, int level) {
+        return null;
     }
 
     @Override

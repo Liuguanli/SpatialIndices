@@ -2,10 +2,7 @@ package com.unimelb.cis.structures.recursivemodel;
 
 import com.unimelb.cis.Curve;
 import com.unimelb.cis.geometry.Mbr;
-import com.unimelb.cis.node.LeafModel;
-import com.unimelb.cis.node.Model;
-import com.unimelb.cis.node.NonLeafModel;
-import com.unimelb.cis.node.Point;
+import com.unimelb.cis.node.*;
 import com.unimelb.cis.structures.IRtree;
 import com.unimelb.cis.utils.ExpReturn;
 
@@ -147,6 +144,16 @@ public class RecursiveModelRtree extends IRtree {
         if (root != null) {
             return root.windowQuery(window);
         }
+        return null;
+    }
+
+    @Override
+    public ExpReturn insert(Point point) {
+        return insert(Arrays.asList(point));
+    }
+
+    @Override
+    public NonLeafNode buildRtreeAfterTuning(String path, int dim, int level) {
         return null;
     }
 

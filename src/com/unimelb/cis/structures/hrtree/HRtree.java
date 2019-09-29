@@ -273,6 +273,11 @@ public class HRtree extends RLRtree {
     }
 
     @Override
+    public ExpReturn insert(Point point) {
+        return insert(Arrays.asList(point));
+    }
+
+    @Override
     public void output(String file) {
         List<String> lines = new ArrayList<>();
         List<Node> nodes = new ArrayList<>();

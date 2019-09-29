@@ -1,6 +1,7 @@
 package com.unimelb.cis.structures.zrtree;
 
 import com.unimelb.cis.CSVFileWriter;
+import com.unimelb.cis.HilbertCurve;
 import com.unimelb.cis.ZCurve;
 import com.unimelb.cis.geometry.Mbr;
 import com.unimelb.cis.node.*;
@@ -162,6 +163,43 @@ public class ZRtree extends RLRtree {
     @Override
     public ExpReturn pointQuery(Point point) {
         return pointQuery(Arrays.asList(point));
+    }
+
+    public ExpReturn insert(List<Point> points) {
+        ExpReturn expReturn = new ExpReturn();
+        long begin = System.nanoTime();
+        points.forEach(point -> {
+            long[] indexOrder = new long[dim];
+            for (int i = 0; i < dim; i++) {
+                indexOrder[i] = binarySearch(axisLocations.get(i), point.getLocation()[i]);
+            }
+            int pos = binarySearch(curveValues, ZCurve.getZcurve(indexOrder, bitNum));
+            int index = pos / pagesize;
+            if (index > 0 && index < leafNodes.size()) {
+                LeafNode node = (LeafNode) leafNodes.get(index);
+                if (node.isFull()) {
+                    NonLeafNode parent = findNode(node);
+                    if (parent != null) {
+                        int nodeIndex = parent.getChildren().indexOf(node);
+                        LeafNode newLeafNode = node.split();
+                        NonLeafNode child = new NonLeafNode(pagesize, dim);
+                        child.add(node);
+                        child.add(newLeafNode);
+
+                        parent.getChildren().set(nodeIndex, child);
+                        leafNodes.add(index + 1, newLeafNode);
+                    }
+                }
+            }
+        });
+        long end = System.nanoTime();
+        expReturn.time = end - begin;
+        return expReturn;
+    }
+
+    @Override
+    public ExpReturn insert(Point point) {
+        return insert(Arrays.asList(point));
     }
 
     @Override
