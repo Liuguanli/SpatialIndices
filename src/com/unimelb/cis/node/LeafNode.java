@@ -356,7 +356,7 @@ public class LeafNode extends Node {
 
     public LeafNode split() {
         //right part
-        LeafNode leafNode = new LeafNode();
+        LeafNode leafNode = new LeafNode(pageSize, dim);
         leafNode.addAll(children.subList(pageSize / 2, pageSize));
         // left part
         List<Point> temp = new ArrayList<>(children.subList(0, pageSize / 2));

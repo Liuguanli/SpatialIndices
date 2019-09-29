@@ -453,8 +453,8 @@ public class RstarTree extends RLRtree {
         rstarTree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_1000_1_2_.csv");
 
 //        System.out.println(rstarTree.root);
-
-        rstarTree.visualize(600, 600).save("rstar_revisit.png");
+        rstarTree.insert(new Point(0.5f,0.5f));
+//        rstarTree.visualize(600, 600).save("rstar_revisit.png");
 //        rstarTree.output("/Users/guanli/Documents/datasets/RLRtree/trees/Z_uniform_10000_1_3_.csv");
 //
 //        rstarTree.buildRtreeAfterTuning("/Users/guanli/Documents/datasets/RLRtree/trees/Z_uniform_10000_1_3_.csv", rstarTree.getDim(), rstarTree.getLevel());

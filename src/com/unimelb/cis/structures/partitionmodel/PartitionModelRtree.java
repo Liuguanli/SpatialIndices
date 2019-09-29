@@ -163,13 +163,8 @@ public class PartitionModelRtree extends IRtree {
         points.forEach(point -> {
             int modelIndex = getModelIndex(boundary, point, point.getDim());
             LeafModel model = partitionModels.get(modelIndex);
-
             model.insert(point);
-
-            ExpReturn eachExpReturn = model.pointQuery(point);
-            expReturn.pageaccess += eachExpReturn.pageaccess;
         });
-
 
         long end = System.nanoTime();
         expReturn.time = end - begin;
@@ -258,9 +253,12 @@ public class PartitionModelRtree extends IRtree {
 //        partitionModelRtree.build("D:\\datasets\\RLRtree\\raw\\normal_160000_1_2_.csv", all.get(i));
             System.out.println("build finish");
 
-            System.out.println(partitionModelRtree.pointQuery(partitionModelRtree.points));
-            ExpReturn expReturn = partitionModelRtree.windowQuery(new Mbr(0.1f, 0.1f, 0.6f, 0.6f));
-            System.out.println(expReturn);
+//            System.out.println(partitionModelRtree.pointQuery(partitionModelRtree.points));
+//            ExpReturn expReturn = partitionModelRtree.windowQuery(new Mbr(0.1f, 0.1f, 0.6f, 0.6f));
+//            System.out.println(expReturn);
+
+            System.out.println("insert" + partitionModelRtree.insert(new Point(0.5f, 0.5f)));
+
 //            break;
         }
     }

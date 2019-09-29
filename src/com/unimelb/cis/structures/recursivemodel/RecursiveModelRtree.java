@@ -191,12 +191,13 @@ public class RecursiveModelRtree extends IRtree {
             RecursiveModelRtree recursiveModelRtree = new RecursiveModelRtree(10000, "H", 100, all.get(i));
             recursiveModelRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_10000_1_2_.csv");
 //            recursiveModelRtree.build("D:\\datasets\\RLRtree\\raw\\normal_160000_1_2_.csv", all.get(i));
-            ExpReturn expReturn = recursiveModelRtree.pointQuery(recursiveModelRtree.root.getChildren());
-            ExpReturn expReturn1 = recursiveModelRtree.windowQuery(new Mbr(0.1f, 0.1f, 0.6f, 0.6f));
-            long end = System.nanoTime();
-            System.out.println(end - begin);
-            System.out.println(expReturn);
-            System.out.println(expReturn1);
+//            ExpReturn expReturn = recursiveModelRtree.pointQuery(recursiveModelRtree.root.getChildren());
+//            ExpReturn expReturn1 = recursiveModelRtree.windowQuery(new Mbr(0.1f, 0.1f, 0.6f, 0.6f));
+//            long end = System.nanoTime();
+//            System.out.println(end - begin);
+//            System.out.println(expReturn);
+//            System.out.println(expReturn1);
+            System.out.println("insert" + recursiveModelRtree.insert(new Point(0.5f, 0.5f)));
 //            break;
         }
     }

@@ -42,7 +42,7 @@ public class ZRtree extends RLRtree {
     @Override
     public boolean buildRtree(List<Point> points) {
         bitNum = (int) (Math.log(points.size()) / Math.log(2.0)) + 1;
-        int dimension = points.get(0).getDim();
+        dim = points.get(0).getDim();
         for (int i = 0; i < dim; i++) {
             List<Float> locations = new ArrayList<>();
             int finalI = i;
@@ -58,7 +58,7 @@ public class ZRtree extends RLRtree {
         int currentLevel = 0;
         for (int i = 0; i < points.size(); i++) {
             if (i % pagesize == 0) {
-                leafNode = new LeafNode(pagesize, dimension);
+                leafNode = new LeafNode(pagesize, dim);
                 leafNode.setLevel(currentLevel);
                 childrenNodes.add(leafNode);
             }
@@ -75,7 +75,7 @@ public class ZRtree extends RLRtree {
         while (childrenNodes.size() != 1) {
             for (int i = 0; i < childrenNodes.size(); i++) {
                 if (i % pagesize == 0) {
-                    nonLeafNode = new NonLeafNode(pagesize, dimension);
+                    nonLeafNode = new NonLeafNode(pagesize, dim);
                     nonLeafNode.setLevel(currentLevel);
                     nonLeafNodes.add(nonLeafNode);
                 }
@@ -92,7 +92,7 @@ public class ZRtree extends RLRtree {
         root = childrenNodes.get(0);
         root.setLevel(currentLevel);
         this.setLevel(currentLevel);
-        this.setDim(dimension);
+        this.setDim(dim);
         return true;
     }
 
@@ -307,6 +307,8 @@ public class ZRtree extends RLRtree {
 //        System.out.println(zRtree.windowQuery(Mbr.getMbrs(0.01f, 11, 3).get(0)));
 
         zRtree.visualize(600, 600).save("ztree_skewed.png");
+
+        zRtree.insert(new Point(0.5f,0.5f));
 
 //        Mbr mbr = new Mbr(1,2,3,4);
 

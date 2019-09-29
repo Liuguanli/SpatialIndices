@@ -82,21 +82,21 @@ public class LeafModel extends Model {
         long begin = System.nanoTime();
         Instances instances = getInstances(name, points);
         List<Double> results = getPredVals(classifier, instances);
-        points.forEach(point -> results.forEach(aDouble -> {
-            int index = aDouble.intValue();
+
+        for (int i = 0; i < results.size(); i++) {
+            int index = results.get(i).intValue();
             LeafNode target = leafNodes.get(index);
             if (target.isFull()) {
                 LeafNode newLeafNode = target.split();
                 int last = leafNodes.size();
-                for (int i = last; i > index + 1; i--) {
-                    leafNodes.put(i, leafNodes.get(i - 1));
+                for (int j = last; j > index + 1; j--) {
+                    leafNodes.put(j, leafNodes.get(j - 1));
                 }
                 leafNodes.put(index + 1, newLeafNode);
             } else {
-                target.add(point);
+                target.add(points.get(i));
             }
-        }));
-
+        }
 
         long end = System.nanoTime();
         expReturn.time = end - begin;

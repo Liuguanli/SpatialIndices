@@ -8,6 +8,7 @@ import com.unimelb.cis.node.Node;
 import com.unimelb.cis.node.NonLeafNode;
 import com.unimelb.cis.node.Point;
 import com.unimelb.cis.structures.RLRtree;
+import com.unimelb.cis.structures.zrtree.ZRtree;
 import com.unimelb.cis.utils.ExpReturn;
 
 import java.util.*;
@@ -35,7 +36,7 @@ public class HRtree extends RLRtree {
     @Override
     public boolean buildRtree(List<Point> points) {
         bitNum = (int) (Math.log(points.size()) / Math.log(2.0)) + 1;
-        int dimension = points.get(0).getDim();
+        dim = points.get(0).getDim();
         for (int i = 0; i < dim; i++) {
             List<Float> locations = new ArrayList<>();
             int finalI = i;
@@ -51,7 +52,7 @@ public class HRtree extends RLRtree {
         int currentLevel = 0;
         for (int i = 0; i < points.size(); i++) {
             if (i % pagesize == 0) {
-                leafNode = new LeafNode(pagesize, dimension);
+                leafNode = new LeafNode(pagesize, dim);
                 leafNode.setLevel(currentLevel);
                 childrenNodes.add(leafNode);
             }
@@ -68,7 +69,7 @@ public class HRtree extends RLRtree {
         while (childrenNodes.size() != 1) {
             for (int i = 0; i < childrenNodes.size(); i++) {
                 if (i % pagesize == 0) {
-                    nonLeafNode = new NonLeafNode(pagesize, dimension);
+                    nonLeafNode = new NonLeafNode(pagesize, dim);
                     nonLeafNode.setLevel(currentLevel);
                     nonLeafNodes.add(nonLeafNode);
                 }
@@ -84,7 +85,7 @@ public class HRtree extends RLRtree {
 
         root = childrenNodes.get(0);
         this.setLevel(currentLevel);
-        this.setDim(dimension);
+        this.setDim(dim);
         return true;
     }
 
@@ -294,4 +295,22 @@ public class HRtree extends RLRtree {
         }
         CSVFileWriter.write(lines, file);
     }
+
+    public static void main(String[] args) {
+        HRtree hRtree = new HRtree(100);
+
+        hRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/skewed_160000_9_2_.csv");
+
+//        zRtree.output("/Users/guanli/Documents/datasets/RLRtree/trees/Z_uniform_10000_1_2_.csv");
+
+//        zRtree.buildRtreeAfterTuning("/Users/guanli/Documents/datasets/RLRtree/trees/Z_uniform_10000_1_3_.csv", zRtree.getDim(), zRtree.getLevel());
+//        zRtree.getRoot();
+
+//        System.out.println(zRtree.windowQuery(Mbr.getMbrs(0.01f, 10, 3).get(0)));
+//        System.out.println(zRtree.windowQuery(Mbr.getMbrs(0.01f, 9, 3).get(0)));
+//        System.out.println(zRtree.windowQuery(Mbr.getMbrs(0.01f, 11, 3).get(0)));
+
+        hRtree.insert(new Point(0.5f,0.5f));
+    }
+
 }
