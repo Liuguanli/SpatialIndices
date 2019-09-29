@@ -244,7 +244,7 @@ public class Point extends Node implements Comparable {
         for (int i = 0; i < num; i++) {
             float[] locations = new float[dim];
             for (int j = 0; j < dim; j++) {
-                locations[i] = random.nextFloat();
+                locations[j] = random.nextFloat();
             }
             points.add(new Point(locations));
         }

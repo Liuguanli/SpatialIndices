@@ -2,6 +2,7 @@ package com.unimelb.cis.structures.hrtree;
 
 import com.unimelb.cis.CSVFileWriter;
 import com.unimelb.cis.HilbertCurve;
+import com.unimelb.cis.ZCurve;
 import com.unimelb.cis.geometry.Mbr;
 import com.unimelb.cis.node.LeafNode;
 import com.unimelb.cis.node.Node;
@@ -187,7 +188,7 @@ public class HRtree extends RLRtree {
         for (int i = 1; i < level; i++) {
             nodes[i] = new NonLeafNode(pagesize, dim);
         }
-
+        List<Point> points = new ArrayList<>();
         root.add(nodes[level - 1]);
         for (int i = 0; i < lines.size(); i++) {
             String line = lines.get(i);
@@ -199,7 +200,7 @@ public class HRtree extends RLRtree {
             }
 
             Point point = new Point(0, locations);
-
+            points.add(point);
             if (i == 0) {
                 ((LeafNode) nodes[0]).add(point);
                 for (int j = 1; j < level; j++) {
@@ -236,6 +237,16 @@ public class HRtree extends RLRtree {
                 }
             }
         }
+        this.points = points;
+        for (int i = 0; i < dim; i++) {
+            List<Float> locations = new ArrayList<>();
+            int finalI = i;
+            points.forEach(point -> locations.add(point.getLocation()[finalI]));
+            locations.sort(Float::compareTo);
+            axisLocations.put(i, locations);
+        }
+        points = ZCurve.zCurve(points);
+        points.forEach(point -> curveValues.add(point.getCurveValue()));
         root.add(nodes[level - 1]);
         this.root = root;
         return root;

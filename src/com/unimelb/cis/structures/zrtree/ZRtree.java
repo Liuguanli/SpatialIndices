@@ -220,6 +220,7 @@ public class ZRtree extends RLRtree {
 //        for (int i = 0; i < level - 1; i++) {
 //            ((NonLeafNode) nodes[i + 1]).add(nodes[i]);
 //        }
+        List<Point> points = new ArrayList<>();
         root.add(nodes[level - 1]);
         for (int i = 0; i < lines.size(); i++) {
             String line = lines.get(i);
@@ -231,7 +232,7 @@ public class ZRtree extends RLRtree {
             }
 
             Point point = new Point(0, locations);
-
+            points.add(point);
             if (i == 0) {
                 ((LeafNode) nodes[0]).add(point);
                 for (int j = 1; j < level; j++) {
@@ -269,6 +270,16 @@ public class ZRtree extends RLRtree {
             }
 //            points.add(point);
         }
+        this.points = points;
+        for (int i = 0; i < dim; i++) {
+            List<Float> locations = new ArrayList<>();
+            int finalI = i;
+            points.forEach(point -> locations.add(point.getLocation()[finalI]));
+            locations.sort(Float::compareTo);
+            axisLocations.put(i, locations);
+        }
+        points = ZCurve.zCurve(points);
+        points.forEach(point -> curveValues.add(point.getCurveValue()));
         root.add(nodes[level - 1]);
         this.root = root;
         return root;
@@ -295,20 +306,25 @@ public class ZRtree extends RLRtree {
     public static void main(String[] args) {
         ZRtree zRtree = new ZRtree(100);
 
-        zRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/skewed_160000_9_2_.csv");
+//        zRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/skewed_160000_9_2_.csv");
 
 //        zRtree.output("/Users/guanli/Documents/datasets/RLRtree/trees/Z_uniform_10000_1_2_.csv");
 
-//        zRtree.buildRtreeAfterTuning("/Users/guanli/Documents/datasets/RLRtree/trees/Z_uniform_10000_1_3_.csv", zRtree.getDim(), zRtree.getLevel());
+        zRtree.buildRtreeAfterTuning("/Users/guanli/Documents/datasets/RLRtree/trees/Z_uniform_160000_1_2_.csv", 2, 2);
 //        zRtree.getRoot();
 
 //        System.out.println(zRtree.windowQuery(Mbr.getMbrs(0.01f, 10, 3).get(0)));
 //        System.out.println(zRtree.windowQuery(Mbr.getMbrs(0.01f, 9, 3).get(0)));
 //        System.out.println(zRtree.windowQuery(Mbr.getMbrs(0.01f, 11, 3).get(0)));
 
-        zRtree.visualize(600, 600).save("ztree_skewed.png");
+//        zRtree.visualize(600, 600).save("ztree_skewed.png");
+
+//        zRtree.pointQuery(zRtree.getPoints());
+
+
 
         zRtree.insert(new Point(0.5f,0.5f));
+
 
 //        Mbr mbr = new Mbr(1,2,3,4);
 

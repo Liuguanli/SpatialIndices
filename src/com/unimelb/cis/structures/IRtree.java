@@ -94,8 +94,6 @@ public abstract class IRtree {
     public Map<Integer, List<Float>> axisLocations = new HashMap<>();
     public List<Long> curveValues = new ArrayList<>();
 
-
-
     public NonLeafNode findNode(LeafNode leafNode) {
         List<Node> nodes = new ArrayList<>();
         nodes.add(root);
