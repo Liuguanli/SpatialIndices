@@ -85,16 +85,23 @@ public class LeafModel extends Model {
 
         for (int i = 0; i < results.size(); i++) {
             int index = results.get(i).intValue();
+            Point point = points.get(i);
             LeafNode target = leafNodes.get(index);
-            if (target.isFull()) {
-                LeafNode newLeafNode = target.split();
-                int last = leafNodes.size();
-                for (int j = last; j > index + 1; j--) {
-                    leafNodes.put(j, leafNodes.get(j - 1));
-                }
-                leafNodes.put(index + 1, newLeafNode);
+            if (target == null) {
+                LeafNode newLeafNode = new LeafNode(pageSize, point.getDim());
+                newLeafNode.add(point);
+                leafNodes.put(index, newLeafNode);
             } else {
-                target.add(points.get(i));
+                if (target.isFull()) {
+                    LeafNode newLeafNode = target.split();
+                    int last = leafNodes.size();
+                    for (int j = last; j > index + 1; j--) {
+                        leafNodes.put(j, leafNodes.get(j - 1));
+                    }
+                    leafNodes.put(index + 1, newLeafNode);
+                } else {
+                    target.add(point);
+                }
             }
         }
 
