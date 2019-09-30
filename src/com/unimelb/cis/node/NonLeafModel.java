@@ -4,10 +4,7 @@ import com.unimelb.cis.geometry.Mbr;
 import com.unimelb.cis.utils.ExpReturn;
 import weka.core.Instances;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.BiConsumer;
 
 public class NonLeafModel extends Model {
@@ -82,13 +79,10 @@ public class NonLeafModel extends Model {
         }
         Map<Integer, Model> subModels = getSubModels();
 //        System.out.println("NonLeafModel:" + index + " levle:" + level);
-        subModels.forEach(new BiConsumer<Integer, Model>() {
-            @Override
-            public void accept(Integer integer, Model model) {
+        subModels.forEach((integer, model) -> {
 //                System.out.println("LeafModel:" + integer + " " + model.getMbr());
-                model.getChildren().sort((o1, o2) -> o1.getzCurveValue() > o2.getzCurveValue() ? 1 : -1);
-                model.build();
-            }
+            model.getChildren().sort((o1, o2) -> o1.getCurveValue() > o2.getCurveValue() ? 1 : -1);
+            model.build();
         });
     }
 
@@ -101,7 +95,7 @@ public class NonLeafModel extends Model {
         ExpReturn expReturn = new ExpReturn();
         long begin = System.nanoTime();
         for (int i = 0; i < results.size(); i++) {
-            ExpReturn eachExpReturn = subModels.get(results.get(i).intValue()).pointQuery(point);
+            ExpReturn eachExpReturn = subModels.get(results.get(i).intValue()).pointQuery(points.get(i));
             expReturn.pageaccess += eachExpReturn.pageaccess;
         }
         long end = System.nanoTime();
@@ -140,6 +134,43 @@ public class NonLeafModel extends Model {
         expReturn.time = end - begin;
         return expReturn;
     }
+
+    public ExpReturn insert(List<Point> points) {
+        List<Point> sameIndexPoints = new ArrayList<>();
+        ExpReturn expReturn = new ExpReturn();
+        Instances instances = getInstances(name, points);
+        List<Double> results = getPredVals(classifier, instances);
+        Double index = results.get(0);
+
+        long begin = System.nanoTime();
+        results.sort((Double::compareTo));
+        for (int i = 0; i < results.size(); i++) {
+//            subModels.get(results.get(i).intValue()).pointQuery(points.get(i));
+            if (results.get(i).intValue() == index.intValue()) {
+//                sameIndexPoints.add(points.get(i));
+            } else {
+                ExpReturn eachExpReturn = subModels.get(index.intValue()).insert(sameIndexPoints);
+                expReturn.pageaccess += eachExpReturn.pageaccess;
+                index = results.get(i);
+                sameIndexPoints = new ArrayList<>();
+//                sameIndexPoints.add(points.get(i));
+            }
+            sameIndexPoints.add(points.get(i));
+            if (i == results.size() - 1) {
+                ExpReturn eachExpReturn = subModels.get(index.intValue()).insert(sameIndexPoints);
+                expReturn.pageaccess += eachExpReturn.pageaccess;
+            }
+        }
+        long end = System.nanoTime();
+        expReturn.time = end - begin;
+        return expReturn;
+    }
+
+    public ExpReturn insert(Point point) {
+        List<Point> points = Arrays.asList(point);
+        return insert(points);
+    }
+
 
     @Override
     public ExpReturn windowQuery(Mbr window) {

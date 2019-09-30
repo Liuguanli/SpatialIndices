@@ -31,6 +31,8 @@ Data set: Uniform distribution, M=100, m=40
 
 *[R*-tree and R-tree](https://github.com/davidmoten/rtree)*.
 
+*[author of R*-tree](https://www.uni-marburg.de/fb12/arbeitsgruppen/dbs/downloads)
+
 ### Papers:
 
 *[R*-tree paper](https://infolab.usc.edu/csci587/Fall2019/papers/p322-beckmann.pdf)*

@@ -5,6 +5,7 @@ import com.unimelb.cis.geometry.Boundary;
 import com.unimelb.cis.geometry.Line;
 import com.unimelb.cis.geometry.Mbr;
 import com.unimelb.cis.node.LeafModel;
+import com.unimelb.cis.node.NonLeafNode;
 import com.unimelb.cis.node.Point;
 import com.unimelb.cis.structures.IRtree;
 import com.unimelb.cis.utils.ExpReturn;
@@ -136,22 +137,46 @@ public class PartitionModelRtree extends IRtree {
 
     public ExpReturn pointQuery(List<Point> points) {
         ExpReturn expReturn = new ExpReturn();
-        long begin = System.nanoTime();
         points.forEach(point -> {
             int modelIndex = getModelIndex(boundary, point, point.getDim());
             LeafModel model = partitionModels.get(modelIndex);
             // TODO for the experiment, we can change it to the list type
             ExpReturn eachExpReturn = model.pointQuery(point);
             expReturn.pageaccess += eachExpReturn.pageaccess;
+            expReturn.time += eachExpReturn.time;
         });
-        long end = System.nanoTime();
-        expReturn.time = end - begin;
         return expReturn;
     }
 
     @Override
     public ExpReturn pointQuery(Point point) {
         return pointQuery(Arrays.asList(point));
+    }
+
+    @Override
+    public ExpReturn insert(List<Point> points) {
+        ExpReturn expReturn = new ExpReturn();
+        long begin = System.nanoTime();
+
+        points.forEach(point -> {
+            int modelIndex = getModelIndex(boundary, point, point.getDim());
+            LeafModel model = partitionModels.get(modelIndex);
+            model.insert(point);
+        });
+
+        long end = System.nanoTime();
+        expReturn.time = end - begin;
+        return expReturn;
+    }
+
+    @Override
+    public ExpReturn insert(Point point) {
+        return insert(Arrays.asList(point));
+    }
+
+    @Override
+    public NonLeafNode buildRtreeAfterTuning(String path, int dim, int level) {
+        return null;
     }
 
     @Override
@@ -163,16 +188,18 @@ public class PartitionModelRtree extends IRtree {
             Point point = new Point(line);
             points.add(point);
         }
-        points.sort(getComparator(points.get(0).getDim() - 1));
-        dataPartition(points, points.get(0).getDim());
+        dim = points.get(0).getDim();
+        points.sort(getComparator(dim - 1));
+        dataPartition(points, dim);
         return true;
     }
 
     @Override
     public boolean buildRtree(List<Point> res) {
         this.points = res;
-        points.sort(getComparator(points.get(0).getDim() - 1));
-        dataPartition(points, points.get(0).getDim());
+        dim = points.get(0).getDim();
+        points.sort(getComparator(dim - 1));
+        dataPartition(points, dim);
         return true;
     }
 
@@ -220,13 +247,17 @@ public class PartitionModelRtree extends IRtree {
         for (int i = 0; i < all.size(); i++) {
             System.out.println("---------------" + all.get(i) + "---------------");
             PartitionModelRtree partitionModelRtree = new PartitionModelRtree(10000, "H", 100, all.get(i));
-            partitionModelRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_10000_1_2_.csv");
-//        partitionModelRtree.build("D:\\datasets\\RLRtree\\raw\\normal_160000_1_2_.csv", all.get(i));
+//            partitionModelRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_1000000_1_2_.csv");
+        partitionModelRtree.buildRtree("D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_2_.csv");
             System.out.println("build finish");
+            System.out.println("point query" + partitionModelRtree.pointQuery(partitionModelRtree.points));
 
-            System.out.println(partitionModelRtree.pointQuery(partitionModelRtree.points));
-            ExpReturn expReturn = partitionModelRtree.windowQuery(new Mbr(0.1f, 0.1f, 0.6f, 0.6f));
-            System.out.println(expReturn);
+//            System.out.println(partitionModelRtree.pointQuery(partitionModelRtree.points));
+//            ExpReturn expReturn = partitionModelRtree.windowQuery(new Mbr(0.1f, 0.1f, 0.6f, 0.6f));
+//            System.out.println(expReturn);
+
+            System.out.println("insert" + partitionModelRtree.insert(new Point(0.5f, 0.5f)));
+
 //            break;
         }
     }

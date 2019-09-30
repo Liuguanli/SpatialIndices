@@ -3,24 +3,24 @@ package com.unimelb.cis.node;
 import com.unimelb.cis.geometry.Mbr;
 import weka.core.Instance;
 
-import java.util.Arrays;
+import java.util.*;
 
 public class Point extends Node implements Comparable {
 
     private int index;
 
-    private long zCurveValue;
+    private long curveValue;
 
-    private int[] locationOrder;
+    private long[] locationOrder;
 
-    public int[] getLocationOrder() {
+    public long[] getLocationOrder() {
         return locationOrder;
     }
 
     public Point(float... location) {
         this.location = location;
         this.dim = location.length;
-        locationOrder = new int[dim];
+        locationOrder = new long[dim];
         mbr = Mbr.getMbrFromPoint(this);
     }
 
@@ -28,7 +28,7 @@ public class Point extends Node implements Comparable {
         this.index = index;
         this.location = location;
         this.dim = location.length;
-        locationOrder = new int[dim];
+        locationOrder = new long[dim];
         mbr = Mbr.getMbrFromPoint(this);
     }
 
@@ -41,7 +41,7 @@ public class Point extends Node implements Comparable {
         this.index = Integer.parseInt(items[items.length - 1]);
         this.location = location;
         this.dim = location.length;
-        locationOrder = new int[dim];
+        locationOrder = new long[dim];
         mbr = Mbr.getMbrFromPoint(this);
     }
 
@@ -50,7 +50,7 @@ public class Point extends Node implements Comparable {
         this.location = new float[dim];
         location[0] = x;
         location[1] = y;
-        locationOrder = new int[dim];
+        locationOrder = new long[dim];
         mbr = Mbr.getMbrFromPoint(this);
     }
 
@@ -60,7 +60,7 @@ public class Point extends Node implements Comparable {
         this.location = new float[dim];
         location[0] = x;
         location[1] = y;
-        locationOrder = new int[dim];
+        locationOrder = new long[dim];
         mbr = Mbr.getMbrFromPoint(this);
     }
 
@@ -70,7 +70,7 @@ public class Point extends Node implements Comparable {
         location[0] = x;
         location[1] = y;
         location[2] = z;
-        locationOrder = new int[dim];
+        locationOrder = new long[dim];
         mbr = Mbr.getMbrFromPoint(this);
     }
 
@@ -81,7 +81,7 @@ public class Point extends Node implements Comparable {
         location[0] = x;
         location[1] = y;
         location[2] = z;
-        locationOrder = new int[dim];
+        locationOrder = new long[dim];
         mbr = Mbr.getMbrFromPoint(this);
     }
 
@@ -143,7 +143,7 @@ public class Point extends Node implements Comparable {
         this.index = index;
     }
 
-    public int getxIndex() {
+    public long getxIndex() {
         return locationOrder[0];
     }
 
@@ -151,7 +151,7 @@ public class Point extends Node implements Comparable {
         locationOrder[0] = xIndex;
     }
 
-    public int getyIndex() {
+    public long getyIndex() {
         return locationOrder[1];
     }
 
@@ -159,7 +159,7 @@ public class Point extends Node implements Comparable {
         locationOrder[1] = yIndex;
     }
 
-    public int getzIndex() {
+    public long getzIndex() {
         return locationOrder[2];
     }
 
@@ -167,12 +167,12 @@ public class Point extends Node implements Comparable {
         locationOrder[2] = zIndex;
     }
 
-    public long getzCurveValue() {
-        return zCurveValue;
+    public long getCurveValue() {
+        return curveValue;
     }
 
-    public void setzCurveValue(long zCurveValue) {
-        this.zCurveValue = zCurveValue;
+    public void setCurveValue(long curveValue) {
+        this.curveValue = curveValue;
     }
 
     @Override
@@ -191,7 +191,7 @@ public class Point extends Node implements Comparable {
     @Override
     public String toString() {
         return "Point{" +
-                "zCurveValue=" + zCurveValue +
+                "curveValue=" + curveValue +
                 ", location=" + Arrays.toString(location) +
                 ", locationOrder=" + Arrays.toString(locationOrder) +
                 '}';
@@ -235,5 +235,39 @@ public class Point extends Node implements Comparable {
         return new Point(location);
     }
 
+    static Random random = new Random(42);
+
+    static Map<Integer, Map<Integer, List<Point>>> pointCache = new HashMap<>();
+
+    public static List<Point> generatePoints(int num, int dim) {
+        List<Point> points = new ArrayList<>();
+        for (int i = 0; i < num; i++) {
+            float[] locations = new float[dim];
+            for (int j = 0; j < dim; j++) {
+                locations[j] = random.nextFloat();
+            }
+            points.add(new Point(locations));
+        }
+        return points;
+    }
+
+    public static List<Point> getPoints(int num, int dim) {
+        List<Point> points;
+        if (pointCache.containsKey(dim)) {
+            if (pointCache.get(dim).containsKey(num)) {
+                points = pointCache.get(dim).get(num);
+                return points;
+            } else {
+                points = generatePoints(num, dim);
+                pointCache.get(dim).put(num, points);
+            }
+        } else {
+            points = generatePoints(num, dim);
+            Map<Integer, List<Point>> item = new HashMap<>();
+            item.put(num, points);
+            pointCache.put(dim, item);
+        }
+        return points;
+    }
 
 }

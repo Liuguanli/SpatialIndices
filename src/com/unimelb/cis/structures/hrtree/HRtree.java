@@ -2,13 +2,14 @@ package com.unimelb.cis.structures.hrtree;
 
 import com.unimelb.cis.CSVFileWriter;
 import com.unimelb.cis.HilbertCurve;
+import com.unimelb.cis.ZCurve;
 import com.unimelb.cis.geometry.Mbr;
 import com.unimelb.cis.node.LeafNode;
 import com.unimelb.cis.node.Node;
 import com.unimelb.cis.node.NonLeafNode;
 import com.unimelb.cis.node.Point;
-import com.unimelb.cis.structures.IRtree;
 import com.unimelb.cis.structures.RLRtree;
+import com.unimelb.cis.structures.zrtree.ZRtree;
 import com.unimelb.cis.utils.ExpReturn;
 
 import java.util.*;
@@ -35,15 +36,24 @@ public class HRtree extends RLRtree {
 
     @Override
     public boolean buildRtree(List<Point> points) {
-        int dimension = points.get(0).getDim();
+        bitNum = (int) (Math.log(points.size()) / Math.log(2.0)) + 1;
+        dim = points.get(0).getDim();
+        for (int i = 0; i < dim; i++) {
+            List<Float> locations = new ArrayList<>();
+            int finalI = i;
+            points.forEach(point -> locations.add(point.getLocation()[finalI]));
+            locations.sort(Float::compareTo);
+            axisLocations.put(i, locations);
+        }
         points = HilbertCurve.hilbertCurve(points);
+        points.forEach(point -> curveValues.add(point.getCurveValue()));
         this.points = points;
         LeafNode leafNode = null;
         List<Node> childrenNodes = new ArrayList<>();
         int currentLevel = 0;
         for (int i = 0; i < points.size(); i++) {
             if (i % pagesize == 0) {
-                leafNode = new LeafNode(pagesize, dimension);
+                leafNode = new LeafNode(pagesize, dim);
                 leafNode.setLevel(currentLevel);
                 childrenNodes.add(leafNode);
             }
@@ -60,7 +70,7 @@ public class HRtree extends RLRtree {
         while (childrenNodes.size() != 1) {
             for (int i = 0; i < childrenNodes.size(); i++) {
                 if (i % pagesize == 0) {
-                    nonLeafNode = new NonLeafNode(pagesize, dimension);
+                    nonLeafNode = new NonLeafNode(pagesize, dim);
                     nonLeafNode.setLevel(currentLevel);
                     nonLeafNodes.add(nonLeafNode);
                 }
@@ -76,7 +86,7 @@ public class HRtree extends RLRtree {
 
         root = childrenNodes.get(0);
         this.setLevel(currentLevel);
-        this.setDim(dimension);
+        this.setDim(dim);
         return true;
     }
 
@@ -164,6 +174,7 @@ public class HRtree extends RLRtree {
         return pointQuery(Arrays.asList(point));
     }
 
+
     @Override
     public NonLeafNode buildRtreeAfterTuning(String path, int dim, int level) {
         this.dataFile = path;
@@ -177,7 +188,7 @@ public class HRtree extends RLRtree {
         for (int i = 1; i < level; i++) {
             nodes[i] = new NonLeafNode(pagesize, dim);
         }
-
+        List<Point> points = new ArrayList<>();
         root.add(nodes[level - 1]);
         for (int i = 0; i < lines.size(); i++) {
             String line = lines.get(i);
@@ -189,7 +200,7 @@ public class HRtree extends RLRtree {
             }
 
             Point point = new Point(0, locations);
-
+            points.add(point);
             if (i == 0) {
                 ((LeafNode) nodes[0]).add(point);
                 for (int j = 1; j < level; j++) {
@@ -226,9 +237,56 @@ public class HRtree extends RLRtree {
                 }
             }
         }
+        this.points = points;
+        for (int i = 0; i < dim; i++) {
+            List<Float> locations = new ArrayList<>();
+            int finalI = i;
+            points.forEach(point -> locations.add(point.getLocation()[finalI]));
+            locations.sort(Float::compareTo);
+            axisLocations.put(i, locations);
+        }
+        points = ZCurve.zCurve(points);
+        points.forEach(point -> curveValues.add(point.getCurveValue()));
         root.add(nodes[level - 1]);
         this.root = root;
         return root;
+    }
+
+    public ExpReturn insert(List<Point> points) {
+        ExpReturn expReturn = new ExpReturn();
+        long begin = System.nanoTime();
+        points.forEach(point -> {
+            long[] indexOrder = new long[dim];
+            for (int i = 0; i < dim; i++) {
+                indexOrder[i] = binarySearch(axisLocations.get(i), point.getLocation()[i]);
+            }
+            int pos = binarySearch(curveValues, HilbertCurve.getHilbertValue(bitNum, indexOrder));
+            int index = pos / pagesize;
+            if (index > 0 && index < leafNodes.size()) {
+                LeafNode node = (LeafNode) leafNodes.get(index);
+                if (node.isFull()) {
+                    NonLeafNode parent = findNode(node);
+                    if (parent != null) {
+                        int nodeIndex = parent.getChildren().indexOf(node);
+                        LeafNode newLeafNode = node.split();
+                        NonLeafNode child = new NonLeafNode(pagesize, dim);
+                        child.add(node);
+                        child.add(newLeafNode);
+
+                        parent.getChildren().set(nodeIndex, child);
+                        leafNodes.add(index + 1, newLeafNode);
+                    }
+                }
+            }
+        });
+        long end = System.nanoTime();
+        expReturn.time = end - begin;
+        return expReturn;
+    }
+
+    @Override
+    public ExpReturn insert(Point point) {
+        return insert(Arrays.asList(point));
     }
 
     @Override
@@ -248,4 +306,22 @@ public class HRtree extends RLRtree {
         }
         CSVFileWriter.write(lines, file);
     }
+
+    public static void main(String[] args) {
+        HRtree hRtree = new HRtree(100);
+
+        hRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/skewed_160000_9_2_.csv");
+
+//        zRtree.output("/Users/guanli/Documents/datasets/RLRtree/trees/Z_uniform_10000_1_2_.csv");
+
+//        zRtree.buildRtreeAfterTuning("/Users/guanli/Documents/datasets/RLRtree/trees/Z_uniform_10000_1_3_.csv", zRtree.getDim(), zRtree.getLevel());
+//        zRtree.getRoot();
+
+//        System.out.println(zRtree.windowQuery(Mbr.getMbrs(0.01f, 10, 3).get(0)));
+//        System.out.println(zRtree.windowQuery(Mbr.getMbrs(0.01f, 9, 3).get(0)));
+//        System.out.println(zRtree.windowQuery(Mbr.getMbrs(0.01f, 11, 3).get(0)));
+
+        hRtree.insert(new Point(0.5f,0.5f));
+    }
+
 }

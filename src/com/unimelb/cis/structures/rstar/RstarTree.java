@@ -1,11 +1,11 @@
 package com.unimelb.cis.structures.rstar;
 
+import com.unimelb.cis.ZCurve;
 import com.unimelb.cis.geometry.Mbr;
 import com.unimelb.cis.node.LeafNode;
 import com.unimelb.cis.node.Node;
 import com.unimelb.cis.node.NonLeafNode;
 import com.unimelb.cis.node.Point;
-import com.unimelb.cis.structures.IRtree;
 import com.unimelb.cis.structures.RLRtree;
 import com.unimelb.cis.utils.ExpReturn;
 
@@ -45,7 +45,7 @@ public class RstarTree extends RLRtree {
         for (int i = 0; i < lines.size(); i++) {
             String line = lines.get(i);
             Point point = new Point(line);
-            point.setzCurveValue(i);
+            point.setCurveValue(i);
             points.add(point);
         }
         return buildRtree(points);
@@ -57,7 +57,7 @@ public class RstarTree extends RLRtree {
         this.setDim(dimension);
         this.points = points;
         for (int i = 0; i < points.size(); i++) {
-            insert(points.get(i));
+            rstarInsert(points.get(i));
         }
         return true;
     }
@@ -149,7 +149,7 @@ public class RstarTree extends RLRtree {
         return true;
     }
 
-    public boolean insert(Point point) {
+    public boolean rstarInsert(Point point) {
         LeafNode insertTarget = chooseSubTree(root, point);
         if (insertTarget.add(point)) {
             point.adjust();
@@ -157,6 +157,21 @@ public class RstarTree extends RLRtree {
         } else {
             return overflowtreatment(insertTarget, point);
         }
+    }
+
+    @Override
+    public ExpReturn insert(List<Point> points) {
+        ExpReturn expReturn = new ExpReturn();
+        long begin = System.nanoTime();
+        points.forEach(point -> rstarInsert(point));
+        long end = System.nanoTime();
+        expReturn.time = end - begin;
+        return expReturn;
+    }
+
+    @Override
+    public ExpReturn insert(Point point) {
+        return insert(Arrays.asList(point));
     }
 
     private Set<Integer> overflowtreatmentSet = new HashSet<>();
@@ -171,7 +186,7 @@ public class RstarTree extends RLRtree {
             point.adjust();
             List<Point> reInsertPoints = new ArrayList<>(insertTarget.reInsert(p, point));
             for (int i = 0; i < reInsertPoints.size(); i++) {
-                insert(reInsertPoints.get(i));
+                rstarInsert(reInsertPoints.get(i));
             }
             return true;
         }
@@ -438,8 +453,8 @@ public class RstarTree extends RLRtree {
         rstarTree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_1000_1_2_.csv");
 
 //        System.out.println(rstarTree.root);
-
-        rstarTree.visualize(600, 600).save("rstar_revisit.png");
+        rstarTree.insert(new Point(0.5f,0.5f));
+//        rstarTree.visualize(600, 600).save("rstar_revisit.png");
 //        rstarTree.output("/Users/guanli/Documents/datasets/RLRtree/trees/Z_uniform_10000_1_3_.csv");
 //
 //        rstarTree.buildRtreeAfterTuning("/Users/guanli/Documents/datasets/RLRtree/trees/Z_uniform_10000_1_3_.csv", rstarTree.getDim(), rstarTree.getLevel());

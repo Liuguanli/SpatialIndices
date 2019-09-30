@@ -2,10 +2,7 @@ package com.unimelb.cis.structures.recursivemodel;
 
 import com.unimelb.cis.Curve;
 import com.unimelb.cis.geometry.Mbr;
-import com.unimelb.cis.node.LeafModel;
-import com.unimelb.cis.node.Model;
-import com.unimelb.cis.node.NonLeafModel;
-import com.unimelb.cis.node.Point;
+import com.unimelb.cis.node.*;
 import com.unimelb.cis.structures.IRtree;
 import com.unimelb.cis.utils.ExpReturn;
 
@@ -106,6 +103,7 @@ public class RecursiveModelRtree extends IRtree {
             Point point = new Point(line);
             points.add(point);
         }
+        dim = points.get(0).getDim();
         points = Curve.getPointByCurve(points, this.curveType);
         int classNum = points.size() / threshold;
         if (classNum <= 1) {
@@ -123,6 +121,7 @@ public class RecursiveModelRtree extends IRtree {
     public boolean buildRtree(List<Point> res) {
         this.points = res;
         int classNum = points.size() / threshold;
+        dim = points.get(0).getDim();
         if (classNum <= 1) {
             root = new LeafModel(-1, pageSize, algorithm);
         } else {
@@ -148,6 +147,27 @@ public class RecursiveModelRtree extends IRtree {
         return null;
     }
 
+    @Override
+    public ExpReturn insert(Point point) {
+        return insert(Arrays.asList(point));
+    }
+
+    @Override
+    public NonLeafNode buildRtreeAfterTuning(String path, int dim, int level) {
+        return null;
+    }
+
+    @Override
+    public ExpReturn insert(List<Point> points) {
+        ExpReturn expReturn = new ExpReturn();
+        long begin = System.nanoTime();
+
+        long end = System.nanoTime();
+        expReturn.time = end - begin;
+        return expReturn;
+    }
+
+
     /**
      * add data
      * https://waikato.github.io/weka-wiki/formats_and_processing/creating_arff_file/
@@ -171,12 +191,13 @@ public class RecursiveModelRtree extends IRtree {
             RecursiveModelRtree recursiveModelRtree = new RecursiveModelRtree(10000, "H", 100, all.get(i));
             recursiveModelRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_10000_1_2_.csv");
 //            recursiveModelRtree.build("D:\\datasets\\RLRtree\\raw\\normal_160000_1_2_.csv", all.get(i));
-            ExpReturn expReturn = recursiveModelRtree.pointQuery(recursiveModelRtree.root.getChildren());
-            ExpReturn expReturn1 = recursiveModelRtree.windowQuery(new Mbr(0.1f, 0.1f, 0.6f, 0.6f));
-            long end = System.nanoTime();
-            System.out.println(end - begin);
-            System.out.println(expReturn);
-            System.out.println(expReturn1);
+//            ExpReturn expReturn = recursiveModelRtree.pointQuery(recursiveModelRtree.root.getChildren());
+//            ExpReturn expReturn1 = recursiveModelRtree.windowQuery(new Mbr(0.1f, 0.1f, 0.6f, 0.6f));
+//            long end = System.nanoTime();
+//            System.out.println(end - begin);
+//            System.out.println(expReturn);
+//            System.out.println(expReturn1);
+            System.out.println("insert" + recursiveModelRtree.insert(new Point(0.5f, 0.5f)));
 //            break;
         }
     }

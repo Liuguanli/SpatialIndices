@@ -4,11 +4,9 @@ import com.unimelb.cis.geometry.Mbr;
 import com.unimelb.cis.utils.ExpReturn;
 import weka.core.Instances;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 public class LeafModel extends Model {
 
@@ -64,7 +62,7 @@ public class LeafModel extends Model {
         classifier = getModels(name);
         train(classifier, instances);
         evaluate();
-        System.out.println("maxError:" + maxError + " minError:" + minError);
+//        System.out.println("maxError:" + maxError + " minError:" + minError);
     }
 
     @Override
@@ -73,6 +71,43 @@ public class LeafModel extends Model {
         List<Point> points = new ArrayList<>();
         points.add(point);
         return pointQuery(points);
+    }
+
+    public ExpReturn insert(Point point) {
+        return insert(Arrays.asList(point));
+    }
+
+    public ExpReturn insert(List<Point> points) {
+        ExpReturn expReturn = new ExpReturn();
+        long begin = System.nanoTime();
+        Instances instances = getInstances(name, points);
+        List<Double> results = getPredVals(classifier, instances);
+
+        for (int i = 0; i < results.size(); i++) {
+            int index = results.get(i).intValue();
+            Point point = points.get(i);
+            LeafNode target = leafNodes.get(index);
+            if (target == null) {
+                LeafNode newLeafNode = new LeafNode(pageSize, point.getDim());
+                newLeafNode.add(point);
+                leafNodes.put(index, newLeafNode);
+            } else {
+                if (target.isFull()) {
+                    LeafNode newLeafNode = target.split();
+                    int last = leafNodes.size();
+                    for (int j = last; j > index + 1; j--) {
+                        leafNodes.put(j, leafNodes.get(j - 1));
+                    }
+                    leafNodes.put(index + 1, newLeafNode);
+                } else {
+                    target.add(point);
+                }
+            }
+        }
+
+        long end = System.nanoTime();
+        expReturn.time = end - begin;
+        return expReturn;
     }
 
     @Override
@@ -85,7 +120,7 @@ public class LeafModel extends Model {
         ExpReturn expReturn = new ExpReturn();
         long begin = System.nanoTime();
         for (int i = 0; i < results.size(); i++) {
-            int index = results.get(i).intValue();
+            int index = Math.min(Math.max(results.get(i).intValue(), 0), leafNodes.size() - 1);
             int gap = 1;
             int pageAccess = 1;
             if (index < 0) {
@@ -103,11 +138,15 @@ public class LeafModel extends Model {
                     }
                     pageAccess++;
                     real = index + gap;
+//                    System.out.println(real + " " + index);
                     if (real < max && leafNodes.get(real).getChildren().contains(points.get(i))) {
 //                        System.out.println("find it: real" + real +" index" + index);
                         break;
                     }
                     gap++;
+                    if (index - gap < min && index + gap > max) {
+                        break;
+                    }
                 }
             }
             expReturn.pageaccess += pageAccess;
@@ -120,10 +159,8 @@ public class LeafModel extends Model {
     @Override
     public ExpReturn windowQuery(Mbr window) {
 
-        ExpReturn old = windowQueryByScanAll(window);
-        System.out.println("windowQueryByScanAll:" + old.result.size());
-
-
+//        ExpReturn old = windowQueryByScanAll(window);
+//        System.out.println("windowQueryByScanAll:" + old.result.size());
         ExpReturn expReturn = new ExpReturn();
         final int[] pageAccessArray = {0};
         long begin = System.nanoTime();
@@ -145,11 +182,11 @@ public class LeafModel extends Model {
             }
 
         });
-        System.err.println(results);
+//        System.err.println(results);
         long end = System.nanoTime();
         expReturn.pageaccess = pageAccessArray[0];
         expReturn.time = end - begin;
-        System.out.println("windowQuery:" + expReturn.result.size());
+//        System.out.println("windowQuery:" + expReturn.result.size());
         return expReturn;
     }
 

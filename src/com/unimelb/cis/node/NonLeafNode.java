@@ -23,6 +23,7 @@ public class NonLeafNode extends Node {
     public NonLeafNode(int pageSize, int dim) {
         super(pageSize, dim);
         children = new ArrayList<>();
+        mbr = new Mbr(dim);
     }
 
     @Override

@@ -73,7 +73,7 @@ public void testBuildRtreeAfterTuning() throws Exception {
 
 /** 
 * 
-* Method: insert(Point point) 
+* Method: rstarInsert(Point point)
 * 
 */ 
 @Test
