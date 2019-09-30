@@ -120,7 +120,7 @@ public class LeafModel extends Model {
         ExpReturn expReturn = new ExpReturn();
         long begin = System.nanoTime();
         for (int i = 0; i < results.size(); i++) {
-            int index = results.get(i).intValue();
+            int index = Math.min(Math.max(results.get(i).intValue(), 0), leafNodes.size() - 1);
             int gap = 1;
             int pageAccess = 1;
             if (index < 0) {
@@ -138,11 +138,15 @@ public class LeafModel extends Model {
                     }
                     pageAccess++;
                     real = index + gap;
+//                    System.out.println(real + " " + index);
                     if (real < max && leafNodes.get(real).getChildren().contains(points.get(i))) {
 //                        System.out.println("find it: real" + real +" index" + index);
                         break;
                     }
                     gap++;
+                    if (index - gap < min && index + gap > max) {
+                        break;
+                    }
                 }
             }
             expReturn.pageaccess += pageAccess;

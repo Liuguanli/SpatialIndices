@@ -137,16 +137,14 @@ public class PartitionModelRtree extends IRtree {
 
     public ExpReturn pointQuery(List<Point> points) {
         ExpReturn expReturn = new ExpReturn();
-        long begin = System.nanoTime();
         points.forEach(point -> {
             int modelIndex = getModelIndex(boundary, point, point.getDim());
             LeafModel model = partitionModels.get(modelIndex);
             // TODO for the experiment, we can change it to the list type
             ExpReturn eachExpReturn = model.pointQuery(point);
             expReturn.pageaccess += eachExpReturn.pageaccess;
+            expReturn.time += eachExpReturn.time;
         });
-        long end = System.nanoTime();
-        expReturn.time = end - begin;
         return expReturn;
     }
 
@@ -249,9 +247,10 @@ public class PartitionModelRtree extends IRtree {
         for (int i = 0; i < all.size(); i++) {
             System.out.println("---------------" + all.get(i) + "---------------");
             PartitionModelRtree partitionModelRtree = new PartitionModelRtree(10000, "H", 100, all.get(i));
-            partitionModelRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_10000_1_2_.csv");
-//        partitionModelRtree.build("D:\\datasets\\RLRtree\\raw\\normal_160000_1_2_.csv", all.get(i));
+//            partitionModelRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_1000000_1_2_.csv");
+        partitionModelRtree.buildRtree("D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_2_.csv");
             System.out.println("build finish");
+            System.out.println("point query" + partitionModelRtree.pointQuery(partitionModelRtree.points));
 
 //            System.out.println(partitionModelRtree.pointQuery(partitionModelRtree.points));
 //            ExpReturn expReturn = partitionModelRtree.windowQuery(new Mbr(0.1f, 0.1f, 0.6f, 0.6f));
