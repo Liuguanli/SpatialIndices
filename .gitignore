@@ -1,3 +1,22 @@
 *.xml
 
 .idea/workspace.xml
+
+/target
+/out
+/classes
+/checkouts
+/.lein-*
+/.env
+*.iml
+.idea
+.DS_Store
+*/target
+.svn
+.project
+.settings
+.classpath
+logs
+/log
+/tmp
+hotspot.log
