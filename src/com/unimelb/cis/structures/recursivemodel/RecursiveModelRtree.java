@@ -185,11 +185,11 @@ public class RecursiveModelRtree extends IRtree {
         all.addAll(regs);
         all.addAll(clas);
 
-        for (int i = 0; i < all.size(); i++) {
+        for (int i = 0; i < clas.size(); i++) {
             long begin = System.nanoTime();
-            System.out.println("---------------" + all.get(i) + "---------------");
-            RecursiveModelRtree recursiveModelRtree = new RecursiveModelRtree(10000, "H", 100, all.get(i));
-            recursiveModelRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_10000_1_2_.csv");
+            System.out.println("---------------" + clas.get(i) + "---------------");
+            RecursiveModelRtree recursiveModelRtree = new RecursiveModelRtree(10000, "H", 100, clas.get(i));
+            recursiveModelRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_2000000_1_2_.csv");
 //            recursiveModelRtree.build("D:\\datasets\\RLRtree\\raw\\normal_160000_1_2_.csv", all.get(i));
 //            ExpReturn expReturn = recursiveModelRtree.pointQuery(recursiveModelRtree.root.getChildren());
 //            ExpReturn expReturn1 = recursiveModelRtree.windowQuery(new Mbr(0.1f, 0.1f, 0.6f, 0.6f));
@@ -202,7 +202,7 @@ public class RecursiveModelRtree extends IRtree {
         }
     }
 
-    public static List<String> clas = Arrays.asList("NaiveBayes", "MultilayerPerceptron");
+    public static List<String> clas = Arrays.asList("NaiveBayes");
     public static List<String> regs = Arrays.asList("LinearRegression");
 
 }

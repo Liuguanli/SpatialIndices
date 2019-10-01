@@ -63,8 +63,14 @@ public class NonLeafModel extends Model {
         int bottomClassNum = points.size() / threshold + (points.size() % threshold == 0 ? 0 : 1);
         level = (int) (Math.log(bottomClassNum) / Math.log(pageSize));
         classNum = bottomClassNum / (int) Math.pow(pageSize, level);
-        if (classNum > pageSize) {
-            isSubNonLeafModel = true;
+
+        if(level >= 1) {
+            if (classNum > 1) {
+                isSubNonLeafModel = true;
+            } else {
+                classNum = bottomClassNum;
+                level--;
+            }
         }
         int denominator = (int) (threshold * Math.pow(pageSize, level));
         for (int i = 0; i < points.size(); i++) {

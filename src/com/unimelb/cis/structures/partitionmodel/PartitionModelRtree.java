@@ -72,6 +72,9 @@ public class PartitionModelRtree extends IRtree {
         for (int i = 0; i < length; i++) {
             int begin = i * threshold * (int) Math.pow(length, dim - 1);
             int end = Math.min((i + 1) * threshold * (int) Math.pow(length, dim - 1), points.size());
+            if (begin >= end) {
+                break;
+            }
             boundary.addBoundry(new Line(points.get(begin).getLocation()[dim - 1], points.get(end - 1).getLocation()[dim - 1]));
             List<Point> temp = points.subList(begin, end);
             Boundary boundary1 = getPartition(temp, dim - 1, length);
@@ -247,8 +250,8 @@ public class PartitionModelRtree extends IRtree {
         for (int i = 0; i < all.size(); i++) {
             System.out.println("---------------" + all.get(i) + "---------------");
             PartitionModelRtree partitionModelRtree = new PartitionModelRtree(10000, "H", 100, all.get(i));
-//            partitionModelRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_1000000_1_2_.csv");
-        partitionModelRtree.buildRtree("D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_2_.csv");
+            partitionModelRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_4000000_1_2_.csv");
+//        partitionModelRtree.buildRtree("D:\\datasets\\RLRtree\\raw\\uniform_2000000_1_2_.csv");
             System.out.println("build finish");
             System.out.println("point query" + partitionModelRtree.pointQuery(partitionModelRtree.points));
 
