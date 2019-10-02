@@ -71,7 +71,6 @@ public class LeafModel extends Model {
         Instances instances = getInstances(name, points);
         classifier = getModels(name);
         train(classifier, instances);
-        System.out.println("points.size():" + points.size());
         evaluate();
 //        System.out.println("maxError:" + maxError + " minError:" + minError);
     }
