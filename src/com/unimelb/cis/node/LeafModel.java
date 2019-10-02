@@ -51,6 +51,16 @@ public class LeafModel extends Model {
     public void build() {
 //        System.out.println("LeafNode is Building");
         List<Point> points = getChildren();
+        if (points.size() < pageSize) {
+            points.forEach(new Consumer<Point>() {
+                @Override
+                public void accept(Point point) {
+                    point.setIndex(0);
+                    add(0, point);
+                }
+            });
+            return;
+        }
         for (int i = 0; i < points.size(); i++) {
             points.get(i).setIndex(i / pageSize);
             add(i / pageSize, points.get(i));

@@ -123,15 +123,18 @@ public class NonLeafModel extends Model {
             if (results.get(i).intValue() == index.intValue()) {
 //                sameIndexPoints.add(points.get(i));
             } else {
-                ExpReturn eachExpReturn = subModels.get(index.intValue()).pointQuery(sameIndexPoints);
-                expReturn.pageaccess += eachExpReturn.pageaccess;
-                expReturn.time += eachExpReturn.time;
-                index = results.get(i);
-                sameIndexPoints = new ArrayList<>();
-//                sameIndexPoints.add(points.get(i));
+//                System.out.println(index.intValue());
+                // TODO the code should be optimized
+                if (subModels.containsKey(index.intValue()) && sameIndexPoints.size() > 0) {
+                    ExpReturn eachExpReturn = subModels.get(index.intValue()).pointQuery(sameIndexPoints);
+                    expReturn.pageaccess += eachExpReturn.pageaccess;
+                    expReturn.time += eachExpReturn.time;
+                    index = results.get(i);
+                    sameIndexPoints = new ArrayList<>();
+                }
             }
             sameIndexPoints.add(points.get(i));
-            if (i == results.size() - 1) {
+            if (i == results.size() - 1 && subModels.containsKey(index.intValue()) && sameIndexPoints.size() > 0) {
                 ExpReturn eachExpReturn = subModels.get(index.intValue()).pointQuery(sameIndexPoints);
                 expReturn.pageaccess += eachExpReturn.pageaccess;
             }

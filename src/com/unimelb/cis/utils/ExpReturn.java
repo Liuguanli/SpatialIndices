@@ -9,7 +9,7 @@ public class ExpReturn {
 
     public long time;
 
-    public int pageaccess;
+    public long pageaccess;
 
     public List<Point> result = new ArrayList<>();
 
