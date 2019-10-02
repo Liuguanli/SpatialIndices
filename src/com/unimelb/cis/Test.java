@@ -64,7 +64,11 @@ public class Test {
 //            "D:\\datasets\\RLRtree\\raw\\uniform_2000000_1_2_.csv",
 //            "D:\\datasets\\RLRtree\\raw\\uniform_4000000_1_2_.csv",
 //            "D:\\datasets\\RLRtree\\raw\\uniform_8000000_1_2_.csv",
-            "D:\\datasets\\RLRtree\\raw\\uniform_16000000_1_2_.csv");
+//            "D:\\datasets\\RLRtree\\raw\\uniform_16000000_1_2_.csv",
+            "D:\\datasets\\RLRtree\\raw\\uniform_32000000_1_2_.csv",
+            "D:\\datasets\\RLRtree\\raw\\uniform_64000000_1_2_.csv",
+            "D:\\datasets\\RLRtree\\raw\\uniform_128000000_1_2_.csv"
+    );
 
     public static void main(String[] args) {
         datasets.forEach(new Consumer<String>() {
@@ -74,9 +78,9 @@ public class Test {
 //                testZRtree(s);
 //                testHRtree(s);
 //                testPRegression(s);
-//                testPclassification(s);
+                testPclassification(s);
 //                testRRegression(s);
-                testRclassification(s);
+//                testRclassification(s);
             }
         });
     }
