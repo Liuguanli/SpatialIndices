@@ -72,6 +72,9 @@ public class PartitionModelRtree extends IRtree {
         for (int i = 0; i < length; i++) {
             int begin = i * threshold * (int) Math.pow(length, dim - 1);
             int end = Math.min((i + 1) * threshold * (int) Math.pow(length, dim - 1), points.size());
+            if (begin >= end) {
+                break;
+            }
             boundary.addBoundry(new Line(points.get(begin).getLocation()[dim - 1], points.get(end - 1).getLocation()[dim - 1]));
             List<Point> temp = points.subList(begin, end);
             Boundary boundary1 = getPartition(temp, dim - 1, length);
@@ -180,7 +183,9 @@ public class PartitionModelRtree extends IRtree {
     }
 
     @Override
-    public boolean buildRtree(String path) {
+    public ExpReturn buildRtree(String path) {
+        ExpReturn expReturn = new ExpReturn();
+        long begin = System.nanoTime();
         List<String> lines = read(path);
         points = new ArrayList<>(lines.size());
         for (int i = 0; i < lines.size(); i++) {
@@ -191,16 +196,22 @@ public class PartitionModelRtree extends IRtree {
         dim = points.get(0).getDim();
         points.sort(getComparator(dim - 1));
         dataPartition(points, dim);
-        return true;
+        long end = System.nanoTime();
+        expReturn.time = end - begin;
+        return expReturn;
     }
 
     @Override
-    public boolean buildRtree(List<Point> res) {
+    public ExpReturn buildRtree(List<Point> res) {
+        ExpReturn expReturn = new ExpReturn();
+        long begin = System.nanoTime();
         this.points = res;
         dim = points.get(0).getDim();
         points.sort(getComparator(dim - 1));
         dataPartition(points, dim);
-        return true;
+        long end = System.nanoTime();
+        expReturn.time = end - begin;
+        return expReturn;
     }
 
     /**

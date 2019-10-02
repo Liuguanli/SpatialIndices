@@ -63,8 +63,14 @@ public class NonLeafModel extends Model {
         int bottomClassNum = points.size() / threshold + (points.size() % threshold == 0 ? 0 : 1);
         level = (int) (Math.log(bottomClassNum) / Math.log(pageSize));
         classNum = bottomClassNum / (int) Math.pow(pageSize, level);
-        if (classNum > pageSize) {
-            isSubNonLeafModel = true;
+
+        if(level >= 1) {
+            if (classNum > 1) {
+                isSubNonLeafModel = true;
+            } else {
+                classNum = bottomClassNum;
+                level--;
+            }
         }
         int denominator = (int) (threshold * Math.pow(pageSize, level));
         for (int i = 0; i < points.size(); i++) {
@@ -111,7 +117,6 @@ public class NonLeafModel extends Model {
         Double index = results.get(0);
         List<Point> sameIndexPoints = new ArrayList<>();
         ExpReturn expReturn = new ExpReturn();
-        long begin = System.nanoTime();
         results.sort((Double::compareTo));
         for (int i = 0; i < results.size(); i++) {
 //            subModels.get(results.get(i).intValue()).pointQuery(points.get(i));
@@ -120,6 +125,7 @@ public class NonLeafModel extends Model {
             } else {
                 ExpReturn eachExpReturn = subModels.get(index.intValue()).pointQuery(sameIndexPoints);
                 expReturn.pageaccess += eachExpReturn.pageaccess;
+                expReturn.time += eachExpReturn.time;
                 index = results.get(i);
                 sameIndexPoints = new ArrayList<>();
 //                sameIndexPoints.add(points.get(i));
@@ -130,8 +136,6 @@ public class NonLeafModel extends Model {
                 expReturn.pageaccess += eachExpReturn.pageaccess;
             }
         }
-        long end = System.nanoTime();
-        expReturn.time = end - begin;
         return expReturn;
     }
 

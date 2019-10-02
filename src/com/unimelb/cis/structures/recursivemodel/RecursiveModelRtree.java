@@ -6,6 +6,7 @@ import com.unimelb.cis.node.*;
 import com.unimelb.cis.structures.IRtree;
 import com.unimelb.cis.utils.ExpReturn;
 
+import java.io.PrintStream;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -95,7 +96,9 @@ public class RecursiveModelRtree extends IRtree {
     }
 
     @Override
-    public boolean buildRtree(String path) {
+    public ExpReturn buildRtree(String path) {
+        ExpReturn expReturn = new ExpReturn();
+        long begin = System.nanoTime();
         List<String> lines = read(path);
         points = new ArrayList<>(lines.size());
         for (int i = 0; i < lines.size(); i++) {
@@ -114,11 +117,15 @@ public class RecursiveModelRtree extends IRtree {
 //        System.out.println("Root:" + root.getIndex());
         root.setChildren(points);
         root.build();
-        return true;
+        long end = System.nanoTime();
+        expReturn.time = end - begin;
+        return expReturn;
     }
 
     @Override
-    public boolean buildRtree(List<Point> res) {
+    public ExpReturn buildRtree(List<Point> res) {
+        ExpReturn expReturn = new ExpReturn();
+        long begin = System.nanoTime();
         this.points = res;
         int classNum = points.size() / threshold;
         dim = points.get(0).getDim();
@@ -130,7 +137,9 @@ public class RecursiveModelRtree extends IRtree {
 //        System.out.println("Root:" + root.getIndex());
         root.setChildren(points);
         root.build();
-        return true;
+        long end = System.nanoTime();
+        expReturn.time = end - begin;
+        return expReturn;
     }
 
     public ExpReturn windowQueryByScanAll(Mbr window) {
@@ -189,20 +198,32 @@ public class RecursiveModelRtree extends IRtree {
             long begin = System.nanoTime();
             System.out.println("---------------" + all.get(i) + "---------------");
             RecursiveModelRtree recursiveModelRtree = new RecursiveModelRtree(10000, "H", 100, all.get(i));
-            recursiveModelRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_10000_1_2_.csv");
+            recursiveModelRtree.buildRtree("D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_2_.csv");
 //            recursiveModelRtree.build("D:\\datasets\\RLRtree\\raw\\normal_160000_1_2_.csv", all.get(i));
-//            ExpReturn expReturn = recursiveModelRtree.pointQuery(recursiveModelRtree.root.getChildren());
+            ExpReturn expReturn = recursiveModelRtree.pointQuery(recursiveModelRtree.root.getChildren());
 //            ExpReturn expReturn1 = recursiveModelRtree.windowQuery(new Mbr(0.1f, 0.1f, 0.6f, 0.6f));
 //            long end = System.nanoTime();
 //            System.out.println(end - begin);
-//            System.out.println(expReturn);
+            System.out.println(expReturn);
 //            System.out.println(expReturn1);
             System.out.println("insert" + recursiveModelRtree.insert(new Point(0.5f, 0.5f)));
 //            break;
         }
+
+//        PrintStream var10000 = System.out;
+//        String var10001 = "MultilayerPerceptron";
+//        var10000.println("---------------" + (String)var10001 + "---------------");
+//        RecursiveModelRtree recursiveModelRtree = new RecursiveModelRtree(10000, "H", 100, var10001);
+//        recursiveModelRtree.buildRtree("D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_2_.csv");
+//        var10000 = System.out;
+//        System.out.println("build finish");
+//        System.out.println("point query"+recursiveModelRtree.pointQuery(recursiveModelRtree.points));
+//        ExpReturn var6 = recursiveModelRtree.insert(new Point(0.5F, 0.5F));
+//        var10000.println("insert" + var6);
+
     }
 
-    public static List<String> clas = Arrays.asList("NaiveBayes", "MultilayerPerceptron");
+    public static List<String> clas = Arrays.asList("NaiveBayes");
     public static List<String> regs = Arrays.asList("LinearRegression");
 
 }
