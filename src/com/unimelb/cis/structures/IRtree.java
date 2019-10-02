@@ -69,9 +69,9 @@ public abstract class IRtree {
         this.points = points;
     }
 
-    public abstract boolean buildRtree(String path);
+    public abstract ExpReturn buildRtree(String path);
 
-    public abstract boolean buildRtree(List<Point> points);
+    public abstract ExpReturn buildRtree(List<Point> points);
 
     public abstract ExpReturn windowQuery(Mbr window);
 

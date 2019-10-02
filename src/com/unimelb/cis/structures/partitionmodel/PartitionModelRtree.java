@@ -183,7 +183,9 @@ public class PartitionModelRtree extends IRtree {
     }
 
     @Override
-    public boolean buildRtree(String path) {
+    public ExpReturn buildRtree(String path) {
+        ExpReturn expReturn = new ExpReturn();
+        long begin = System.nanoTime();
         List<String> lines = read(path);
         points = new ArrayList<>(lines.size());
         for (int i = 0; i < lines.size(); i++) {
@@ -194,16 +196,22 @@ public class PartitionModelRtree extends IRtree {
         dim = points.get(0).getDim();
         points.sort(getComparator(dim - 1));
         dataPartition(points, dim);
-        return true;
+        long end = System.nanoTime();
+        expReturn.time = end - begin;
+        return expReturn;
     }
 
     @Override
-    public boolean buildRtree(List<Point> res) {
+    public ExpReturn buildRtree(List<Point> res) {
+        ExpReturn expReturn = new ExpReturn();
+        long begin = System.nanoTime();
         this.points = res;
         dim = points.get(0).getDim();
         points.sort(getComparator(dim - 1));
         dataPartition(points, dim);
-        return true;
+        long end = System.nanoTime();
+        expReturn.time = end - begin;
+        return expReturn;
     }
 
     /**
@@ -250,8 +258,8 @@ public class PartitionModelRtree extends IRtree {
         for (int i = 0; i < all.size(); i++) {
             System.out.println("---------------" + all.get(i) + "---------------");
             PartitionModelRtree partitionModelRtree = new PartitionModelRtree(10000, "H", 100, all.get(i));
-            partitionModelRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_4000000_1_2_.csv");
-//        partitionModelRtree.buildRtree("D:\\datasets\\RLRtree\\raw\\uniform_2000000_1_2_.csv");
+//            partitionModelRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_1000000_1_2_.csv");
+        partitionModelRtree.buildRtree("D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_2_.csv");
             System.out.println("build finish");
             System.out.println("point query" + partitionModelRtree.pointQuery(partitionModelRtree.points));
 

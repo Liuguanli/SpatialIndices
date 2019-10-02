@@ -25,7 +25,9 @@ public class ZRtree extends RLRtree {
 
 
     @Override
-    public boolean buildRtree(String path) {
+    public ExpReturn buildRtree(String path) {
+        ExpReturn expReturn = new ExpReturn();
+        long begin = System.nanoTime();
         this.dataFile = path;
         List<String> lines = read(path);
 
@@ -36,11 +38,17 @@ public class ZRtree extends RLRtree {
             points.add(point);
         }
 
-        return buildRtree(points);
+        buildRtree(points);
+
+        long end = System.nanoTime();
+        expReturn.time = end - begin;
+        return expReturn;
     }
 
     @Override
-    public boolean buildRtree(List<Point> points) {
+    public ExpReturn buildRtree(List<Point> points) {
+        ExpReturn expReturn = new ExpReturn();
+        long begin = System.nanoTime();
         bitNum = (int) (Math.log(points.size()) / Math.log(2.0)) + 1;
         dim = points.get(0).getDim();
         for (int i = 0; i < dim; i++) {
@@ -93,7 +101,9 @@ public class ZRtree extends RLRtree {
         root.setLevel(currentLevel);
         this.setLevel(currentLevel);
         this.setDim(dim);
-        return true;
+        long end = System.nanoTime();
+        expReturn.time = end - begin;
+        return expReturn;
     }
 
     @Override
@@ -137,23 +147,7 @@ public class ZRtree extends RLRtree {
         ExpReturn expReturn = new ExpReturn();
         long begin = System.nanoTime();
         points.forEach(point -> {
-            List<Node> nodes = new ArrayList<>();
-            nodes.add(root);
-            while (nodes.size() > 0) {
-                Node top = nodes.remove(0);
-                if (top instanceof NonLeafNode) {
-                    if (top.getMbr().contains(point)) {
-                        expReturn.pageaccess++;
-                        nodes.addAll(((NonLeafNode) top).getChildren());
-                    }
-                } else if (top instanceof LeafNode) {
-                    if (top.getMbr().contains(point)) {
-                        expReturn.pageaccess++;
-                        break;
-                    }
-                }
-
-            }
+            expReturn.pageaccess += pointQuery(point).pageaccess;
         });
         long end = System.nanoTime();
         expReturn.time = end - begin;
@@ -162,7 +156,28 @@ public class ZRtree extends RLRtree {
 
     @Override
     public ExpReturn pointQuery(Point point) {
-        return pointQuery(Arrays.asList(point));
+        ExpReturn expReturn = new ExpReturn();
+        long begin = System.nanoTime();
+        List<Node> nodes = new ArrayList<>();
+        nodes.add(root);
+        while (nodes.size() > 0) {
+            Node top = nodes.remove(0);
+            if (top instanceof NonLeafNode) {
+                if (top.getMbr().contains(point)) {
+                    expReturn.pageaccess++;
+                    nodes.addAll(((NonLeafNode) top).getChildren());
+                }
+            } else if (top instanceof LeafNode) {
+                if (top.getMbr().contains(point)) {
+                    expReturn.pageaccess++;
+                    break;
+                }
+            }
+
+        }
+        long end = System.nanoTime();
+        expReturn.time = end - begin;
+        return expReturn;
     }
 
     public ExpReturn insert(List<Point> points) {
@@ -310,7 +325,8 @@ public class ZRtree extends RLRtree {
 
 //        zRtree.output("/Users/guanli/Documents/datasets/RLRtree/trees/Z_uniform_10000_1_2_.csv");
 
-        zRtree.buildRtreeAfterTuning("/Users/guanli/Documents/datasets/RLRtree/trees/Z_uniform_160000_1_2_.csv", 2, 2);
+//        zRtree.buildRtreeAfterTuning("/Users/guanli/Documents/datasets/RLRtree/trees/Z_uniform_160000_1_2_.csv", 2, 2);
+        zRtree.buildRtree("D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_2_.csv");
 //        zRtree.getRoot();
 
 //        System.out.println(zRtree.windowQuery(Mbr.getMbrs(0.01f, 10, 3).get(0)));
@@ -322,7 +338,7 @@ public class ZRtree extends RLRtree {
 //        zRtree.pointQuery(zRtree.getPoints());
 
 
-
+        System.out.println("point query:"+zRtree.pointQuery(zRtree.points));
         zRtree.insert(new Point(0.5f,0.5f));
 
 

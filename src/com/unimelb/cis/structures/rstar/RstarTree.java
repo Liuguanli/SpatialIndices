@@ -37,7 +37,9 @@ public class RstarTree extends RLRtree {
     }
 
     @Override
-    public boolean buildRtree(String path) {
+    public ExpReturn buildRtree(String path) {
+        ExpReturn expReturn = new ExpReturn();
+        long begin = System.nanoTime();
         this.dataFile = path;
         List<String> lines = read(path);
 
@@ -48,18 +50,25 @@ public class RstarTree extends RLRtree {
             point.setCurveValue(i);
             points.add(point);
         }
-        return buildRtree(points);
+        buildRtree(points);
+        long end = System.nanoTime();
+        expReturn.time = end - begin;
+        return expReturn;
     }
 
     @Override
-    public boolean buildRtree(List<Point> points) {
+    public ExpReturn buildRtree(List<Point> points) {
+        ExpReturn expReturn = new ExpReturn();
+        long begin = System.nanoTime();
         int dimension = points.get(0).getDim();
         this.setDim(dimension);
         this.points = points;
         for (int i = 0; i < points.size(); i++) {
             rstarInsert(points.get(i));
         }
-        return true;
+        long end = System.nanoTime();
+        expReturn.time = end - begin;
+        return expReturn;
     }
 
     @Override

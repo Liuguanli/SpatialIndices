@@ -117,7 +117,6 @@ public class NonLeafModel extends Model {
         Double index = results.get(0);
         List<Point> sameIndexPoints = new ArrayList<>();
         ExpReturn expReturn = new ExpReturn();
-        long begin = System.nanoTime();
         results.sort((Double::compareTo));
         for (int i = 0; i < results.size(); i++) {
 //            subModels.get(results.get(i).intValue()).pointQuery(points.get(i));
@@ -126,6 +125,7 @@ public class NonLeafModel extends Model {
             } else {
                 ExpReturn eachExpReturn = subModels.get(index.intValue()).pointQuery(sameIndexPoints);
                 expReturn.pageaccess += eachExpReturn.pageaccess;
+                expReturn.time += eachExpReturn.time;
                 index = results.get(i);
                 sameIndexPoints = new ArrayList<>();
 //                sameIndexPoints.add(points.get(i));
@@ -136,8 +136,6 @@ public class NonLeafModel extends Model {
                 expReturn.pageaccess += eachExpReturn.pageaccess;
             }
         }
-        long end = System.nanoTime();
-        expReturn.time = end - begin;
         return expReturn;
     }
 
