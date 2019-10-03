@@ -79,7 +79,10 @@ public class NonLeafModel extends Model {
         Instances instances = getInstances(name, points);
         classifier = getModels(name);
         train(classifier, instances);
+        long begin = System.nanoTime();
         List<Double> results = getPredVals(classifier, instances);
+        long end = System.nanoTime();
+//        System.out.println("prediction" + (end - begin));
         for (int i = 0; i < results.size(); i++) {
             add(results.get(i).intValue(), getChildren().get(i));
         }
