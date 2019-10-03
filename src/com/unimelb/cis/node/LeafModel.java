@@ -90,9 +90,8 @@ public class LeafModel extends Model {
     public ExpReturn insert(List<Point> points) {
         ExpReturn expReturn = new ExpReturn();
         Instances instances = getInstances(name, points);
-        long begin = System.nanoTime();
         List<Double> results = getPredVals(classifier, instances);
-
+        long begin = System.nanoTime();
         for (int i = 0; i < results.size(); i++) {
             int index = results.get(i).intValue();
             Point point = points.get(i);
@@ -124,11 +123,11 @@ public class LeafModel extends Model {
     public ExpReturn pointQuery(List<Point> points) {
 //        System.out.println("LeafNode pointQuery(List<Point> points)");
         Instances instances = getInstances(name, points);
-        long begin = System.nanoTime();
         List<Double> results = getPredVals(classifier, instances);
         int max = leafNodes.size();
         int min = 0;
         ExpReturn expReturn = new ExpReturn();
+        long begin = System.nanoTime();
         for (int i = 0; i < results.size(); i++) {
             int index = Math.min(Math.max(results.get(i).intValue(), 0), leafNodes.size() - 1);
             int gap = 1;
