@@ -159,11 +159,11 @@ public class PartitionModelRtree extends IRtree {
         long begin = System.nanoTime();
         while (true) {
             Mbr window = Mbr.getMbr(point, knnquerySide);
-            ExpReturn tempExpReturn =windowQuery(window);
+            ExpReturn tempExpReturn = windowQuery(window);
             List<Point> tempResult = tempExpReturn.result;
             if (tempResult.size() >= k) {
                 tempResult.sort((o1, o2) -> point.getDist(o1) > point.getDist(o2) ? 1 : -1);
-                if (tempResult.get(k).getDist(point) <= knnquerySide) {
+                if (tempResult.get(k - 1).getDist(point) <= knnquerySide) {
                     expReturn.result = tempResult.subList(0, k);
                     expReturn.pageaccess += tempExpReturn.pageaccess;
                     break;
