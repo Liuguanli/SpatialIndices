@@ -152,6 +152,31 @@ public class PartitionModelRtree extends IRtree {
     }
 
     @Override
+    public ExpReturn knnQuery(Point point, int k) {
+        // 4 side * side = 4k/data set size
+        float knnquerySide = (float) Math.sqrt((float)k/points.size());
+        ExpReturn expReturn = new ExpReturn();
+        long begin = System.nanoTime();
+        while (true) {
+            Mbr window = Mbr.getMbr(point, knnquerySide);
+            ExpReturn tempExpReturn =windowQuery(window);
+            List<Point> tempResult = tempExpReturn.result;
+            if (tempResult.size() >= k) {
+                tempResult.sort((o1, o2) -> point.getDist(o1) > point.getDist(o2) ? 1 : -1);
+                if (tempResult.get(k).getDist(point) <= knnquerySide) {
+                    expReturn.result = tempResult.subList(0, k);
+                    expReturn.pageaccess += tempExpReturn.pageaccess;
+                    break;
+                }
+            }
+            knnquerySide = knnquerySide * 2;
+        }
+        long end = System.nanoTime();
+        expReturn.time = end - begin;
+        return expReturn;
+    }
+
+    @Override
     public ExpReturn pointQuery(Point point) {
         return pointQuery(Arrays.asList(point));
     }
@@ -259,9 +284,11 @@ public class PartitionModelRtree extends IRtree {
             System.out.println("---------------" + all.get(i) + "---------------");
             PartitionModelRtree partitionModelRtree = new PartitionModelRtree(10000, "H", 100, all.get(i));
 //            partitionModelRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_1000000_1_2_.csv");
-        partitionModelRtree.buildRtree("D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_2_.csv");
+            partitionModelRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_10000_1_2_.csv");
+//        partitionModelRtree.buildRtree("D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_2_.csv");
             System.out.println("build finish");
             System.out.println("point query" + partitionModelRtree.pointQuery(partitionModelRtree.points));
+            System.out.println("knn query:" + partitionModelRtree.knnQuery(new Point(0.5f, 0.5f), 1));
 
 //            System.out.println(partitionModelRtree.pointQuery(partitionModelRtree.points));
 //            ExpReturn expReturn = partitionModelRtree.windowQuery(new Mbr(0.1f, 0.1f, 0.6f, 0.6f));

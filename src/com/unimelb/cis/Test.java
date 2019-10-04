@@ -42,9 +42,9 @@ public class Test {
 
     public static void testPclassification(String s) {
         System.out.println("------------------------------------------------");
-        PartitionModelRtree Pclassification = new PartitionModelRtree(10000, "H", 100, "MultilayerPerceptron");
+        PartitionModelRtree Pclassification = new PartitionModelRtree(10000, "H", 100, "NaiveBayes");
 //        System.out.println("partition:" + "NaiveBayes");
-        System.out.println("partition:" + "MultilayerPerceptron");
+        System.out.println("partition:" + "NaiveBayes");
         System.out.println("build finish:" + Pclassification.buildRtree(s));
         System.out.println("point query:" + Pclassification.pointQuery(Pclassification.getPoints()));
         System.out.println("window query:"+Pclassification.windowQuery(new Mbr(0.5f,0.5f,0.6f,0.6f)));

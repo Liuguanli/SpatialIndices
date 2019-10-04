@@ -456,10 +456,59 @@ public class RstarTree extends RLRtree {
         }
     }
 
-    public static void main(String[] args) {
-        RstarTree rstarTree = new RstarTree(8, true);
+    @Override
+    public ExpReturn knnQuery(Point point, int k) {
+        ExpReturn expReturn = new ExpReturn();
+        long begin = System.nanoTime();
+        PriorityQueue<Object> queue = getQueue(point, k);
+        ArrayList<Node> list = new ArrayList();
+        list.add(root);
+        while (list.size() > 0) {
+            Node top = list.remove(0);
+            if (top instanceof NonLeafNode) {
+                NonLeafNode nonLeaf = (NonLeafNode) top;
+                List<Node> children = nonLeaf.getChildren();
+                for (int i = 0; i < children.size(); i++) {
+                    Node former = children.get(i);
+                    boolean isProne = false;
+                    for (int j = 0; j < children.size(); j++) {
+                        if (i == j) {
+                            continue;
+                        }
+                        Node later = children.get(j);
+                        if (former.getMbr().calMINMAXDIST(point) > later.getMbr().calMINMAXDIST(point)) {
+                            isProne = true;
+                            break;
+                        }
+                    }
+                    if (!isProne) {
+                        list.add(former);
+                    }
+                }
+                expReturn.pageaccess++;
+            } else if (top instanceof LeafNode) {
+                LeafNode leaf = (LeafNode) top;
+                List<Point> children = leaf.getChildren();
+                queue.addAll(children);
+                expReturn.pageaccess++;
+            } else if (top instanceof Point){
+                expReturn.result.add((Point) top);
+                if (expReturn.result.size() == k) {
+                    break;
+                }
+            }
+        }
+        long end = System.nanoTime();
+        expReturn.time = end - begin;
+        return expReturn;
+    }
 
-        rstarTree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_1000_1_2_.csv");
+    public static void main(String[] args) {
+        RstarTree rstarTree = new RstarTree(100, true);
+
+        rstarTree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_10000_1_2_.csv");
+
+        System.out.println("knn query:" + rstarTree.knnQuery(new Point(0.5f, 0.5f), 1));
 
 //        System.out.println(rstarTree.root);
         rstarTree.insert(new Point(0.5f,0.5f));

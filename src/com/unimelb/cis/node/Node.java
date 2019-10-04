@@ -162,6 +162,14 @@ public abstract class Node implements Comparable {
         return mbr.volume() - this.getMbr().volume();
     }
 
+    public double getDist(Point point) {
+        double result = 0;
+        for (int i = 0; i < dim; i++) {
+            result += (this.getLocation()[i] - point.getLocation()[i]) * (this.getLocation()[i] - point.getLocation()[i]);
+        }
+        return Math.sqrt(result);
+    }
+
     public float getDeltaOvlp(Node node) {
         return getDeltaOvlp(node, "vol");
     }

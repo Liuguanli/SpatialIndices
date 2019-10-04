@@ -155,6 +155,78 @@ public class ZRtree extends RLRtree {
     }
 
     @Override
+    public ExpReturn knnQuery(Point point, int k) {
+        ExpReturn expReturn = new ExpReturn();
+        long begin = System.nanoTime();
+        PriorityQueue<Object> queue = new PriorityQueue(k, (o1, o2) -> {
+            double dist1;
+            double dist2;
+            if (o1 instanceof NonLeafNode) {
+                dist1 = ((NonLeafNode) o1).getMbr().claDist(point);
+            } else if (o1 instanceof LeafNode) {
+                dist1 = ((LeafNode) o1).getMbr().claDist(point);
+            } else {
+                dist1 = ((Point) o1).calDist(point);
+            }
+            if (o2 instanceof NonLeafNode) {
+                dist2 = ((NonLeafNode) o2).getMbr().claDist(point);
+            } else if (o2 instanceof LeafNode) {
+                dist2 = ((LeafNode) o2).getMbr().claDist(point);
+            } else {
+                dist2 = ((Point) o2).calDist(point);
+            }
+            if (dist1 > dist2) {
+                return 1;
+            } else if (dist1 < dist2) {
+                return -1;
+            } else {
+                return 0;
+            }
+        });
+        ArrayList<Node> list = new ArrayList();
+        list.add(root);
+        while (list.size() > 0) {
+            Node top = list.remove(0);
+            if (top instanceof NonLeafNode) {
+                NonLeafNode nonLeaf = (NonLeafNode) top;
+                List<Node> children = nonLeaf.getChildren();
+                for (int i = 0; i < children.size(); i++) {
+                    Node former = children.get(i);
+                    boolean isProne = false;
+                    for (int j = 0; j < children.size(); j++) {
+                        if (i == j) {
+                            continue;
+                        }
+                        Node later = children.get(j);
+                        if (former.getMbr().calMINDIST(point) > later.getMbr().calMINMAXDIST(point)) {
+                            isProne = true;
+                            break;
+                        }
+                    }
+                    if (!isProne) {
+                        list.add(former);
+                    }
+                }
+                expReturn.pageaccess++;
+            } else if (top instanceof LeafNode) {
+                LeafNode leaf = (LeafNode) top;
+                List<Point> children = leaf.getChildren();
+                queue.addAll(children);
+                expReturn.pageaccess++;
+            } else {
+                queue.add(top);
+            }
+        }
+        for (int i = 0; i < k; i++) {
+            expReturn.result.add((Point) queue.poll());
+        }
+        long end = System.nanoTime();
+        expReturn.time = end - begin;
+        return expReturn;
+    }
+
+
+    @Override
     public ExpReturn pointQuery(Point point) {
         ExpReturn expReturn = new ExpReturn();
         long begin = System.nanoTime();
@@ -321,12 +393,12 @@ public class ZRtree extends RLRtree {
     public static void main(String[] args) {
         ZRtree zRtree = new ZRtree(100);
 
-//        zRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/skewed_160000_9_2_.csv");
+        zRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_10000_1_2_.csv");
 
 //        zRtree.output("/Users/guanli/Documents/datasets/RLRtree/trees/Z_uniform_10000_1_2_.csv");
 
 //        zRtree.buildRtreeAfterTuning("/Users/guanli/Documents/datasets/RLRtree/trees/Z_uniform_160000_1_2_.csv", 2, 2);
-        zRtree.buildRtree("D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_2_.csv");
+//        zRtree.buildRtree("D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_2_.csv");
 //        zRtree.getRoot();
 
 //        System.out.println(zRtree.windowQuery(Mbr.getMbrs(0.01f, 10, 3).get(0)));
@@ -338,8 +410,9 @@ public class ZRtree extends RLRtree {
 //        zRtree.pointQuery(zRtree.getPoints());
 
 
-        System.out.println("point query:"+zRtree.pointQuery(zRtree.points));
-        zRtree.insert(new Point(0.5f,0.5f));
+//        System.out.println("point query:" + zRtree.pointQuery(zRtree.points));
+//        zRtree.insert(new Point(0.5f, 0.5f));
+        System.out.println("knn query:" + zRtree.knnQuery(new Point(0.5f, 0.5f), 1));
 
 
 //        Mbr mbr = new Mbr(1,2,3,4);
