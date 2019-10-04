@@ -4,6 +4,7 @@ package com.unimelb.cis.geometry;
 import com.unimelb.cis.node.Point;
 
 import java.util.*;
+import java.util.function.Consumer;
 
 public class Mbr {
 
@@ -191,84 +192,66 @@ public class Mbr {
         return true;
     }
 
-    public double calMINMAXDIST(Point point) {
-        double distX = 0;
-        double distY = 0;
-        float midX = (this.getX1() + this.getX2()) / 2;
-        float midY = (this.getY1() + this.getY2()) / 2;
-        if (point.getX() < midX) {
-            if (point.getY() < midY) {
-                Point temp = new Point(this.getX1(), this.getY2());
-                distX = point.calDist(temp);
-            } else {
-                Point temp = new Point(this.getX1(), this.getY1());
-                distX = point.calDist(temp);
+    public double calMINMAXDIST(Point queryPoint) {
+        float minResult = Float.MAX_VALUE;
+        for (int i = 0; i < dim; i++) {
+            float result = 0;
+            for (int j = 0; j < dim; j++) {
+                if (i == j) {
+                    float temp = 0;
+                    if (queryPoint.getLocation()[j] < (this.getLocation()[j + dim] + this.getLocation()[j]) / 2) {
+                        temp = this.getLocation()[j];
+                    } else {
+                        temp = this.getLocation()[j + dim];
+                    }
+                    result += (queryPoint.getLocation()[j] - temp) * (queryPoint.getLocation()[j] - temp);
+                } else {
+                    float temp = 0;
+                    if (queryPoint.getLocation()[j] > (this.getLocation()[j + dim] + this.getLocation()[j]) / 2) {
+                        temp = this.getLocation()[j + dim];
+                    } else {
+                        temp = this.getLocation()[j];
+                    }
+                    result += Math.abs(queryPoint.getLocation()[j] - temp);
+                }
             }
-        } else {
-            if (point.getY() < midY) {
-                Point temp = new Point(this.getX2(), this.getY2());
-                distX = point.calDist(temp);
-            } else {
-                Point temp = new Point(this.getX2(), this.getY1());
-                distX = point.calDist(temp);
-            }
-        }
-        if (point.getY() < midY) {
-            if (point.getX() < midX) {
-                Point temp = new Point(this.getX2(), this.getY1());
-                distY = point.calDist(temp);
-            } else {
-                Point temp = new Point(this.getX1(), this.getY1());
-                distY = point.calDist(temp);
-            }
-        } else {
-            if (point.getX() > midX) {
-                Point temp = new Point(this.getX1(), this.getY2());
-                distY = point.calDist(temp);
-            } else {
-                Point temp = new Point(this.getX2(), this.getY2());
-                distY = point.calDist(temp);
+            if (result < minResult) {
+                minResult = result;
             }
         }
-        return distX < distY ? distX : distY;
+        return Math.sqrt(minResult);
     }
 
-    public double calMINDIST(Point point) {
-        double dist = 0;
-        if (this.contains(point)) {
+    public double calMINDIST(Point queryPoint) {
+        if (this.contains(queryPoint)) {
             return 0;
-        } else {
-            if (point.getX() < this.getX1()) {
-                if (point.getY() < this.getY1()) {
-                    Point temp = new Point(this.getX1(), this.getY1());
-                    dist = point.calDist(temp);
-                } else if (point.getY() > this.getY2()) {
-                    Point temp = new Point(this.getX1(), this.getY2());
-                    dist = point.calDist(temp);
-                } else {
-                    dist = this.getX1() - point.getX();
-                }
-            } else if (point.getX() > this.getX2()) {
-                if (point.getY() < this.getY1()) {
-                    Point temp = new Point(this.getX2(), this.getY1());
-                    dist = point.calDist(temp);
-                } else if (point.getY() > this.getY2()) {
-                    Point temp = new Point(this.getX2(), this.getY2());
-                    dist = point.calDist(temp);
-                } else {
-                    dist = point.getX() - this.getX2();
-                }
+        }
+
+        float[] newLocations = new float[dim];
+        boolean flag = true;
+        for (int i = 0; i < dim; i++) {
+            if (queryPoint.getLocation()[i] <= this.getLocation()[i + dim] && queryPoint.getLocation()[i] >= this.getLocation()[i]) {
+                newLocations[i] = queryPoint.getLocation()[i];
+                flag = false;
             } else {
-                if (point.getY() < this.getY1()) {
-                    dist = this.getY1() - point.getY();
-                } else if (point.getY() > this.getY2()) {
-                    dist = point.getY() - this.getY2();
+                if (Math.abs(queryPoint.getLocation()[i] - this.getLocation()[i + dim]) < Math.abs(queryPoint.getLocation()[i] - this.getLocation()[i])) {
+                    newLocations[i] = this.getLocation()[i + dim];
                 } else {
-                    dist = 0;
+                    newLocations[i] = this.getLocation()[i];
                 }
             }
         }
-        return dist;
+        if (flag) {
+            List<Point> points = getAllPoints();
+            List<Double> result = new ArrayList<>();
+            // queryPoint to each Vertexs
+            points.forEach(point -> result.add(point.getDist(queryPoint)));
+
+            result.sort(Double::compareTo);
+            return result.get(0);
+        } else {
+            return new Point(newLocations).getDist(queryPoint);
+        }
     }
 
     public float getOverlapVol(Mbr mbr) {
@@ -322,25 +305,23 @@ public class Mbr {
         return (this.getX2() + mbr.getX2() - this.getX1() - mbr.getX1()) * (this.getY2() + mbr.getY2() - this.getY1() - mbr.getY1());
     }
 
-//    public double claDist(Point point) {
-//        if (interact(point))
-//            return 0;
-//        float a1 = point.getX();
-//        float a2 = point.getX();
-//        float b1 = point.getY();
-//        float b2 = point.getY();
-//        boolean xyMostLeft = x1 < a1;
-//        float mostLeftX1 = xyMostLeft ? x1 : a1;
-//        float mostRightX1 = xyMostLeft ? a1 : x1;
-//        float mostLeftX2 = xyMostLeft ? x2 : a2;
-//        double xDifference = (double) Math.max(0.0F, mostLeftX1 == mostRightX1 ? 0.0F : mostRightX1 - mostLeftX2);
-//        boolean xyMostDown = y1 < b1;
-//        float mostDownY1 = xyMostDown ? y1 : b1;
-//        float mostUpY1 = xyMostDown ? b1 : y1;
-//        float mostDownY2 = xyMostDown ? y2 : b2;
-//        double yDifference = (double) Math.max(0.0F, mostDownY1 == mostUpY1 ? 0.0F : mostUpY1 - mostDownY2);
-//        return Math.sqrt(xDifference * xDifference + yDifference * yDifference);
-//    }
+    public double claDist(Point point) {
+        if (interact(point)) {
+            return 0;
+        } else {
+            double sum = 0;
+            for (int i = 0; i < dim; i++) {
+                float a1 = point.getLocation()[i];
+                boolean xyMostLeft = location[i] < a1;
+                float mostLeftX1 = xyMostLeft ? location[i] : a1;
+                float mostRightX1 = xyMostLeft ? a1 : location[i];
+                float mostLeftX2 = xyMostLeft ? location[i + dim] : a1;
+                double xDifference = (double) Math.max(0.0F, mostLeftX1 == mostRightX1 ? 0.0F : (mostRightX1 - mostLeftX2));
+                sum = xDifference * xDifference;
+            }
+            return Math.sqrt(sum);
+        }
+    }
 
     public static Mbr genMbr(String s, String separator) {
         String[] xys = s.split(separator);
@@ -507,6 +488,16 @@ public class Mbr {
         List<Point> points = new ArrayList<>();
         getAllVertexs(this, 0, dim, new float[dim], points);
         return points;
+    }
+
+    public static Mbr getMbr(Point point, float side) {
+        int dim = point.getDim();
+        float[] location = new float[dim * 2];
+        for (int i = 0; i < dim; i++) {
+            location[i] = Math.max(0, point.getLocation()[i] - side);
+            location[i + dim] = Math.max(1, point.getLocation()[i] + side);
+        }
+        return new Mbr(location);
     }
 
     //    public static List<Mbr> getMbrs(float[] sides, int dim) {

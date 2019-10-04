@@ -9,10 +9,7 @@ import com.unimelb.cis.node.Point;
 import com.unimelb.cis.utils.ExpReturn;
 import com.unimelb.cis.utils.Visualizer;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public abstract class IRtree {
 
@@ -158,5 +155,127 @@ public abstract class IRtree {
         }
         return mid;
     }
+
+    public PriorityQueue<Object> getQueue(Point point, int k) {
+        PriorityQueue<Object> queue = new PriorityQueue(k, (o1, o2) -> {
+            double dist1;
+            double dist2;
+            if (o1 instanceof NonLeafNode) {
+                dist1 = ((NonLeafNode) o1).getMbr().claDist(point);
+            } else if (o1 instanceof LeafNode) {
+                dist1 = ((LeafNode) o1).getMbr().claDist(point);
+            } else {
+                dist1 = ((Point) o1).calDist(point);
+            }
+            if (o2 instanceof NonLeafNode) {
+                dist2 = ((NonLeafNode) o2).getMbr().claDist(point);
+            } else if (o2 instanceof LeafNode) {
+                dist2 = ((LeafNode) o2).getMbr().claDist(point);
+            } else {
+                dist2 = ((Point) o2).calDist(point);
+            }
+            if (dist1 > dist2) {
+                return 1;
+            } else if (dist1 < dist2) {
+                return -1;
+            } else {
+                return 0;
+            }
+        });
+        return queue;
+    }
+
+//    public double calMINDIST(Point point, Geometry geometry) {
+//        geometry.mbr().x1();
+//        geometry.mbr().y1();
+//        geometry.mbr().x2();
+//        geometry.mbr().y2();
+//        double dist = 0;
+//        if (geometry.intersects(point)) {
+//            return 0;
+//        } else {
+//            if (point.x() < geometry.mbr().x1()) {
+//                if (point.y() < geometry.mbr().y1()) {
+//                    Point temp = Geometries.point(geometry.mbr().x1(),
+//                            geometry.mbr().y1());
+//                    dist = point.geometry().distance(temp);
+//                } else if (point.y() > geometry.mbr().y2()) {
+//                    Point temp = Geometries.point(geometry.mbr().x1(),
+//                            geometry.mbr().y2());
+//                    dist = point.geometry().distance(temp);
+//                } else {
+//                    dist = geometry.mbr().x1() - point.x();
+//                }
+//            } else if (point.x() > geometry.mbr().x2()) {
+//                if (point.y() < geometry.mbr().y1()) {
+//                    Point temp = Geometries.point(geometry.mbr().x2(),
+//                            geometry.mbr().y1());
+//                    dist = point.geometry().distance(temp);
+//                } else if (point.y() > geometry.mbr().y2()) {
+//                    Point temp = Geometries.point(geometry.mbr().x2(),
+//                            geometry.mbr().y2());
+//                    dist = point.geometry().distance(temp);
+//                } else {
+//                    dist = point.x() - geometry.mbr().x2();
+//                }
+//            } else {
+//                if (point.y() < geometry.mbr().y1()) {
+//                    dist = geometry.mbr().y1() - point.y();
+//                } else {
+//                    dist = point.y() - geometry.mbr().y2();
+//                }
+//            }
+//        }
+//        return dist;
+//    }
+//    public double calMINMAXDIST(Point point, Geometry geometry) {
+//        double distX = 0;
+//        double distY = 0;
+//        float midX = (geometry.mbr().x1() + geometry.mbr().x2()) / 2;
+//        float midY = (geometry.mbr().y1() + geometry.mbr().y2()) / 2;
+//        if (point.x() < midX) {
+//            if (point.y() < midY) {
+//                Point temp = Geometries.point(geometry.mbr().x1(),
+//                        geometry.mbr().y2());
+//                distX = point.geometry().distance(temp);
+//            } else {
+//                Point temp = Geometries.point(geometry.mbr().x1(),
+//                        geometry.mbr().y1());
+//                distX = point.geometry().distance(temp);
+//            }
+//        } else {
+//            if (point.y() < midY) {
+//                Point temp = Geometries.point(geometry.mbr().x2(),
+//                        geometry.mbr().y2());
+//                distX = point.geometry().distance(temp);
+//            } else {
+//                Point temp = Geometries.point(geometry.mbr().x2(),
+//                        geometry.mbr().y1());
+//                distX = point.geometry().distance(temp);
+//            }
+//        }
+//        if (point.y() < midY) {
+//            if (point.x() < midX) {
+//                Point temp = Geometries.point(geometry.mbr().x2(),
+//                        geometry.mbr().y1());
+//                distY = point.geometry().distance(temp);
+//            } else {
+//                Point temp = Geometries.point(geometry.mbr().x1(),
+//                        geometry.mbr().y1());
+//                distY = point.geometry().distance(temp);
+//            }
+//        } else {
+//            if (point.x() > midX) {
+//                Point temp = Geometries.point(geometry.mbr().x1(),
+//                        geometry.mbr().y2());
+//                distY = point.geometry().distance(temp);
+//            } else {
+//                Point temp = Geometries.point(geometry.mbr().x2(),
+//                        geometry.mbr().y2());
+//                distY = point.geometry().distance(temp);
+//            }
+//        }
+//        return distX < distY ? distX : distY;
+//    }
 
 }
