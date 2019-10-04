@@ -158,6 +158,11 @@ public class HRtree extends RLRtree {
     }
 
     @Override
+    public ExpReturn knnQuery(Point point, int k) {
+        return null;
+    }
+
+    @Override
     public ExpReturn pointQuery(Point point) {
         ExpReturn expReturn = new ExpReturn();
         long begin = System.nanoTime();

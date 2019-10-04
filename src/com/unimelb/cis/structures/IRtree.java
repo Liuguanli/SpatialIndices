@@ -77,6 +77,8 @@ public abstract class IRtree {
 
     public abstract ExpReturn pointQuery(List<Point> points);
 
+    public abstract ExpReturn knnQuery(Point point, int k);
+
     public abstract ExpReturn pointQuery(Point point);
 
     public abstract ExpReturn insert(List<Point> points);
