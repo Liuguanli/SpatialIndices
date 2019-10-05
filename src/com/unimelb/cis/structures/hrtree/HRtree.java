@@ -111,9 +111,9 @@ public class HRtree extends RLRtree {
 
     @Override
     public ExpReturn windowQuery(Mbr window) {
+        ExpReturn expReturn = new ExpReturn();
         int pageAccessNum = 0;
         long begin = System.nanoTime();
-        List<Point> retults = new ArrayList<>();
         ArrayList<Node> list = new ArrayList();
         list.add(root);
         while (list.size() > 0) {
@@ -131,7 +131,7 @@ public class HRtree extends RLRtree {
                     List<Point> children = leaf.getChildren();
                     for (int i = 0; i < children.size(); i++) {
                         if (window.contains(children.get(i))) {
-                            retults.add(children.get(i));
+                            expReturn.result.add(children.get(i));
                         }
                     }
                     pageAccessNum++;
@@ -139,7 +139,6 @@ public class HRtree extends RLRtree {
             }
         }
         long end = System.nanoTime();
-        ExpReturn expReturn = new ExpReturn();
         expReturn.pageaccess = pageAccessNum;
         expReturn.time = end - begin;
         return expReturn;
@@ -186,7 +185,7 @@ public class HRtree extends RLRtree {
                         list.add(former);
                     }
                 }
-//                expReturn.pageaccess++;
+                expReturn.pageaccess++;
             } else if (top instanceof LeafNode) {
                 LeafNode leaf = (LeafNode) top;
                 List<Point> children = leaf.getChildren();

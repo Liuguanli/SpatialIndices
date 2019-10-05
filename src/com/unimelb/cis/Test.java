@@ -25,7 +25,7 @@ public class Test {
         System.out.println("build finish:" + zRtree.buildRtree(s));
         System.out.println("point query:" + zRtree.pointQuery(zRtree.getPoints()));
         System.out.println("window query:" + zRtree.windowQuery(mbr));
-        System.out.println("knn query:" + zRtree.knnQuery(point, k).result);
+        System.out.println("knn query:" + zRtree.knnQuery(point, k));
     }
 
     public static void testHRtree(String s) {
@@ -35,7 +35,7 @@ public class Test {
         System.out.println("build finish:" + hRtree.buildRtree(s));
         System.out.println("point query:" + hRtree.pointQuery(hRtree.getPoints()));
         System.out.println("window query:" + hRtree.windowQuery(mbr));
-        System.out.println("knn query:" + hRtree.knnQuery(point, k).result);
+        System.out.println("knn query:" + hRtree.knnQuery(point, k));
     }
 
     public static void testPRegression(String s) {
