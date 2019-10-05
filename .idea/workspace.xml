@@ -9,18 +9,8 @@
     <list default="true" id="ba9c8980-c90e-48aa-8dfb-ac39a52585ec" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/artifacts/SpatialIndices_jar/SpatialIndices.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/SpatialIndices_jar/SpatialIndices.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/geometry/Mbr.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/geometry/Mbr.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/structures/hrtree/HRtree.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/structures/hrtree/HRtree.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/structures/zrtree/ZRtree.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/structures/zrtree/ZRtree.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/utils/ExpReturn.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/utils/ExpReturn.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SpatialIndices/test/com/unimelb/cis/geometry/MbrTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SpatialIndices/test/com/unimelb/cis/geometry/MbrTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/Test.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/ZCurve.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/ZCurve.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/geometry/Mbr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/geometry/Mbr.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/structures/hrtree/HRtree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/structures/hrtree/HRtree.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/structures/zrtree/ZRtree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/structures/zrtree/ZRtree.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/utils/ExpReturn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/utils/ExpReturn.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/com/unimelb/cis/geometry/MbrTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/com/unimelb/cis/geometry/MbrTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/ZCurve$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/ZCurve.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/ZCurve.class" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -49,7 +39,7 @@
         <entry file="file://$PROJECT_DIR$/src/test/com/unimelb/cis/geometry/MbrTest.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="361">
-              <caret line="179" lean-forward="true" selection-start-line="179" selection-end-line="179" />
+              <caret line="179" selection-start-line="179" selection-end-line="179" />
             </state>
           </provider>
         </entry>
@@ -58,7 +48,7 @@
         <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/ZCurve.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="17">
-              <caret line="25" column="58" lean-forward="true" selection-start-line="25" selection-start-column="58" selection-end-line="25" selection-end-column="58" />
+              <caret line="25" column="58" selection-start-line="25" selection-start-column="58" selection-end-line="25" selection-end-column="58" />
             </state>
           </provider>
         </entry>
@@ -465,38 +455,6 @@
     <option name="localTasksCounter" value="4" />
     <servers />
   </component>
-  <component name="TestHistory">
-    <history-entry file="MbrTest_testInteractMbr - 2019.09.28 at 17h 34m 41s.xml">
-      <configuration name="MbrTest.testInteractMbr" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="MbrTest_testInteractMbr - 2019.09.28 at 17h 34m 56s.xml">
-      <configuration name="MbrTest.testInteractMbr" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="MbrTest_testInteractMbr - 2019.09.28 at 17h 35m 56s.xml">
-      <configuration name="MbrTest.testInteractMbr" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="MbrTest_testCalMINDIST - 2019.10.04 at 23h 20m 13s.xml">
-      <configuration name="MbrTest.testCalMINDIST" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="MbrTest_testCalMINDIST - 2019.10.04 at 23h 21m 05s.xml">
-      <configuration name="MbrTest.testCalMINDIST" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="MbrTest_testCalMINDIST - 2019.10.04 at 23h 21m 28s.xml">
-      <configuration name="MbrTest.testCalMINDIST" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="MbrTest_testCalMINDIST - 2019.10.04 at 23h 22m 01s.xml">
-      <configuration name="MbrTest.testCalMINDIST" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="MbrTest_testCalMINDIST - 2019.10.04 at 23h 24m 06s.xml">
-      <configuration name="MbrTest.testCalMINDIST" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="MbrTest_testCalMINDIST - 2019.10.04 at 23h 24m 30s.xml">
-      <configuration name="MbrTest.testCalMINDIST" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="MbrTest_testCalMINDIST - 2019.10.04 at 23h 25m 17s.xml">
-      <configuration name="MbrTest.testCalMINDIST" configurationId="JUnit" />
-    </history-entry>
-  </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
       <is-autoscroll-to-source value="true" />
@@ -510,7 +468,7 @@
     <frame x="-1295" y="-1057" width="1920" height="1057" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14217253" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14217253" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -519,12 +477,12 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.31422505" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.38110402" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.38110402" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3481953" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32939634" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.3673036" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.3673036" />
       <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="9" weight="0.32908705" />
       <window_info anchor="bottom" id="Messages" order="10" weight="0.32908705" />
@@ -772,28 +730,5 @@
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
-  </component>
-  <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/partitionmodel/PartitionModelRtree.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1502">
-          <caret line="165" column="40" selection-start-line="165" selection-start-column="40" selection-end-line="165" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/node/Point.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/ZCurve.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="25" column="58" lean-forward="true" selection-start-line="25" selection-start-column="58" selection-end-line="25" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
   </component>
 </project>
