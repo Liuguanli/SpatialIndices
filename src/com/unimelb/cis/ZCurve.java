@@ -22,15 +22,13 @@ public class ZCurve extends Curve {
             point.setCurveValue(result);
         }
 
-        Collections.sort(points, new Comparator<Point>() {
-            public int compare(Point o1, Point o2) {
-                if (o1.getCurveValue() > o2.getCurveValue()) {
-                    return 1;
-                } else if (o1.getCurveValue() < o2.getCurveValue()) {
-                    return -1;
-                } else {
-                    return 0;
-                }
+        Collections.sort(points, (o1, o2) -> {
+            if (o1.getCurveValue() > o2.getCurveValue()) {
+                return 1;
+            } else if (o1.getCurveValue() < o2.getCurveValue()) {
+                return -1;
+            } else {
+                return 0;
             }
         });
         return points;

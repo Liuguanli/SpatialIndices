@@ -111,9 +111,9 @@ public class HRtree extends RLRtree {
 
     @Override
     public ExpReturn windowQuery(Mbr window) {
+        ExpReturn expReturn = new ExpReturn();
         int pageAccessNum = 0;
         long begin = System.nanoTime();
-        List<Point> retults = new ArrayList<>();
         ArrayList<Node> list = new ArrayList();
         list.add(root);
         while (list.size() > 0) {
@@ -131,7 +131,7 @@ public class HRtree extends RLRtree {
                     List<Point> children = leaf.getChildren();
                     for (int i = 0; i < children.size(); i++) {
                         if (window.contains(children.get(i))) {
-                            retults.add(children.get(i));
+                            expReturn.result.add(children.get(i));
                         }
                     }
                     pageAccessNum++;
@@ -139,7 +139,6 @@ public class HRtree extends RLRtree {
             }
         }
         long end = System.nanoTime();
-        ExpReturn expReturn = new ExpReturn();
         expReturn.pageaccess = pageAccessNum;
         expReturn.time = end - begin;
         return expReturn;
@@ -161,31 +160,7 @@ public class HRtree extends RLRtree {
     public ExpReturn knnQuery(Point point, int k) {
         ExpReturn expReturn = new ExpReturn();
         long begin = System.nanoTime();
-        PriorityQueue<Object> queue = new PriorityQueue(k, (o1, o2) -> {
-            double dist1;
-            double dist2;
-            if (o1 instanceof NonLeafNode) {
-                dist1 = ((NonLeafNode) o1).getMbr().claDist(point);
-            } else if (o1 instanceof LeafNode) {
-                dist1 = ((LeafNode) o1).getMbr().claDist(point);
-            } else {
-                dist1 = ((Point) o1).calDist(point);
-            }
-            if (o2 instanceof NonLeafNode) {
-                dist2 = ((NonLeafNode) o2).getMbr().claDist(point);
-            } else if (o2 instanceof LeafNode) {
-                dist2 = ((LeafNode) o2).getMbr().claDist(point);
-            } else {
-                dist2 = ((Point) o2).calDist(point);
-            }
-            if (dist1 > dist2) {
-                return 1;
-            } else if (dist1 < dist2) {
-                return -1;
-            } else {
-                return 0;
-            }
-        });
+        PriorityQueue<Object> queue = getQueue(point, k);
         ArrayList<Node> list = new ArrayList();
         list.add(root);
         while (list.size() > 0) {

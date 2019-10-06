@@ -179,7 +179,7 @@ public class LeafModel extends Model {
         int indexLow = results.get(0).intValue();
         int indexHigh = results.get(results.size() - 1).intValue();
         leafNodes.forEach((integer, leafNode) -> {
-            if (integer >= indexLow && integer < indexHigh) {
+            if (integer >= Math.max(0, indexLow - minError) && integer < Math.min(indexHigh + maxError , leafNodes.size())) {
                 if (leafNode.getMbr().interact(window)) {
                     pageAccessArray[0]++;
                     leafNode.getChildren().forEach(point -> {

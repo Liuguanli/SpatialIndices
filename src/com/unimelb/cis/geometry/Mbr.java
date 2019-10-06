@@ -193,6 +193,9 @@ public class Mbr {
     }
 
     public double calMINMAXDIST(Point queryPoint) {
+        if (contains(queryPoint)) {
+            return 0;
+        }
         float minResult = Float.MAX_VALUE;
         for (int i = 0; i < dim; i++) {
             float result = 0;
@@ -495,7 +498,7 @@ public class Mbr {
         float[] location = new float[dim * 2];
         for (int i = 0; i < dim; i++) {
             location[i] = Math.max(0, point.getLocation()[i] - side);
-            location[i + dim] = Math.max(1, point.getLocation()[i] + side);
+            location[i + dim] = Math.min(1, point.getLocation()[i] + side);
         }
         return new Mbr(location);
     }
