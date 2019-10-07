@@ -22,30 +22,30 @@ public class Test {
         System.out.println("------------------------------------------------");
         ZRtree zRtree = new ZRtree(100);
         System.out.println("ZRtree:");
-        System.out.println("build finish:" + zRtree.buildRtree(s));
-        System.out.println("point query:" + zRtree.pointQuery(zRtree.getPoints()));
-        System.out.println("window query:" + zRtree.windowQuery(mbr));
-        System.out.println("knn query:" + zRtree.knnQuery(point, k));
+        System.out.println("build finish:" + zRtree.buildRtree(s).time);
+//        System.out.println("point query:" + zRtree.pointQuery(zRtree.getPoints()));
+//        System.out.println("window query:" + zRtree.windowQuery(mbr));
+//        System.out.println("knn query:" + zRtree.knnQuery(point, k));
     }
 
     public static void testHRtree(String s) {
         System.out.println("------------------------------------------------");
         HRtree hRtree = new HRtree(100);
         System.out.println("HRtree:");
-        System.out.println("build finish:" + hRtree.buildRtree(s));
-        System.out.println("point query:" + hRtree.pointQuery(hRtree.getPoints()));
-        System.out.println("window query:" + hRtree.windowQuery(mbr));
-        System.out.println("knn query:" + hRtree.knnQuery(point, k));
+        System.out.println("build finish:" + hRtree.buildRtree(s).time);
+//        System.out.println("point query:" + hRtree.pointQuery(hRtree.getPoints()));
+//        System.out.println("window query:" + hRtree.windowQuery(mbr));
+//        System.out.println("knn query:" + hRtree.knnQuery(point, k));
     }
 
     public static void testPRegression(String s) {
         System.out.println("------------------------------------------------");
         PartitionModelRtree PRegression = new PartitionModelRtree(10000, "H", 100, "LinearRegression");
         System.out.println("partition:" + "LinearRegression");
-        System.out.println("build finish:" + PRegression.buildRtree(s));
-        System.out.println("point query:" + PRegression.pointQuery(PRegression.getPoints()));
-        System.out.println("window query:" + PRegression.windowQuery(mbr));
-        System.out.println("knn query:" + PRegression.knnQuery(point, k));
+        System.out.println("build finish:" + PRegression.buildRtree(s).time);
+//        System.out.println("point query:" + PRegression.pointQuery(PRegression.getPoints()));
+//        System.out.println("window query:" + PRegression.windowQuery(mbr));
+//        System.out.println("knn query:" + PRegression.knnQuery(point, k));
     }
 
     public static void testPclassification(String s) {
@@ -53,30 +53,30 @@ public class Test {
         PartitionModelRtree Pclassification = new PartitionModelRtree(10000, "H", 100, "NaiveBayes");
 //        System.out.println("partition:" + "NaiveBayes");
         System.out.println("partition:" + "NaiveBayes");
-        System.out.println("build finish:" + Pclassification.buildRtree(s));
-        System.out.println("point query:" + Pclassification.pointQuery(Pclassification.getPoints()));
-        System.out.println("window query:" + Pclassification.windowQuery(mbr));
-        System.out.println("knn query:" + Pclassification.knnQuery(point, k));
+        System.out.println("build finish:" + Pclassification.buildRtree(s).time);
+//        System.out.println("point query:" + Pclassification.pointQuery(Pclassification.getPoints()));
+//        System.out.println("window query:" + Pclassification.windowQuery(mbr));
+//        System.out.println("knn query:" + Pclassification.knnQuery(point, k));
     }
 
     public static void testRRegression(String s) {
         System.out.println("------------------------------------------------");
         RecursiveModelRtree RRegression = new RecursiveModelRtree(10000, "H", 100, "LinearRegression");
         System.out.println("Recursive:" + "LinearRegression");
-        System.out.println("build finish:" + RRegression.buildRtree(s));
-        System.out.println("point query:" + RRegression.pointQuery(RRegression.getPoints()));
-        System.out.println("window query:" + RRegression.windowQuery(mbr));
-        System.out.println("knn query:" + RRegression.knnQuery(point, k));
+        System.out.println("build finish:" + RRegression.buildRtree(s).time);
+//        System.out.println("point query:" + RRegression.pointQuery(RRegression.getPoints()));
+//        System.out.println("window query:" + RRegression.windowQuery(mbr));
+//        System.out.println("knn query:" + RRegression.knnQuery(point, k));
     }
 
     public static void testRclassification(String s) {
         System.out.println("------------------------------------------------");
         RecursiveModelRtree Rclassification = new RecursiveModelRtree(10000, "H", 100, "NaiveBayes");
         System.out.println("Recursive:" + "NaiveBayes");
-        System.out.println("build finish:" + Rclassification.buildRtree(s));
-        System.out.println("point query:" + Rclassification.pointQuery(Rclassification.getPoints()));
-        System.out.println("window query:" + Rclassification.windowQuery(mbr));
-        System.out.println("knn query:" + Rclassification.knnQuery(point, k));
+        System.out.println("build finish:" + Rclassification.buildRtree(s).time);
+//        System.out.println("point query:" + Rclassification.pointQuery(Rclassification.getPoints()));
+//        System.out.println("window query:" + Rclassification.windowQuery(mbr));
+//        System.out.println("knn query:" + Rclassification.knnQuery(point, k));
     }
 
     static List<String> datasets = Arrays.asList(
@@ -90,11 +90,11 @@ public class Test {
 //            "D:\\datasets\\RLRtree\\raw\\uniform_100000000_1_2_.csv",
 //            "D:\\datasets\\RLRtree\\raw\\uniform_128000000_1_2_.csv",
 //            "D:\\datasets\\RLRtree\\raw\\uniform_80000000_1_2_.csv",
-            "D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_2_.csv",
-            "D:\\datasets\\RLRtree\\raw\\uniform_2000000_1_2_.csv",
-            "D:\\datasets\\RLRtree\\raw\\uniform_4000000_1_2_.csv",
-            "D:\\datasets\\RLRtree\\raw\\uniform_8000000_1_2_.csv",
-            "D:\\datasets\\RLRtree\\raw\\uniform_16000000_1_2_.csv",
+//            "D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_2_.csv",
+//            "D:\\datasets\\RLRtree\\raw\\uniform_2000000_1_2_.csv",
+//            "D:\\datasets\\RLRtree\\raw\\uniform_4000000_1_2_.csv",
+//            "D:\\datasets\\RLRtree\\raw\\uniform_8000000_1_2_.csv",
+//            "D:\\datasets\\RLRtree\\raw\\uniform_16000000_1_2_.csv",
             "D:\\datasets\\RLRtree\\raw\\uniform_32000000_1_2_.csv",
             "D:\\datasets\\RLRtree\\raw\\uniform_64000000_1_2_.csv"
     );
@@ -104,12 +104,12 @@ public class Test {
             @Override
             public void accept(String s) {
                 System.out.println(s);
-                testZRtree(s);
-                testHRtree(s);
-//                testPRegression(s);
-                testPclassification(s);
-//                testRRegression(s);
-//                testRclassification(s);
+//                testZRtree(s);
+//                testHRtree(s);
+                testPRegression(s);
+//                testPclassification(s);
+                testRRegression(s);
+                testRclassification(s);
             }
         });
     }
