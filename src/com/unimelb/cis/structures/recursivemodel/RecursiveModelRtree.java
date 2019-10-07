@@ -11,6 +11,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Consumer;
 
 import static com.unimelb.cis.CSVFileReader.read;
 
@@ -195,7 +196,9 @@ public class RecursiveModelRtree extends IRtree {
     public ExpReturn insert(List<Point> points) {
         ExpReturn expReturn = new ExpReturn();
         long begin = System.nanoTime();
-
+        points.forEach(point -> {
+            root.insert(point);
+        });
         long end = System.nanoTime();
         expReturn.time = end - begin;
         return expReturn;
