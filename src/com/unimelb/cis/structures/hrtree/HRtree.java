@@ -145,6 +145,32 @@ public class HRtree extends RLRtree {
     }
 
     @Override
+    public ExpReturn windowQuery(List<Mbr> windows) {
+        ExpReturn expReturn = new ExpReturn();
+        windows.forEach(mbr -> {
+            ExpReturn temp = windowQuery(mbr);
+            expReturn.time += temp.time;
+            expReturn.pageaccess += temp.pageaccess;
+        });
+        expReturn.time /= windows.size();
+        expReturn.pageaccess /= windows.size();
+        return expReturn;
+    }
+
+    @Override
+    public ExpReturn knnQuery(List<Point> points, int k) {
+        ExpReturn expReturn = new ExpReturn();
+        points.forEach(point -> {
+            ExpReturn temp = knnQuery(point, k);
+            expReturn.time += temp.time;
+            expReturn.pageaccess += temp.pageaccess;
+        });
+        expReturn.time /= points.size();
+        expReturn.pageaccess /= points.size();
+        return expReturn;
+    }
+
+    @Override
     public ExpReturn pointQuery(List<Point> points) {
         ExpReturn expReturn = new ExpReturn();
         long begin = System.nanoTime();
@@ -209,7 +235,17 @@ public class HRtree extends RLRtree {
             ExpReturn tempExpReturn = windowQuery(window);
             List<Point> tempResult = tempExpReturn.result;
             if (tempResult.size() >= k) {
-                tempResult.sort((o1, o2) -> point.getDist(o1) > point.getDist(o2) ? 1 : -1);
+                tempResult.sort((o1, o2) -> {
+                    double d1 = point.getDist(o1);
+                    double d2 = point.getDist(o2);
+                    if (d1 > d2) {
+                        return 1;
+                    } else if(d1 <d2) {
+                        return -1;
+                    } else {
+                        return 0;
+                    }
+                });
                 if (tempResult.get(k - 1).getDist(point) <= knnquerySide) {
                     expReturn.result = tempResult.subList(0, k);
                     expReturn.pageaccess += tempExpReturn.pageaccess;
@@ -344,6 +380,7 @@ public class HRtree extends RLRtree {
                     if (parent != null) {
                         int nodeIndex = parent.getChildren().indexOf(node);
                         LeafNode newLeafNode = node.split();
+                        expReturn.pageaccess++;
                         NonLeafNode child = new NonLeafNode(pagesize, dim);
                         child.add(node);
                         child.add(newLeafNode);

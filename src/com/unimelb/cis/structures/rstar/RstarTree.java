@@ -457,6 +457,32 @@ public class RstarTree extends RLRtree {
     }
 
     @Override
+    public ExpReturn windowQuery(List<Mbr> windows) {
+        ExpReturn expReturn = new ExpReturn();
+        windows.forEach(mbr -> {
+            ExpReturn temp = windowQuery(mbr);
+            expReturn.time += temp.time;
+            expReturn.pageaccess += temp.pageaccess;
+        });
+        expReturn.time /= windows.size();
+        expReturn.pageaccess /= windows.size();
+        return expReturn;
+    }
+
+    @Override
+    public ExpReturn knnQuery(List<Point> points, int k) {
+        ExpReturn expReturn = new ExpReturn();
+        points.forEach(point -> {
+            ExpReturn temp = knnQuery(point, k);
+            expReturn.time += temp.time;
+            expReturn.pageaccess += temp.pageaccess;
+        });
+        expReturn.time /= points.size();
+        expReturn.pageaccess /= points.size();
+        return expReturn;
+    }
+
+    @Override
     public ExpReturn knnQuery(Point point, int k) {
         ExpReturn expReturn = new ExpReturn();
         long begin = System.nanoTime();
