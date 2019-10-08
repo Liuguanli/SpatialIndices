@@ -155,7 +155,6 @@ public class Mbr {
             else
                 continue;
         }
-
         return true;
     }
 
@@ -364,7 +363,7 @@ public class Mbr {
         float y = random.nextFloat();
         while (true) {
             if (x - side > 0 && x + side < 1 && y - side > 0 && y + side < 1) {
-                return new Mbr(x - side, x + side, y - side, y + side);
+                return new Mbr(x - side, y - side,  x + side, y + side);
             } else {
                 x = random.nextFloat();
                 y = random.nextFloat();
@@ -399,18 +398,8 @@ public class Mbr {
                 }
             }
         }
-        if (dim == 2) {
-            for (int i = 0; i < num; i++) {
-                mbrs.add(getMbr2D(side));
-            }
-        } else if (dim == 3) {
-            for (int i = 0; i < num; i++) {
-                mbrs.add(getMbr3D(side));
-            }
-        } else {
-            for (int i = 0; i < num; i++) {
-                mbrs.add(getMbr(side, dim));
-            }
+        for (int i = 0; i < num; i++) {
+            mbrs.add(getMbr(side, dim));
         }
         Map temp = new HashMap<>();
         temp.put(side, mbrs);

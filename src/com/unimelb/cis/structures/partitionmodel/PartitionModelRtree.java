@@ -117,8 +117,15 @@ public class PartitionModelRtree extends IRtree {
             int result = 0;
             int begin = 0;
             int end = boundary.getBoundries().size();
+            List<Line> boundries = boundary.getBoundries();
             while (begin <= end) {
                 int mid = (begin + end) / 2;
+                if (mid >= boundries.size()) {
+                    // out of boundary!!! However, we can not change the boundary
+                    result = boundries.size() - 1;
+                }
+
+//                System.out.println(point);
                 if (boundary.getBoundries().get(mid).isContains(point.getLocation()[dim - 1])) {
 //                    if (boundary.getChildren().size() == 0) {
 //                        result = boundary.getIndex();
@@ -152,6 +159,34 @@ public class PartitionModelRtree extends IRtree {
     }
 
     @Override
+    public ExpReturn windowQuery(List<Mbr> windows) {
+        ExpReturn expReturn = new ExpReturn();
+        windows.forEach(mbr -> {
+            ExpReturn temp = windowQuery(mbr);
+            expReturn.time += temp.time;
+            expReturn.pageaccess += temp.pageaccess;
+            expReturn.accuracy += temp.accuracy;
+        });
+        expReturn.time /= windows.size();
+        expReturn.pageaccess /= windows.size();
+        expReturn.accuracy /= windows.size();
+        return expReturn;
+    }
+
+    @Override
+    public ExpReturn knnQuery(List<Point> points, int k) {
+        ExpReturn expReturn = new ExpReturn();
+        points.forEach(point -> {
+            ExpReturn temp = knnQuery(point, k);
+            expReturn.time += temp.time;
+            expReturn.pageaccess += temp.pageaccess;
+        });
+        expReturn.time /= points.size();
+        expReturn.pageaccess /= points.size();
+        return expReturn;
+    }
+
+    @Override
     public ExpReturn knnQuery(Point point, int k) {
         // 4 side * side = 4k/data set size
         float knnquerySide = (float) Math.sqrt((float)k/points.size());
@@ -162,7 +197,17 @@ public class PartitionModelRtree extends IRtree {
             ExpReturn tempExpReturn = windowQuery(window);
             List<Point> tempResult = tempExpReturn.result;
             if (tempResult.size() >= k) {
-                tempResult.sort((o1, o2) -> point.getDist(o1) > point.getDist(o2) ? 1 : -1);
+                tempResult.sort((o1, o2) -> {
+                    double d1 = point.getDist(o1);
+                    double d2 = point.getDist(o2);
+                    if (d1 > d2) {
+                        return 1;
+                    } else if(d1 < d2) {
+                        return -1;
+                    } else {
+                        return 0;
+                    }
+                });
                 if (tempResult.get(k - 1).getDist(point) <= knnquerySide) {
                     expReturn.result = tempResult.subList(0, k);
                     expReturn.pageaccess += tempExpReturn.pageaccess;
@@ -189,7 +234,7 @@ public class PartitionModelRtree extends IRtree {
         points.forEach(point -> {
             int modelIndex = getModelIndex(boundary, point, point.getDim());
             LeafModel model = partitionModels.get(modelIndex);
-            model.insert(point);
+            expReturn.pageaccess += model.insert(point).pageaccess;
         });
 
         long end = System.nanoTime();
@@ -255,6 +300,8 @@ public class PartitionModelRtree extends IRtree {
             }
         });
         long end = System.nanoTime();
+        ExpReturn accurate = windowQueryByScanAll(window);
+        expReturn.accuracy = (double) expReturn.result.size() / accurate.result.size();
         expReturn.time = end - begin;
         return expReturn;
     }

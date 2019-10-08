@@ -13,6 +13,8 @@ public class ExpReturn {
 
     public List<Point> result = new ArrayList<>();
 
+    public double accuracy;
+
     @Override
     public String toString() {
 
@@ -25,6 +27,11 @@ public class ExpReturn {
 //            builder.append("result=").append(result.size());
 //        }
 //        builder.append(System.lineSeparator());
+
+        if (accuracy != 0) {
+            builder.append("accuracy=").append(accuracy).append(System.lineSeparator());
+        }
+
         return builder.toString();
     }
 }

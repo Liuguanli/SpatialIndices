@@ -11,6 +11,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Consumer;
 
 import static com.unimelb.cis.CSVFileReader.read;
 
@@ -101,7 +102,17 @@ public class RecursiveModelRtree extends IRtree {
             ExpReturn tempExpReturn = windowQuery(window);
             List<Point> tempResult = tempExpReturn.result;
             if (tempResult.size() >= k) {
-                tempResult.sort((o1, o2) -> point.getDist(o1) > point.getDist(o2) ? 1 : -1);
+                tempResult.sort((o1, o2) -> {
+                    double d1 = point.getDist(o1);
+                    double d2 = point.getDist(o2);
+                    if (d1 > d2) {
+                        return 1;
+                    } else if(d1 < d2) {
+                        return -1;
+                    } else {
+                        return 0;
+                    }
+                });
                 if (tempResult.get(k - 1).getDist(point) <= knnquerySide) {
                     expReturn.result = tempResult.subList(0, k);
                     expReturn.pageaccess += tempExpReturn.pageaccess;
@@ -174,9 +185,40 @@ public class RecursiveModelRtree extends IRtree {
         return null;
     }
 
+    @Override
+    public ExpReturn windowQuery(List<Mbr> windows) {
+        ExpReturn expReturn = new ExpReturn();
+        windows.forEach(mbr -> {
+            ExpReturn temp = windowQuery(mbr);
+            expReturn.time += temp.time;
+            expReturn.pageaccess += temp.pageaccess;
+            expReturn.accuracy += temp.accuracy;
+        });
+        expReturn.time /= windows.size();
+        expReturn.pageaccess /= windows.size();
+        expReturn.accuracy /= windows.size();
+        return expReturn;
+    }
+
+    @Override
+    public ExpReturn knnQuery(List<Point> points, int k) {
+        ExpReturn expReturn = new ExpReturn();
+        points.forEach(point -> {
+            ExpReturn temp = knnQuery(point, k);
+            expReturn.time += temp.time;
+            expReturn.pageaccess += temp.pageaccess;
+        });
+        expReturn.time /= points.size();
+        expReturn.pageaccess /= points.size();
+        return expReturn;
+    }
+
     public ExpReturn windowQuery(Mbr window) {
         if (root != null) {
-            return root.windowQuery(window);
+            ExpReturn expReturn = root.windowQuery(window);
+            ExpReturn accurate = windowQueryByScanAll(window);
+            expReturn.accuracy = (double) expReturn.result.size() / accurate.result.size();
+            return expReturn;
         }
         return null;
     }
@@ -195,7 +237,9 @@ public class RecursiveModelRtree extends IRtree {
     public ExpReturn insert(List<Point> points) {
         ExpReturn expReturn = new ExpReturn();
         long begin = System.nanoTime();
-
+        points.forEach(point -> {
+            expReturn.pageaccess += root.insert(point).pageaccess;
+        });
         long end = System.nanoTime();
         expReturn.time = end - begin;
         return expReturn;

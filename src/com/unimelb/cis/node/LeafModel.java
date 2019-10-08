@@ -103,6 +103,7 @@ public class LeafModel extends Model {
             } else {
                 if (target.isFull()) {
                     LeafNode newLeafNode = target.split();
+                    expReturn.pageaccess++;
                     int last = leafNodes.size();
                     for (int j = last; j > index + 1; j--) {
                         leafNodes.put(j, leafNodes.get(j - 1));
