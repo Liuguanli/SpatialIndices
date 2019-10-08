@@ -25,9 +25,9 @@ public class Test {
         System.out.println("ZRtree:");
         System.out.println("build finish:" + zRtree.buildRtree(s).time);
         System.out.println("point query:" + zRtree.pointQuery(zRtree.getPoints()));
-        System.out.println("insert:" + zRtree.insert(insertedPoints));
         System.out.println("window query:" + zRtree.windowQuery(mbrs));
         System.out.println("knn query:" + zRtree.knnQuery(knnPoints, k));
+        System.out.println("insert:" + zRtree.insert(insertedPoints));
     }
 
     public static void testHRtree(String s) {
@@ -35,10 +35,10 @@ public class Test {
         HRtree hRtree = new HRtree(100);
         System.out.println("HRtree:");
         System.out.println("build finish:" + hRtree.buildRtree(s).time);
-        System.out.println("insert:" + hRtree.insert(insertedPoints));
         System.out.println("point query:" + hRtree.pointQuery(hRtree.getPoints()));
         System.out.println("window query:" + hRtree.windowQuery(mbrs));
         System.out.println("knn query:" + hRtree.knnQuery(knnPoints, k));
+        System.out.println("insert:" + hRtree.insert(insertedPoints));
     }
 
     public static void testPRegression(String s) {
@@ -113,9 +113,9 @@ public class Test {
                 System.out.println(s);
 //                testZRtree(s);
 //                testHRtree(s);
-                testPRegression(s);
-                testPclassification(s);
-                testRRegression(s);
+//                testPRegression(s);
+//                testPclassification(s);
+//                testRRegression(s);
                 testRclassification(s);
             }
         });

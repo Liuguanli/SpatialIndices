@@ -123,6 +123,7 @@ public class PartitionModelRtree extends IRtree {
                 if (mid >= boundries.size()) {
                     // out of boundary!!! However, we can not change the boundary
                     result = boundries.size() - 1;
+                    break;
                 }
 
 //                System.out.println(point);

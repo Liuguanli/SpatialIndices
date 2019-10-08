@@ -177,6 +177,7 @@ public class LeafModel extends Model {
         List<Point> vertexes = window.getAllPoints();
         Instances instances = getInstances(name, vertexes);
         List<Double> results = getPredVals(classifier, instances);
+        results.sort(Double::compareTo);
         int indexLow = results.get(0).intValue();
         int indexHigh = results.get(results.size() - 1).intValue();
         leafNodes.forEach((integer, leafNode) -> {

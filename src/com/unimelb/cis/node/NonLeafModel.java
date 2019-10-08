@@ -40,6 +40,23 @@ public class NonLeafModel extends Model {
         this.subModels = subModels;
     }
 
+    public void add(int predictedVal, List<Point> points) {
+        points.forEach(point -> {
+            if (subModels.containsKey(predictedVal)) {
+                subModels.get(predictedVal).add(point);
+            } else {
+                Model model;
+                if (isSubNonLeafModel) {
+                    model = new NonLeafModel(predictedVal, name, level - 1, threshold, pageSize);
+                } else {
+                    model = new LeafModel(predictedVal, pageSize, name);
+                }
+                model.add(point);
+                subModels.put(predictedVal, model);
+            }
+        });
+    }
+
     public void add(int predictedVal, Point point) {
         if (subModels.containsKey(predictedVal)) {
             subModels.get(predictedVal).add(point);
@@ -79,10 +96,7 @@ public class NonLeafModel extends Model {
         Instances instances = getInstances(name, points);
         classifier = getModels(name);
         train(classifier, instances);
-        long begin = System.nanoTime();
         List<Double> results = getPredVals(classifier, instances);
-        long end = System.nanoTime();
-//        System.out.println("prediction" + (end - begin));
         for (int i = 0; i < results.size(); i++) {
             add(results.get(i).intValue(), getChildren().get(i));
         }
@@ -159,16 +173,24 @@ public class NonLeafModel extends Model {
             if (results.get(i).intValue() == index.intValue()) {
 //                sameIndexPoints.add(points.get(i));
             } else {
-                ExpReturn eachExpReturn = subModels.get(index.intValue()).insert(sameIndexPoints);
-                expReturn.pageaccess += eachExpReturn.pageaccess;
+                if (subModels.containsKey(index.intValue())) {
+                    ExpReturn eachExpReturn = subModels.get(index.intValue()).insert(sameIndexPoints);
+                    expReturn.pageaccess += eachExpReturn.pageaccess;
+                } else {
+                    add(results.get(i).intValue(), sameIndexPoints);
+                }
                 index = results.get(i);
                 sameIndexPoints = new ArrayList<>();
 //                sameIndexPoints.add(points.get(i));
             }
             sameIndexPoints.add(points.get(i));
             if (i == results.size() - 1) {
-                ExpReturn eachExpReturn = subModels.get(index.intValue()).insert(sameIndexPoints);
-                expReturn.pageaccess += eachExpReturn.pageaccess;
+                if (subModels.containsKey(index.intValue())) {
+                    ExpReturn eachExpReturn = subModels.get(index.intValue()).insert(sameIndexPoints);
+                    expReturn.pageaccess += eachExpReturn.pageaccess;
+                } else {
+                    add(results.get(i).intValue(), sameIndexPoints);
+                }
             }
         }
         long end = System.nanoTime();
