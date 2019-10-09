@@ -208,18 +208,16 @@ public class NonLeafModel extends Model {
     @Override
     public ExpReturn windowQuery(Mbr window) {
         ExpReturn expReturn = new ExpReturn();
-        final int[] pageAccessArray = {0};
         long begin = System.nanoTime();
         subModels.forEach((integer, leafModel) -> {
             if (leafModel.getMbr().interact(window)) {
-                pageAccessArray[0]++;
                 ExpReturn eachExpReturn = leafModel.windowQuery(mbr);
                 expReturn.pageaccess += eachExpReturn.pageaccess;
+                expReturn.pageaccess ++;
                 expReturn.result.addAll(eachExpReturn.result);
             }
         });
         long end = System.nanoTime();
-        expReturn.pageaccess = pageAccessArray[0];
         expReturn.time = end - begin;
         return expReturn;
     }

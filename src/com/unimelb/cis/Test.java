@@ -14,12 +14,8 @@ import java.util.function.Consumer;
 
 public class Test {
 
-    static int k = 25;
-    static List<Point> knnPoints = Point.getPoints(10, 2);
-    static List<Point> insertedPoints = Point.getPoints(10000, 2);
-    static List<Mbr> mbrs = Mbr.getMbrs(0.04f , 10, 2);
 
-    public static void testZRtree(String s) {
+    public static void testZRtree(String s, List<Point> insertedPoints, List<Mbr> mbrs, List<Point> knnPoints, int k) {
         System.out.println("------------------------------------------------");
         ZRtree zRtree = new ZRtree(100);
         System.out.println("ZRtree:");
@@ -30,7 +26,7 @@ public class Test {
         System.out.println("insert:" + zRtree.insert(insertedPoints));
     }
 
-    public static void testHRtree(String s) {
+    public static void testHRtree(String s, List<Point> insertedPoints, List<Mbr> mbrs, List<Point> knnPoints, int k) {
         System.out.println("------------------------------------------------");
         HRtree hRtree = new HRtree(100);
         System.out.println("HRtree:");
@@ -41,7 +37,7 @@ public class Test {
         System.out.println("insert:" + hRtree.insert(insertedPoints));
     }
 
-    public static void testPRegression(String s) {
+    public static void testPRegression(String s, List<Point> insertedPoints, List<Mbr> mbrs, List<Point> knnPoints, int k) {
         System.out.println("------------------------------------------------");
         PartitionModelRtree PRegression = new PartitionModelRtree(10000, "H", 100, "LinearRegression");
         System.out.println("partition:" + "LinearRegression");
@@ -52,7 +48,7 @@ public class Test {
         System.out.println("insert:" + PRegression.insert(insertedPoints));
     }
 
-    public static void testPclassification(String s) {
+    public static void testPclassification(String s, List<Point> insertedPoints, List<Mbr> mbrs, List<Point> knnPoints, int k) {
         System.out.println("------------------------------------------------");
         PartitionModelRtree Pclassification = new PartitionModelRtree(10000, "H", 100, "NaiveBayes");
 //        System.out.println("partition:" + "NaiveBayes");
@@ -64,7 +60,7 @@ public class Test {
         System.out.println("insert:" + Pclassification.insert(insertedPoints));
     }
 
-    public static void testRRegression(String s) {
+    public static void testRRegression(String s, List<Point> insertedPoints, List<Mbr> mbrs, List<Point> knnPoints, int k) {
         System.out.println("------------------------------------------------");
         RecursiveModelRtree RRegression = new RecursiveModelRtree(10000, "H", 100, "LinearRegression");
         System.out.println("Recursive:" + "LinearRegression");
@@ -75,7 +71,7 @@ public class Test {
         System.out.println("insert:" + RRegression.insert(insertedPoints));
     }
 
-    public static void testRclassification(String s) {
+    public static void testRclassification(String s, List<Point> insertedPoints, List<Mbr> mbrs, List<Point> knnPoints, int k) {
         System.out.println("------------------------------------------------");
         RecursiveModelRtree Rclassification = new RecursiveModelRtree(10000, "H", 100, "NaiveBayes");
         System.out.println("Recursive:" + "NaiveBayes");
@@ -87,7 +83,16 @@ public class Test {
     }
 
     static List<String> datasets = Arrays.asList(
-//            "D:\\datasets\\RLRtree\\raw\\uniform_10000_1_2_.csv"
+//            "/Users/guanli/Documents/datasets/RLRtree/raw/uniform_1000000_1_2_.csv",
+//            "/Users/guanli/Documents/datasets/RLRtree/raw/uniform_1000000_1_3_.csv",
+//            "/Users/guanli/Documents/datasets/RLRtree/raw/uniform_1000000_1_4_.csv",
+//            "/Users/guanli/Documents/datasets/RLRtree/raw/uniform_1000000_1_5_.csv",
+//            "/Users/guanli/Documents/datasets/RLRtree/raw/uniform_1000000_1_6_.csv"
+            "D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_2_.csv",
+            "D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_3_.csv",
+            "D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_4_.csv",
+            "D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_5_.csv",
+            "D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_6_.csv"
 //            "D:\\datasets\\RLRtree\\raw\\uniform_2000000_1_2_.csv",
 //            "D:\\datasets\\RLRtree\\raw\\uniform_4000000_1_2_.csv",
 //            "D:\\datasets\\RLRtree\\raw\\uniform_8000000_1_2_.csv",
@@ -95,7 +100,7 @@ public class Test {
 //            "D:\\datasets\\RLRtree\\raw\\uniform_32000000_1_2_.csv"
 //            "D:\\datasets\\RLRtree\\raw\\uniform_64000000_1_2_.csv",
 //            "D:\\datasets\\RLRtree\\raw\\uniform_100000000_1_2_.csv",
-            "D:\\datasets\\RLRtree\\raw\\real_east.csv"
+//            "D:\\datasets\\RLRtree\\raw\\real_east.csv"
 //            "D:\\datasets\\RLRtree\\raw\\uniform_80000000_1_2_.csv",
 //            "D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_2_.csv",
 //            "D:\\datasets\\RLRtree\\raw\\uniform_2000000_1_2_.csv",
@@ -106,18 +111,47 @@ public class Test {
 //            "D:\\datasets\\RLRtree\\raw\\uniform_64000000_1_2_.csv"
     );
 
+    static List<String> datasets1 = Arrays.asList(
+            "D:\\datasets\\RLRtree\\raw\\real_east.csv",
+            "D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_2_.csv",
+            "D:\\datasets\\RLRtree\\raw\\uniform_2000000_1_2_.csv",
+            "D:\\datasets\\RLRtree\\raw\\uniform_4000000_1_2_.csv",
+            "D:\\datasets\\RLRtree\\raw\\uniform_8000000_1_2_.csv",
+            "D:\\datasets\\RLRtree\\raw\\uniform_16000000_1_2_.csv",
+            "D:\\datasets\\RLRtree\\raw\\uniform_32000000_1_2_.csv"
+//            "D:\\datasets\\RLRtree\\raw\\uniform_64000000_1_2_.csv"
+    );
+
     public static void main(String[] args) {
-        datasets.forEach(new Consumer<String>() {
-            @Override
-            public void accept(String s) {
-                System.out.println(s);
-//                testZRtree(s);
-//                testHRtree(s);
-//                testPRegression(s);
-//                testPclassification(s);
-//                testRRegression(s);
-                testRclassification(s);
-            }
+
+        int k = 25;
+        int dim = 2;
+
+        datasets1.forEach(s -> {
+            List<Point> knnPoints = Point.getPoints(10, 2);
+            List<Point> insertedPoints = Point.getPoints(10000, 2);
+            List<Mbr> mbrs = Mbr.getMbrs(0.04f , 10, 2);
+            System.out.println(s);
+            testZRtree(s, insertedPoints, mbrs, knnPoints, k);
+            testHRtree(s, insertedPoints, mbrs, knnPoints, k);
+            testPRegression(s, insertedPoints, mbrs, knnPoints, k);
+            testPclassification(s, insertedPoints, mbrs, knnPoints, k);
+            testRRegression(s, insertedPoints, mbrs, knnPoints, k);
+            testRclassification(s, insertedPoints, mbrs, knnPoints, k);
         });
+
+        for (int i = 3; i < datasets.size(); i++) {
+            String s = datasets.get(i);
+            List<Point> knnPoints = Point.getPoints(10, dim + i);
+            List<Point> insertedPoints = Point.getPoints(10000, dim + i);
+            List<Mbr> mbrs = Mbr.getMbrs(0.04f , 10, dim + i);
+            System.out.println(s);
+            testZRtree(s, insertedPoints, mbrs, knnPoints, k);
+            testHRtree(s, insertedPoints, mbrs, knnPoints, k);
+            testPRegression(s, insertedPoints, mbrs, knnPoints, k);
+            testPclassification(s, insertedPoints, mbrs, knnPoints, k);
+            testRRegression(s, insertedPoints, mbrs, knnPoints, k);
+            testRclassification(s, insertedPoints, mbrs, knnPoints, k);
+        }
     }
 }
