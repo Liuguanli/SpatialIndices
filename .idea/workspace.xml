@@ -9,17 +9,8 @@
     <list default="true" id="ba9c8980-c90e-48aa-8dfb-ac39a52585ec" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/artifacts/SpatialIndices_jar/SpatialIndices.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/SpatialIndices_jar/SpatialIndices.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/node/LeafModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/node/LeafModel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/node/Model.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/node/Model.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/node/NonLeafModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/node/NonLeafModel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/structures/partitionmodel/PartitionModelRtree.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/structures/partitionmodel/PartitionModelRtree.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/structures/recursivemodel/RecursiveModelRtree.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/structures/recursivemodel/RecursiveModelRtree.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/Test.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/node/LeafModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/node/LeafModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/node/Model.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/node/Model.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/node/NonLeafModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/node/NonLeafModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/structures/partitionmodel/PartitionModelRtree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/structures/partitionmodel/PartitionModelRtree.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/structures/recursivemodel/RecursiveModelRtree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/structures/recursivemodel/RecursiveModelRtree.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -423,6 +414,16 @@
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/node/Model.java</url>
           <line>210</line>
           <option name="timeStamp" value="215" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/unimelb/cis/node/Model.java</url>
+          <line>121</line>
+          <option name="timeStamp" value="216" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/unimelb/cis/node/NonLeafModel.java</url>
+          <line>79</line>
+          <option name="timeStamp" value="217" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
