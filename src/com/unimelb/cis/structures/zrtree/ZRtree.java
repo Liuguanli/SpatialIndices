@@ -256,7 +256,6 @@ public class ZRtree extends RLRtree {
         return expReturn;
     }
 
-
     @Override
     public ExpReturn pointQuery(Point point) {
         ExpReturn expReturn = new ExpReturn();

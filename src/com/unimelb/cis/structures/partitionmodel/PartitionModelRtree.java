@@ -192,8 +192,8 @@ public class PartitionModelRtree extends IRtree {
         // 4 side * side = 4k/data set size
         float knnquerySide = (float) Math.sqrt((float)k/points.size());
         ExpReturn expReturn = new ExpReturn();
-        long begin = System.nanoTime();
         while (true) {
+            long begin = System.nanoTime();
             Mbr window = Mbr.getMbr(point, knnquerySide);
             ExpReturn tempExpReturn = windowQuery(window);
             List<Point> tempResult = tempExpReturn.result;
@@ -216,9 +216,9 @@ public class PartitionModelRtree extends IRtree {
                 }
             }
             knnquerySide = knnquerySide * 2;
+            long end = System.nanoTime();
+            expReturn.time = end - begin;
         }
-        long end = System.nanoTime();
-        expReturn.time = end - begin;
         return expReturn;
     }
 

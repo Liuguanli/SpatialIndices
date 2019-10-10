@@ -79,9 +79,9 @@ public class NonLeafModel extends Model {
         List<Point> points = getChildren();
         int bottomClassNum = points.size() / threshold + (points.size() % threshold == 0 ? 0 : 1);
         level = (int) (Math.log(bottomClassNum) / Math.log(pageSize));
-        classNum = bottomClassNum / (int) Math.pow(pageSize, level) + (bottomClassNum % (int) Math.pow(pageSize, level) == 0 ? 0:1);
+        classNum = bottomClassNum / (int) Math.pow(pageSize, level) + (bottomClassNum % (int) Math.pow(pageSize, level) == 0 ? 0 : 1);
 //        System.out.println("bottomClassNum:" + bottomClassNum);
-        if(level >= 1) {
+        if (level >= 1) {
             if (classNum > 2) {
                 isSubNonLeafModel = true;
             } else {
@@ -213,7 +213,7 @@ public class NonLeafModel extends Model {
             if (leafModel.getMbr().interact(window)) {
                 ExpReturn eachExpReturn = leafModel.windowQuery(mbr);
                 expReturn.pageaccess += eachExpReturn.pageaccess;
-                expReturn.pageaccess ++;
+                expReturn.pageaccess++;
                 expReturn.result.addAll(eachExpReturn.result);
             }
         });
@@ -225,18 +225,17 @@ public class NonLeafModel extends Model {
     @Override
     public ExpReturn windowQueryByScanAll(Mbr window) {
         ExpReturn expReturn = new ExpReturn();
-        final int[] pageAccessArray = {0};
         long begin = System.nanoTime();
         subModels.forEach((integer, leafModel) -> {
+            System.out.println(leafModel.getMbr() + " " + window + " " + leafModel.getMbr().interact(window));
             if (leafModel.getMbr().interact(window)) {
-                pageAccessArray[0]++;
                 ExpReturn eachExpReturn = leafModel.windowQueryByScanAll(mbr);
                 expReturn.pageaccess += eachExpReturn.pageaccess;
+                expReturn.pageaccess++;
                 expReturn.result.addAll(eachExpReturn.result);
             }
         });
         long end = System.nanoTime();
-        expReturn.pageaccess = pageAccessArray[0];
         expReturn.time = end - begin;
         return expReturn;
     }
