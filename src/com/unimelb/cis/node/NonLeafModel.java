@@ -227,7 +227,6 @@ public class NonLeafModel extends Model {
         ExpReturn expReturn = new ExpReturn();
         long begin = System.nanoTime();
         subModels.forEach((integer, leafModel) -> {
-            System.out.println(leafModel.getMbr() + " " + window + " " + leafModel.getMbr().interact(window));
             if (leafModel.getMbr().interact(window)) {
                 ExpReturn eachExpReturn = leafModel.windowQueryByScanAll(mbr);
                 expReturn.pageaccess += eachExpReturn.pageaccess;
