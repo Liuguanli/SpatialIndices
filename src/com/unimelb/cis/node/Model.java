@@ -239,8 +239,12 @@ public abstract class Model {
         try {
             for (int i = 0; i < instances.numInstances(); i++) {
                 Instance instance = instances.instance(i);
-                double value = classifier.classifyInstance(instance);
-                results.add(value);
+                if (classifier == null) {
+                    results.add(0.0);
+                } else {
+                    double value = classifier.classifyInstance(instance);
+                    results.add(value);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

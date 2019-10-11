@@ -173,10 +173,11 @@ public class LeafModel extends Model {
 //        System.out.println("windowQueryByScanAll:" + old.result.size());
         ExpReturn expReturn = new ExpReturn();
         final int[] pageAccessArray = {0};
-        long begin = System.nanoTime();
         List<Point> vertexes = window.getAllPoints();
         Instances instances = getInstances(name, vertexes);
         List<Double> results = getPredVals(classifier, instances);
+        long begin = System.nanoTime();
+        results.sort(Double::compareTo);
         int indexLow = results.get(0).intValue();
         int indexHigh = results.get(results.size() - 1).intValue();
         leafNodes.forEach((integer, leafNode) -> {

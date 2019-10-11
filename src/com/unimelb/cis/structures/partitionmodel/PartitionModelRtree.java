@@ -123,6 +123,7 @@ public class PartitionModelRtree extends IRtree {
                 if (mid >= boundries.size()) {
                     // out of boundary!!! However, we can not change the boundary
                     result = boundries.size() - 1;
+                    break;
                 }
 
 //                System.out.println(point);
@@ -191,11 +192,12 @@ public class PartitionModelRtree extends IRtree {
         // 4 side * side = 4k/data set size
         float knnquerySide = (float) Math.sqrt((float)k/points.size());
         ExpReturn expReturn = new ExpReturn();
-        long begin = System.nanoTime();
         while (true) {
             Mbr window = Mbr.getMbr(point, knnquerySide);
             ExpReturn tempExpReturn = windowQuery(window);
             List<Point> tempResult = tempExpReturn.result;
+            expReturn.time += tempExpReturn.time;
+            long begin = System.nanoTime();
             if (tempResult.size() >= k) {
                 tempResult.sort((o1, o2) -> {
                     double d1 = point.getDist(o1);
@@ -215,9 +217,9 @@ public class PartitionModelRtree extends IRtree {
                 }
             }
             knnquerySide = knnquerySide * 2;
+            long end = System.nanoTime();
+            expReturn.time += end - begin;
         }
-        long end = System.nanoTime();
-        expReturn.time = end - begin;
         return expReturn;
     }
 

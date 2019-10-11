@@ -40,6 +40,23 @@ public class NonLeafModel extends Model {
         this.subModels = subModels;
     }
 
+    public void add(int predictedVal, List<Point> points) {
+        points.forEach(point -> {
+            if (subModels.containsKey(predictedVal)) {
+                subModels.get(predictedVal).add(point);
+            } else {
+                Model model;
+                if (isSubNonLeafModel) {
+                    model = new NonLeafModel(predictedVal, name, level - 1, threshold, pageSize);
+                } else {
+                    model = new LeafModel(predictedVal, pageSize, name);
+                }
+                model.add(point);
+                subModels.put(predictedVal, model);
+            }
+        });
+    }
+
     public void add(int predictedVal, Point point) {
         if (subModels.containsKey(predictedVal)) {
             subModels.get(predictedVal).add(point);
@@ -62,16 +79,17 @@ public class NonLeafModel extends Model {
         List<Point> points = getChildren();
         int bottomClassNum = points.size() / threshold + (points.size() % threshold == 0 ? 0 : 1);
         level = (int) (Math.log(bottomClassNum) / Math.log(pageSize));
-        classNum = bottomClassNum / (int) Math.pow(pageSize, level);
-
-        if(level >= 1) {
-            if (classNum > 1) {
+        classNum = bottomClassNum / (int) Math.pow(pageSize, level) + (bottomClassNum % (int) Math.pow(pageSize, level) == 0 ? 0 : 1);
+//        System.out.println("bottomClassNum:" + bottomClassNum);
+        if (level >= 1) {
+            if (classNum > 2) {
                 isSubNonLeafModel = true;
             } else {
                 classNum = bottomClassNum;
                 level--;
             }
         }
+//        System.out.println("classNum:" + classNum);
         int denominator = (int) (threshold * Math.pow(pageSize, level));
         for (int i = 0; i < points.size(); i++) {
             points.get(i).setIndex(i / denominator);
@@ -79,10 +97,7 @@ public class NonLeafModel extends Model {
         Instances instances = getInstances(name, points);
         classifier = getModels(name);
         train(classifier, instances);
-        long begin = System.nanoTime();
         List<Double> results = getPredVals(classifier, instances);
-        long end = System.nanoTime();
-//        System.out.println("prediction" + (end - begin));
         for (int i = 0; i < results.size(); i++) {
             add(results.get(i).intValue(), getChildren().get(i));
         }
@@ -159,16 +174,24 @@ public class NonLeafModel extends Model {
             if (results.get(i).intValue() == index.intValue()) {
 //                sameIndexPoints.add(points.get(i));
             } else {
-                ExpReturn eachExpReturn = subModels.get(index.intValue()).insert(sameIndexPoints);
-                expReturn.pageaccess += eachExpReturn.pageaccess;
+                if (subModels.containsKey(index.intValue())) {
+                    ExpReturn eachExpReturn = subModels.get(index.intValue()).insert(sameIndexPoints);
+                    expReturn.pageaccess += eachExpReturn.pageaccess;
+                } else {
+                    add(results.get(i).intValue(), sameIndexPoints);
+                }
                 index = results.get(i);
                 sameIndexPoints = new ArrayList<>();
 //                sameIndexPoints.add(points.get(i));
             }
             sameIndexPoints.add(points.get(i));
             if (i == results.size() - 1) {
-                ExpReturn eachExpReturn = subModels.get(index.intValue()).insert(sameIndexPoints);
-                expReturn.pageaccess += eachExpReturn.pageaccess;
+                if (subModels.containsKey(index.intValue())) {
+                    ExpReturn eachExpReturn = subModels.get(index.intValue()).insert(sameIndexPoints);
+                    expReturn.pageaccess += eachExpReturn.pageaccess;
+                } else {
+                    add(results.get(i).intValue(), sameIndexPoints);
+                }
             }
         }
         long end = System.nanoTime();
@@ -185,18 +208,16 @@ public class NonLeafModel extends Model {
     @Override
     public ExpReturn windowQuery(Mbr window) {
         ExpReturn expReturn = new ExpReturn();
-        final int[] pageAccessArray = {0};
         long begin = System.nanoTime();
         subModels.forEach((integer, leafModel) -> {
             if (leafModel.getMbr().interact(window)) {
-                pageAccessArray[0]++;
                 ExpReturn eachExpReturn = leafModel.windowQuery(mbr);
                 expReturn.pageaccess += eachExpReturn.pageaccess;
+                expReturn.pageaccess++;
                 expReturn.result.addAll(eachExpReturn.result);
             }
         });
         long end = System.nanoTime();
-        expReturn.pageaccess = pageAccessArray[0];
         expReturn.time = end - begin;
         return expReturn;
     }
@@ -204,18 +225,16 @@ public class NonLeafModel extends Model {
     @Override
     public ExpReturn windowQueryByScanAll(Mbr window) {
         ExpReturn expReturn = new ExpReturn();
-        final int[] pageAccessArray = {0};
         long begin = System.nanoTime();
         subModels.forEach((integer, leafModel) -> {
             if (leafModel.getMbr().interact(window)) {
-                pageAccessArray[0]++;
                 ExpReturn eachExpReturn = leafModel.windowQueryByScanAll(mbr);
                 expReturn.pageaccess += eachExpReturn.pageaccess;
+                expReturn.pageaccess++;
                 expReturn.result.addAll(eachExpReturn.result);
             }
         });
         long end = System.nanoTime();
-        expReturn.pageaccess = pageAccessArray[0];
         expReturn.time = end - begin;
         return expReturn;
     }

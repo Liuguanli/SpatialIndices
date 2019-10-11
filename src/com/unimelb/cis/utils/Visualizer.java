@@ -55,18 +55,17 @@ public class Visualizer {
     private List<RectangleDepth> getRectangleDepths(Node node,
                                                     int depth) {
         final List<RectangleDepth> list = new ArrayList();
-        if (node instanceof NonLeafNode) {
+        if (node instanceof LeafNode) {
             list.add(new RectangleDepth(node.getMbr(), depth));
         }
         if (node instanceof LeafNode) {
-//            final LeafNode leaf = (LeafNode) node;
-//            for (int i = 0; i < leaf.getChildren().size(); i++) {
-//                list.add(new RectangleDepth(leaf.getChildren().get(i).getMbr(), depth + 2));
-//            }
+            final LeafNode leaf = (LeafNode) node;
+            for (int i = 0; i < leaf.getChildren().size(); i++) {
+                list.add(new RectangleDepth(leaf.getChildren().get(i).getMbr(), depth + 2));
+            }
         } else if (node instanceof NonLeafNode){
             final NonLeafNode n = (NonLeafNode) node;
             for (int i = 0; i < n.getChildren().size(); i++) {
-
                 list.addAll(getRectangleDepths(n.getChildren().get(i), depth + 1));
             }
         }
