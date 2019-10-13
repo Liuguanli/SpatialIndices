@@ -113,10 +113,10 @@ public class Test {
 
     static List<String> datasets1 = Arrays.asList(
 //            "D:\\datasets\\RLRtree\\raw\\real_east.csv",
-//            "D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_2_.csv",
-//            "D:\\datasets\\RLRtree\\raw\\uniform_2000000_1_2_.csv",
-//            "D:\\datasets\\RLRtree\\raw\\uniform_4000000_1_2_.csv",
-//            "D:\\datasets\\RLRtree\\raw\\uniform_8000000_1_2_.csv",
+            "D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_2_.csv",
+            "D:\\datasets\\RLRtree\\raw\\uniform_2000000_1_2_.csv",
+            "D:\\datasets\\RLRtree\\raw\\uniform_4000000_1_2_.csv",
+            "D:\\datasets\\RLRtree\\raw\\uniform_8000000_1_2_.csv",
             "D:\\datasets\\RLRtree\\raw\\uniform_16000000_1_2_.csv",
             "D:\\datasets\\RLRtree\\raw\\uniform_32000000_1_2_.csv"
 //            "D:\\datasets\\RLRtree\\raw\\uniform_64000000_1_2_.csv"
@@ -127,17 +127,26 @@ public class Test {
         int k = 25;
         int dim = 2;
 
+        List<Float> sides = Arrays.asList(0.01f, 0.02f,0.04f,0.08f,0.16f);
+
         datasets1.forEach(s -> {
             List<Point> knnPoints = Point.getPoints(10, 2);
             List<Point> insertedPoints = Point.getPoints(10000, 2);
-            List<Mbr> mbrs = Mbr.getMbrs(0.04f , 10, 2);
             System.out.println(s);
-//            testZRtree(s, insertedPoints, mbrs, knnPoints, k);
-            testHRtree(s, insertedPoints, mbrs, knnPoints, k);
-            testPRegression(s, insertedPoints, mbrs, knnPoints, k);
-            testPclassification(s, insertedPoints, mbrs, knnPoints, k);
-//            testRRegression(s, insertedPoints, mbrs, knnPoints, k);
-//            testRclassification(s, insertedPoints, mbrs, knnPoints, k);
+
+            sides.forEach(new Consumer<Float>() {
+                @Override
+                public void accept(Float aFloat) {
+                    List<Mbr> mbrs = Mbr.getMbrs(aFloat , 10, 2);
+                    testZRtree(s, insertedPoints, mbrs, knnPoints, k);
+                    testHRtree(s, insertedPoints, mbrs, knnPoints, k);
+                    testPRegression(s, insertedPoints, mbrs, knnPoints, k);
+                    testPclassification(s, insertedPoints, mbrs, knnPoints, k);
+                    testRRegression(s, insertedPoints, mbrs, knnPoints, k);
+                    testRclassification(s, insertedPoints, mbrs, knnPoints, k);
+                }
+            });
+
         });
 
 //        for (int i = 1; i < datasets.size(); i++) {
