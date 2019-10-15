@@ -4,10 +4,17 @@
 - [x] HilberCurve R-tree
 - [x] ZCurve R-tree
 - [x] R*-tree (Revisited Version without weight function.)
+- [x] Recursive Learning R-tree
+- [x] Partition Learning R-tree
 
 ## Coming:
+- [ ] R-tree
+- [ ] R+-tree
 - [ ] KD-tree
 - [ ] KDB-tree
+- [ ] UB-tree
+- [ ] Quadtree
+- [ ] X-tree
 
 ## TODO
 - [ ] Figures
