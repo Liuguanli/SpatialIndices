@@ -323,7 +323,7 @@ public class HRtree extends RLRtree {
             for (int j = 0; j < level; j++) {
                 int index = Integer.valueOf(items[dim + j]);
                 if (j == 0) {
-                    if (index == levelIndex[j]) {
+                    if (index <= levelIndex[j]) {
                         ((LeafNode) nodes[j]).add(point);
                         break;
                     } else {
@@ -333,7 +333,7 @@ public class HRtree extends RLRtree {
                         nodes[j] = leafNode;
                     }
                 } else {
-                    if (index == levelIndex[j]) {
+                    if (index <= levelIndex[j]) {
                         ((NonLeafNode) nodes[j]).add(nodes[j - 1]);
                         break;
                     } else {

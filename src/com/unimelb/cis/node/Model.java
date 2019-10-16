@@ -32,6 +32,12 @@ public abstract class Model {
         this.children = new ArrayList<>();
     }
 
+    String type = "LRM";
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     String name;
 
     int pageSize;
@@ -83,12 +89,24 @@ public abstract class Model {
         }
     }
 
-    public Instances getInstances(String name, List<Point> points) {
-        if (RecursiveModelRtree.clas.contains(name)) {
-            return prepareDataSetCla(points, classNum);
-        } else {
-            return prepareDataSetReg(points, classNum);
+    public Instances getInstances(String learnerName, List<Point> points, String name) {
+        switch (name) {
+            case "LRM":
+                if (RecursiveModelRtree.clas.contains(learnerName)) {
+                    return prepareDataSetCla(points, classNum);
+                } else {
+                    return prepareDataSetReg(points);
+                }
+            case "MDM":
+                return prepareDataSetRegMDM(points);
+            default:
+                return prepareDataSetReg(points);
         }
+
+    }
+
+    public Instances getInstances(String learnerName, List<Point> points) {
+        return getInstances(learnerName, points, "LRM");
     }
 
     /**
@@ -123,7 +141,30 @@ public abstract class Model {
         return dataSet;
     }
 
-    public Instances prepareDataSetReg(List<Point> points, int classNum) {
+    /**
+     * paper from mdm  Learned Index for Spatial Queries
+     *
+     * @param points
+     * @return
+     */
+    public Instances prepareDataSetRegMDM(List<Point> points) {
+        FastVector atts = new FastVector();
+        atts.addElement(new Attribute("att" + 1));
+        atts.addElement(new Attribute("index"));
+
+        Instances dataSet = new Instances("tree", atts, 0);
+        for (int i = 0; i < points.size(); i++) {
+            Point point = points.get(i);
+            double[] vals = new double[dataSet.numAttributes()];
+            vals[0] = point.getCurveValue();
+            vals[1] = point.getIndex();
+            dataSet.add(new Instance(1.0, vals));
+        }
+        dataSet.setClassIndex(dataSet.numAttributes() - 1);
+        return dataSet;
+    }
+
+    public Instances prepareDataSetReg(List<Point> points) {
         int dim = points.get(0).getDim();
         FastVector atts = new FastVector();
         for (int i = 0; i < dim; i++) {
