@@ -7,7 +7,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ba9c8980-c90e-48aa-8dfb-ac39a52585ec" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/SpatialIndices_jar/SpatialIndices.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/SpatialIndices_jar/SpatialIndices.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/structures/zrtree/ZRtree.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/structures/zrtree/ZRtree.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/structures/zrtree/ZRtree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/structures/zrtree/ZRtree.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -72,7 +75,7 @@
         <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/zrtree/ZRtree.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="463">
-              <caret line="443" selection-start-line="443" selection-end-line="443" />
+              <caret line="441" selection-start-line="441" selection-end-line="441" />
             </state>
           </provider>
         </entry>
@@ -425,9 +428,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-1295" y="-1080" width="1920" height="1080" extended-state="0" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25239617" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25239617" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -441,7 +443,7 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.27963525" />
+      <window_info anchor="bottom" id="Terminal" order="7" visible="true" weight="0.2786221" />
       <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="9" weight="0.32939634" />
       <window_info anchor="bottom" id="Messages" order="10" />
@@ -665,7 +667,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/structures/zrtree/ZRtree.java</url>
-          <line>407</line>
+          <line>405</line>
           <properties />
           <option name="timeStamp" value="208" />
         </line-breakpoint>
@@ -713,14 +715,14 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/structures/zrtree/ZRtree.java</url>
-          <line>401</line>
+          <line>399</line>
           <properties />
           <option name="timeStamp" value="218" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <condition expression="i=999" language="JAVA" />
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/structures/zrtree/ZRtree.java</url>
-          <line>343</line>
+          <line>341</line>
           <properties />
           <option name="timeStamp" value="219" />
         </line-breakpoint>
@@ -817,7 +819,7 @@
     <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/zrtree/ZRtree.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="463">
-          <caret line="443" selection-start-line="443" selection-end-line="443" />
+          <caret line="441" selection-start-line="441" selection-end-line="441" />
         </state>
       </provider>
     </entry>
