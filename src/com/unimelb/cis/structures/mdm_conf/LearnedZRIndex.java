@@ -275,7 +275,6 @@ public class LearnedZRIndex extends IRtree  {
         PartitionModelRtree partitionModelRtree = new PartitionModelRtree(10000, "Z", 100, "NaiveBayes");
         partitionModelRtree.buildRtree(dataset);
         System.out.println(partitionModelRtree.pointQuery(partitionModelRtree.getPoints()));
-
     }
 
 }

@@ -41,6 +41,9 @@ public class HilbertCurve extends Curve {
                 }
             }
         });
+        for (int i = 0; i < points.size(); i++) {
+            points.get(i).setCurveValueOrder(i);
+        }
         return points;
     }
 

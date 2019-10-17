@@ -31,6 +31,9 @@ public class ZCurve extends Curve {
                 return 0;
             }
         });
+        for (int i = 0; i < points.size(); i++) {
+            points.get(i).setCurveValueOrder(i);
+        }
         return points;
     }
 
