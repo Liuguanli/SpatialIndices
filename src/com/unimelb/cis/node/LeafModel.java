@@ -68,7 +68,7 @@ public class LeafModel extends Model {
 
         classNum = points.size() / pageSize + (points.size() % pageSize == 0 ? 0 : 1);
 //        System.out.println("classNum:" +classNum +" points.size()" + points.size());
-        Instances instances = getInstances(name, points);
+        Instances instances = getInstances(name, points, type);
         classifier = getModels(name);
         train(classifier, instances);
         evaluate();
@@ -89,7 +89,7 @@ public class LeafModel extends Model {
 
     public ExpReturn insert(List<Point> points) {
         ExpReturn expReturn = new ExpReturn();
-        Instances instances = getInstances(name, points);
+        Instances instances = getInstances(name, points, type);
         List<Double> results = getPredVals(classifier, instances);
         long begin = System.nanoTime();
         for (int i = 0; i < results.size(); i++) {
@@ -123,7 +123,7 @@ public class LeafModel extends Model {
     @Override
     public ExpReturn pointQuery(List<Point> points) {
 //        System.out.println("LeafNode pointQuery(List<Point> points)");
-        Instances instances = getInstances(name, points);
+        Instances instances = getInstances(name, points, type);
         List<Double> results = getPredVals(classifier, instances);
         int max = leafNodes.size();
         int min = 0;
@@ -174,7 +174,7 @@ public class LeafModel extends Model {
         ExpReturn expReturn = new ExpReturn();
         final int[] pageAccessArray = {0};
         List<Point> vertexes = window.getAllPoints();
-        Instances instances = getInstances(name, vertexes);
+        Instances instances = getInstances(name, vertexes, type);
         List<Double> results = getPredVals(classifier, instances);
         long begin = System.nanoTime();
         results.sort(Double::compareTo);

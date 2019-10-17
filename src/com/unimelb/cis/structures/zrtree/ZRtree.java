@@ -322,6 +322,7 @@ public class ZRtree extends RLRtree {
 
     @Override
     public NonLeafNode buildRtreeAfterTuning(String path, int dim, int level) {
+        level--;
         this.dataFile = path;
         this.setDim(dim);
         this.setLevel(level);
@@ -335,11 +336,8 @@ public class ZRtree extends RLRtree {
             nodes[i] = new NonLeafNode(pagesize, dim);
         }
 
-//        for (int i = 0; i < level - 1; i++) {
-//            ((NonLeafNode) nodes[i + 1]).add(nodes[i]);
-//        }
         List<Point> points = new ArrayList<>();
-        root.add(nodes[level - 1]);
+//        root.add(nodes[level - 1]);
         for (int i = 0; i < lines.size(); i++) {
             String line = lines.get(i);
             String[] items = line.split(",");
@@ -348,21 +346,21 @@ public class ZRtree extends RLRtree {
             for (int j = 0; j < dim; j++) {
                 locations[j] = Float.valueOf(items[j]);
             }
-
             Point point = new Point(0, locations);
             points.add(point);
             if (i == 0) {
                 ((LeafNode) nodes[0]).add(point);
-                for (int j = 1; j < level; j++) {
-                    ((NonLeafNode) nodes[j]).add(nodes[j - 1]);
-                }
+//                for (int j = 1; j < level; j++) {
+//                    ((NonLeafNode) nodes[j]).add(nodes[j - 1]);
+//                }
+//                root.add(nodes[level - 1]);
                 continue;
             }
 
             for (int j = 0; j < level; j++) {
                 int index = Integer.valueOf(items[dim + j]);
                 if (j == 0) {
-                    if (index == levelIndex[j]) {
+                    if (index <= levelIndex[j]) {
                         ((LeafNode) nodes[j]).add(point);
                         break;
                     } else {
@@ -372,7 +370,7 @@ public class ZRtree extends RLRtree {
                         nodes[j] = leafNode;
                     }
                 } else {
-                    if (index == levelIndex[j]) {
+                    if (index <= levelIndex[j]) {
                         ((NonLeafNode) nodes[j]).add(nodes[j - 1]);
                         break;
                     } else {
@@ -424,12 +422,12 @@ public class ZRtree extends RLRtree {
     public static void main(String[] args) {
         ZRtree zRtree = new ZRtree(10);
 
-        zRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_1000_1_2_.csv");
-        zRtree.visualize(600, 600).save("uniform_1000_1_2_.png");
+//        zRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_1000_1_2_.csv");
+//        zRtree.visualize(600, 600).save("uniform_1000_1_2_.png");
 //        zRtree.output("/Users/guanli/Documents/datasets/RLRtree/trees/Z_uniform_10000_1_2_.csv");
 
-        zRtree = new ZRtree(15);
-        zRtree.buildRtreeAfterTuning("/Users/guanli/Documents/datasets/RLRtree/newtrees/Z_uniform_1000_1_2_DQN.csv", 2, 2);
+        zRtree = new ZRtree(100);
+        zRtree.buildRtreeAfterTuning("D:\\datasets\\RLRtree\\newtrees\\H_uniform_20000_1_2_DQN.csv", 2, 3);
         zRtree.visualize(600, 600).save("DQN_uniform_1000_1_2_.png");
 //        zRtree.buildRtree("D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_2_.csv");
 //        zRtree.getRoot();

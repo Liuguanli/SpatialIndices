@@ -11,7 +11,27 @@ public class Point extends Node implements Comparable {
 
     private long curveValue;
 
+    private int curveValueOrder;
+
     private long[] locationOrder;
+
+    @Override
+    public String toString() {
+        return "Point{" +
+                "index=" + index +
+                ", curveValue=" + curveValue +
+                ", curveValueOrder=" + curveValueOrder +
+                ", locationOrder=" + Arrays.toString(locationOrder) +
+                '}';
+    }
+
+    public int getCurveValueOrder() {
+        return curveValueOrder;
+    }
+
+    public void setCurveValueOrder(int curveValueOrder) {
+        this.curveValueOrder = curveValueOrder;
+    }
 
     public long[] getLocationOrder() {
         return locationOrder;
@@ -186,15 +206,6 @@ public class Point extends Node implements Comparable {
     @Override
     public int hashCode() {
         return Arrays.hashCode(location);
-    }
-
-    @Override
-    public String toString() {
-        return "Point{" +
-                "curveValue=" + curveValue +
-                ", location=" + Arrays.toString(location) +
-                ", locationOrder=" + Arrays.toString(locationOrder) +
-                '}';
     }
 
     public Point clone() {

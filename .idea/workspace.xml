@@ -6,7 +6,17 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ba9c8980-c90e-48aa-8dfb-ac39a52585ec" name="Default Changelist" comment="" />
+    <list default="true" id="ba9c8980-c90e-48aa-8dfb-ac39a52585ec" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/com/unimelb/cis/structures/recursivemodel/OriginalRecursiveModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/HilbertCurve.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/HilbertCurve.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/ZCurve.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/ZCurve.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/node/Point.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/node/Point.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/HilbertCurve.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/HilbertCurve.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/ZCurve.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/ZCurve.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/node/Point.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/node/Point.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/structures/mdm_conf/LearnedZRIndex.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/structures/mdm_conf/LearnedZRIndex.java" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,109 +29,6 @@
   <component name="DefaultGradleProjectSettings">
     <option name="isMigrated" value="true" />
   </component>
-  <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5">
-      <split-first>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/Test.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-1561">
-                  <caret line="35" column="58" selection-start-line="35" selection-start-column="58" selection-end-line="35" selection-end-column="58" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/node/NonLeafModel.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="427">
-                  <caret line="237" column="37" lean-forward="true" selection-start-line="237" selection-start-column="37" selection-end-line="237" selection-end-column="37" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/node/Model.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="156">
-                  <caret line="262" column="38" selection-start-line="262" selection-start-column="38" selection-end-line="262" selection-end-column="38" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/CSVFileReader.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="39">
-                  <caret line="18" column="38" lean-forward="true" selection-start-line="18" selection-start-column="38" selection-end-line="18" selection-end-column="38" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/RLRtree.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="68">
-                  <caret line="4" column="22" selection-start-line="4" selection-start-column="22" selection-end-line="4" selection-end-column="22" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/zrtree/ZRtree.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="463">
-                  <caret line="443" lean-forward="true" selection-start-line="443" selection-end-line="443" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/geometry/Mbr.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="408">
-                  <caret line="270" lean-forward="true" selection-start-line="270" selection-end-line="270" />
-                  <folding>
-                    <element signature="e#3756#3757#0" expanded="true" />
-                    <element signature="e#3831#3832#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/utils/Visualizer.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="260">
-                  <caret line="61" column="12" selection-start-line="61" selection-start-column="12" selection-end-line="64" selection-end-column="13" />
-                  <folding>
-                    <element signature="e#3478#3479#0" expanded="true" />
-                    <element signature="e#3598#3599#0" expanded="true" />
-                    <element signature="e#3712#3713#0" expanded="true" />
-                    <element signature="e#3800#3801#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-first>
-      <split-second>
-        <leaf>
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/Test.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="17">
-                  <caret line="35" column="58" selection-start-line="35" selection-start-column="58" selection-end-line="35" selection-end-column="58" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-second>
-    </splitter>
-  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -130,105 +37,26 @@
       </list>
     </option>
   </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>getins</find>
+    </findStrings>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
-      <list>
-        <option value="$PROJECT_DIR$/src/com/unimelb/cis/utils/Visualizer.java" />
-        <option value="$PROJECT_DIR$/src/com/unimelb/cis/structures/zrtree/ZRtree.java" />
-      </list>
-    </option>
   </component>
   <component name="ProjectCodeStyleSettingsMigration">
     <option name="version" value="1" />
   </component>
-  <component name="ProjectFrameBounds" extendedState="6" fullScreen="true">
+  <component name="ProjectFrameBounds" fullScreen="true">
     <option name="x" value="-1295" />
     <option name="y" value="-1080" />
-    <option name="width" value="954" />
+    <option name="width" value="1920" />
     <option name="height" value="1080" />
   </component>
   <component name="ProjectId" id="1QxffiCJa2IRZHDUj6ehzm6NQaM" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
-  </component>
-  <component name="ProjectView">
-    <navigator proportions="" version="1">
-      <foldersAlwaysOnTop value="true" />
-    </navigator>
-    <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="SpatialIndices" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SpatialIndices" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SpatialIndices" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SpatialIndices" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SpatialIndices" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SpatialIndices" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="cis" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SpatialIndices" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SpatialIndices" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="cis" type="462c0819:PsiDirectoryNode" />
-              <item name="geometry" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SpatialIndices" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SpatialIndices" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="cis" type="462c0819:PsiDirectoryNode" />
-              <item name="structures" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SpatialIndices" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SpatialIndices" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="cis" type="462c0819:PsiDirectoryNode" />
-              <item name="structures" type="462c0819:PsiDirectoryNode" />
-              <item name="partitionmodel" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SpatialIndices" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SpatialIndices" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="cis" type="462c0819:PsiDirectoryNode" />
-              <item name="structures" type="462c0819:PsiDirectoryNode" />
-              <item name="recursivemodel" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SpatialIndices" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SpatialIndices" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="cis" type="462c0819:PsiDirectoryNode" />
-              <item name="structures" type="462c0819:PsiDirectoryNode" />
-              <item name="zrtree" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SpatialIndices" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SpatialIndices" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="cis" type="462c0819:PsiDirectoryNode" />
-              <item name="utils" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-    </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="Downloaded.Files.Path.Enabled" value="false" />
@@ -240,25 +68,25 @@
     <property name="Repository.Attach.JavaDocs" value="false" />
     <property name="Repository.Attach.Sources" value="false" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/doc/figs" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/doc/papers" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.4678309" />
     <property name="settings.editor.selected.configurable" value="com.intellij.jarRepository.settings.RemoteRepositoriesConfigurable" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/doc/figs" />
-      <recent name="C:\Users\Leo\Dropbox\shared\RLR-trees\codes\java\SpatialIndices\src\com\unimelb\cis\node" />
-      <recent name="$PROJECT_DIR$/Rstar/src" />
-      <recent name="$PROJECT_DIR$/src/com/unimelb/cis/structures" />
-      <recent name="$PROJECT_DIR$/src/com/unimelb/cis/structures/hrtree" />
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/datasets" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.unimelb.cis.structures.recursivemodel" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/datasets" />
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/doc/papers" />
+      <recent name="$PROJECT_DIR$/doc/figs" />
+      <recent name="C:\Users\Leo\Dropbox\shared\RLR-trees\codes\java\SpatialIndices\src\com\unimelb\cis\node" />
+      <recent name="$PROJECT_DIR$/Rstar/src" />
+      <recent name="$PROJECT_DIR$/src/com/unimelb/cis/structures" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -273,13 +101,13 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.ZRtree">
-    <configuration name="PartitionModelRtree" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.unimelb.cis.structures.partitionmodel.PartitionModelRtree" />
+  <component name="RunManager" selected="Application.OriginalRecursiveModel">
+    <configuration name="LearnedIndex" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.unimelb.cis.structures.mdm_conf.LearnedIndex" />
       <module name="SpatialIndices" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.unimelb.cis.structures.partitionmodel.*" />
+          <option name="PATTERN" value="com.unimelb.cis.structures.mdm_conf.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -287,12 +115,25 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="RecursiveModelRtree" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.unimelb.cis.structures.recursivemodel.RecursiveModelRtree" />
+    <configuration name="LearnedZRIndex" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.unimelb.cis.structures.mdm_conf.LearnedZRIndex" />
       <module name="SpatialIndices" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.unimelb.cis.geometry.*" />
+          <option name="PATTERN" value="com.unimelb.cis.structures.mdm_conf.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="OriginalRecursiveModel" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.unimelb.cis.structures.recursivemodel.OriginalRecursiveModel" />
+      <module name="SpatialIndices" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.unimelb.cis.structures.recursivemodel.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -327,36 +168,20 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="MbrTest.testCalMINDIST" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="SpatialIndices" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="test.com.unimelb.cis.geometry.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="test.com.unimelb.cis.geometry" />
-      <option name="MAIN_CLASS_NAME" value="test.com.unimelb.cis.geometry.MbrTest" />
-      <option name="METHOD_NAME" value="testCalMINDIST" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <list>
-      <item itemvalue="Application.RecursiveModelRtree" />
       <item itemvalue="Application.Test" />
-      <item itemvalue="Application.PartitionModelRtree" />
-      <item itemvalue="JUnit.MbrTest.testCalMINDIST" />
       <item itemvalue="Application.ZRtree" />
+      <item itemvalue="Application.LearnedIndex" />
+      <item itemvalue="Application.LearnedZRIndex" />
+      <item itemvalue="Application.OriginalRecursiveModel" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.OriginalRecursiveModel" />
+        <item itemvalue="Application.LearnedZRIndex" />
+        <item itemvalue="Application.LearnedIndex" />
         <item itemvalue="Application.ZRtree" />
         <item itemvalue="Application.Test" />
-        <item itemvalue="JUnit.MbrTest.testCalMINDIST" />
-        <item itemvalue="Application.PartitionModelRtree" />
-        <item itemvalue="Application.RecursiveModelRtree" />
       </list>
     </recent_temporary>
   </component>
@@ -414,75 +239,12 @@
       <is-autoscroll-to-source value="true" />
     </todo-panel>
   </component>
-  <component name="ToolWindowManager">
-    <frame x="-1295" y="-1080" width="1920" height="1080" extended-state="6" />
-    <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25239617" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Image Layers" order="2" />
-      <window_info id="Designer" order="3" />
-      <window_info id="Learn" order="4" />
-      <window_info id="Capture Tool" order="5" />
-      <window_info id="Favorites" order="6" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32928064" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.33029383" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.17325228" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.27963525" />
-      <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="9" weight="0.32939634" />
-      <window_info anchor="bottom" id="Messages" order="10" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Maven" order="3" />
-      <window_info anchor="right" id="Theme Preview" order="4" />
-      <window_info anchor="right" id="Capture Analysis" order="5" />
-      <window_info anchor="right" id="Palette&#9;" order="6" />
-    </layout>
-    <layout-to-restore>
-      <window_info id="Image Layers" order="0" />
-      <window_info id="Designer" order="1" />
-      <window_info id="Learn" order="2" />
-      <window_info id="Capture Tool" order="3" />
-      <window_info id="Favorites" order="4" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="5" visible="true" weight="0.24973376" />
-      <window_info id="Structure" order="6" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" order="0" weight="0.32908705" />
-      <window_info anchor="bottom" id="Version Control" order="1" />
-      <window_info anchor="bottom" id="Event Log" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Messages" order="3" />
-      <window_info anchor="bottom" id="Message" order="4" />
-      <window_info anchor="bottom" id="Find" order="5" />
-      <window_info anchor="bottom" id="Run" order="6" visible="true" weight="0.32908705" />
-      <window_info anchor="bottom" id="Debug" order="7" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="8" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="9" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="10" />
-      <window_info anchor="right" id="Capture Analysis" order="0" />
-      <window_info anchor="right" id="Theme Preview" order="1" />
-      <window_info anchor="right" id="Palette&#9;" order="2" />
-      <window_info anchor="right" id="Maven" order="3" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="4" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="5" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="6" weight="0.25" />
-    </layout-to-restore>
-  </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
           <value>
             <State>
-              <option name="RECENTLY_FILTERED_USER_GROUPS">
-                <collection />
-              </option>
-              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
-                <collection />
-              </option>
               <option name="COLUMN_ORDER" />
             </State>
           </value>
@@ -516,300 +278,197 @@
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/structures/zrtree/ZRtree.java</url>
           <line>114</line>
-          <properties />
           <option name="timeStamp" value="42" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/utils/Visualizer.java</url>
           <line>37</line>
-          <properties />
           <option name="timeStamp" value="59" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/utils/Visualizer.java</url>
           <line>44</line>
-          <properties />
           <option name="timeStamp" value="63" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/utils/Visualizer.java</url>
           <line>89</line>
-          <properties />
           <option name="timeStamp" value="67" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/node/NonLeafNode.java</url>
           <line>108</line>
-          <properties />
           <option name="timeStamp" value="92" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/node/NonLeafNode.java</url>
           <line>142</line>
-          <properties />
           <option name="timeStamp" value="93" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/node/NonLeafNode.java</url>
           <line>220</line>
-          <properties />
           <option name="timeStamp" value="96" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/node/LeafNode.java</url>
           <line>276</line>
-          <properties />
           <option name="timeStamp" value="105" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/node/LeafNode.java</url>
           <line>316</line>
-          <properties />
           <option name="timeStamp" value="116" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/structures/rstar/RstarTree.java</url>
           <line>98</line>
-          <properties />
           <option name="timeStamp" value="117" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/structures/rstar/RstarTree.java</url>
           <line>107</line>
-          <properties />
           <option name="timeStamp" value="118" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/utils/Visualizer.java</url>
           <line>61</line>
-          <properties />
           <option name="timeStamp" value="131" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/utils/Visualizer.java</url>
           <line>66</line>
-          <properties />
           <option name="timeStamp" value="132" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/structures/rstar/RstarTree.java</url>
           <line>309</line>
-          <properties />
           <option name="timeStamp" value="138" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <condition expression="asym &lt; -1" language="JAVA" />
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/node/Node.java</url>
           <line>185</line>
-          <properties />
           <option name="timeStamp" value="145" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/node/NonLeafModel.java</url>
-          <line>90</line>
-          <properties />
+          <line>91</line>
           <option name="timeStamp" value="151" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/node/Model.java</url>
-          <line>99</line>
-          <properties />
+          <line>117</line>
           <option name="timeStamp" value="153" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/node/Model.java</url>
-          <line>108</line>
-          <properties />
+          <line>126</line>
           <option name="timeStamp" value="162" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/structures/partitionmodel/PartitionModelRtree.java</url>
           <line>274</line>
-          <properties />
           <option name="timeStamp" value="182" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <condition expression="node.mbr == null" language="JAVA" />
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/node/NonLeafNode.java</url>
           <line>267</line>
-          <properties />
           <option name="timeStamp" value="203" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/structures/partitionmodel/PartitionModelRtree.java</url>
           <line>231</line>
-          <properties />
           <option name="timeStamp" value="204" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/node/LeafModel.java</url>
           <line>91</line>
-          <properties />
           <option name="timeStamp" value="205" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/structures/IRtree.java</url>
           <line>119</line>
-          <properties />
           <option name="timeStamp" value="207" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/structures/zrtree/ZRtree.java</url>
-          <line>407</line>
-          <properties />
+          <line>405</line>
           <option name="timeStamp" value="208" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/structures/partitionmodel/PartitionModelRtree.java</url>
           <line>195</line>
-          <properties />
           <option name="timeStamp" value="210" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/structures/partitionmodel/PartitionModelRtree.java</url>
           <line>298</line>
-          <properties />
           <option name="timeStamp" value="211" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/node/LeafModel.java</url>
           <line>173</line>
-          <properties />
           <option name="timeStamp" value="212" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/Test.java</url>
           <line>64</line>
-          <properties />
           <option name="timeStamp" value="213" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/node/Model.java</url>
-          <line>210</line>
-          <properties />
-          <option name="timeStamp" value="215" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/unimelb/cis/node/Model.java</url>
-          <line>121</line>
-          <properties />
+          <line>139</line>
           <option name="timeStamp" value="216" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/node/NonLeafModel.java</url>
-          <line>79</line>
-          <properties />
+          <line>80</line>
           <option name="timeStamp" value="217" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/structures/zrtree/ZRtree.java</url>
-          <line>401</line>
-          <properties />
+          <line>399</line>
           <option name="timeStamp" value="218" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <condition expression="i=999" language="JAVA" />
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/structures/zrtree/ZRtree.java</url>
-          <line>343</line>
-          <properties />
+          <line>341</line>
           <option name="timeStamp" value="219" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/unimelb/cis/node/NonLeafModel.java</url>
+          <line>97</line>
+          <option name="timeStamp" value="221" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/unimelb/cis/structures/recursivemodel/OriginalRecursiveModel.java</url>
+          <line>80</line>
+          <option name="timeStamp" value="223" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/unimelb/cis/structures/recursivemodel/OriginalRecursiveModel.java</url>
+          <line>99</line>
+          <option name="timeStamp" value="224" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/unimelb/cis/structures/recursivemodel/OriginalRecursiveModel.java</url>
+          <line>104</line>
+          <option name="timeStamp" value="225" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/unimelb/cis/structures/recursivemodel/OriginalRecursiveModel.java</url>
+          <line>118</line>
+          <option name="timeStamp" value="226" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/unimelb/cis/structures/recursivemodel/OriginalRecursiveModel.java</url>
+          <line>117</line>
+          <option name="timeStamp" value="230" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
-  </component>
-  <component name="debuggerHistoryManager">
-    <expressions id="breakpointCondition">
-      <expression>
-        <expression-string>i=999</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-    </expressions>
-  </component>
-  <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/ZCurve.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="83" column="33" selection-start-line="83" selection-start-column="33" selection-end-line="83" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/node/NonLeafModel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="427">
-          <caret line="237" column="37" lean-forward="true" selection-start-line="237" selection-start-column="37" selection-end-line="237" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/uniform_10000_1_2_.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/partitionmodel/PartitionModelRtree.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="162" column="21" selection-start-line="162" selection-start-column="21" selection-end-line="162" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DQN_uniform_10000_1_2_.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/recursivemodel/RecursiveModelRtree.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="173">
-          <caret line="182" column="32" lean-forward="true" selection-start-line="182" selection-start-column="32" selection-end-line="182" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/geometry/Mbr.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="270" lean-forward="true" selection-start-line="270" selection-end-line="270" />
-          <folding>
-            <element signature="e#3756#3757#0" expanded="true" />
-            <element signature="e#3831#3832#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/utils/Visualizer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="260">
-          <caret line="61" column="12" selection-start-line="61" selection-start-column="12" selection-end-line="64" selection-end-column="13" />
-          <folding>
-            <element signature="e#3478#3479#0" expanded="true" />
-            <element signature="e#3598#3599#0" expanded="true" />
-            <element signature="e#3712#3713#0" expanded="true" />
-            <element signature="e#3800#3801#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DQN_uniform_100_1_2_.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/uniform_100_1_2_.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DQN_uniform_1000_1_2_.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/uniform_1000_1_2_.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/zrtree/ZRtree.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="463">
-          <caret line="443" lean-forward="true" selection-start-line="443" selection-end-line="443" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/Test.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="35" column="58" selection-start-line="35" selection-start-column="58" selection-end-line="35" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
   </component>
 </project>

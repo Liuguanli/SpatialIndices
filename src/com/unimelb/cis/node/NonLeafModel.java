@@ -68,6 +68,7 @@ public class NonLeafModel extends Model {
                 model = new LeafModel(predictedVal, pageSize, name);
             }
             model.add(point);
+            model.setType(type);
             subModels.put(predictedVal, model);
         }
     }
@@ -94,7 +95,7 @@ public class NonLeafModel extends Model {
         for (int i = 0; i < points.size(); i++) {
             points.get(i).setIndex(i / denominator);
         }
-        Instances instances = getInstances(name, points);
+        Instances instances = getInstances(name, points, type);
         classifier = getModels(name);
         train(classifier, instances);
         List<Double> results = getPredVals(classifier, instances);
@@ -114,7 +115,7 @@ public class NonLeafModel extends Model {
     public ExpReturn pointQuery(Point point) {
         List<Point> points = new ArrayList<>();
         points.add(point);
-        Instances instances = getInstances(name, points);
+        Instances instances = getInstances(name, points, type);
         List<Double> results = getPredVals(classifier, instances);
         ExpReturn expReturn = new ExpReturn();
         long begin = System.nanoTime();
@@ -130,7 +131,7 @@ public class NonLeafModel extends Model {
     @Override
     public ExpReturn pointQuery(List<Point> points) {
 //        System.out.println("NonLeafNode pointQuery(List<Point> points)");
-        Instances instances = getInstances(name, points);
+        Instances instances = getInstances(name, points, type);
         List<Double> results = getPredVals(classifier, instances);
         Double index = results.get(0);
         List<Point> sameIndexPoints = new ArrayList<>();
@@ -163,7 +164,7 @@ public class NonLeafModel extends Model {
     public ExpReturn insert(List<Point> points) {
         List<Point> sameIndexPoints = new ArrayList<>();
         ExpReturn expReturn = new ExpReturn();
-        Instances instances = getInstances(name, points);
+        Instances instances = getInstances(name, points, type);
         List<Double> results = getPredVals(classifier, instances);
         Double index = results.get(0);
 
