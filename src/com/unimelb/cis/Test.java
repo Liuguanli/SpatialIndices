@@ -139,11 +139,12 @@ public class Test {
                 public void accept(Float aFloat) {
                     List<Mbr> mbrs = Mbr.getMbrs(aFloat , 10, 2);
 //                    testZRtree(s, insertedPoints, mbrs, knnPoints, k);
-                    testHRtree(s, insertedPoints, mbrs, knnPoints, k);
+//                    testHRtree(s, insertedPoints, mbrs, knnPoints, k);
 //                    testPRegression(s, insertedPoints, mbrs, knnPoints, k);
 //                    testPclassification(s, insertedPoints, mbrs, knnPoints, k);
-//                    testRRegression(s, insertedPoints, mbrs, knnPoints, k);
-//                    testRclassification(s, insertedPoints, mbrs, knnPoints, k);
+                    testRRegression(s, insertedPoints, mbrs, knnPoints, k);
+//                    testRclassificati
+//                    on(s, insertedPoints, mbrs, knnPoints, k);
                 }
             });
 

@@ -7,10 +7,22 @@ import java.util.*;
 
 public class HilbertCurve extends Curve {
 
-    public static List<Point> hilbertCurve(List<Point> points) {
+
+
+    public static List<Point> hilbertCurve(List<Point> points, boolean ranksapce) {
         int dimension = points.get(0).getDim();
-        for (int i = 0; i < dimension; i++) {
-            sortDimensiont(points, i);
+        int width = points.size();
+        if (ranksapce) {
+            for (int i = 0; i < dimension; i++) {
+                sortDimensiont(points, i);
+            }
+        } else {
+            for (int i = 0; i < dimension; i++) {
+                for (int j = 0; j < width; j++) {
+                    Point point = points.get(j);
+                    point.getLocationOrder()[i] = (long) (point.getLocation()[i] * width);
+                }
+            }
         }
         int length = points.size();
         int bitNum = (int) (Math.log(length) / Math.log(2.0)) + 1;
@@ -45,6 +57,11 @@ public class HilbertCurve extends Curve {
             points.get(i).setCurveValueOrder(i);
         }
         return points;
+    }
+
+
+    public static List<Point> hilbertCurve(List<Point> points) {
+        return hilbertCurve(points, true);
     }
 
     public static long f(int n, int x, int y) {

@@ -25,35 +25,52 @@ public class OriginalRecursiveModel extends Model {
 
     String algorithm;
 
-    public OriginalRecursiveModel(int index, String name) {
+    boolean rankspace;
+
+    public OriginalRecursiveModel(int index, String name, boolean rankspace) {
         super(index, name);
+        this.rankspace = rankspace;
     }
 
 
     /**
      * train the first model according to the length of stages.get(0)
      */
-    public void init() {
-
-
-        for (int i = 0; i < stages.size(); i++) {
-
-
-        }
-    }
 
     public static void main(String[] args) {
-        String dataset = "/Users/guanli/Documents/datasets/RLRtree/raw/uniform_160000_1_2_.csv";
-        OriginalRecursiveModel originalRecursiveModel = new OriginalRecursiveModel(0, "Z");
+
+        /**
+         * 0.421375
+         * 4.3944125
+         *
+         * 0.06645625
+         * 40.6776125
+         */
+        String dataset = "/Users/guanli/Documents/datasets/RLRtree/raw/skewed_160000_9_2_.csv";
+        OriginalRecursiveModel originalRecursiveModel = new OriginalRecursiveModel(0, "Z", true);
         originalRecursiveModel.curveType = "Z";
         originalRecursiveModel.buildRtree(dataset);
         System.out.println(originalRecursiveModel);
         originalRecursiveModel.points.forEach(point -> originalRecursiveModel.pointQuery(point));
+        System.out.println(originalRecursiveModel.correctNum/160000.0);
+        System.out.println(originalRecursiveModel.pageaccess/160000.0);
+        System.out.println(originalRecursiveModel.maxErr);
+        System.out.println(originalRecursiveModel.minErr);
+
+
+        OriginalRecursiveModel originalRecursiveModel1 = new OriginalRecursiveModel(0, "Z", false);
+        originalRecursiveModel1.curveType = "Z";
+        originalRecursiveModel1.buildRtree(dataset);
+        System.out.println(originalRecursiveModel1);
+        originalRecursiveModel1.points.forEach(point -> originalRecursiveModel1.pointQuery(point));
+        System.out.println(originalRecursiveModel1.correctNum/160000.0);
+        System.out.println(originalRecursiveModel1.pageaccess/160000.0);
+        System.out.println(originalRecursiveModel1.maxErr);
+        System.out.println(originalRecursiveModel1.minErr);
     }
 
-
     List<List<List<Point>>> tmp_records = new ArrayList<>();
-    List<Integer> stages = Arrays.asList(1, 50, 1600);  // the last value should be the number of pages
+    List<Integer> stages = Arrays.asList(1, 100, 1600);  // the last value should be the number of pages
     String name = "MultilayerPerceptron";
     String type = "MDM";
     List<Point> points;
@@ -70,7 +87,7 @@ public class OriginalRecursiveModel extends Model {
             Point point = new Point(line);
             points.add(point);
         }
-        points = Curve.getPointByCurve(points, this.curveType);
+        points = Curve.getPointByCurve(points, this.curveType, rankspace);
 
 //        System.out.println("Root:" + root.getIndex());
 
@@ -129,6 +146,11 @@ public class OriginalRecursiveModel extends Model {
 
     }
 
+    int correctNum = 0;
+    int pageaccess = 0;
+    int maxErr = Integer.MIN_VALUE;
+    int minErr = Integer.MAX_VALUE;
+
     @Override
     public ExpReturn pointQuery(Point point) {
         ExpReturn expReturn = new ExpReturn();
@@ -152,7 +174,20 @@ public class OriginalRecursiveModel extends Model {
                 predictedVal = stages.get(i + 1) - 1;
             }
         }
-        System.out.println(point + " " + predictedVal);
+        if (point.getIndex() == predictedVal) {
+            correctNum++;
+        }
+        if ((predictedVal - point.getIndex()) < minErr) {
+            minErr = predictedVal - point.getIndex();
+        }
+        if ((predictedVal - point.getIndex()) > maxErr) {
+            maxErr = predictedVal - point.getIndex();
+        }
+
+//        pageaccess += Math.log(Math.abs(predictedVal - point.getIndex()) * 2 + 1)/Math.log(2) + 1;
+        pageaccess += Math.abs(predictedVal - point.getIndex()) * 2 + 1;
+
+//        System.out.println(point + " " + predictedVal);
         long end = System.nanoTime();
         expReturn.time = end - begin;
         return expReturn;

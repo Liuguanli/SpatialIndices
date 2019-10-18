@@ -52,7 +52,7 @@ public class PartitionModelRtree extends IRtree {
     int modelIndex = 0;
 
     private LeafModel addPoints(List<Point> points) {
-        points = Curve.getPointByCurve(points, curve);
+        points = Curve.getPointByCurve(points, curve, true);
         LeafModel leafModel = new LeafModel(-1, pageSize, algorithm);
         leafModel.setChildren(points);
         leafModel.build();

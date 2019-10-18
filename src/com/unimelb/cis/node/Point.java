@@ -21,7 +21,7 @@ public class Point extends Node implements Comparable {
                 "index=" + index +
                 ", curveValue=" + curveValue +
                 ", curveValueOrder=" + curveValueOrder +
-                ", locationOrder=" + Arrays.toString(locationOrder) +
+                ", location=" + Arrays.toString(location) +
                 '}';
     }
 

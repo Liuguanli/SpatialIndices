@@ -9,20 +9,21 @@ import com.unimelb.cis.node.Node;
 import com.unimelb.cis.node.NonLeafNode;
 import com.unimelb.cis.node.Point;
 import com.unimelb.cis.structures.RLRtree;
-import com.unimelb.cis.structures.zrtree.ZRtree;
 import com.unimelb.cis.utils.ExpReturn;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static com.unimelb.cis.CSVFileReader.read;
 
-public class HRRtree extends RLRtree {
+public class HRtree extends RLRtree {
 
 //
 //    public HRRtree() {
 //    }
 
-    public HRRtree(int pagesize) {
+    public HRtree(int pagesize) {
         super(pagesize);
     }
 
@@ -47,7 +48,7 @@ public class HRRtree extends RLRtree {
             locations.sort(Float::compareTo);
             axisLocations.put(i, locations);
         }
-        points = HilbertCurve.hilbertCurve(points);
+        points = HilbertCurve.hilbertCurve(points, false);
         points.forEach(point -> curveValues.add(point.getCurveValue()));
         this.points = points;
         LeafNode leafNode = null;
@@ -424,20 +425,17 @@ public class HRRtree extends RLRtree {
     }
 
     public static void main(String[] args) {
-        HRRtree hRRtree = new HRRtree(100);
+        HRtree hRRtree = new HRtree(100);
 
 //        hRRtree.buildRtree("D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_2_.csv");
-//        hRRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_10000_1_2_.csv");
-
-        hRRtree.buildRtreeAfterTuning("/Users/guanli/Documents/datasets/RLRtree/newtrees/H_uniform_10000_1_2_DQN.csv", 2, 3);
-//        hRRtree.visualize(600, 600).save("DQN_uniform_1000_1_2_.png");
+        hRRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_10000_1_2_.csv");
 
 //        zRtree.output("/Users/guanli/Documents/datasets/RLRtree/trees/Z_uniform_10000_1_2_.csv");
 
 //        zRtree.buildRtreeAfterTuning("/Users/guanli/Documents/datasets/RLRtree/trees/Z_uniform_10000_1_3_.csv", zRtree.getDim(), zRtree.getLevel());
 //        zRtree.getRoot();
 
-        System.out.println(hRRtree.windowQuery(Mbr.getMbrs(0.01f, 10, 2).get(0)));
+//        System.out.println(zRtree.windowQuery(Mbr.getMbrs(0.01f, 10, 3).get(0)));
 //        System.out.println(zRtree.windowQuery(Mbr.getMbrs(0.01f, 9, 3).get(0)));
 //        System.out.println(zRtree.windowQuery(Mbr.getMbrs(0.01f, 11, 3).get(0)));
 //        System.out.println(hRRtree.pointQuery(hRRtree.getPoints()));

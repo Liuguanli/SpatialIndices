@@ -424,7 +424,7 @@ public class ZRRtree extends RLRtree {
 //        zRRtree.output("/Users/guanli/Documents/datasets/RLRtree/trees/Z_uniform_10000_1_2_.csv");
 
         zRRtree = new ZRRtree(100);
-        zRRtree.buildRtreeAfterTuning("D:\\datasets\\RLRtree\\newtrees\\H_uniform_20000_1_2_DQN.csv", 2, 3);
+        zRRtree.buildRtreeAfterTuning("/Users/guanli/Documents/datasets/RLRtree/newtrees/H_uniform_10000_1_2_DQN.csv", 2, 3);
         zRRtree.visualize(600, 600).save("DQN_uniform_1000_1_2_.png");
 //        zRRtree.buildRtree("D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_2_.csv");
 //        zRRtree.getRoot();

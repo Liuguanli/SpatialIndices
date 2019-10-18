@@ -43,31 +43,7 @@ public class LearnedZRIndex extends IRtree  {
         this.algorithm = algorithm;
     }
 
-    /**
-     * step 1
-     *
-     * @return
-     */
-    public void build(String path) {
-        List<String> lines = read(path);
-        List<Point> points = new ArrayList<>(lines.size());
-        for (int i = 0; i < lines.size(); i++) {
-            String line = lines.get(i);
-            Point point = new Point(line);
-            points.add(point);
-        }
-        points = Curve.getPointByCurve(points, this.curveType);
-        int classNum = points.size() / threshold;
-        if (classNum <= 1) {
-            root = new LeafModel(-1, pageSize, algorithm);
-        } else {
-            root = new NonLeafModel(-1, pageSize, algorithm, threshold);
-        }
-//        System.out.println("Root:" + root.getIndex());
-        root.setChildren(points);
-        root.setType("MDM");
-        root.build();
-    }
+
 
 //    /**
 //     * step 3
@@ -144,7 +120,7 @@ public class LearnedZRIndex extends IRtree  {
             points.add(point);
         }
         dim = points.get(0).getDim();
-        points = Curve.getPointByCurve(points, this.curveType);
+        points = Curve.getPointByCurve(points, this.curveType, true);
         int classNum = points.size() / threshold;
         if (classNum <= 1) {
             root = new LeafModel(0, pageSize, algorithm);
