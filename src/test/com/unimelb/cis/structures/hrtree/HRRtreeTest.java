@@ -5,13 +5,13 @@ import org.junit.Before;
 import org.junit.After; 
 
 /** 
-* HRtree Tester. 
+* HRRtree Tester.
 * 
 * @author <Authors name> 
 * @since <pre>Sep 28, 2019</pre> 
 * @version 1.0 
 */ 
-public class HRtreeTest { 
+public class HRRtreeTest {
 
 @Before
 public void before() throws Exception { 

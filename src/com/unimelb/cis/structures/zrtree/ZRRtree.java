@@ -1,25 +1,22 @@
 package com.unimelb.cis.structures.zrtree;
 
 import com.unimelb.cis.CSVFileWriter;
-import com.unimelb.cis.HilbertCurve;
 import com.unimelb.cis.ZCurve;
 import com.unimelb.cis.geometry.Mbr;
 import com.unimelb.cis.node.*;
-import com.unimelb.cis.structures.IRtree;
 import com.unimelb.cis.structures.RLRtree;
 import com.unimelb.cis.utils.ExpReturn;
 
 import java.util.*;
-import java.util.function.Consumer;
 
 import static com.unimelb.cis.CSVFileReader.read;
 
-public class ZRtree extends RLRtree {
+public class ZRRtree extends RLRtree {
 
-//    public ZRtree() {
+//    public ZRRtree() {
 //    }
 
-    public ZRtree(int pagesize) {
+    public ZRRtree(int pagesize) {
         super(pagesize);
     }
 
@@ -420,30 +417,30 @@ public class ZRtree extends RLRtree {
     }
 
     public static void main(String[] args) {
-        ZRtree zRtree = new ZRtree(10);
+        ZRRtree zRRtree = new ZRRtree(10);
 
-//        zRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_1000_1_2_.csv");
-//        zRtree.visualize(600, 600).save("uniform_1000_1_2_.png");
-//        zRtree.output("/Users/guanli/Documents/datasets/RLRtree/trees/Z_uniform_10000_1_2_.csv");
+//        zRRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_1000_1_2_.csv");
+//        zRRtree.visualize(600, 600).save("uniform_1000_1_2_.png");
+//        zRRtree.output("/Users/guanli/Documents/datasets/RLRtree/trees/Z_uniform_10000_1_2_.csv");
 
-        zRtree = new ZRtree(100);
-        zRtree.buildRtreeAfterTuning("D:\\datasets\\RLRtree\\newtrees\\H_uniform_20000_1_2_DQN.csv", 2, 3);
-        zRtree.visualize(600, 600).save("DQN_uniform_1000_1_2_.png");
-//        zRtree.buildRtree("D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_2_.csv");
-//        zRtree.getRoot();
+        zRRtree = new ZRRtree(100);
+        zRRtree.buildRtreeAfterTuning("D:\\datasets\\RLRtree\\newtrees\\H_uniform_20000_1_2_DQN.csv", 2, 3);
+        zRRtree.visualize(600, 600).save("DQN_uniform_1000_1_2_.png");
+//        zRRtree.buildRtree("D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_2_.csv");
+//        zRRtree.getRoot();
 
-//        System.out.println(zRtree.windowQuery(Mbr.getMbrs(0.01f, 10, 3).get(0)));
-//        System.out.println(zRtree.windowQuery(Mbr.getMbrs(0.01f, 9, 3).get(0)));
-//        System.out.println(zRtree.windowQuery(Mbr.getMbrs(0.01f, 11, 3).get(0)));
+//        System.out.println(zRRtree.windowQuery(Mbr.getMbrs(0.01f, 10, 3).get(0)));
+//        System.out.println(zRRtree.windowQuery(Mbr.getMbrs(0.01f, 9, 3).get(0)));
+//        System.out.println(zRRtree.windowQuery(Mbr.getMbrs(0.01f, 11, 3).get(0)));
 
-//        zRtree.visualize(600, 600).save("uniform_10000_1_2_.png");
+//        zRRtree.visualize(600, 600).save("uniform_10000_1_2_.png");
 
-//        zRtree.pointQuery(zRtree.getPoints());
+//        zRRtree.pointQuery(zRRtree.getPoints());
 
 
-//        System.out.println("point query:" + zRtree.pointQuery(zRtree.points));
-//        zRtree.insert(new Point(0.5f, 0.5f));
-//        System.out.println("knn query:" + zRtree.knnQuery(new Point(0.5f, 0.5f), 1));
+//        System.out.println("point query:" + zRRtree.pointQuery(zRRtree.points));
+//        zRRtree.insert(new Point(0.5f, 0.5f));
+//        System.out.println("knn query:" + zRRtree.knnQuery(new Point(0.5f, 0.5f), 1));
 
 
 //        Mbr mbr = new Mbr(1,2,3,4);

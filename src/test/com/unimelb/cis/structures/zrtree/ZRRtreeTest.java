@@ -1,19 +1,17 @@
 package test.com.unimelb.cis.structures.zrtree;
 
-import com.unimelb.cis.structures.zrtree.ZRtree;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.Before;
 import org.junit.After;
 
 /**
- * ZRtree Tester.
+ * ZRRtree Tester.
  *
  * @author <Authors name>
  * @version 1.0
  * @since <pre>Jul 29, 2019</pre>
  */
-public class ZRtreeTest {
+public class ZRRtreeTest {
 
     int PAGE_SIZE = 100;
 
@@ -30,7 +28,7 @@ public class ZRtreeTest {
      */
     @Test
     public void testBuildRtree() throws Exception {
-//        ZRtree zRtree = new ZRtree();
+//        ZRRtree zRtree = new ZRRtree();
 //        zRtree.buildRtree("datasets/normal_10000_.csv");
 //        Assert.assertNotNull(zRtree.getRoot());
 //        Assert.assertNotNull(zRtree.getLeafNodes());

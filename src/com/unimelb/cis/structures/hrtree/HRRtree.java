@@ -9,20 +9,19 @@ import com.unimelb.cis.node.Node;
 import com.unimelb.cis.node.NonLeafNode;
 import com.unimelb.cis.node.Point;
 import com.unimelb.cis.structures.RLRtree;
-import com.unimelb.cis.structures.zrtree.ZRtree;
 import com.unimelb.cis.utils.ExpReturn;
 
 import java.util.*;
 
 import static com.unimelb.cis.CSVFileReader.read;
 
-public class HRtree extends RLRtree {
+public class HRRtree extends RLRtree {
 
 //
-//    public HRtree() {
+//    public HRRtree() {
 //    }
 
-    public HRtree(int pagesize) {
+    public HRRtree(int pagesize) {
         super(pagesize);
     }
 
@@ -420,10 +419,10 @@ public class HRtree extends RLRtree {
     }
 
     public static void main(String[] args) {
-        HRtree hRtree = new HRtree(100);
+        HRRtree hRRtree = new HRRtree(100);
 
-//        hRtree.buildRtree("D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_2_.csv");
-        hRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_10000_1_2_.csv");
+//        hRRtree.buildRtree("D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_2_.csv");
+        hRRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_10000_1_2_.csv");
 
 //        zRtree.output("/Users/guanli/Documents/datasets/RLRtree/trees/Z_uniform_10000_1_2_.csv");
 
@@ -433,9 +432,9 @@ public class HRtree extends RLRtree {
 //        System.out.println(zRtree.windowQuery(Mbr.getMbrs(0.01f, 10, 3).get(0)));
 //        System.out.println(zRtree.windowQuery(Mbr.getMbrs(0.01f, 9, 3).get(0)));
 //        System.out.println(zRtree.windowQuery(Mbr.getMbrs(0.01f, 11, 3).get(0)));
-//        System.out.println(hRtree.pointQuery(hRtree.getPoints()));
-//        hRtree.insert(new Point(0.5f,0.5f));
-        System.out.println("knn query:" + hRtree.knnQuery(new Point(0.5f, 0.5f), 1));
+//        System.out.println(hRRtree.pointQuery(hRRtree.getPoints()));
+//        hRRtree.insert(new Point(0.5f,0.5f));
+        System.out.println("knn query:" + hRRtree.knnQuery(new Point(0.5f, 0.5f), 1));
     }
 
 }

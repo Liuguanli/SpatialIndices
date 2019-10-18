@@ -18,10 +18,10 @@ import java.util.List;
 import static com.unimelb.cis.CSVFileReader.read;
 
 /**
- * 1 build ZRtree
+ * 1 build ZRRtree
  * 2 build training set by（z and index value） fan out 100
  * 3 implement window query method.
- * 4 compage ZRtree
+ * 4 compage ZRRtree
  */
 public class LearnedZRIndex extends IRtree  {
 

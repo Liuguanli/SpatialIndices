@@ -2,11 +2,10 @@ package com.unimelb.cis;
 
 import com.unimelb.cis.geometry.Mbr;
 import com.unimelb.cis.node.Point;
-import com.unimelb.cis.structures.IRtree;
-import com.unimelb.cis.structures.hrtree.HRtree;
+import com.unimelb.cis.structures.hrtree.HRRtree;
 import com.unimelb.cis.structures.partitionmodel.PartitionModelRtree;
 import com.unimelb.cis.structures.recursivemodel.RecursiveModelRtree;
-import com.unimelb.cis.structures.zrtree.ZRtree;
+import com.unimelb.cis.structures.zrtree.ZRRtree;
 
 import java.util.Arrays;
 import java.util.List;
@@ -17,24 +16,24 @@ public class Test {
 
     public static void testZRtree(String s, List<Point> insertedPoints, List<Mbr> mbrs, List<Point> knnPoints, int k) {
         System.out.println("------------------------------------------------");
-        ZRtree zRtree = new ZRtree(100);
-        System.out.println("ZRtree:");
-        System.out.println("build finish:" + zRtree.buildRtree(s).time);
-//        System.out.println("point query:" + zRtree.pointQuery(zRtree.getPoints()));
-        System.out.println("window query:" + zRtree.windowQuery(mbrs));
-        System.out.println("knn query:" + zRtree.knnQuery(knnPoints, k));
-//        System.out.println("insert:" + zRtree.insert(insertedPoints));
+        ZRRtree zRRtree = new ZRRtree(100);
+        System.out.println("ZRRtree:");
+        System.out.println("build finish:" + zRRtree.buildRtree(s).time);
+//        System.out.println("point query:" + zRRtree.pointQuery(zRRtree.getPoints()));
+        System.out.println("window query:" + zRRtree.windowQuery(mbrs));
+        System.out.println("knn query:" + zRRtree.knnQuery(knnPoints, k));
+//        System.out.println("insert:" + zRRtree.insert(insertedPoints));
     }
 
     public static void testHRtree(String s, List<Point> insertedPoints, List<Mbr> mbrs, List<Point> knnPoints, int k) {
         System.out.println("------------------------------------------------");
-        HRtree hRtree = new HRtree(100);
-        System.out.println("HRtree:");
-        System.out.println("build finish:" + hRtree.buildRtree(s).time);
-//        System.out.println("point query:" + hRtree.pointQuery(hRtree.getPoints()));
-        System.out.println("window query:" + hRtree.windowQuery(mbrs));
-        System.out.println("knn query:" + hRtree.knnQuery(knnPoints, k));
-//        System.out.println("insert:" + hRtree.insert(insertedPoints));
+        HRRtree hRRtree = new HRRtree(100);
+        System.out.println("HRRtree:");
+        System.out.println("build finish:" + hRRtree.buildRtree(s).time);
+//        System.out.println("point query:" + hRRtree.pointQuery(hRRtree.getPoints()));
+        System.out.println("window query:" + hRRtree.windowQuery(mbrs));
+        System.out.println("knn query:" + hRRtree.knnQuery(knnPoints, k));
+//        System.out.println("insert:" + hRRtree.insert(insertedPoints));
     }
 
     public static void testPRegression(String s, List<Point> insertedPoints, List<Mbr> mbrs, List<Point> knnPoints, int k) {
@@ -113,24 +112,25 @@ public class Test {
 
     static List<String> datasets1 = Arrays.asList(
 //            "D:\\datasets\\RLRtree\\raw\\real_east.csv",
-            "D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_2_.csv",
-            "D:\\datasets\\RLRtree\\raw\\uniform_2000000_1_2_.csv",
-            "D:\\datasets\\RLRtree\\raw\\uniform_4000000_1_2_.csv",
-            "D:\\datasets\\RLRtree\\raw\\uniform_8000000_1_2_.csv",
-            "D:\\datasets\\RLRtree\\raw\\uniform_16000000_1_2_.csv",
-            "D:\\datasets\\RLRtree\\raw\\uniform_32000000_1_2_.csv"
+//            "D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_2_.csv",
+//            "D:\\datasets\\RLRtree\\raw\\uniform_2000000_1_2_.csv",
+//            "D:\\datasets\\RLRtree\\raw\\uniform_4000000_1_2_.csv",
+//            "D:\\datasets\\RLRtree\\raw\\uniform_8000000_1_2_.csv",
+//            "D:\\datasets\\RLRtree\\raw\\uniform_16000000_1_2_.csv",
+//            "D:\\datasets\\RLRtree\\raw\\uniform_32000000_1_2_.csv"
 //            "D:\\datasets\\RLRtree\\raw\\uniform_64000000_1_2_.csv"
+            "D:\\datasets\\RLRtree\\raw\\uniform_128000000_1_2_.csv"
     );
 
     public static void main(String[] args) {
 
-        int k = 25;
+        int k = 625;
         int dim = 2;
 
         List<Float> sides = Arrays.asList(0.01f, 0.02f,0.04f,0.08f,0.16f);
 
         datasets1.forEach(s -> {
-            List<Point> knnPoints = Point.getPoints(10, 2);
+            List<Point> knnPoints = Point.getPoints(100, 2);
             List<Point> insertedPoints = Point.getPoints(10000, 2);
             System.out.println(s);
 
@@ -138,12 +138,12 @@ public class Test {
                 @Override
                 public void accept(Float aFloat) {
                     List<Mbr> mbrs = Mbr.getMbrs(aFloat , 10, 2);
-                    testZRtree(s, insertedPoints, mbrs, knnPoints, k);
+//                    testZRtree(s, insertedPoints, mbrs, knnPoints, k);
                     testHRtree(s, insertedPoints, mbrs, knnPoints, k);
-                    testPRegression(s, insertedPoints, mbrs, knnPoints, k);
-                    testPclassification(s, insertedPoints, mbrs, knnPoints, k);
-                    testRRegression(s, insertedPoints, mbrs, knnPoints, k);
-                    testRclassification(s, insertedPoints, mbrs, knnPoints, k);
+//                    testPRegression(s, insertedPoints, mbrs, knnPoints, k);
+//                    testPclassification(s, insertedPoints, mbrs, knnPoints, k);
+//                    testRRegression(s, insertedPoints, mbrs, knnPoints, k);
+//                    testRclassification(s, insertedPoints, mbrs, knnPoints, k);
                 }
             });
 

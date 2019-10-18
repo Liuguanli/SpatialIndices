@@ -16,7 +16,7 @@ import java.util.function.Consumer;
 import static com.unimelb.cis.CSVFileReader.read;
 
 /**
- * first we get ZRtree or only the points with Z value and cal the last level index
+ * first we get ZRRtree or only the points with Z value and cal the last level index
  * <p>
  * then Use the model to classify to sub models. Then generate new points with new index!!!
  * <p>
