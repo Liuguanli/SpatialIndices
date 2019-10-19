@@ -52,19 +52,18 @@ public class OriginalRecursiveModel extends Model {
         originalRecursiveModel.buildRtree(dataset);
         System.out.println(originalRecursiveModel);
         originalRecursiveModel.points.forEach(point -> originalRecursiveModel.pointQuery(point));
-        System.out.println(originalRecursiveModel.correctNum/160000.0);
-        System.out.println(originalRecursiveModel.pageaccess/160000.0);
+        System.out.println(originalRecursiveModel.correctNum / 160000.0);
+        System.out.println(originalRecursiveModel.pageaccess / 160000.0);
         System.out.println(originalRecursiveModel.maxErr);
         System.out.println(originalRecursiveModel.minErr);
-
 
         OriginalRecursiveModel originalRecursiveModel1 = new OriginalRecursiveModel(0, "Z", false);
         originalRecursiveModel1.curveType = "Z";
         originalRecursiveModel1.buildRtree(dataset);
         System.out.println(originalRecursiveModel1);
         originalRecursiveModel1.points.forEach(point -> originalRecursiveModel1.pointQuery(point));
-        System.out.println(originalRecursiveModel1.correctNum/160000.0);
-        System.out.println(originalRecursiveModel1.pageaccess/160000.0);
+        System.out.println(originalRecursiveModel1.correctNum / 160000.0);
+        System.out.println(originalRecursiveModel1.pageaccess / 160000.0);
         System.out.println(originalRecursiveModel1.maxErr);
         System.out.println(originalRecursiveModel1.minErr);
     }
@@ -91,9 +90,7 @@ public class OriginalRecursiveModel extends Model {
 
 //        System.out.println("Root:" + root.getIndex());
 
-
         tmp_records.add(Arrays.asList(points));
-
 
         for (int i = 0; i < stages.size() - 1; i++) {
             int lengthOfStage = stages.get(i);
