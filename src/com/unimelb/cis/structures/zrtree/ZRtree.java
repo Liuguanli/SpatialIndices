@@ -403,24 +403,6 @@ public class ZRtree extends RLRtree {
         return root;
     }
 
-    @Override
-    public void output(String file) {
-        List<String> lines = new ArrayList<>();
-        List<Node> nodes = new ArrayList<>();
-        nodes.add(root);
-        while (nodes.size() > 0) {
-            Node top = nodes.remove(0);
-            if (top instanceof NonLeafNode) {
-                nodes.addAll(((NonLeafNode) top).getChildren());
-            } else if (top instanceof LeafNode) {
-                nodes.addAll(((LeafNode) top).getChildren());
-            } else {
-                lines.add(((Point) top).getOutPutString(root));
-            }
-        }
-        CSVFileWriter.write(lines, file);
-    }
-
     public static void main(String[] args) {
         ZRtree zRRtree = new ZRtree(10);
 

@@ -12,6 +12,10 @@ import com.unimelb.cis.structures.RLRtree;
 import com.unimelb.cis.structures.zrtree.ZRtree;
 import com.unimelb.cis.utils.ExpReturn;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 
 import static com.unimelb.cis.CSVFileReader.read;
@@ -405,23 +409,7 @@ public class HRRtree extends RLRtree {
         return insert(Arrays.asList(point));
     }
 
-    @Override
-    public void output(String file) {
-        List<String> lines = new ArrayList<>();
-        List<Node> nodes = new ArrayList<>();
-        nodes.add(root);
-        while (nodes.size() > 0) {
-            Node top = nodes.remove(0);
-            if (top instanceof NonLeafNode) {
-                nodes.addAll(((NonLeafNode) top).getChildren());
-            } else if (top instanceof LeafNode) {
-                nodes.addAll(((LeafNode) top).getChildren());
-            } else {
-                lines.add(((Point) top).getOutPutString(root));
-            }
-        }
-        CSVFileWriter.write(lines, file);
-    }
+
 
     public static void main(String[] args) {
         HRRtree hRRtree = new HRRtree(100);

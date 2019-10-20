@@ -34,4 +34,11 @@ public class ExpReturn {
 
         return builder.toString();
     }
+
+    public void plus(ExpReturn temp) {
+        this.pageaccess += temp.pageaccess;
+        this.time += temp.pageaccess;
+        this.result.addAll(temp.result);
+
+    }
 }
