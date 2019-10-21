@@ -19,18 +19,21 @@ public class UnsupervisedModel extends Model {
 
     LeafModel leafModel;
 
-    int pageSize = 100;
-
     Map<Integer, UnsupervisedModel> subModels;
 
     SimpleKMeans kmeans = null;
 
     String curve;
 
-    public UnsupervisedModel(int index, int pageSize, String algorithm, String curve, int threshold) {
+    public UnsupervisedModel(int index, int pageSize, String algorithm, String curve, int threshold, int maxIteration) {
         super(index, pageSize, algorithm);
         this.threshold = threshold;
         this.curve = curve;
+        this.maxIteration = maxIteration;
+    }
+
+    public Map<Integer, UnsupervisedModel> getSubModels() {
+        return subModels;
     }
 
     @Override
@@ -61,11 +64,17 @@ public class UnsupervisedModel extends Model {
                 ex.printStackTrace();
             }
 
+//            Instances centroids = kmeans.getClusterCentroids();
+//            for (int i = 0; i < K; i++) {
+//                System.out.print("Cluster " + i + " size: " + kmeans.getClusterSizes()[i]);
+//                System.out.println(" Centroid: " + centroids.instance(i));
+//            }
+
             children.forEach(point -> {
                 try {
                     int index = kmeans.clusterInstance(new Instance(1.0, point.getLocationDouble()));
                     if (!subModels.containsKey(index)) {
-                        UnsupervisedModel unsupervisedModel = new UnsupervisedModel(index, pageSize, name, curve, threshold);
+                        UnsupervisedModel unsupervisedModel = new UnsupervisedModel(index, pageSize, name, curve, threshold, maxIteration);
                         subModels.put(index, unsupervisedModel);
                     }
                     subModels.get(index).add(point);
@@ -111,7 +120,9 @@ public class UnsupervisedModel extends Model {
         if (leafModel == null) {
             subModels.forEach((integer, unsupervisedModel) -> {
                 if (unsupervisedModel.getMbr().interact(window)) {
-                    expReturn.plus(unsupervisedModel.windowQuery(window));
+                    ExpReturn temp = unsupervisedModel.windowQuery(window);
+                    expReturn.plus(temp);
+//                    System.out.println("expReturn.pageaccess" + expReturn.pageaccess);
                 }
             });
         } else {

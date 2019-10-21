@@ -27,9 +27,12 @@ public class OriginalRecursiveModel extends Model {
 
     boolean rankspace;
 
-    public OriginalRecursiveModel(int index, String name, boolean rankspace) {
+    List<Integer> stages;  // the last value should be the number of pages
+
+    public OriginalRecursiveModel(int index, String name, boolean rankspace, List<Integer> stages) {
         super(index, name);
         this.rankspace = rankspace;
+        this.stages = stages;
     }
 
 
@@ -47,8 +50,9 @@ public class OriginalRecursiveModel extends Model {
          * 40.6776125
          */
         String dataset = "/Users/guanli/Documents/datasets/RLRtree/raw/skewed_160000_9_2_.csv";
-        OriginalRecursiveModel originalRecursiveModel = new OriginalRecursiveModel(0, "Z", true);
+        OriginalRecursiveModel originalRecursiveModel = new OriginalRecursiveModel(0, "Z", true, Arrays.asList(1, 100, 1600));
         originalRecursiveModel.curveType = "Z";
+
         originalRecursiveModel.buildRtree(dataset);
         System.out.println(originalRecursiveModel);
         originalRecursiveModel.points.forEach(point -> originalRecursiveModel.pointQuery(point));
@@ -57,7 +61,7 @@ public class OriginalRecursiveModel extends Model {
         System.out.println(originalRecursiveModel.maxErr);
         System.out.println(originalRecursiveModel.minErr);
 
-        OriginalRecursiveModel originalRecursiveModel1 = new OriginalRecursiveModel(0, "Z", false);
+        OriginalRecursiveModel originalRecursiveModel1 = new OriginalRecursiveModel(0, "Z", false, Arrays.asList(1, 100, 1600));
         originalRecursiveModel1.curveType = "Z";
         originalRecursiveModel1.buildRtree(dataset);
         System.out.println(originalRecursiveModel1);
@@ -69,7 +73,6 @@ public class OriginalRecursiveModel extends Model {
     }
 
     List<List<List<Point>>> tmp_records = new ArrayList<>();
-    List<Integer> stages = Arrays.asList(1, 100, 1600);  // the last value should be the number of pages
     String name = "MultilayerPerceptron";
     String type = "MDM";
     List<Point> points;

@@ -5,6 +5,7 @@ import com.unimelb.cis.node.Point;
 import com.unimelb.cis.structures.hrtree.HRRtree;
 import com.unimelb.cis.structures.partitionmodel.PartitionModelRtree;
 import com.unimelb.cis.structures.recursivemodel.RecursiveModelRtree;
+import com.unimelb.cis.structures.unsupervisedPartition.UnsupervisedPartitionModel;
 import com.unimelb.cis.structures.zrtree.ZRRtree;
 
 import java.util.Arrays;
@@ -81,6 +82,18 @@ public class Test {
 //        System.out.println("insert:" + Rclassification.insert(insertedPoints));
     }
 
+    public static  void testKMeans(String s, List<Point> insertedPoints, List<Mbr> mbrs, List<Point> knnPoints, int k) {
+        System.out.println("------------------------------------------------");
+        UnsupervisedPartitionModel unsupervisedPartitionModel = new UnsupervisedPartitionModel(10000, "H", 100, "NaiveBayes", 1000);
+        System.out.println("Partition:" + "KMeans");
+        System.out.println("build finish:" + unsupervisedPartitionModel.buildRtree(s).time);
+        unsupervisedPartitionModel.visualize(600,600, unsupervisedPartitionModel.getmbrFigures()).saveMBR("kmeans_160000.png");
+//        System.out.println("point query:" + unsupervisedPartitionModel.pointQuery(unsupervisedPartitionModel.getPoints()));
+//        System.out.println("window query:" + unsupervisedPartitionModel.windowQuery(mbrs));
+//        System.out.println("knn query:" + unsupervisedPartitionModel.knnQuery(knnPoints, k));
+//        System.out.println("insert:" + unsupervisedPartitionModel.insert(insertedPoints));
+    }
+
     static List<String> datasets = Arrays.asList(
             "/Users/guanli/Documents/datasets/RLRtree/raw/uniform_1000000_1_2_.csv",
             "/Users/guanli/Documents/datasets/RLRtree/raw/uniform_1000000_1_3_.csv",
@@ -111,6 +124,7 @@ public class Test {
     );
 
     static List<String> datasets1 = Arrays.asList(
+            "/Users/guanli/Documents/datasets/RLRtree/raw/uniform_160000_1_2_.csv"
 //            "D:\\datasets\\RLRtree\\raw\\real_east.csv",
 //            "D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_2_.csv",
 //            "D:\\datasets\\RLRtree\\raw\\uniform_2000000_1_2_.csv",
@@ -119,12 +133,12 @@ public class Test {
 //            "D:\\datasets\\RLRtree\\raw\\uniform_16000000_1_2_.csv",
 //            "D:\\datasets\\RLRtree\\raw\\uniform_32000000_1_2_.csv"
 //            "D:\\datasets\\RLRtree\\raw\\uniform_64000000_1_2_.csv"
-            "D:\\datasets\\RLRtree\\raw\\uniform_128000000_1_2_.csv"
+//            "D:\\datasets\\RLRtree\\raw\\uniform_128000000_1_2_.csv"
     );
 
     public static void main(String[] args) {
 
-        int k = 625;
+        int k = 25;
         int dim = 2;
 
         List<Float> sides = Arrays.asList(0.01f, 0.02f,0.04f,0.08f,0.16f);
@@ -142,9 +156,10 @@ public class Test {
 //                    testHRtree(s, insertedPoints, mbrs, knnPoints, k);
 //                    testPRegression(s, insertedPoints, mbrs, knnPoints, k);
 //                    testPclassification(s, insertedPoints, mbrs, knnPoints, k);
-                    testRRegression(s, insertedPoints, mbrs, knnPoints, k);
+//                    testRRegression(s, insertedPoints, mbrs, knnPoints, k);
 //                    testRclassificati
 //                    on(s, insertedPoints, mbrs, knnPoints, k);
+                    testKMeans(s, insertedPoints, mbrs, knnPoints, k);
                 }
             });
 

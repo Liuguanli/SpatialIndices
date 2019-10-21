@@ -36,9 +36,9 @@ public class ExpReturn {
     }
 
     public void plus(ExpReturn temp) {
-        this.pageaccess += temp.pageaccess;
-        this.time += temp.pageaccess;
-        this.result.addAll(temp.result);
+        pageaccess += temp.pageaccess;
+        time += temp.time;
+        result.addAll(temp.result);
 
     }
 }
