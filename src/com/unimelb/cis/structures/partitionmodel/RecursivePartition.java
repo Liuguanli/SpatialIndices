@@ -3,6 +3,7 @@ package com.unimelb.cis.structures.partitionmodel;
 import com.unimelb.cis.Curve;
 import com.unimelb.cis.geometry.Mbr;
 import com.unimelb.cis.node.NonLeafNode;
+import com.unimelb.cis.node.Partition;
 import com.unimelb.cis.node.Point;
 import com.unimelb.cis.structures.IRtree;
 import com.unimelb.cis.utils.ExpReturn;
@@ -15,7 +16,22 @@ import static com.unimelb.cis.CSVFileReader.read;
 public class RecursivePartition extends IRtree {
 
 
-    int partitionNum = 4;
+    int partitionNum;
+
+    Partition root;
+
+    int threshold;
+
+    public RecursivePartition(int partitionNum, int threshold) {
+        this.partitionNum = partitionNum;
+        this.threshold = threshold;
+    }
+
+    public static void main(String[] args) {
+        RecursivePartition recursivePartition = new RecursivePartition(2, 10000);
+        String dataset = "/Users/guanli/Documents/datasets/RLRtree/raw/uniform_160000_1_2_.csv";
+        System.out.println(recursivePartition.buildRtree(dataset));
+    }
 
     @Override
     public ExpReturn buildRtree(String path) {
@@ -30,9 +46,9 @@ public class RecursivePartition extends IRtree {
         }
 
         points = Curve.getPointByCurve(points, "Z", false);
-
-
-
+        root = new Partition(0, partitionNum, threshold);
+        root.setPoints(points);
+        root.build();
 
         long end = System.nanoTime();
         expReturn.time = end - begin;
