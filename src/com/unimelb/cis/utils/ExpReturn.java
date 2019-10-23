@@ -15,6 +15,12 @@ public class ExpReturn {
 
     public double accuracy;
 
+    public int index;
+
+    public int maxErr;
+
+    public int minErr;
+
     @Override
     public String toString() {
 
