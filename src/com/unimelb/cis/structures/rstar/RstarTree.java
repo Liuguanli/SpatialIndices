@@ -10,6 +10,7 @@ import com.unimelb.cis.structures.RLRtree;
 import com.unimelb.cis.utils.ExpReturn;
 
 import java.util.*;
+import java.util.function.Consumer;
 
 import static com.unimelb.cis.CSVFileReader.read;
 
@@ -73,7 +74,35 @@ public class RstarTree extends RLRtree {
 
     @Override
     public ExpReturn windowQuery(Mbr window) {
-        return null;
+        ExpReturn expReturn = new ExpReturn();
+        long begin = System.nanoTime();
+            List<Node> nodes = new ArrayList<>();
+            nodes.add(root);
+            while (nodes.size() > 0) {
+                Node top = nodes.remove(0);
+                if (top instanceof NonLeafNode) {
+                    if (window.interact(top.getMbr())) {
+                        expReturn.pageaccess++;
+                        nodes.addAll(((NonLeafNode) top).getChildren());
+                    }
+                } else if (top instanceof LeafNode) {
+                    if (window.interact(top.getMbr())) {
+                        expReturn.pageaccess++;
+                        List<Point> children = ((LeafNode) top).getChildren();
+                        children.forEach(new Consumer<Point>() {
+                            @Override
+                            public void accept(Point point) {
+                                if (window.contains(point)) {
+                                    expReturn.result.add(point);
+                                }
+                            }
+                        });
+                    }
+                }
+            }
+        long end = System.nanoTime();
+        expReturn.time = end - begin;
+        return expReturn;
     }
 
     @Override

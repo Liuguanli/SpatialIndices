@@ -5,23 +5,32 @@ import com.unimelb.cis.node.Point;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class ZCurve extends Curve {
 
-    public static List<Point> zCurve(List<Point> points) {
+    public static List<Point> zCurve(List<Point> points, boolean ranksapce) {
         int dimension = points.get(0).getDim();
-        for (int i = 0; i < dimension; i++) {
-            sortDimensiont(points, i);
+        int width = points.size();
+        if (ranksapce) {
+            for (int i = 0; i < dimension; i++) {
+                sortDimensiont(points, i);
+            }
+        } else {
+            for (int i = 0; i < dimension; i++) {
+                for (int j = 0; j < width; j++) {
+                    Point point = points.get(j);
+                    point.getLocationOrder()[i] = (long) (point.getLocation()[i] * width);
+                }
+            }
         }
         int length = points.size();
         int bitNum = (int) (Math.log(length) / Math.log(2.0)) + 1;
-
         for (int i = 0; i < points.size(); i++) {
             Point point = points.get(i);
             long result = getZcurve(point.getLocationOrder(), bitNum);
             point.setCurveValue(result);
         }
-
         Collections.sort(points, (o1, o2) -> {
             if (o1.getCurveValue() > o2.getCurveValue()) {
                 return 1;
@@ -35,6 +44,11 @@ public class ZCurve extends Curve {
             points.get(i).setCurveValueOrder(i);
         }
         return points;
+    }
+
+
+    public static List<Point> zCurve(List<Point> points) {
+        return zCurve(points, true);
     }
 
     public static long getZcurve(long[] locationOrder, int length) {

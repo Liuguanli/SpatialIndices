@@ -51,8 +51,8 @@ public class PartitionModelRtree extends IRtree {
 
     int modelIndex = 0;
 
-    private LeafModel addPoints(List<Point> points) {
-        points = Curve.getPointByCurve(points, curve);
+    private LeafModel addPointsAndBuild(List<Point> points) {
+        points = Curve.getPointByCurve(points, curve, true);
         LeafModel leafModel = new LeafModel(-1, pageSize, algorithm);
         leafModel.setChildren(points);
         leafModel.build();
@@ -64,7 +64,7 @@ public class PartitionModelRtree extends IRtree {
         if (dim == 0) {
             Boundary boundary = new Boundary(modelIndex, dim - 1);
 //            boundary.addBoundry(new Line(points.get(0).getLocation()[dim - 1], points.get(points.size() - 1).getLocation()[dim - 1]));
-            partitionModels.put(modelIndex++, addPoints(points));
+            partitionModels.put(modelIndex++, addPointsAndBuild(points));
             return boundary;
         }
         Boundary boundary = new Boundary(dim);

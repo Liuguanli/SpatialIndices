@@ -93,6 +93,11 @@ public abstract class IRtree {
         return new Visualizer(this, width, height, view);
     }
 
+    public Visualizer visualize(int width, int height, List<Mbr> mbrs) {
+        Mbr view = new Mbr(0, 0, 1, 1);
+        return new Visualizer(mbrs, width, height, view);
+    }
+
     public int bitNum;
     public Map<Integer, List<Float>> axisLocations = new HashMap<>();
     public List<Long> curveValues = new ArrayList<>();

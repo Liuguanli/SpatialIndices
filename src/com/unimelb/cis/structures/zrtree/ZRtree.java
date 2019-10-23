@@ -1,22 +1,24 @@
 package com.unimelb.cis.structures.zrtree;
 
 import com.unimelb.cis.CSVFileWriter;
-import com.unimelb.cis.HilbertCurve;
 import com.unimelb.cis.ZCurve;
 import com.unimelb.cis.geometry.Mbr;
-import com.unimelb.cis.node.*;
-import com.unimelb.cis.structures.IRtree;
+import com.unimelb.cis.node.LeafNode;
+import com.unimelb.cis.node.Node;
+import com.unimelb.cis.node.NonLeafNode;
+import com.unimelb.cis.node.Point;
 import com.unimelb.cis.structures.RLRtree;
 import com.unimelb.cis.utils.ExpReturn;
 
-import java.util.*;
-import java.util.function.Consumer;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static com.unimelb.cis.CSVFileReader.read;
 
 public class ZRtree extends RLRtree {
 
-//    public ZRtree() {
+//    public ZRRtree() {
 //    }
 
     public ZRtree(int pagesize) {
@@ -58,7 +60,7 @@ public class ZRtree extends RLRtree {
             locations.sort(Float::compareTo);
             axisLocations.put(i, locations);
         }
-        points = ZCurve.zCurve(points);
+        points = ZCurve.zCurve(points, false);
         points.forEach(point -> curveValues.add(point.getCurveValue()));
         this.points = points;
         LeafNode leafNode = null;
@@ -401,49 +403,31 @@ public class ZRtree extends RLRtree {
         return root;
     }
 
-    @Override
-    public void output(String file) {
-        List<String> lines = new ArrayList<>();
-        List<Node> nodes = new ArrayList<>();
-        nodes.add(root);
-        while (nodes.size() > 0) {
-            Node top = nodes.remove(0);
-            if (top instanceof NonLeafNode) {
-                nodes.addAll(((NonLeafNode) top).getChildren());
-            } else if (top instanceof LeafNode) {
-                nodes.addAll(((LeafNode) top).getChildren());
-            } else {
-                lines.add(((Point) top).getOutPutString(root));
-            }
-        }
-        CSVFileWriter.write(lines, file);
-    }
-
     public static void main(String[] args) {
-        ZRtree zRtree = new ZRtree(10);
+        ZRtree zRRtree = new ZRtree(10);
 
-//        zRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_1000_1_2_.csv");
-//        zRtree.visualize(600, 600).save("uniform_1000_1_2_.png");
-//        zRtree.output("/Users/guanli/Documents/datasets/RLRtree/trees/Z_uniform_10000_1_2_.csv");
+//        zRRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_1000_1_2_.csv");
+//        zRRtree.visualize(600, 600).save("uniform_1000_1_2_.png");
+//        zRRtree.output("/Users/guanli/Documents/datasets/RLRtree/trees/Z_uniform_10000_1_2_.csv");
 
-        zRtree = new ZRtree(100);
-        zRtree.buildRtreeAfterTuning("D:\\datasets\\RLRtree\\newtrees\\H_uniform_20000_1_2_DQN.csv", 2, 3);
-        zRtree.visualize(600, 600).save("DQN_uniform_1000_1_2_.png");
-//        zRtree.buildRtree("D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_2_.csv");
-//        zRtree.getRoot();
+        zRRtree = new ZRtree(100);
+        zRRtree.buildRtreeAfterTuning("D:\\datasets\\RLRtree\\newtrees\\Z_uniform_20000_1_2_DQN.csv", 2, 3);
+        zRRtree.visualize(600, 600).save("DQN_uniform_1000_1_2_.png");
+//        zRRtree.buildRtree("D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_2_.csv");
+//        zRRtree.getRoot();
 
-//        System.out.println(zRtree.windowQuery(Mbr.getMbrs(0.01f, 10, 3).get(0)));
-//        System.out.println(zRtree.windowQuery(Mbr.getMbrs(0.01f, 9, 3).get(0)));
-//        System.out.println(zRtree.windowQuery(Mbr.getMbrs(0.01f, 11, 3).get(0)));
+//        System.out.println(zRRtree.windowQuery(Mbr.getMbrs(0.01f, 10, 3).get(0)));
+//        System.out.println(zRRtree.windowQuery(Mbr.getMbrs(0.01f, 9, 3).get(0)));
+//        System.out.println(zRRtree.windowQuery(Mbr.getMbrs(0.01f, 11, 3).get(0)));
 
-//        zRtree.visualize(600, 600).save("uniform_10000_1_2_.png");
+//        zRRtree.visualize(600, 600).save("uniform_10000_1_2_.png");
 
-//        zRtree.pointQuery(zRtree.getPoints());
+//        zRRtree.pointQuery(zRRtree.getPoints());
 
 
-//        System.out.println("point query:" + zRtree.pointQuery(zRtree.points));
-//        zRtree.insert(new Point(0.5f, 0.5f));
-//        System.out.println("knn query:" + zRtree.knnQuery(new Point(0.5f, 0.5f), 1));
+//        System.out.println("point query:" + zRRtree.pointQuery(zRRtree.points));
+//        zRRtree.insert(new Point(0.5f, 0.5f));
+//        System.out.println("knn query:" + zRRtree.knnQuery(new Point(0.5f, 0.5f), 1));
 
 
 //        Mbr mbr = new Mbr(1,2,3,4);

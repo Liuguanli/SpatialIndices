@@ -12,6 +12,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class Visualizer {
 
@@ -25,6 +26,8 @@ public class Visualizer {
 
     private int maxDepth;
 
+    private List<Mbr> mbrs;
+
     public Visualizer(IRtree tree, int height, int width, Mbr view) {
         this.tree = tree;
         this.height = height;
@@ -33,6 +36,24 @@ public class Visualizer {
         this.maxDepth = tree.getLevel();
     }
 
+    public Visualizer(List<Mbr> mbrs, int height, int width, Mbr view) {
+        this.mbrs = mbrs;
+        this.height = height;
+        this.width = width;
+        this.view = view;
+    }
+
+    public BufferedImage createImageMBR() {
+        final BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        final Graphics2D g = (Graphics2D) image.getGraphics();
+        g.setBackground(Color.white);
+        g.clearRect(0, 0, width, height);
+        g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.75f));
+
+        final List<RectangleDepth> nodeDepths = getNodeDepthsSortedByDepthMBR();
+        drawNode(g, nodeDepths);
+        return image;
+    }
 
     public BufferedImage createImage() {
         final BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
@@ -44,6 +65,12 @@ public class Visualizer {
         final List<RectangleDepth> nodeDepths = getNodeDepthsSortedByDepth(tree.getRoot());
         drawNode(g, nodeDepths);
         return image;
+    }
+
+    private List<RectangleDepth> getNodeDepthsSortedByDepthMBR() {
+        List<RectangleDepth> list = new ArrayList<>();
+        mbrs.forEach(mbr -> list.add(new RectangleDepth(mbr, 1)));
+        return list;
     }
 
     private List<RectangleDepth> getNodeDepthsSortedByDepth(Node root) {
@@ -96,6 +123,10 @@ public class Visualizer {
 
     public void save(File file, String imageFormat) {
         ImageSaver.save(createImage(), file, imageFormat);
+    }
+
+    public void saveMBR(String filename) {
+        ImageSaver.save(createImageMBR(), new File(filename), "PNG");
     }
 
     public void save(String filename, String imageFormat) {

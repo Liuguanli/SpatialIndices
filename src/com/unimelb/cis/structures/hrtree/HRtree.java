@@ -9,17 +9,18 @@ import com.unimelb.cis.node.Node;
 import com.unimelb.cis.node.NonLeafNode;
 import com.unimelb.cis.node.Point;
 import com.unimelb.cis.structures.RLRtree;
-import com.unimelb.cis.structures.zrtree.ZRtree;
 import com.unimelb.cis.utils.ExpReturn;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static com.unimelb.cis.CSVFileReader.read;
 
 public class HRtree extends RLRtree {
 
 //
-//    public HRtree() {
+//    public HRRtree() {
 //    }
 
     public HRtree(int pagesize) {
@@ -47,7 +48,7 @@ public class HRtree extends RLRtree {
             locations.sort(Float::compareTo);
             axisLocations.put(i, locations);
         }
-        points = HilbertCurve.hilbertCurve(points);
+        points = HilbertCurve.hilbertCurve(points, false);
         points.forEach(point -> curveValues.add(point.getCurveValue()));
         this.points = points;
         LeafNode leafNode = null;
@@ -288,10 +289,12 @@ public class HRtree extends RLRtree {
 
     @Override
     public NonLeafNode buildRtreeAfterTuning(String path, int dim, int level) {
+        level--;
         this.dataFile = path;
         this.setDim(dim);
         this.setLevel(level);
         List<String> lines = read(path);
+//        List<Point> points = new ArrayList<>(lines.size());
         int[] levelIndex = new int[level];
         Node[] nodes = new Node[level];
         NonLeafNode root = new NonLeafNode(pagesize, dim);
@@ -299,8 +302,9 @@ public class HRtree extends RLRtree {
         for (int i = 1; i < level; i++) {
             nodes[i] = new NonLeafNode(pagesize, dim);
         }
+
         List<Point> points = new ArrayList<>();
-        root.add(nodes[level - 1]);
+//        root.add(nodes[level - 1]);
         for (int i = 0; i < lines.size(); i++) {
             String line = lines.get(i);
             String[] items = line.split(",");
@@ -309,14 +313,14 @@ public class HRtree extends RLRtree {
             for (int j = 0; j < dim; j++) {
                 locations[j] = Float.valueOf(items[j]);
             }
-
             Point point = new Point(0, locations);
             points.add(point);
             if (i == 0) {
                 ((LeafNode) nodes[0]).add(point);
-                for (int j = 1; j < level; j++) {
-                    ((NonLeafNode) nodes[j]).add(nodes[j - 1]);
-                }
+//                for (int j = 1; j < level; j++) {
+//                    ((NonLeafNode) nodes[j]).add(nodes[j - 1]);
+//                }
+//                root.add(nodes[level - 1]);
                 continue;
             }
 
@@ -347,6 +351,7 @@ public class HRtree extends RLRtree {
                     }
                 }
             }
+//            points.add(point);
         }
         this.points = points;
         for (int i = 0; i < dim; i++) {
@@ -356,7 +361,7 @@ public class HRtree extends RLRtree {
             locations.sort(Float::compareTo);
             axisLocations.put(i, locations);
         }
-        points = ZCurve.zCurve(points);
+        points = HilbertCurve.hilbertCurve(points);
         points.forEach(point -> curveValues.add(point.getCurveValue()));
         root.add(nodes[level - 1]);
         this.root = root;
@@ -401,29 +406,11 @@ public class HRtree extends RLRtree {
         return insert(Arrays.asList(point));
     }
 
-    @Override
-    public void output(String file) {
-        List<String> lines = new ArrayList<>();
-        List<Node> nodes = new ArrayList<>();
-        nodes.add(root);
-        while (nodes.size() > 0) {
-            Node top = nodes.remove(0);
-            if (top instanceof NonLeafNode) {
-                nodes.addAll(((NonLeafNode) top).getChildren());
-            } else if (top instanceof LeafNode) {
-                nodes.addAll(((LeafNode) top).getChildren());
-            } else {
-                lines.add(((Point) top).getOutPutString(root));
-            }
-        }
-        CSVFileWriter.write(lines, file);
-    }
-
     public static void main(String[] args) {
-        HRtree hRtree = new HRtree(100);
+        HRtree hRRtree = new HRtree(100);
 
-//        hRtree.buildRtree("D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_2_.csv");
-        hRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_10000_1_2_.csv");
+//        hRRtree.buildRtree("D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_2_.csv");
+        hRRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_10000_1_2_.csv");
 
 //        zRtree.output("/Users/guanli/Documents/datasets/RLRtree/trees/Z_uniform_10000_1_2_.csv");
 
@@ -433,9 +420,9 @@ public class HRtree extends RLRtree {
 //        System.out.println(zRtree.windowQuery(Mbr.getMbrs(0.01f, 10, 3).get(0)));
 //        System.out.println(zRtree.windowQuery(Mbr.getMbrs(0.01f, 9, 3).get(0)));
 //        System.out.println(zRtree.windowQuery(Mbr.getMbrs(0.01f, 11, 3).get(0)));
-//        System.out.println(hRtree.pointQuery(hRtree.getPoints()));
-//        hRtree.insert(new Point(0.5f,0.5f));
-        System.out.println("knn query:" + hRtree.knnQuery(new Point(0.5f, 0.5f), 1));
+//        System.out.println(hRRtree.pointQuery(hRRtree.getPoints()));
+//        hRRtree.insert(new Point(0.5f,0.5f));
+        System.out.println("knn query:" + hRRtree.knnQuery(new Point(0.5f, 0.5f), 1));
     }
 
 }

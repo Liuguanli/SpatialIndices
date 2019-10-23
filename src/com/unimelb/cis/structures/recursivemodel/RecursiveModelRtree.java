@@ -16,7 +16,7 @@ import java.util.function.Consumer;
 import static com.unimelb.cis.CSVFileReader.read;
 
 /**
- * first we get ZRtree or only the points with Z value and cal the last level index
+ * first we get ZRRtree or only the points with Z value and cal the last level index
  * <p>
  * then Use the model to classify to sub models. Then generate new points with new index!!!
  * <p>
@@ -56,7 +56,7 @@ public class RecursiveModelRtree extends IRtree {
             Point point = new Point(line);
             points.add(point);
         }
-        points = Curve.getPointByCurve(points, this.curveType);
+        points = Curve.getPointByCurve(points, this.curveType, true);
         int classNum = points.size() / threshold;
         if (classNum <= 1) {
             root = new LeafModel(-1, pageSize, algorithm);
@@ -143,7 +143,7 @@ public class RecursiveModelRtree extends IRtree {
             points.add(point);
         }
         dim = points.get(0).getDim();
-        points = Curve.getPointByCurve(points, this.curveType);
+        points = Curve.getPointByCurve(points, this.curveType, true);
         int classNum = points.size() / threshold;
         if (classNum <= 1) {
             root = new LeafModel(0, pageSize, algorithm);

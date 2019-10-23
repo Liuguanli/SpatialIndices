@@ -81,6 +81,9 @@ public abstract class Model {
     }
 
     public void add(Point point) {
+        if (this.children == null) {
+            this.children = new ArrayList<>();
+        }
         this.children.add(point);
         if (mbr == null) {
             mbr = new Mbr(point);
@@ -291,6 +294,25 @@ public abstract class Model {
             e.printStackTrace();
         }
         return results;
+    }
+
+    public Instances prepareDataSet(List<Point> points) {
+        int dim = points.get(0).getDim();
+        FastVector atts = new FastVector();
+        FastVector attVals = new FastVector();
+        for (int i = 0; i < dim; i++) {
+            atts.addElement(new Attribute("att" + (i + 1)));
+        }
+        Instances dataSet = new Instances("tree", atts, 0);
+        for (int i = 0; i < points.size(); i++) {
+            Point point = points.get(i);
+            double[] vals = new double[dataSet.numAttributes()];
+            for (int j = 0; j < vals.length; j++) {
+                vals[j] = point.getLocation()[j];
+            }
+            dataSet.add(new Instance(1.0, vals));
+        }
+        return dataSet;
     }
 
     public abstract void build();

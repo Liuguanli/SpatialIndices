@@ -15,6 +15,12 @@ public class ExpReturn {
 
     public double accuracy;
 
+    public int index;
+
+    public int maxErr;
+
+    public int minErr;
+
     @Override
     public String toString() {
 
@@ -33,5 +39,12 @@ public class ExpReturn {
         }
 
         return builder.toString();
+    }
+
+    public void plus(ExpReturn temp) {
+        pageaccess += temp.pageaccess;
+        time += temp.time;
+        result.addAll(temp.result);
+
     }
 }

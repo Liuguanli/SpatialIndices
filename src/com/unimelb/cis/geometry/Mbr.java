@@ -363,7 +363,7 @@ public class Mbr {
         float y = random.nextFloat();
         while (true) {
             if (x - side > 0 && x + side < 1 && y - side > 0 && y + side < 1) {
-                return new Mbr(x - side, y - side,  x + side, y + side);
+                return new Mbr(x - side, y - side, x + side, y + side);
             } else {
                 x = random.nextFloat();
                 y = random.nextFloat();
@@ -474,6 +474,10 @@ public class Mbr {
             location[i] = this.location[i + dim];
         }
         return new Point(location);
+    }
+
+    public List<Point> getCornerPoints() {
+        return Arrays.asList(getPointLow(), getPointHigh());
     }
 
     public List<Point> getAllPoints() {

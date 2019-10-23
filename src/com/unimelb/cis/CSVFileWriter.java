@@ -1,7 +1,5 @@
 package com.unimelb.cis;
 
-import com.unimelb.cis.structures.zrtree.ZRtree;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;

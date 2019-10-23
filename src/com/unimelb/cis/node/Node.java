@@ -33,6 +33,15 @@ public abstract class Node implements Comparable {
         return location;
     }
 
+    public double[] getLocationDouble() {
+        double[] result = new double[location.length];
+        for (int i = 0; i < location.length; i++) {
+            result[i] = location[i];
+        }
+        return result;
+    }
+
+
     public void setLocation(float[] location) {
         this.location = location;
     }

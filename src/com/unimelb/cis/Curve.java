@@ -22,13 +22,13 @@ public abstract class Curve {
         }
     }
 
-    public static List<Point> getPointByCurve(List<Point> points, String curve) {
+    public static List<Point> getPointByCurve(List<Point> points, String curve, boolean rankspace) {
         switch (curve) {
             case "Z":
-                points = ZCurve.zCurve(points);
+                points = ZCurve.zCurve(points, rankspace);
                 break;
             case "H":
-                points = HilbertCurve.hilbertCurve(points);
+                points = HilbertCurve.hilbertCurve(points, rankspace);
                 break;
         }
         return points;
