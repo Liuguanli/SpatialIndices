@@ -7,9 +7,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ba9c8980-c90e-48aa-8dfb-ac39a52585ec" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/com/unimelb/cis/node/Partition.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/unimelb/cis/structures/partitionmodel/PartitionModelByPred.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/node/LeafModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/node/LeafModel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/structures/partitionmodel/PartitionModelRtree.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/structures/partitionmodel/PartitionModelRtree.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/Test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/node/LeafModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/node/LeafModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/node/Model.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/node/Model.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/node/Partition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/node/Partition.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/node/UnsupervisedModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/node/UnsupervisedModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/structures/partitionmodel/PartitionModelRtree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/structures/partitionmodel/PartitionModelRtree.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/structures/partitionmodel/RecursivePartition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/structures/partitionmodel/RecursivePartition.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/structures/recursivemodel/RecursiveModelRtree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/structures/recursivemodel/RecursiveModelRtree.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/structures/unsupervisedPartition/UnsupervisedPartitionModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/structures/unsupervisedPartition/UnsupervisedPartitionModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/structures/zrtree/ZRRtree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/structures/zrtree/ZRRtree.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -24,197 +35,116 @@
     <option name="isMigrated" value="true" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5">
-      <split-first>
-        <leaf>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/recursivemodel/OriginalRecursiveModel.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="118">
-                  <caret line="61" column="8" selection-start-line="61" selection-start-column="8" selection-end-line="61" selection-end-column="71" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/partitionmodel/RecursivePartition.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="225">
-                  <caret line="50" column="14" selection-start-line="50" selection-start-column="14" selection-end-line="50" selection-end-column="14" />
-                  <folding>
-                    <element signature="imports" expanded="true" />
-                    <element signature="e#476#477#0" expanded="true" />
-                    <element signature="e#503#504#0" expanded="true" />
-                    <element signature="e#565#566#0" expanded="true" />
-                    <element signature="e#592#593#0" expanded="true" />
-                    <element signature="e#661#662#0" expanded="true" />
-                    <element signature="e#688#689#0" expanded="true" />
-                    <element signature="e#757#758#0" expanded="true" />
-                    <element signature="e#784#785#0" expanded="true" />
-                    <element signature="e#851#852#0" expanded="true" />
-                    <element signature="e#878#879#0" expanded="true" />
-                    <element signature="e#952#953#0" expanded="true" />
-                    <element signature="e#979#980#0" expanded="true" />
-                    <element signature="e#1041#1042#0" expanded="true" />
-                    <element signature="e#1068#1069#0" expanded="true" />
-                    <element signature="e#1133#1134#0" expanded="true" />
-                    <element signature="e#1160#1161#0" expanded="true" />
-                    <element signature="e#1218#1219#0" expanded="true" />
-                    <element signature="e#1245#1246#0" expanded="true" />
-                    <element signature="e#1340#1341#0" expanded="true" />
-                    <element signature="e#1367#1368#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/node/Partition.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="455">
-                  <caret line="118" column="5" lean-forward="true" selection-start-line="118" selection-start-column="5" selection-end-line="118" selection-end-column="5" />
-                  <folding>
-                    <element signature="imports" expanded="true" />
-                    <element signature="e#544#545#0" expanded="true" />
-                    <element signature="e#573#574#0" expanded="true" />
-                    <element signature="e#622#623#0" expanded="true" />
-                    <element signature="e#658#659#0" expanded="true" />
-                    <element signature="e#685#686#0" expanded="true" />
-                    <element signature="e#711#712#0" expanded="true" />
-                    <element signature="e#746#747#0" expanded="true" />
-                    <element signature="e#776#777#0" expanded="true" />
-                    <element signature="e#805#806#0" expanded="true" />
-                    <element signature="e#833#834#0" expanded="true" />
-                    <element signature="e#872#873#0" expanded="true" />
-                    <element signature="e#906#907#0" expanded="true" />
-                    <element signature="e#935#936#0" expanded="true" />
-                    <element signature="e#963#964#0" expanded="true" />
-                    <element signature="e#1002#1003#0" expanded="true" />
-                    <element signature="e#1036#1037#0" expanded="true" />
-                    <element signature="e#1080#1081#0" expanded="true" />
-                    <element signature="e#1111#1112#0" expanded="true" />
-                    <element signature="e#1168#1169#0" expanded="true" />
-                    <element signature="e#1208#1209#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="jar:///Library/Java/JavaVirtualMachines/jdk-12.0.1.jdk/Contents/Home/lib/src.zip!/java.base/java/lang/Long.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="155">
-                  <caret line="64" column="19" selection-start-line="64" selection-start-column="19" selection-end-line="64" selection-end-column="19" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/ZCurve.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="180">
-                  <caret line="50" column="34" selection-start-line="50" selection-start-column="30" selection-end-line="50" selection-end-column="34" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/partitionmodel/PartitionModelRtree.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="665">
-                  <caret line="82" column="23" selection-start-line="82" selection-start-column="15" selection-end-line="82" selection-end-column="23" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="jar:///Library/Java/JavaVirtualMachines/jdk-12.0.1.jdk/Contents/Home/lib/src.zip!/java.base/java/util/List.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="188">
-                  <caret line="571" column="6" selection-start-line="571" selection-start-column="6" selection-end-line="571" selection-end-column="6" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/node/LeafNode.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="68">
-                  <caret line="11" column="32" selection-start-line="11" selection-start-column="32" selection-end-line="11" selection-end-column="32" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/node/Node.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="312">
-                  <caret line="25" column="31" selection-start-line="25" selection-start-column="4" selection-end-line="25" selection-end-column="31" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/IRtree.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="357">
-                  <caret line="30" column="26" selection-start-line="30" selection-start-column="18" selection-end-line="30" selection-end-column="26" />
-                  <folding>
-                    <element signature="e#455#456#0" expanded="true" />
-                    <element signature="e#495#496#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-first>
-      <split-second>
-        <leaf>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/node/Partition.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="443">
-                  <caret line="91" column="59" selection-start-line="91" selection-start-column="59" selection-end-line="91" selection-end-column="59" />
-                  <folding>
-                    <element signature="imports" expanded="true" />
-                    <element signature="e#514#515#0" expanded="true" />
-                    <element signature="e#543#544#0" expanded="true" />
-                    <element signature="e#592#593#0" expanded="true" />
-                    <element signature="e#628#629#0" expanded="true" />
-                    <element signature="e#195#196#0" expanded="true" />
-                    <element signature="e#221#222#0" expanded="true" />
-                    <element signature="e#256#257#0" expanded="true" />
-                    <element signature="e#286#287#0" expanded="true" />
-                    <element signature="e#315#316#0" expanded="true" />
-                    <element signature="e#343#344#0" expanded="true" />
-                    <element signature="e#382#383#0" expanded="true" />
-                    <element signature="e#416#417#0" expanded="true" />
-                    <element signature="e#445#446#0" expanded="true" />
-                    <element signature="e#473#474#0" expanded="true" />
-                    <element signature="e#512#513#0" expanded="true" />
-                    <element signature="e#546#547#0" expanded="true" />
-                    <element signature="e#645#646#0" expanded="true" />
-                    <element signature="e#676#677#0" expanded="true" />
-                    <element signature="e#733#734#0" expanded="true" />
-                    <element signature="e#773#774#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/zrtree/ZRtree.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="354">
-                  <caret line="62" column="27" selection-start-line="62" selection-start-column="31" selection-end-line="62" selection-end-column="37" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-second>
-    </splitter>
+    <leaf>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/node/LeafModel.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="201">
+              <caret line="70" column="37" selection-start-line="70" selection-start-column="43" selection-end-line="70" selection-end-column="47" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/node/Model.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="170">
+              <caret line="22" column="69" selection-start-line="22" selection-start-column="53" selection-end-line="22" selection-end-column="69" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="jar://$PROJECT_DIR$/../../weka-3.7.0.jar!/weka/classifiers/Classifier.class">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="202">
+              <caret line="30" column="18" selection-start-line="30" selection-start-column="18" selection-end-line="30" selection-end-column="18" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="jar://$PROJECT_DIR$/../../weka-3.7.0.jar!/weka/classifiers/bayes/NaiveBayes.class">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-5401">
+              <caret line="175" column="14" selection-start-line="175" selection-start-column="14" selection-end-line="175" selection-end-column="14" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/partitionmodel/PartitionModelRtree.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="355">
+              <caret line="381" column="91" selection-start-line="381" selection-start-column="91" selection-end-line="381" selection-end-column="91" />
+              <folding>
+                <element signature="e#6756#6757#0" expanded="true" />
+                <element signature="e#6811#6812#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/partitionmodel/PartitionModelByPred.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="161">
+              <caret line="444" column="103" selection-start-line="444" selection-start-column="95" selection-end-line="444" selection-end-column="103" />
+              <folding>
+                <element signature="e#9686#9687#0" expanded="true" />
+                <element signature="e#9737#9738#0" expanded="true" />
+                <element signature="e#9832#9833#0" expanded="true" />
+                <element signature="e#9859#9860#0" expanded="true" />
+                <element signature="e#12467#12468#0" expanded="true" />
+                <element signature="e#12536#12537#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/unsupervisedPartition/UnsupervisedPartitionModel.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="350">
+              <caret line="35" column="33" selection-start-line="35" selection-start-column="33" selection-end-line="35" selection-end-column="33" />
+              <folding>
+                <element signature="e#3443#3444#0" expanded="true" />
+                <element signature="e#3489#3490#0" expanded="true" />
+                <element signature="e#5391#5392#0" expanded="true" />
+                <element signature="e#5446#5447#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/node/UnsupervisedModel.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="434">
+              <caret line="104" column="9" lean-forward="true" selection-start-line="104" selection-start-column="9" selection-end-line="104" selection-end-column="9" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="jar://$PROJECT_DIR$/../../weka-3.7.0.jar!/weka/clusterers/SimpleKMeans.class">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="187">
+              <caret line="310" column="15" selection-start-line="310" selection-start-column="15" selection-end-line="310" selection-end-column="15" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/recursivemodel/RecursiveModelRtree.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="271">
+              <caret line="275" selection-start-line="275" selection-end-line="275" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -227,7 +157,6 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>getins</find>
-      <find>partitionModels</find>
       <find>build</find>
       <find>pageSize</find>
       <find>System.out.println</find>
@@ -237,7 +166,13 @@
       <find>leafNodes</find>
       <find>setIndex</find>
       <find>bitNum</find>
+      <find>log</find>
+      <find>partitionModels</find>
       <find>System.out</find>
+      <find>NaiveBayes</find>
+      <find>name</find>
+      <find>classifyInstance</find>
+      <find>algorithm</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -246,21 +181,24 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/com/unimelb/cis/structures/recursivemodel/OriginalRecursiveModel.java" />
-        <option value="$PROJECT_DIR$/src/com/unimelb/cis/ZCurve.java" />
-        <option value="$PROJECT_DIR$/src/com/unimelb/cis/structures/partitionmodel/RecursivePartition.java" />
-        <option value="$PROJECT_DIR$/src/com/unimelb/cis/node/Partition.java" />
+        <option value="$PROJECT_DIR$/src/com/unimelb/cis/node/LeafModel.java" />
+        <option value="$PROJECT_DIR$/src/com/unimelb/cis/structures/recursivemodel/RecursiveModelRtree.java" />
+        <option value="$PROJECT_DIR$/src/com/unimelb/cis/node/Model.java" />
+        <option value="$PROJECT_DIR$/src/com/unimelb/cis/structures/partitionmodel/PartitionModelByPred.java" />
+        <option value="$PROJECT_DIR$/src/com/unimelb/cis/structures/partitionmodel/PartitionModelRtree.java" />
+        <option value="$PROJECT_DIR$/src/com/unimelb/cis/structures/unsupervisedPartition/UnsupervisedPartitionModel.java" />
+        <option value="$PROJECT_DIR$/src/com/unimelb/cis/node/UnsupervisedModel.java" />
       </list>
     </option>
   </component>
   <component name="ProjectCodeStyleSettingsMigration">
     <option name="version" value="1" />
   </component>
-  <component name="ProjectFrameBounds" extendedState="6" fullScreen="true">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-1295" />
-    <option name="y" value="-1080" />
+    <option name="y" value="-1057" />
     <option name="width" value="1920" />
-    <option name="height" value="1080" />
+    <option name="height" value="1057" />
   </component>
   <component name="ProjectId" id="1QxffiCJa2IRZHDUj6ehzm6NQaM" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -366,6 +304,13 @@
               <item name="structures" type="462c0819:PsiDirectoryNode" />
               <item name="zrtree" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="SpatialIndices" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SpatialIndices" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="cis" type="462c0819:PsiDirectoryNode" />
+              <item name="utils" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -388,23 +333,24 @@
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.4678309" />
-    <property name="settings.editor.selected.configurable" value="com.intellij.jarRepository.settings.RemoteRepositoriesConfigurable" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/datasets" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.unimelb.cis.structures.partitionmodel" />
+      <recent name="com.unimelb.cis.structures.zrtree" />
+      <recent name="com.unimelb.cis.structures.hrtree" />
+      <recent name="com.unimelb.cis.structures.recursivemodel" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/doc/papers" />
       <recent name="$PROJECT_DIR$/doc/figs" />
       <recent name="C:\Users\Leo\Dropbox\shared\RLR-trees\codes\java\SpatialIndices\src\com\unimelb\cis\node" />
       <recent name="$PROJECT_DIR$/Rstar/src" />
       <recent name="$PROJECT_DIR$/src/com/unimelb/cis/structures" />
-    </key>
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="com.unimelb.cis.structures.zrtree" />
-      <recent name="com.unimelb.cis.structures.hrtree" />
-      <recent name="com.unimelb.cis.structures.recursivemodel" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/datasets" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -419,13 +365,13 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.RecursivePartition">
-    <configuration name="HRRtree" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.unimelb.cis.structures.hrtree.HRRtree" />
+  <component name="RunManager" selected="Application.UnsupervisedPartitionModel">
+    <configuration name="PartitionModelByPred" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.unimelb.cis.structures.partitionmodel.PartitionModelByPred" />
       <module name="SpatialIndices" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.unimelb.cis.structures.hrtree.*" />
+          <option name="PATTERN" value="com.unimelb.cis.structures.partitionmodel.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -433,21 +379,8 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="OriginalRecursiveModel" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.unimelb.cis.structures.recursivemodel.OriginalRecursiveModel" />
-      <module name="SpatialIndices" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.unimelb.cis.structures.recursivemodel.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="RecursivePartition" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.unimelb.cis.structures.partitionmodel.RecursivePartition" />
+    <configuration name="PartitionModelRtree" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.unimelb.cis.structures.partitionmodel.PartitionModelRtree" />
       <module name="SpatialIndices" />
       <extension name="coverage">
         <pattern>
@@ -462,7 +395,7 @@
     <configuration name="Test" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.unimelb.cis.Test" />
       <module name="SpatialIndices" />
-      <option name="VM_PARAMETERS" value="-Xms34000m -Xmx34000m" />
+      <option name="VM_PARAMETERS" value="-Xms24000m -Xmx24000m" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.unimelb.cis.*" />
@@ -486,20 +419,33 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ZRRtree" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.unimelb.cis.structures.zrtree.ZRRtree" />
+      <module name="SpatialIndices" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.unimelb.cis.structures.zrtree.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <list>
       <item itemvalue="Application.Test" />
-      <item itemvalue="Application.OriginalRecursiveModel" />
-      <item itemvalue="Application.HRRtree" />
+      <item itemvalue="Application.PartitionModelByPred" />
+      <item itemvalue="Application.PartitionModelRtree" />
+      <item itemvalue="Application.ZRRtree" />
       <item itemvalue="Application.UnsupervisedPartitionModel" />
-      <item itemvalue="Application.RecursivePartition" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.RecursivePartition" />
-        <item itemvalue="Application.OriginalRecursiveModel" />
-        <item itemvalue="Application.Test" />
         <item itemvalue="Application.UnsupervisedPartitionModel" />
-        <item itemvalue="Application.HRRtree" />
+        <item itemvalue="Application.PartitionModelByPred" />
+        <item itemvalue="Application.PartitionModelRtree" />
+        <item itemvalue="Application.Test" />
+        <item itemvalue="Application.ZRRtree" />
       </list>
     </recent_temporary>
   </component>
@@ -558,7 +504,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1295" y="-1080" width="1920" height="1080" extended-state="6" />
+    <frame x="-1295" y="-1057" width="1920" height="1057" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Favorites" side_tool="true" />
@@ -566,16 +512,16 @@
       <window_info id="Designer" />
       <window_info id="Capture Tool" />
       <window_info id="Learn" weight="0.32960597" />
-      <window_info content_ui="combo" id="Project" order="0" weight="0.24973376" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16134185" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Version Control" />
-      <window_info anchor="bottom" id="Terminal" weight="0.15906788" />
+      <window_info anchor="bottom" id="Version Control" weight="0.5325507" />
+      <window_info anchor="bottom" id="Terminal" weight="0.21558164" />
       <window_info anchor="bottom" id="Event Log" side_tool="true" />
       <window_info anchor="bottom" id="Messages" weight="0.32928064" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32928064" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.35359675" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.29989868" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.34042552" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3237792" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39065817" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -587,6 +533,33 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
     </layout>
+    <layout-to-restore>
+      <window_info id="Image Layers" order="0" />
+      <window_info id="Designer" order="1" />
+      <window_info id="Learn" order="2" weight="0.32960597" />
+      <window_info id="Capture Tool" order="3" />
+      <window_info id="Favorites" order="4" side_tool="true" />
+      <window_info content_ui="combo" id="Project" order="5" visible="true" weight="0.16125599" />
+      <window_info id="Structure" order="6" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Terminal" order="0" weight="0.21653543" />
+      <window_info anchor="bottom" id="Version Control" order="1" weight="0.328084" />
+      <window_info anchor="bottom" id="Event Log" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Messages" order="3" weight="0.32928064" />
+      <window_info anchor="bottom" id="Message" order="4" />
+      <window_info anchor="bottom" id="Find" order="5" weight="0.34042552" />
+      <window_info anchor="bottom" id="Run" order="6" weight="0.6771653" />
+      <window_info anchor="bottom" id="Debug" order="7" weight="0.39107612" />
+      <window_info anchor="bottom" id="Cvs" order="8" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="9" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="10" />
+      <window_info anchor="right" id="Capture Analysis" order="0" />
+      <window_info anchor="right" id="Theme Preview" order="1" />
+      <window_info anchor="right" id="Palette&#9;" order="2" />
+      <window_info anchor="right" id="Maven" order="3" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="4" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="5" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="6" weight="0.25" />
+    </layout-to-restore>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -729,19 +702,19 @@
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/node/Model.java</url>
-          <line>120</line>
+          <line>123</line>
           <properties />
           <option name="timeStamp" value="153" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/node/Model.java</url>
-          <line>129</line>
+          <line>132</line>
           <properties />
           <option name="timeStamp" value="162" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/structures/partitionmodel/PartitionModelRtree.java</url>
-          <line>274</line>
+          <line>310</line>
           <properties />
           <option name="timeStamp" value="182" />
         </line-breakpoint>
@@ -754,7 +727,7 @@
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/structures/partitionmodel/PartitionModelRtree.java</url>
-          <line>231</line>
+          <line>267</line>
           <properties />
           <option name="timeStamp" value="204" />
         </line-breakpoint>
@@ -772,33 +745,27 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/structures/partitionmodel/PartitionModelRtree.java</url>
-          <line>195</line>
+          <line>236</line>
           <properties />
           <option name="timeStamp" value="210" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/structures/partitionmodel/PartitionModelRtree.java</url>
-          <line>298</line>
+          <line>334</line>
           <properties />
           <option name="timeStamp" value="211" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/node/LeafModel.java</url>
-          <line>173</line>
+          <line>175</line>
           <properties />
           <option name="timeStamp" value="212" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/Test.java</url>
-          <line>64</line>
+          <line>66</line>
           <properties />
           <option name="timeStamp" value="213" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/unimelb/cis/node/Model.java</url>
-          <line>142</line>
-          <properties />
-          <option name="timeStamp" value="216" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/node/NonLeafModel.java</url>
@@ -839,13 +806,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/structures/unsupervisedPartition/UnsupervisedPartitionModel.java</url>
-          <line>76</line>
+          <line>68</line>
           <properties />
           <option name="timeStamp" value="244" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/Test.java</url>
-          <line>89</line>
+          <line>91</line>
           <properties />
           <option name="timeStamp" value="267" />
         </line-breakpoint>
@@ -862,152 +829,163 @@
           <option name="timeStamp" value="274" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/unimelb/cis/node/Partition.java</url>
-          <line>96</line>
+          <url>file://$PROJECT_DIR$/src/com/unimelb/cis/structures/partitionmodel/PartitionModelByPred.java</url>
+          <line>447</line>
           <properties />
-          <option name="timeStamp" value="278" />
+          <option name="timeStamp" value="280" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/unimelb/cis/ZCurve.java</url>
-          <line>54</line>
+          <url>jar://$PROJECT_DIR$/../../weka-3.7.0.jar!/weka/classifiers/Classifier.class</url>
+          <line>61</line>
           <properties />
-          <option name="timeStamp" value="279" />
+          <option name="timeStamp" value="281" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/unimelb/cis/node/Model.java</url>
+          <line>292</line>
+          <properties />
+          <option name="timeStamp" value="283" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$PROJECT_DIR$/../../weka-3.7.0.jar!/weka/classifiers/Classifier.class</url>
+          <line>32</line>
+          <properties />
+          <option name="timeStamp" value="284" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>jar://$PROJECT_DIR$/../../weka-3.7.0.jar!/weka/classifiers/Classifier.class</url>
+          <line>30</line>
+          <properties class="weka.classifiers.Classifier" method="classifyInstance" />
+          <option name="timeStamp" value="285" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>jar://$PROJECT_DIR$/../../weka-3.7.0.jar!/weka/classifiers/Classifier.class</url>
+          <line>60</line>
+          <properties class="weka.classifiers.Classifier" method="distributionForInstance" />
+          <option name="timeStamp" value="286" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/geometry/Mbr.java">
+    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/Test.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="410" selection-start-line="410" selection-end-line="410" />
+        <state relative-caret-position="251">
+          <caret line="180" column="54" selection-start-line="180" selection-start-column="54" selection-end-line="180" selection-end-column="54" />
         </state>
       </provider>
     </entry>
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk-12.0.1.jdk/Contents/Home/lib/src.zip!/java.base/java/util/List.java">
+    <entry file="file://$PROJECT_DIR$/partition_pred_skewed_1000000.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/partition_skewed_1000000.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/../../weka-3.7.0.jar!/weka/classifiers/bayes/NaiveBayes.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="188">
-          <caret line="571" column="6" selection-start-line="571" selection-start-column="6" selection-end-line="571" selection-end-column="6" />
+        <state relative-caret-position="-5401">
+          <caret line="175" column="14" selection-start-line="175" selection-start-column="14" selection-end-line="175" selection-end-column="14" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/node/LeafNode.java">
+    <entry file="jar://$PROJECT_DIR$/../../weka-3.7.0.jar!/weka/classifiers/Classifier.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="11" column="32" selection-start-line="11" selection-start-column="32" selection-end-line="11" selection-end-column="32" />
+        <state relative-caret-position="202">
+          <caret line="30" column="18" selection-start-line="30" selection-start-column="18" selection-end-line="30" selection-end-column="18" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/node/Node.java">
+    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/node/LeafModel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="312">
-          <caret line="25" column="31" selection-start-line="25" selection-start-column="4" selection-end-line="25" selection-end-column="31" />
+        <state relative-caret-position="201">
+          <caret line="70" column="37" selection-start-line="70" selection-start-column="43" selection-end-line="70" selection-end-column="47" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/IRtree.java">
+    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/recursivemodel/RecursiveModelRtree.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="30" column="26" selection-start-line="30" selection-start-column="18" selection-end-line="30" selection-end-column="26" />
-          <folding>
-            <element signature="e#455#456#0" expanded="true" />
-            <element signature="e#495#496#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="271">
+          <caret line="275" selection-start-line="275" selection-end-line="275" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/node/Model.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="22" column="69" selection-start-line="22" selection-start-column="53" selection-end-line="22" selection-end-column="69" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/partitionmodel/PartitionModelRtree.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="665">
-          <caret line="82" column="23" selection-start-line="82" selection-start-column="15" selection-end-line="82" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/zrtree/ZRtree.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="354">
-          <caret line="62" column="27" selection-start-line="62" selection-start-column="31" selection-end-line="62" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk-12.0.1.jdk/Contents/Home/lib/src.zip!/java.base/java/lang/Long.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="155">
-          <caret line="64" column="19" selection-start-line="64" selection-start-column="19" selection-end-line="64" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/ZCurve.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="50" column="34" selection-start-line="50" selection-start-column="30" selection-end-line="50" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/recursivemodel/OriginalRecursiveModel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="118">
-          <caret line="61" column="8" selection-start-line="61" selection-start-column="8" selection-end-line="61" selection-end-column="71" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/partitionmodel/RecursivePartition.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="50" column="14" selection-start-line="50" selection-start-column="14" selection-end-line="50" selection-end-column="14" />
+        <state relative-caret-position="355">
+          <caret line="381" column="91" selection-start-line="381" selection-start-column="91" selection-end-line="381" selection-end-column="91" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#476#477#0" expanded="true" />
-            <element signature="e#503#504#0" expanded="true" />
-            <element signature="e#565#566#0" expanded="true" />
-            <element signature="e#592#593#0" expanded="true" />
-            <element signature="e#661#662#0" expanded="true" />
-            <element signature="e#688#689#0" expanded="true" />
-            <element signature="e#757#758#0" expanded="true" />
-            <element signature="e#784#785#0" expanded="true" />
-            <element signature="e#851#852#0" expanded="true" />
-            <element signature="e#878#879#0" expanded="true" />
-            <element signature="e#952#953#0" expanded="true" />
-            <element signature="e#979#980#0" expanded="true" />
-            <element signature="e#1041#1042#0" expanded="true" />
-            <element signature="e#1068#1069#0" expanded="true" />
-            <element signature="e#1133#1134#0" expanded="true" />
-            <element signature="e#1160#1161#0" expanded="true" />
-            <element signature="e#1218#1219#0" expanded="true" />
-            <element signature="e#1245#1246#0" expanded="true" />
-            <element signature="e#1340#1341#0" expanded="true" />
-            <element signature="e#1367#1368#0" expanded="true" />
+            <element signature="e#6756#6757#0" expanded="true" />
+            <element signature="e#6811#6812#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/node/Partition.java">
+    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/partitionmodel/PartitionModelByPred.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="455">
-          <caret line="118" column="5" lean-forward="true" selection-start-line="118" selection-start-column="5" selection-end-line="118" selection-end-column="5" />
+        <state relative-caret-position="161">
+          <caret line="444" column="103" selection-start-line="444" selection-start-column="95" selection-end-line="444" selection-end-column="103" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#544#545#0" expanded="true" />
-            <element signature="e#573#574#0" expanded="true" />
-            <element signature="e#622#623#0" expanded="true" />
-            <element signature="e#658#659#0" expanded="true" />
-            <element signature="e#685#686#0" expanded="true" />
-            <element signature="e#711#712#0" expanded="true" />
-            <element signature="e#746#747#0" expanded="true" />
-            <element signature="e#776#777#0" expanded="true" />
-            <element signature="e#805#806#0" expanded="true" />
-            <element signature="e#833#834#0" expanded="true" />
-            <element signature="e#872#873#0" expanded="true" />
-            <element signature="e#906#907#0" expanded="true" />
-            <element signature="e#935#936#0" expanded="true" />
-            <element signature="e#963#964#0" expanded="true" />
-            <element signature="e#1002#1003#0" expanded="true" />
-            <element signature="e#1036#1037#0" expanded="true" />
-            <element signature="e#1080#1081#0" expanded="true" />
-            <element signature="e#1111#1112#0" expanded="true" />
-            <element signature="e#1168#1169#0" expanded="true" />
-            <element signature="e#1208#1209#0" expanded="true" />
+            <element signature="e#9686#9687#0" expanded="true" />
+            <element signature="e#9737#9738#0" expanded="true" />
+            <element signature="e#9832#9833#0" expanded="true" />
+            <element signature="e#9859#9860#0" expanded="true" />
+            <element signature="e#12467#12468#0" expanded="true" />
+            <element signature="e#12536#12537#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/Curve.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="24" column="30" selection-start-line="24" selection-start-column="30" selection-end-line="24" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/node/NonLeafModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="457">
+          <caret line="102" column="65" lean-forward="true" selection-start-line="102" selection-start-column="65" selection-end-line="102" selection-end-column="65" />
+          <folding>
+            <element signature="e#853#854#0" expanded="true" />
+            <element signature="e#885#886#0" expanded="true" />
+            <element signature="e#948#949#0" expanded="true" />
+            <element signature="e#990#991#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/../../weka-3.7.0.jar!/weka/clusterers/SimpleKMeans.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="310" column="15" selection-start-line="310" selection-start-column="15" selection-end-line="310" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/unsupervisedPartition/UnsupervisedPartitionModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="350">
+          <caret line="35" column="33" selection-start-line="35" selection-start-column="33" selection-end-line="35" selection-end-column="33" />
+          <folding>
+            <element signature="e#3443#3444#0" expanded="true" />
+            <element signature="e#3489#3490#0" expanded="true" />
+            <element signature="e#5391#5392#0" expanded="true" />
+            <element signature="e#5446#5447#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/node/UnsupervisedModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="434">
+          <caret line="104" column="9" lean-forward="true" selection-start-line="104" selection-start-column="9" selection-end-line="104" selection-end-column="9" />
         </state>
       </provider>
     </entry>

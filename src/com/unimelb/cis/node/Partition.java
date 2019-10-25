@@ -115,6 +115,6 @@ public class Partition {
                 partition.getPoints().add(point);
             }
         }
-//        children.forEach(partition1 -> System.out.println(partition1.getPoints().size()));
+        children.forEach(partition1 -> System.out.println(partition1.getPoints().size()));
     }
 }

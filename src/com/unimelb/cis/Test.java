@@ -3,6 +3,7 @@ package com.unimelb.cis;
 import com.unimelb.cis.geometry.Mbr;
 import com.unimelb.cis.node.Point;
 import com.unimelb.cis.structures.hrtree.HRRtree;
+import com.unimelb.cis.structures.partitionmodel.PartitionModelByPred;
 import com.unimelb.cis.structures.partitionmodel.PartitionModelRtree;
 import com.unimelb.cis.structures.recursivemodel.OriginalRecursiveModel;
 import com.unimelb.cis.structures.recursivemodel.RecursiveModelRtree;
@@ -21,9 +22,9 @@ public class Test {
         ZRRtree zRRtree = new ZRRtree(100);
         System.out.println("ZRRtree:");
         System.out.println("build finish:" + zRRtree.buildRtree(s).time);
-//        System.out.println("point query:" + zRRtree.pointQuery(zRRtree.getPoints()));
-        System.out.println("window query:" + zRRtree.windowQuery(mbrs));
-        System.out.println("knn query:" + zRRtree.knnQuery(knnPoints, k));
+        System.out.println("point query:" + zRRtree.pointQuery(zRRtree.getPoints()));
+//        System.out.println("window query:" + zRRtree.windowQuery(mbrs));
+//        System.out.println("knn query:" + zRRtree.knnQuery(knnPoints, k));
 //        System.out.println("insert:" + zRRtree.insert(insertedPoints));
     }
 
@@ -32,9 +33,9 @@ public class Test {
         HRRtree hRRtree = new HRRtree(100);
         System.out.println("HRRtree:");
         System.out.println("build finish:" + hRRtree.buildRtree(s).time);
-//        System.out.println("point query:" + hRRtree.pointQuery(hRRtree.getPoints()));
-        System.out.println("window query:" + hRRtree.windowQuery(mbrs));
-        System.out.println("knn query:" + hRRtree.knnQuery(knnPoints, k));
+        System.out.println("point query:" + hRRtree.pointQuery(hRRtree.getPoints()));
+//        System.out.println("window query:" + hRRtree.windowQuery(mbrs));
+//        System.out.println("knn query:" + hRRtree.knnQuery(knnPoints, k));
 //        System.out.println("insert:" + hRRtree.insert(insertedPoints));
     }
 
@@ -43,9 +44,9 @@ public class Test {
         PartitionModelRtree PRegression = new PartitionModelRtree(10000, "H", 100, "LinearRegression");
         System.out.println("partition:" + "LinearRegression");
         System.out.println("build finish:" + PRegression.buildRtree(s).time);
-//        System.out.println("point query:" + PRegression.pointQuery(PRegression.getPoints()));
-        System.out.println("window query:" + PRegression.windowQuery(mbrs));
-        System.out.println("knn query:" + PRegression.knnQuery(knnPoints, k));
+        System.out.println("point query:" + PRegression.pointQuery(PRegression.getPoints()));
+//        System.out.println("window query:" + PRegression.windowQuery(mbrs));
+//        System.out.println("knn query:" + PRegression.knnQuery(knnPoints, k));
 //        System.out.println("insert:" + PRegression.insert(insertedPoints));
     }
 
@@ -55,9 +56,10 @@ public class Test {
 //        System.out.println("partition:" + "NaiveBayes");
         System.out.println("partition:" + "NaiveBayes");
         System.out.println("build finish:" + Pclassification.buildRtree(s).time);
-//        System.out.println("point query:" + Pclassification.pointQuery(Pclassification.getPoints()));
-        System.out.println("window query:" + Pclassification.windowQuery(mbrs));
-        System.out.println("knn query:" + Pclassification.knnQuery(knnPoints, k));
+        System.out.println("point query1:" + Pclassification.pointQueryForExp());
+        System.out.println("point query2:" + Pclassification.pointQuery(Pclassification.getPoints()));
+//        System.out.println("window query:" + Pclassification.windowQuery(mbrs));
+//        System.out.println("knn query:" + Pclassification.knnQuery(knnPoints, k));
 //        System.out.println("insert:" + Pclassification.insert(insertedPoints));
     }
 
@@ -96,29 +98,42 @@ public class Test {
         UnsupervisedPartitionModel unsupervisedPartitionModel = new UnsupervisedPartitionModel(10000, "H", 100, "NaiveBayes", 1000);
         System.out.println("Partition:" + "KMeans");
         System.out.println("build finish:" + unsupervisedPartitionModel.buildRtree(s).time);
-        unsupervisedPartitionModel.visualize(600, 600, unsupervisedPartitionModel.getmbrFigures()).saveMBR("kmeans_160000.png");
-//        System.out.println("point query:" + unsupervisedPartitionModel.pointQuery(unsupervisedPartitionModel.getPoints()));
+//        unsupervisedPartitionModel.visualize(600, 600, unsupervisedPartitionModel.getmbrFigures()).saveMBR("kmeans_160000.png");
+        System.out.println("point query:" + unsupervisedPartitionModel.pointQuery(unsupervisedPartitionModel.getPoints()));
+//        System.out.println("window query:" + unsupervisedPartitionModel.windowQuery(mbrs));
+//        System.out.println("knn query:" + unsupervisedPartitionModel.knnQuery(knnPoints, k));
+//        System.out.println("insert:" + unsupervisedPartitionModel.insert(insertedPoints));
+    }
+
+    public static void testPartitionPred(String s, List<Point> insertedPoints, List<Mbr> mbrs, List<Point> knnPoints, int k) {
+        System.out.println("------------------------------------------------");
+        PartitionModelByPred partitionModelByPred = new PartitionModelByPred(10000, "H", 100, "NaiveBayes");
+        System.out.println("Partition:" + "Pred");
+        System.out.println("build finish:" + partitionModelByPred.buildRtree(s).time);
+//        partitionModelByPred.visualize(600, 600, partitionModelByPred.getmbrFigures()).saveMBR("kmeans_160000.png");
+        System.out.println("point query1:" + partitionModelByPred.pointQueryForExp());
+        System.out.println("point query2:" + partitionModelByPred.pointQuery(partitionModelByPred.getPoints()));
 //        System.out.println("window query:" + unsupervisedPartitionModel.windowQuery(mbrs));
 //        System.out.println("knn query:" + unsupervisedPartitionModel.knnQuery(knnPoints, k));
 //        System.out.println("insert:" + unsupervisedPartitionModel.insert(insertedPoints));
     }
 
     static List<String> datasets = Arrays.asList(
-            "/Users/guanli/Documents/datasets/RLRtree/raw/uniform_1000000_1_2_.csv",
-            "/Users/guanli/Documents/datasets/RLRtree/raw/uniform_1000000_1_3_.csv",
-            "/Users/guanli/Documents/datasets/RLRtree/raw/uniform_1000000_1_4_.csv",
-            "/Users/guanli/Documents/datasets/RLRtree/raw/uniform_1000000_1_5_.csv",
-            "/Users/guanli/Documents/datasets/RLRtree/raw/uniform_1000000_1_6_.csv"
-//            "D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_2_.csv",
+//            "/Users/guanli/Documents/datasets/RLRtree/raw/uniform_1000000_1_2_.csv"
+//            "/Users/guanli/Documents/datasets/RLRtree/raw/uniform_1000000_1_3_.csv",
+//            "/Users/guanli/Documents/datasets/RLRtree/raw/uniform_1000000_1_4_.csv",
+//            "/Users/guanli/Documents/datasets/RLRtree/raw/uniform_1000000_1_5_.csv",
+//            "/Users/guanli/Documents/datasets/RLRtree/raw/uniform_1000000_1_6_.csv"
+            "D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_2_.csv",
 //            "D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_3_.csv",
 //            "D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_4_.csv",
 //            "D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_5_.csv",
 //            "D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_6_.csv"
 //            "D:\\datasets\\RLRtree\\raw\\uniform_2000000_1_2_.csv",
 //            "D:\\datasets\\RLRtree\\raw\\uniform_4000000_1_2_.csv",
-//            "D:\\datasets\\RLRtree\\raw\\uniform_8000000_1_2_.csv",
-//            "D:\\datasets\\RLRtree\\raw\\uniform_16000000_1_2_.csv",
-//            "D:\\datasets\\RLRtree\\raw\\uniform_32000000_1_2_.csv"
+            "D:\\datasets\\RLRtree\\raw\\uniform_8000000_1_2_.csv",
+            "D:\\datasets\\RLRtree\\raw\\uniform_16000000_1_2_.csv",
+            "D:\\datasets\\RLRtree\\raw\\uniform_32000000_1_2_.csv"
 //            "D:\\datasets\\RLRtree\\raw\\uniform_64000000_1_2_.csv",
 //            "D:\\datasets\\RLRtree\\raw\\uniform_100000000_1_2_.csv",
 //            "D:\\datasets\\RLRtree\\raw\\real_east.csv"
@@ -150,9 +165,9 @@ public class Test {
         int k = 25;
         int dim = 2;
 
-        List<Float> sides = Arrays.asList(0.01f, 0.02f, 0.04f, 0.08f, 0.16f);
+        List<Float> sides = Arrays.asList(0.04f);
 
-        datasets1.forEach(s -> {
+        datasets.forEach(s -> {
             List<Point> knnPoints = Point.getPoints(100, 2);
             List<Point> insertedPoints = Point.getPoints(10000, 2);
             System.out.println(s);
@@ -161,15 +176,19 @@ public class Test {
                 @Override
                 public void accept(Float aFloat) {
                     List<Mbr> mbrs = Mbr.getMbrs(aFloat, 10, 2);
-//                    testZRtree(s, insertedPoints, mbrs, knnPoints, k);
-//                    testHRtree(s, insertedPoints, mbrs, knnPoints, k);
+                    testZRtree(s, insertedPoints, mbrs, knnPoints, k);
+                    testHRtree(s, insertedPoints, mbrs, knnPoints, k);
+                    testPartitionPred(s, insertedPoints, mbrs, knnPoints, k);
+                    testKMeans(s, insertedPoints, mbrs, knnPoints, k);
+                    testPclassification(s, insertedPoints, mbrs, knnPoints, k);
+
 //                    testPRegression(s, insertedPoints, mbrs, knnPoints, k);
 //                    testPclassification(s, insertedPoints, mbrs, knnPoints, k);
 //                    testRRegression(s, insertedPoints, mbrs, knnPoints, k);
 //                    testRclassificati
 //                    on(s, insertedPoints, mbrs, knnPoints, k);
 //                    testKMeans(s, insertedPoints, mbrs, knnPoints, k);
-                    testOriginalRecursiveModel(s, insertedPoints, mbrs, knnPoints, k);
+//                    testOriginalRecursiveModel(s, insertedPoints, mbrs, knnPoints, k);
                 }
             });
 

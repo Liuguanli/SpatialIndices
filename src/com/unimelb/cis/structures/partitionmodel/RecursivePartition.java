@@ -28,7 +28,12 @@ public class RecursivePartition extends IRtree {
     }
 
     public static void main(String[] args) {
-        RecursivePartition recursivePartition = new RecursivePartition(2, 10000);
+        int datasetSize = 160000;
+        int threshold = 10000;
+        int partitionNum = (int) (Math.log(datasetSize / threshold) / Math.log(2.0));
+        System.out.println(partitionNum);
+
+        RecursivePartition recursivePartition = new RecursivePartition(partitionNum, 10000);
         String dataset = "/Users/guanli/Documents/datasets/RLRtree/raw/uniform_160000_1_2_.csv";
         System.out.println(recursivePartition.buildRtree(dataset));
     }

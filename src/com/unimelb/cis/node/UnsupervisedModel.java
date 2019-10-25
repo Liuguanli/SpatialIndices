@@ -92,14 +92,16 @@ public class UnsupervisedModel extends Model {
         ExpReturn result = null;
         if (leafModel == null) {
             try {
+                long begin = System.nanoTime();
                 int index = kmeans.clusterInstance(new Instance(1.0, point.getLocationDouble()));
                 result = subModels.get(index).pointQuery(point);
+                long end =  System.nanoTime();
+                result.time = end - begin;
             } catch (Exception e) {
                 e.printStackTrace();
             }
         } else {
             result = leafModel.pointQuery(point);
-//            System.out.println(result);
         }
         return result;
     }

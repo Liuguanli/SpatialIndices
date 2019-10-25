@@ -4,18 +4,23 @@ import com.unimelb.cis.Curve;
 import com.unimelb.cis.geometry.Boundary;
 import com.unimelb.cis.geometry.Line;
 import com.unimelb.cis.geometry.Mbr;
-import com.unimelb.cis.node.LeafModel;
-import com.unimelb.cis.node.NonLeafNode;
-import com.unimelb.cis.node.Point;
+import com.unimelb.cis.node.*;
 import com.unimelb.cis.structures.IRtree;
 import com.unimelb.cis.utils.ExpReturn;
+import weka.classifiers.Classifier;
+import weka.classifiers.bayes.NaiveBayes;
+import weka.core.Attribute;
+import weka.core.FastVector;
+import weka.core.Instance;
+import weka.core.Instances;
 
 import java.util.*;
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 import static com.unimelb.cis.CSVFileReader.read;
 
-public class PartitionModelRtree extends IRtree {
+public class PartitionModelByPred extends IRtree {
 
     private int threshold;
 
@@ -27,8 +32,12 @@ public class PartitionModelRtree extends IRtree {
 
     private Boundary boundary;
 
+    Map<Integer, Model> partitionModels = new HashMap<>();
+    Map<Integer, List<Point>> partitionPoints = new HashMap<>();
 
-    public PartitionModelRtree(int threshold, String curve, int pageSize, String algorithm) {
+    Classifier classifier;
+
+    public PartitionModelByPred(int threshold, String curve, int pageSize, String algorithm) {
         this.threshold = threshold;
         this.curve = curve;
         this.pageSize = pageSize;
@@ -47,9 +56,6 @@ public class PartitionModelRtree extends IRtree {
         };
     }
 
-    Map<Integer, LeafModel> partitionModels = new HashMap<>();
-
-
     int modelIndex = 0;
 
     private LeafModel addPointsAndBuild(List<Point> points) {
@@ -60,12 +66,12 @@ public class PartitionModelRtree extends IRtree {
         return leafModel;
     }
 
-
     public Boundary getPartition(List<Point> points, int dim, int length) {
         if (dim == 0) {
             Boundary boundary = new Boundary(modelIndex, dim - 1);
 //            boundary.addBoundry(new Line(points.get(0).getLocation()[dim - 1], points.get(points.size() - 1).getLocation()[dim - 1]));
-            partitionModels.put(modelIndex++, addPointsAndBuild(points));
+//            partitionModels.put(modelIndex++, addPointsAndBuild(points));
+            partitionPoints.put(modelIndex++, points);
             return boundary;
         }
         Boundary boundary = new Boundary(dim);
@@ -97,18 +103,6 @@ public class PartitionModelRtree extends IRtree {
             boundary.addBoundary(temp);
         }
     }
-
-//    public void build(String path) {
-//        List<String> lines = read(path);
-//        points = new ArrayList<>(lines.size());
-//        for (int i = 0; i < lines.size(); i++) {
-//            String line = lines.get(i);
-//            Point point = new Point(line);
-//            points.add(point);
-//        }
-//        points.sort(getComparator(points.get(0).getDim() - 1));
-//        dataPartition(points, points.get(0).getDim());
-//    }
 
     public int getModelIndex(Boundary boundary, Point point, int dim) {
         // first get LeafModel
@@ -147,29 +141,6 @@ public class PartitionModelRtree extends IRtree {
         }
     }
 
-//    public ExpReturn pointQuery(List<Point> points) {
-//        ExpReturn expReturn = new ExpReturn();
-//        points.forEach(point -> {
-//            ExpReturn eachExpReturn = pointQuery(point);
-//            expReturn.pageaccess += eachExpReturn.pageaccess;
-//            expReturn.time += eachExpReturn.time;
-//        });
-//        return expReturn;
-//    }
-//
-//    @Override
-//    public ExpReturn pointQuery(Point point) {
-//        ExpReturn expReturn = new ExpReturn();
-//        long begin = System.nanoTime();
-//        int modelIndex = getModelIndex(boundary, point, point.getDim());
-//        LeafModel model = partitionModels.get(modelIndex);
-//        ExpReturn eachExpReturn = model.pointQuery(point);
-//        long end = System.nanoTime();
-//        expReturn.time = end - begin;
-//        expReturn.pageaccess = eachExpReturn.pageaccess;
-//        return expReturn;
-//    }
-
     public ExpReturn pointQueryForExp() {
         ExpReturn expReturn = new ExpReturn();
         long begin = System.nanoTime();
@@ -179,25 +150,46 @@ public class PartitionModelRtree extends IRtree {
         return expReturn;
     }
 
-
     public ExpReturn pointQuery(List<Point> points) {
         ExpReturn expReturn = new ExpReturn();
         points.forEach(point -> {
-            long begin = System.nanoTime();
-            int modelIndex = getModelIndex(boundary, point, point.getDim());
-            LeafModel model = partitionModels.get(modelIndex);
-            // TODO for the experiment, we can change it to the list type
-            ExpReturn eachExpReturn = model.pointQuery(point);
-            long end = System.nanoTime();
+            ExpReturn eachExpReturn = pointQuery(point);
             expReturn.pageaccess += eachExpReturn.pageaccess;
-            expReturn.time += end - begin;
+            expReturn.time += eachExpReturn.time;
         });
         return expReturn;
     }
 
     @Override
     public ExpReturn pointQuery(Point point) {
-        return pointQuery(Arrays.asList(point));
+        ExpReturn expReturn = new ExpReturn();
+        long begin = System.nanoTime();
+        long end = 0;
+        int pos = 0;
+        try {
+            Instances instances = prepareDataSetCla(Arrays.asList(point), 0);
+            Instance instance = instances.instance(0);
+            begin = System.nanoTime();
+            pos = (int) classifier.classifyInstance(instance);
+            end = System.nanoTime();
+            System.out.println("predict time:" + (end - begin));
+//            System.out.println(pos + " " + point);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        begin = System.nanoTime();
+        LeafModel model = (LeafModel) partitionModels.get(pos);
+        end = System.nanoTime();
+        System.out.println("get model time:" + (end - begin));
+        begin = System.nanoTime();
+        ExpReturn eachExpReturn = model.pointQuery(point);
+        end = System.nanoTime();
+        System.out.println("sub model pointQuery 1:" + (end - begin));
+        System.out.println("sub model pointQuery 2:" + eachExpReturn.time);
+//        expReturn.time = eachExpReturn.time;
+        expReturn.time = end - begin;
+        expReturn.pageaccess = eachExpReturn.pageaccess;
+        return expReturn;
     }
 
     @Override
@@ -271,7 +263,7 @@ public class PartitionModelRtree extends IRtree {
 
         points.forEach(point -> {
             int modelIndex = getModelIndex(boundary, point, point.getDim());
-            LeafModel model = partitionModels.get(modelIndex);
+            LeafModel model = (LeafModel) partitionModels.get(modelIndex);
             expReturn.pageaccess += model.insert(point).pageaccess;
         });
 
@@ -290,6 +282,50 @@ public class PartitionModelRtree extends IRtree {
         return null;
     }
 
+    public Instances prepareDataSetCla(List<Point> points, int classNum) {
+        int dim = points.get(0).getDim();
+        FastVector atts = new FastVector();
+        FastVector attVals = new FastVector();
+        for (int i = 0; i < dim; i++) {
+            atts.addElement(new Attribute("att" + (i + 1)));
+        }
+        for (int i = 0; i < classNum; i++) {
+            attVals.addElement("" + i);
+        }
+        atts.addElement(new Attribute("index", attVals));
+        Instances dataSet = new Instances("tree", atts, 0);
+        for (int i = 0; i < points.size(); i++) {
+            Point point = points.get(i);
+            double[] vals = new double[dataSet.numAttributes()];
+            for (int j = 0; j < vals.length - 1; j++) {
+                vals[j] = point.getLocation()[j];
+            }
+            int index = attVals.indexOf("" + point.getIndex());
+            vals[vals.length - 1] = index;
+            dataSet.add(new Instance(1.0, vals));
+        }
+        dataSet.setClassIndex(dataSet.numAttributes() - 1);
+        return dataSet;
+    }
+
+    public List<Double> getPredVals(Classifier classifier, Instances instances) {
+        List<Double> results = new ArrayList<>();
+        try {
+            for (int i = 0; i < instances.numInstances(); i++) {
+                Instance instance = instances.instance(i);
+                if (classifier == null) {
+                    results.add(0.0);
+                } else {
+                    double value = classifier.classifyInstance(instance);
+                    results.add(value);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return results;
+    }
+
     @Override
     public ExpReturn buildRtree(String path) {
         ExpReturn expReturn = new ExpReturn();
@@ -304,6 +340,45 @@ public class PartitionModelRtree extends IRtree {
         dim = points.get(0).getDim();
         points.sort(getComparator(dim - 1));
         dataPartition(points, dim);
+
+
+        List<Point> trainingSet = new ArrayList<>();
+        // Partition finish
+        partitionPoints.forEach(new BiConsumer<Integer, List<Point>>() {
+            @Override
+            public void accept(Integer index, List<Point> points) {
+                points.forEach(new Consumer<Point>() {
+                    @Override
+                    public void accept(Point point) {
+                        point.setIndex(index);
+                    }
+                });
+                trainingSet.addAll(points);
+            }
+        });
+        //
+        Instances instances = prepareDataSetCla(trainingSet, partitionPoints.keySet().size());
+        classifier = new NaiveBayes();
+        try {
+            classifier.buildClassifier(instances);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        partitionPoints = new HashMap<>();
+        List<Double> results = getPredVals(classifier, instances);
+        for (int i = 0; i < results.size(); i++) {
+            int pos = results.get(i).intValue();
+            if (!partitionPoints.containsKey(pos)) {
+                partitionPoints.put(pos, new ArrayList<>());
+            }
+            partitionPoints.get(pos).add(trainingSet.get(i));
+        }
+
+        partitionPoints.forEach((integer, points) -> {
+//            System.out.println(integer + " " + points.size());
+            partitionModels.put(integer, addPointsAndBuild(points));
+        });
+
         long end = System.nanoTime();
         expReturn.time = end - begin;
         return expReturn;
@@ -359,7 +434,6 @@ public class PartitionModelRtree extends IRtree {
         return expReturn;
     }
 
-
     public List<Mbr> getmbrFigures() {
         List<Mbr> mbrFigures = new ArrayList<>();
         partitionModels.forEach((integer, model) -> mbrFigures.add(model.getMbr()));
@@ -368,23 +442,24 @@ public class PartitionModelRtree extends IRtree {
 
     public static void main(String[] args) {
 
-        PartitionModelRtree partitionModelRtree = new PartitionModelRtree(10000, "H", 100, "LinearRegression");
-//            partitionModelRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_1000000_1_2_.csv");
-        partitionModelRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_160000_1_2_.csv");
-//        partitionModelRtree.buildRtree("D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_2_.csv");
+        PartitionModelByPred partitionModelByPred = new PartitionModelByPred(10000, "H", 100, "Logistic");
+        partitionModelByPred.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_160000_1_2_.csv");
+//        partitionModelByPred.buildRtree("D:\\datasets\\RLRtree\\raw\\uniform_160000_1_2_.csv");
         System.out.println("build finish");
-        partitionModelRtree.visualize(600, 600, partitionModelRtree.getmbrFigures()).saveMBR("partition_uniform_160000.png");
-        System.out.println("point query" + partitionModelRtree.pointQuery(partitionModelRtree.points));
-//        System.out.println("knn query:" + partitionModelRtree.knnQuery(new Point(0.5f, 0.5f), 1));
-//            System.out.println(partitionModelRtree.pointQuery(partitionModelRtree.points));
-//            ExpReturn expReturn = partitionModelRtree.windowQuery(new Mbr(0.1f, 0.1f, 0.6f, 0.6f));
-//            System.out.println(expReturn);
-//        System.out.println("insert" + partitionModelRtree.insert(new Point(0.5f, 0.5f)));
-//            break;
+//        partitionModelByPred.visualize(600, 600, partitionModelByPred.getmbrFigures()).saveMBR("partition_pred_uniform_2000000.png");
+        System.out.println(partitionModelByPred.pointQueryForExp());
+        System.out.println("point query" + partitionModelByPred.pointQuery(partitionModelByPred.points).time/partitionModelByPred.points.size());
+
+
+//        PartitionModelRtree partitionModelRtree = new PartitionModelRtree(10000, "H", 100, "NaiveBayes");
+////            partitionModelRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_1000000_1_2_.csv");
+////        partitionModelRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_8000000_1_2_.csv");
+//        partitionModelRtree.buildRtree("D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_2_.csv");
+//        System.out.println("build finish");
+//        System.out.println(partitionModelRtree.pointQueryForExp());
+////        partitionModelRtree.visualize(600, 600, partitionModelRtree.getmbrFigures()).saveMBR("partition_uniform_2000000.png");
+//        System.out.println("point query" + partitionModelRtree.pointQuery(partitionModelRtree.getPoints()));
+
     }
-
-
-//    public static List<String> clas = Arrays.asList("NaiveBayes", "MultilayerPerceptron");
-//    public static List<String> regs = Arrays.asList("LinearRegression");
 
 }

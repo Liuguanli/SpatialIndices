@@ -19,6 +19,9 @@ public abstract class Model {
     int maxError = 0;
     int minError = 0;
 
+    public static List<String> clas = Arrays.asList("NaiveBayes", "Logistic");
+    public static List<String> regs = Arrays.asList("LinearRegression");
+
     public Model(int index, int pageSize, String name) {
         this.index = index;
         this.pageSize = pageSize;
@@ -95,7 +98,7 @@ public abstract class Model {
     public Instances getInstances(String learnerName, List<Point> points, String name) {
         switch (name) {
             case "LRM":
-                if (RecursiveModelRtree.clas.contains(learnerName)) {
+                if (clas.contains(learnerName)) {
                     return prepareDataSetCla(points, classNum);
                 } else {
                     return prepareDataSetReg(points);
@@ -286,7 +289,10 @@ public abstract class Model {
                 if (classifier == null) {
                     results.add(0.0);
                 } else {
+                    long begin = System.nanoTime();
                     double value = classifier.classifyInstance(instance);
+                    long end = System.nanoTime();
+                    System.out.println("real predict time:" + (end - begin));
                     results.add(value);
                 }
             }

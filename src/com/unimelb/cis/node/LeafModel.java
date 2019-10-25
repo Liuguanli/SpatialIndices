@@ -124,6 +124,7 @@ public class LeafModel extends Model {
     public ExpReturn pointQuery(List<Point> points) {
 //        System.out.println("LeafNode pointQuery(List<Point> points)");
         Instances instances = getInstances(name, points, type);
+
         List<Double> results = getPredVals(classifier, instances);
         int max = leafNodes.size();
         int min = 0;
@@ -155,6 +156,7 @@ public class LeafModel extends Model {
                     }
                     gap++;
                     if (index - gap < min && index + gap > max) {
+                        System.out.println("not found");
                         break;
                     }
                 }
