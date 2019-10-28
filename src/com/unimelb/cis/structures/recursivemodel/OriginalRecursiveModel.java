@@ -57,12 +57,15 @@ public class OriginalRecursiveModel extends IRtree {
          * 0.06645625
          * 40.6776125
          */
-        String dataset = "/Users/guanli/Documents/datasets/RLRtree/raw/uniform_1000000_1_2_.csv";
-        OriginalRecursiveModel originalRecursiveModel = new OriginalRecursiveModel(100, true, Arrays.asList(1, 100, 10000),"Z");
+        String dataset = "/Users/guanli/Documents/datasets/RLRtree/raw/uniform_160000_1_2_.csv";
+        OriginalRecursiveModel originalRecursiveModel = new OriginalRecursiveModel(100, true, Arrays.asList(1, 100, 1600),"Z");
         System.out.println(originalRecursiveModel.buildRtree(dataset));
         System.out.println(originalRecursiveModel.pointQuery(originalRecursiveModel.points));
 
-        OriginalRecursiveModel originalRecursiveModel1 = new OriginalRecursiveModel(100, false, Arrays.asList(1, 100, 10000), "Z");
+//        time=301473632
+//        pageaccess=247383
+
+        OriginalRecursiveModel originalRecursiveModel1 = new OriginalRecursiveModel(100, false, Arrays.asList(1, 100, 1600), "Z");
         System.out.println(originalRecursiveModel1.buildRtree(dataset));
         System.out.println(originalRecursiveModel1.pointQuery(originalRecursiveModel1.points));
 
@@ -264,23 +267,20 @@ public class OriginalRecursiveModel extends IRtree {
                     while (front <= back) {
 //                        System.out.println("missed " + front + " " + back);
                         LeafNode leafNode = leafNodes.get(mid);
-                        expReturn.pageaccess++;
-                        if (leafNode.getChildren().contains(point)) {
-                            expReturn.index = mid;
-//                            System.out.println("find it");
-                            break;
-                        } else {
-                            if (leafNode.getChildren().get(0).getCurveValue() < point.getCurveValue()) {
-                                front = mid + 1;
-                            } else {
-                                back = mid - 1;
+                        if (leafNode.getMbr().contains(point)) {
+                            if (leafNode.getChildren().contains(point)) {
+                                expReturn.pageaccess++;
+                                break;
                             }
-                            mid = (front + back) / 2;
                         }
+
+                        if (leafNode.getChildren().get(0).getCurveValue() < point.getCurveValue()) {
+                            front = mid + 1;
+                        } else {
+                            back = mid - 1;
+                        }
+                        mid = (front + back) / 2;
                     }
-//                    if (front > back) {
-//                        System.out.println("miss it:" + predictedVal);
-//                    }
                 }
             } else {
                 maxErr = maxErrors.get(predictedVal);

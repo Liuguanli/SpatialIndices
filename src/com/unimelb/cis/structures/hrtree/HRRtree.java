@@ -17,6 +17,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
+import java.util.function.Consumer;
 
 import static com.unimelb.cis.CSVFileReader.read;
 
@@ -175,11 +176,33 @@ public class HRRtree extends RLRtree {
     }
 
     @Override
+    public ExpReturn pointQuery(Point point) {
+        return pointQuery(Arrays.asList(point));
+    }
+
+    @Override
     public ExpReturn pointQuery(List<Point> points) {
         ExpReturn expReturn = new ExpReturn();
         long begin = System.nanoTime();
         points.forEach(point -> {
-            expReturn.pageaccess += pointQuery(point).pageaccess;
+            List<Node> nodes = new ArrayList<>();
+            nodes.add(root);
+            while (nodes.size() > 0) {
+                Node top = nodes.remove(0);
+                if (top instanceof NonLeafNode) {
+                    if (top.getMbr().contains(point)) {
+                        expReturn.pageaccess++;
+                        nodes.addAll(((NonLeafNode) top).getChildren());
+                    }
+                } else if (top instanceof LeafNode) {
+                    if (top.getMbr().contains(point)) {
+                        expReturn.pageaccess++;
+                        if (((LeafNode) top).getChildren().contains(point)) {
+                            break;
+                        }
+                    }
+                }
+            }
         });
         long end = System.nanoTime();
         expReturn.time = end - begin;
@@ -231,7 +254,7 @@ public class HRRtree extends RLRtree {
 //        long end = System.nanoTime();
 //        expReturn.time = end - begin;
 //        return expReturn;
-        float knnquerySide = (float) Math.sqrt((float)k/points.size());
+        float knnquerySide = (float) Math.sqrt((float) k / points.size());
         ExpReturn expReturn = new ExpReturn();
         long begin = System.nanoTime();
         while (true) {
@@ -244,7 +267,7 @@ public class HRRtree extends RLRtree {
                     double d2 = point.getDist(o2);
                     if (d1 > d2) {
                         return 1;
-                    } else if(d1 <d2) {
+                    } else if (d1 < d2) {
                         return -1;
                     } else {
                         return 0;
@@ -262,33 +285,6 @@ public class HRRtree extends RLRtree {
         expReturn.time = end - begin;
         return expReturn;
     }
-
-    @Override
-    public ExpReturn pointQuery(Point point) {
-        ExpReturn expReturn = new ExpReturn();
-        long begin = System.nanoTime();
-        List<Node> nodes = new ArrayList<>();
-        nodes.add(root);
-        while (nodes.size() > 0) {
-            Node top = nodes.remove(0);
-            if (top instanceof NonLeafNode) {
-                if (top.getMbr().contains(point)) {
-                    expReturn.pageaccess++;
-                    nodes.addAll(((NonLeafNode) top).getChildren());
-                }
-            } else if (top instanceof LeafNode) {
-                if (top.getMbr().contains(point)) {
-                    expReturn.pageaccess++;
-                    break;
-                }
-            }
-
-        }
-        long end = System.nanoTime();
-        expReturn.time = end - begin;
-        return expReturn;
-    }
-
 
     @Override
     public NonLeafNode buildRtreeAfterTuning(String path, int dim, int level) {
@@ -408,7 +404,6 @@ public class HRRtree extends RLRtree {
     public ExpReturn insert(Point point) {
         return insert(Arrays.asList(point));
     }
-
 
 
     public static void main(String[] args) {

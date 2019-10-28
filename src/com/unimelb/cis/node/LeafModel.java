@@ -78,9 +78,7 @@ public class LeafModel extends Model {
     @Override
     public ExpReturn pointQuery(Point point) {
 //        System.out.println("LeafModel pointQuery->" + point);
-        List<Point> points = new ArrayList<>();
-        points.add(point);
-        return pointQuery(points);
+        return pointQuery(Arrays.asList(point));
     }
 
     public ExpReturn insert(Point point) {
@@ -124,12 +122,11 @@ public class LeafModel extends Model {
     public ExpReturn pointQuery(List<Point> points) {
 //        System.out.println("LeafNode pointQuery(List<Point> points)");
         Instances instances = getInstances(name, points, type);
-
+        ExpReturn expReturn = new ExpReturn();
+        long begin = System.nanoTime();
         List<Double> results = getPredVals(classifier, instances);
         int max = leafNodes.size();
         int min = 0;
-        ExpReturn expReturn = new ExpReturn();
-        long begin = System.nanoTime();
         for (int i = 0; i < results.size(); i++) {
             int index = Math.min(Math.max(results.get(i).intValue(), 0), leafNodes.size() - 1);
             int gap = 1;
@@ -139,24 +136,27 @@ public class LeafModel extends Model {
             } else if (index >= leafNodes.size()) {
                 index = leafNodes.size() - 1;
             }
-            if (!leafNodes.get(index).getChildren().contains(points.get(i))) {
+            Point queryPoint = points.get(i);
+            if (!leafNodes.get(index).getChildren().contains(queryPoint)) {
                 while (true) {
-                    pageAccess++;
                     int real = index - gap;
-                    if (real >= min && leafNodes.get(real).getChildren().contains(points.get(i))) {
-//                        System.out.println("find it: real" + real +" index" + index);
-                        break;
+                    LeafNode leafNode = leafNodes.get(real);
+                    if (real >= min && leafNode.getMbr().contains(queryPoint)) {
+                        if (leafNode.getChildren().contains(queryPoint)) {
+                            pageAccess++;
+                            break;
+                        }
                     }
-                    pageAccess++;
                     real = index + gap;
-//                    System.out.println(real + " " + index);
-                    if (real < max && leafNodes.get(real).getChildren().contains(points.get(i))) {
-//                        System.out.println("find it: real" + real +" index" + index);
-                        break;
+                    leafNode = leafNodes.get(real);
+                    if (real < max && leafNode.getMbr().contains(queryPoint)) {
+                        if (leafNode.getChildren().contains(queryPoint)) {
+                            pageAccess++;
+                            break;
+                        }
                     }
                     gap++;
                     if (index - gap < min && index + gap > max) {
-                        System.out.println("not found");
                         break;
                     }
                 }
@@ -183,7 +183,7 @@ public class LeafModel extends Model {
         int indexLow = results.get(0).intValue();
         int indexHigh = results.get(results.size() - 1).intValue();
         leafNodes.forEach((integer, leafNode) -> {
-            if (integer >= Math.max(0, indexLow - minError) && integer < Math.min(indexHigh + maxError , leafNodes.size())) {
+            if (integer >= Math.max(0, indexLow - minError) && integer < Math.min(indexHigh + maxError, leafNodes.size())) {
                 if (leafNode.getMbr().interact(window)) {
                     pageAccessArray[0]++;
                     leafNode.getChildren().forEach(point -> {

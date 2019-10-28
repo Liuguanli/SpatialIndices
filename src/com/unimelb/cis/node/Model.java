@@ -5,10 +5,7 @@ import com.unimelb.cis.structures.recursivemodel.RecursiveModelRtree;
 import com.unimelb.cis.utils.ExpReturn;
 import weka.classifiers.Classifier;
 import weka.classifiers.bayes.NaiveBayes;
-import weka.classifiers.functions.LibSVM;
-import weka.classifiers.functions.LinearRegression;
-import weka.classifiers.functions.Logistic;
-import weka.classifiers.functions.MultilayerPerceptron;
+import weka.classifiers.functions.*;
 import weka.classifiers.meta.FilteredClassifier;
 import weka.core.*;
 
@@ -200,6 +197,9 @@ public abstract class Model {
             case "LinearRegression":
                 classifier = new LinearRegression();
                 break;
+            case "SMOreg":
+                classifier = new SMOreg();
+                break;
             case "MultilayerPerceptron":
                 classifier = new MultilayerPerceptron();
                 try {
@@ -209,7 +209,13 @@ public abstract class Model {
                     //setHiddenLayers(“4,5”) 或者 “… -H 4,5”
                     //代表两个隐含层，第一层4个神经元，第二层5个神经元。
                     // https://searchcode.com/codesearch/view/21712641/ line 1627 shows the meaning of a
-                    classifier.setOptions(Utils.splitOptions("-L 0.3 -M 0.2 -N 500 -V 0 -S 0 -E 20 -H a"));
+                    classifier.setOptions(Utils.splitOptions("-L 0.3 -M 0.2 -N 500 -V 0 -S 0 -E 20 -H 50"));
+                    ((MultilayerPerceptron)classifier).setLearningRate(0.01);
+                    ((MultilayerPerceptron)classifier).setNormalizeAttributes(true);
+                    ((MultilayerPerceptron)classifier).setNormalizeNumericClass(true);
+                    ((MultilayerPerceptron)classifier).setSeed(0);
+                    ((MultilayerPerceptron)classifier).setValidationSetSize(20);
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -292,7 +298,7 @@ public abstract class Model {
                     long begin = System.nanoTime();
                     double value = classifier.classifyInstance(instance);
                     long end = System.nanoTime();
-                    System.out.println("real predict time:" + (end - begin));
+//                    System.out.println("real predict time:" + (end - begin));
                     results.add(value);
                 }
             }

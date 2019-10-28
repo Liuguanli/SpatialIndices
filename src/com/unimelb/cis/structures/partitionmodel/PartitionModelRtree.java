@@ -185,12 +185,11 @@ public class PartitionModelRtree extends IRtree {
         points.forEach(point -> {
             long begin = System.nanoTime();
             int modelIndex = getModelIndex(boundary, point, point.getDim());
-            LeafModel model = partitionModels.get(modelIndex);
-            // TODO for the experiment, we can change it to the list type
-            ExpReturn eachExpReturn = model.pointQuery(point);
             long end = System.nanoTime();
+            LeafModel model = partitionModels.get(modelIndex);
+            ExpReturn eachExpReturn = model.pointQuery(point);
             expReturn.pageaccess += eachExpReturn.pageaccess;
-            expReturn.time += end - begin;
+            expReturn.time += eachExpReturn.time + end - begin;
         });
         return expReturn;
     }
@@ -370,7 +369,7 @@ public class PartitionModelRtree extends IRtree {
 
         PartitionModelRtree partitionModelRtree = new PartitionModelRtree(10000, "H", 100, "LinearRegression");
 //            partitionModelRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_1000000_1_2_.csv");
-        partitionModelRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_160000_1_2_.csv");
+        partitionModelRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_1000000_1_2_.csv");
 //        partitionModelRtree.buildRtree("D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_2_.csv");
         System.out.println("build finish");
         partitionModelRtree.visualize(600, 600, partitionModelRtree.getmbrFigures()).saveMBR("partition_uniform_160000.png");
