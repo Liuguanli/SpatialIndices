@@ -397,14 +397,17 @@ public class ZRRtree extends RLRtree {
     public static void main(String[] args) {
         ZRRtree zRRtree = new ZRRtree(100);
 
-//        zRRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_1000000_1_2_.csv");
+        zRRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_1000000_1_2_.csv");
 //        zRRtree.visualize(600, 600).save("uniform_1000_1_2_.png");
-//        zRRtree.output("/Users/guanli/Documents/datasets/RLRtree/trees/Z_uniform_10000_1_2_.csv");
+        long begin = System.nanoTime();
+        zRRtree.output("/Users/guanli/Documents/datasets/RLRtree/trees/Z_uniform_1000000_1_2_.csv");
+        long end = System.nanoTime();
+        System.out.println("time:" + (end - begin));
 
 //        zRRtree = new ZRRtree(100);
 //        zRRtree.buildRtreeAfterTuning("/Users/guanli/Documents/datasets/RLRtree/newtrees/H_uniform_10000_1_2_DQN.csv", 2, 3);
 //        zRRtree.visualize(600, 600).save("DQN_uniform_1000_1_2_.png");
-        zRRtree.buildRtree("D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_2_.csv");
+//        zRRtree.buildRtree("D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_2_.csv");
 //        zRRtree.getRoot();
 
 //        System.out.println(zRRtree.windowQuery(Mbr.getMbrs(0.01f, 10, 3).get(0)));
@@ -413,7 +416,7 @@ public class ZRRtree extends RLRtree {
 
 //        zRRtree.visualize(600, 600).save("uniform_10000_1_2_.png");
 
-        System.out.println(zRRtree.pointQuery(zRRtree.getPoints()));
+//        System.out.println(zRRtree.pointQuery(zRRtree.getPoints()));
 
 
 //        System.out.println("point query:" + zRRtree.pointQuery(zRRtree.points));

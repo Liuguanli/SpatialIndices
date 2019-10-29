@@ -34,6 +34,7 @@ public abstract class RLRtree extends IRtree {
         List<String> lines = new ArrayList<>();
         List<Node> nodes = new ArrayList<>();
         nodes.add(root);
+        int lineNum = 1;
         while (nodes.size() > 0) {
             Node top = nodes.remove(0);
             if (top instanceof NonLeafNode) {
@@ -43,17 +44,24 @@ public abstract class RLRtree extends IRtree {
             } else {
 //                lines.add(((Point) top).getOutPutString(root));
 
+                lineNum++;
                 String line = ((Point) top).getOutPutString(root);
                 try {
                     fw.write(line + "\r\n");
-                    fw.flush();
+                    if (lineNum % 1000000 == 0) {
+                        fw.flush();
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
             }
         }
-//        CSVFileWriter.write(lines, file);
+        try {
+            fw.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

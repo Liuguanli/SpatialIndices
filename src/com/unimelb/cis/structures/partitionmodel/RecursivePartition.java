@@ -32,14 +32,11 @@ public class RecursivePartition extends IRtree {
 
     public static void main(String[] args) {
         int maxPartitionNumEachDim = 8;
-
         RecursivePartition recursivePartition = new RecursivePartition(maxPartitionNumEachDim, 10000, "MultilayerPerceptron");
 //        RecursivePartition recursivePartition = new RecursivePartition(maxPartitionNumEachDim, 10000, "LinearRegression"); // time=93329793368 pageaccess=7911393
         String dataset = "/Users/guanli/Documents/datasets/RLRtree/raw/uniform_4000000_1_2_.csv";
         System.out.println(recursivePartition.buildRtree(dataset));
         System.out.println(recursivePartition.pointQuery(recursivePartition.getPoints()));
-
-
 //        recursivePartition.visualize(600, 600, recursivePartition.root.getmbrFigures()).saveMBR("recursivePartition_uniform_1000000.png");
     }
 
@@ -54,7 +51,6 @@ public class RecursivePartition extends IRtree {
             Point point = new Point(line);
             points.add(point);
         }
-
         root = new Partition(0, 100, algorithm, maxPartitionNumEachDim, threshold, points);
         root.build();
 
