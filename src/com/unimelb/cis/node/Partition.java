@@ -12,29 +12,19 @@ import java.util.*;
 
 public class Partition extends Model {
 
-    protected int maxPartitionNumEachDim = 8;
-
-    protected Mbr mbr;
+    protected int maxPartitionNumEachDim;
 
     protected int level;
 
     protected int index;
 
-    protected int partitionNum;
-
-    protected List<Partition> children;
-
-    protected List<Point> points;
-
     protected int threshold;
 
     protected int dim;
 
-    protected Boundary boundarys;
-
-    private int maxPartitionNum;
-
     private int bitNum;
+
+    String modelName = "LRM";
 
     Map<Integer, List<Point>> partitionPoints = new HashMap<>();
 
@@ -44,12 +34,12 @@ public class Partition extends Model {
         super(index, pageSize, algorithm);
         this.maxPartitionNumEachDim = maxPartitionNumEachDim;
         this.threshold = threshold;
-        this.points = points;
+        this.children = points;
 //        maxPartitionNum = (int) Math.pow(maxPartitionNumEachDim, dim);
     }
 
     public void dataPartition(List<Point> points, int dim) {
-        int num = points.size() / threshold + (points.size() % threshold == 0 ? 0 : 1);
+        int num = points.size() / (2 * threshold) + (points.size() % (2 * threshold) == 0 ? 0 : 1);
 
         bitNum = (int) (Math.log(num) / Math.log(2));
         int length;
@@ -61,7 +51,7 @@ public class Partition extends Model {
         length = Math.min(length, maxPartitionNumEachDim);
 
         int partitionNum = (int) Math.pow(length, dim);
-        System.out.println(partitionNum);
+//        System.out.println(partitionNum);
 
         int capacity = points.size() / partitionNum;
 
@@ -103,11 +93,11 @@ public class Partition extends Model {
     }
 
     public List<Point> getPoints() {
-        return points;
+        return children;
     }
 
     public void setPoints(List<Point> points) {
-        this.points = points;
+        this.children = points;
     }
 
     public Mbr getMbr() {
@@ -134,13 +124,11 @@ public class Partition extends Model {
         this.index = index;
     }
 
-    int classNum;
-
     @Override
     public void build() {
-        dim = points.get(0).getDim();
-        points.sort(getComparator(dim - 1));
-        dataPartition(points, dim);
+        dim = children.get(0).getDim();
+        children.sort(getComparator(dim - 1));
+        dataPartition(children, dim);
 
         List<Point> trainingSet = new ArrayList<>();
 
@@ -151,7 +139,7 @@ public class Partition extends Model {
 
         classNum = partitionPoints.keySet().size();
 
-        Instances instances = getInstances(this.name, trainingSet, "LRM");
+        Instances instances = getInstances(this.name, trainingSet, modelName);
         classifier = getModels(this.name);
         try {
             classifier.buildClassifier(instances);
@@ -160,7 +148,7 @@ public class Partition extends Model {
         }
 
         partitionPoints = new HashMap<>();
-        List<Double> results = getPredVals(classifier, instances);
+        List<Double> results = getPredVals(classifier, instances).predictResults;
         for (int i = 0; i < results.size(); i++) {
             int pos = results.get(i).intValue();
 //            pos = Math.min(pos, classNum - 1);
@@ -172,7 +160,7 @@ public class Partition extends Model {
         }
 
         partitionPoints.forEach((integer, points) -> {
-            System.out.println(integer + " " + points.size());
+//            System.out.println(integer + " " + points.size());
             partitionModels.put(integer, addPointsAndBuild(points));
         });
 //        classNum = partitionModels.keySet().size();
@@ -181,24 +169,53 @@ public class Partition extends Model {
     private Model addPointsAndBuild(List<Point> points) {
         if (points.size() >= threshold * 2) {
             Partition partition = new Partition(0, 100, this.name, maxPartitionNumEachDim, threshold, points);
+            partition.setChildren(points);
             partition.build();
+//            System.out.println(partition.getMbr());
             return partition;
         } else {
-            points = Curve.getPointByCurve(points, "H", true);
+            points = Curve.getPointByCurve(points, "Z", true);
             LeafModel leafModel = new LeafModel(level + 1, pageSize, this.name);
+//            LeafModel leafModel = new LeafModel(level + 1, pageSize, "NaiveBayes");
+//            LeafModel leafModel = new LeafModel(level + 1, pageSize, "Logistic");
             leafModel.setChildren(points);
             leafModel.build();
             return leafModel;
         }
     }
 
+    private List<Integer> getModelIndex(List<Point> points, Instances instances) {
+        List<Integer> result = new ArrayList<>();
+        try {
+            for (int i = 0; i < points.size(); i++) {
+                Instance instance = instances.instance(i);
+                result.add((int) classifier.classifyInstance(instance));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 
 
     private int getModelIndex(Point point) {
         int pos = 0;
         try {
-            Instances instances = prepareDataSetReg(Arrays.asList(point));
+            Instances instances = getInstances(this.name, Arrays.asList(point), modelName);
+//            Instances instances = prepareDataSetReg(Arrays.asList(point));
             Instance instance = instances.instance(0);
+            pos = (int) classifier.classifyInstance(instance);
+//            System.out.println("predict time:" + (end - begin));
+//            System.out.println(pos + " " + point);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return pos;
+    }
+
+    private int getModelIndex(Instance instance) {
+        int pos = 0;
+        try {
             pos = (int) classifier.classifyInstance(instance);
 //            System.out.println("predict time:" + (end - begin));
 //            System.out.println(pos + " " + point);
@@ -211,21 +228,27 @@ public class Partition extends Model {
     @Override
     public ExpReturn pointQuery(Point point) {
         ExpReturn expReturn = new ExpReturn();
+        Instances instances = getInstances(this.name, Arrays.asList(point), modelName);
+//        Instances instances = getInstances(Arrays.asList(point));
+        Instance instance = instances.instance(0);
         long begin = System.nanoTime();
-        int modelIndex = getModelIndex(point);
+        int modelIndex = getModelIndex(instance);
 //        modelIndex = Math.max(modelIndex, 0);
 //        modelIndex = Math.min(modelIndex, classNum - 1);
         long end = System.nanoTime();
+//        System.out.println("level:" + level);
+//        System.out.println("getModelIndex time:" + (end - begin));
+        long gap = end - begin;
         Model model = partitionModels.get(modelIndex);
         if (model == null) {
-            System.out.println("partitionModels:" + partitionModels);
-            System.out.println("points.size()" + points.size());
-            System.out.println("modelIndex" + modelIndex);
-            System.out.println("classNum" + classNum);
+//            System.out.println("partitionModels:" + partitionModels);
+//            System.out.println("points.size()" + children.size());
+//            System.out.println("modelIndex" + modelIndex);
+//            System.out.println("classNum" + classNum);
         } else {
             ExpReturn eachExpReturn = model.pointQuery(point);
             expReturn.pageaccess += eachExpReturn.pageaccess;
-            expReturn.time += eachExpReturn.time + end - begin;
+            expReturn.time += eachExpReturn.time + gap;
         }
         return expReturn;
     }
@@ -233,17 +256,57 @@ public class Partition extends Model {
     @Override
     public ExpReturn pointQuery(List<Point> points) {
         ExpReturn expReturn = new ExpReturn();
-        points.forEach(point -> {
-            ExpReturn eachExpReturn = pointQuery(point);
-            expReturn.pageaccess += eachExpReturn.pageaccess;
-            expReturn.time += eachExpReturn.time;
-        });
+        Instances instances = getInstances(this.name, points, modelName);
+//        Instances instances = prepareDataSetReg(points);
+        long begin = System.nanoTime();
+        List<Integer> results = getModelIndex(points, instances);
+        long end = System.nanoTime();
+        long gap = end - begin;
+        for (int i = 0; i < results.size(); i++) {
+            Model model = partitionModels.get(results.get(i));
+            if (model != null) {
+                ExpReturn eachExpReturn = model.pointQuery(points.get(i));
+                expReturn.plus(eachExpReturn);
+            }
+        }
+//        points.forEach(point -> {
+//            ExpReturn eachExpReturn = pointQuery(point);
+//            expReturn.pageaccess += eachExpReturn.pageaccess;
+//            expReturn.time += eachExpReturn.time;
+//        });
+        System.out.println("gap:" + gap);
         return expReturn;
     }
 
     @Override
     public ExpReturn windowQuery(Mbr window) {
-        return null;
+        ExpReturn expReturn = new ExpReturn();
+        long begin = System.nanoTime();
+
+        List<Integer> results = new ArrayList<>();
+        window.getAllPoints().forEach(point -> {
+            int modelIndex = getModelIndex(point);
+            results.add(modelIndex);
+        });
+        results.sort(Integer::compareTo);
+        int indexLow = results.get(0);
+        int indexHigh = results.get(results.size() - 1);
+        for (int i = indexLow; i <= indexHigh; i++) {
+            if (partitionModels.keySet().contains(i)) {
+                Model leafModel = partitionModels.get(i);
+                ExpReturn eachExpReturn = leafModel.windowQuery(window);
+                expReturn.plus(eachExpReturn);
+            }
+        }
+//        partitionModels.forEach((integer, leafModel) -> {
+//            if (leafModel.getMbr().interact(window)) {
+//                ExpReturn eachExpReturn = leafModel.windowQuery(window);
+//                expReturn.plus(eachExpReturn);
+//            }
+//        });
+        long end = System.nanoTime();
+        expReturn.time = end - begin;
+        return expReturn;
     }
 
     @Override
@@ -253,12 +316,23 @@ public class Partition extends Model {
 
     @Override
     public ExpReturn insert(Point point) {
-        return null;
+        ExpReturn expReturn = new ExpReturn();
+        int modelIndex = getModelIndex(point);
+        Model model = partitionModels.get(modelIndex);
+        if (model != null) {
+            return model.insert(point);
+        }
+        return expReturn;
     }
 
     @Override
     public ExpReturn insert(List<Point> points) {
-        return null;
+        ExpReturn expReturn = new ExpReturn();
+        long begin = System.nanoTime();
+        points.forEach(point -> expReturn.pageaccess += insert(point).pageaccess);
+        long end = System.nanoTime();
+        expReturn.time = end - begin;
+        return expReturn;
     }
 
     public Comparator<Point> getComparator(int index) {

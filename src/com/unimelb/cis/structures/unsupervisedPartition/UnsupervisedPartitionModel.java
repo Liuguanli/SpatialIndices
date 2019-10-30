@@ -29,10 +29,10 @@ public class UnsupervisedPartitionModel extends IRtree {
     private int maxIteration;
 
     public static void main(String[] args) {
-        UnsupervisedPartitionModel unsupervisedPartitionModel = new UnsupervisedPartitionModel(10000, "H", 100, "NaiveBayes", 10);
+        UnsupervisedPartitionModel unsupervisedPartitionModel = new UnsupervisedPartitionModel(4000, "H", 100, "NaiveBayes", 10);
         unsupervisedPartitionModel.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_160000_1_2_.csv");
         ExpReturn expReturn = unsupervisedPartitionModel.pointQuery(unsupervisedPartitionModel.points);
-        System.out.println(expReturn);
+        System.out.println("pointQuery:" + expReturn);
         unsupervisedPartitionModel.visualize(600,600, unsupervisedPartitionModel.getmbrFigures()).saveMBR("kmeans_uniform_160000.png");
     }
 
@@ -100,7 +100,10 @@ public class UnsupervisedPartitionModel extends IRtree {
 
     @Override
     public ExpReturn pointQuery(List<Point> points) {
-        return root.pointQuery(points);
+        ExpReturn expReturn = root.pointQuery(points);
+        expReturn.time /= points.size();
+        expReturn.pageaccess /= points.size();
+        return expReturn;
     }
 
     @Override

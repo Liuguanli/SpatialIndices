@@ -154,8 +154,7 @@ public class HRRtree extends RLRtree {
         ExpReturn expReturn = new ExpReturn();
         windows.forEach(mbr -> {
             ExpReturn temp = windowQuery(mbr);
-            expReturn.time += temp.time;
-            expReturn.pageaccess += temp.pageaccess;
+            expReturn.plus(temp);
         });
         expReturn.time /= windows.size();
         expReturn.pageaccess /= windows.size();
@@ -167,8 +166,7 @@ public class HRRtree extends RLRtree {
         ExpReturn expReturn = new ExpReturn();
         points.forEach(point -> {
             ExpReturn temp = knnQuery(point, k);
-            expReturn.time += temp.time;
-            expReturn.pageaccess += temp.pageaccess;
+            expReturn.plus(temp);
         });
         expReturn.time /= points.size();
         expReturn.pageaccess /= points.size();
@@ -410,9 +408,9 @@ public class HRRtree extends RLRtree {
         HRRtree hRRtree = new HRRtree(100);
 
 //        hRRtree.buildRtree("D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_2_.csv");
-//        hRRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_10000_1_2_.csv");
+        hRRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_4000000_1_2_.csv");
 
-        hRRtree.buildRtreeAfterTuning("/Users/guanli/Documents/datasets/RLRtree/newtrees/H_uniform_10000_1_2_DQN.csv", 2, 3);
+//        hRRtree.buildRtreeAfterTuning("/Users/guanli/Documents/datasets/RLRtree/newtrees/H_uniform_10000_1_2_DQN.csv", 2, 3);
 //        hRRtree.visualize(600, 600).save("DQN_uniform_1000_1_2_.png");
 
 //        zRtree.output("/Users/guanli/Documents/datasets/RLRtree/trees/Z_uniform_10000_1_2_.csv");
@@ -420,12 +418,12 @@ public class HRRtree extends RLRtree {
 //        zRtree.buildRtreeAfterTuning("/Users/guanli/Documents/datasets/RLRtree/trees/Z_uniform_10000_1_3_.csv", zRtree.getDim(), zRtree.getLevel());
 //        zRtree.getRoot();
 
-        System.out.println(hRRtree.windowQuery(Mbr.getMbrs(0.01f, 10, 2).get(0)));
+//        System.out.println(hRRtree.windowQuery(Mbr.getMbrs(0.01f, 10, 2).get(0)));
 //        System.out.println(zRtree.windowQuery(Mbr.getMbrs(0.01f, 9, 3).get(0)));
 //        System.out.println(zRtree.windowQuery(Mbr.getMbrs(0.01f, 11, 3).get(0)));
-//        System.out.println(hRRtree.pointQuery(hRRtree.getPoints()));
+        System.out.println(hRRtree.pointQuery(hRRtree.getPoints()));
 //        hRRtree.insert(new Point(0.5f,0.5f));
-        System.out.println("knn query:" + hRRtree.knnQuery(new Point(0.5f, 0.5f), 1));
+//        System.out.println("knn query:" + hRRtree.knnQuery(new Point(0.5f, 0.5f), 1));
     }
 
 }

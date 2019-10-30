@@ -1,6 +1,7 @@
 package com.unimelb.cis.geometry;
 
 import com.unimelb.cis.HilbertCurve;
+import com.unimelb.cis.ZCurve;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +28,8 @@ public class Boundary {
     }
 
     public long getHCurveValue(int bitNum) {
-        return HilbertCurve.getHilbertValue(bitNum, loactionIndex);
+//        return HilbertCurve.getHilbertValue(bitNum, loactionIndex);
+        return ZCurve.getZcurve(loactionIndex, bitNum);
     }
 
     int dim;

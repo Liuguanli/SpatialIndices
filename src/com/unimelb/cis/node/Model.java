@@ -4,6 +4,7 @@ import com.unimelb.cis.geometry.Mbr;
 import com.unimelb.cis.structures.recursivemodel.RecursiveModelRtree;
 import com.unimelb.cis.utils.ExpReturn;
 import weka.classifiers.Classifier;
+import weka.classifiers.Evaluation;
 import weka.classifiers.bayes.NaiveBayes;
 import weka.classifiers.functions.*;
 import weka.classifiers.meta.FilteredClassifier;
@@ -204,18 +205,19 @@ public abstract class Model {
                 classifier = new MultilayerPerceptron();
                 try {
                     // https://sefiks.com/2017/02/20/building-neural-networks-with-weka/
-                    //https://www.programcreek.com/java-api-examples/?api=weka.classifiers.functions.MultilayerPerceptron
+                    //https://www.programcreek.com/java-api-examples/?aapi=weka.classifiers.functions.MultilayerPerceptron
                     //https://blog.csdn.net/qiao1245/article/details/50924242
                     //setHiddenLayers(“4,5”) 或者 “… -H 4,5”
                     //代表两个隐含层，第一层4个神经元，第二层5个神经元。
                     // https://searchcode.com/codesearch/view/21712641/ line 1627 shows the meaning of a
-                    classifier.setOptions(Utils.splitOptions("-L 0.3 -M 0.2 -N 500 -V 0 -S 0 -E 20 -H 50"));
-                    ((MultilayerPerceptron)classifier).setLearningRate(0.01);
-                    ((MultilayerPerceptron)classifier).setNormalizeAttributes(true);
-                    ((MultilayerPerceptron)classifier).setNormalizeNumericClass(true);
-                    ((MultilayerPerceptron)classifier).setSeed(0);
-                    ((MultilayerPerceptron)classifier).setValidationSetSize(20);
-
+                    StringBuilder builder = new StringBuilder("-L 0.3 -M 0.2 -N 500 -V 0 -S 0 -E 20 -H ");
+                    builder.append(classNum);
+                    classifier.setOptions(Utils.splitOptions(builder.toString()));
+                    ((MultilayerPerceptron) classifier).setLearningRate(0.01);
+                    ((MultilayerPerceptron) classifier).setNormalizeAttributes(true);
+                    ((MultilayerPerceptron) classifier).setNormalizeNumericClass(true);
+                    ((MultilayerPerceptron) classifier).setSeed(0);
+                    ((MultilayerPerceptron) classifier).setValidationSetSize(20);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -269,7 +271,7 @@ public abstract class Model {
 
     public void evaluate() {
         Instances instances = getInstances(name, getChildren());
-        List<Double> results = getPredVals(classifier, instances);
+        List<Double> results = getPredVals(classifier, instances).predictResults;
         for (int i = 0; i < results.size(); i++) {
             int result = results.get(i).intValue();
             int real = (int) instances.instance(i).classValue();
@@ -287,7 +289,26 @@ public abstract class Model {
         }
     }
 
-    public List<Double> getPredVals(Classifier classifier, Instances instances) {
+    public List<Double> getPredVals0(Classifier classifier, Instances instances) {
+        List<Double> results = new ArrayList<>();
+        try {
+            for (int i = 0; i < instances.numInstances(); i++) {
+                Instance instance = instances.instance(i);
+                if (classifier == null) {
+                    results.add(0.0);
+                } else {
+                    double value = classifier.classifyInstance(instance);
+                    results.add(value);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return results;
+    }
+
+    public ExpReturn getPredVals(Classifier classifier, Instances instances) {
+        ExpReturn expReturn = new ExpReturn();
         List<Double> results = new ArrayList<>();
         try {
             for (int i = 0; i < instances.numInstances(); i++) {
@@ -298,14 +319,15 @@ public abstract class Model {
                     long begin = System.nanoTime();
                     double value = classifier.classifyInstance(instance);
                     long end = System.nanoTime();
-//                    System.out.println("real predict time:" + (end - begin));
+                    expReturn.time += (end - begin);
                     results.add(value);
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return results;
+        expReturn.predictResults = results;
+        return expReturn;
     }
 
     public Instances prepareDataSet(List<Point> points) {
@@ -342,7 +364,10 @@ public abstract class Model {
     public abstract ExpReturn insert(List<Point> points);
 
     public void updateMbr(Point point) {
-        this.getMbr().updateMbr(point, point.getDim());
+        if (mbr == null) {
+            mbr = new Mbr(point.getDim());
+        }
+        mbr.updateMbr(point, point.getDim());
     }
 
 }

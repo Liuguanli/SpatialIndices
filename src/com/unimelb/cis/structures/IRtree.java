@@ -62,6 +62,11 @@ public abstract class IRtree {
         return points;
     }
 
+    public List<Point> getQueryPoints(double percentage) {
+        Collections.shuffle(points, new Random(0));
+        return points.subList(0, (int) (points.size() * percentage));
+    }
+
     public void setPoints(List<Point> points) {
         this.points = points;
     }

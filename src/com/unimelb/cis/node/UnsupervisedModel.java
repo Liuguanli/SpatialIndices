@@ -94,9 +94,9 @@ public class UnsupervisedModel extends Model {
             try {
                 long begin = System.nanoTime();
                 int index = kmeans.clusterInstance(new Instance(1.0, point.getLocationDouble()));
-                result = subModels.get(index).pointQuery(point);
                 long end =  System.nanoTime();
-                result.time = end - begin;
+                result = subModels.get(index).pointQuery(point);
+                result.time += end - begin;
             } catch (Exception e) {
                 e.printStackTrace();
             }

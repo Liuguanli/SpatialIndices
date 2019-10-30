@@ -9,7 +9,7 @@ public class ExpReturn {
 
     public long time;
 
-    public long pageaccess;
+    public double pageaccess;
 
     public List<Point> result = new ArrayList<>();
 
@@ -21,12 +21,15 @@ public class ExpReturn {
 
     public int minErr;
 
+    public List<Double> predictResults = new ArrayList<>();
+
     @Override
     public String toString() {
 
         StringBuilder builder = new StringBuilder();
         builder.append("time=").append(time).append(System.lineSeparator()).append("pageaccess=")
-                .append(pageaccess).append(System.lineSeparator());
+                .append(pageaccess).append(System.lineSeparator()).append("result=").append(result.size())
+                .append(System.lineSeparator());
 //        if (result.size() < 100) {
 //            builder.append("result=").append(result);
 //        } else {
@@ -47,4 +50,17 @@ public class ExpReturn {
         result.addAll(temp.result);
 
     }
+
+//    @Override
+//    public String toString() {
+//        return "ExpReturn{" +
+//                "time=" + time +
+//                ", pageaccess=" + pageaccess +
+//                ", result=" + result +
+//                ", accuracy=" + accuracy +
+//                ", index=" + index +
+//                ", maxErr=" + maxErr +
+//                ", minErr=" + minErr +
+//                '}';
+//    }
 }

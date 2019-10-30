@@ -2,6 +2,7 @@ package com.unimelb.cis.structures.partitionmodel;
 
 import com.unimelb.cis.Curve;
 import com.unimelb.cis.geometry.Mbr;
+import com.unimelb.cis.node.Model;
 import com.unimelb.cis.node.NonLeafNode;
 import com.unimelb.cis.node.Partition;
 import com.unimelb.cis.node.Point;
@@ -11,6 +12,7 @@ import weka.classifiers.functions.SMOreg;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 import static com.unimelb.cis.CSVFileReader.read;
 
@@ -32,11 +34,15 @@ public class RecursivePartition extends IRtree {
 
     public static void main(String[] args) {
         int maxPartitionNumEachDim = 8;
-        RecursivePartition recursivePartition = new RecursivePartition(maxPartitionNumEachDim, 10000, "MultilayerPerceptron");
-//        RecursivePartition recursivePartition = new RecursivePartition(maxPartitionNumEachDim, 10000, "LinearRegression"); // time=93329793368 pageaccess=7911393
-        String dataset = "/Users/guanli/Documents/datasets/RLRtree/raw/uniform_4000000_1_2_.csv";
+//        RecursivePartition recursivePartition = new RecursivePartition(maxPartitionNumEachDim, 10000, "SMOreg");
+        RecursivePartition recursivePartition = new RecursivePartition(maxPartitionNumEachDim, 2000, "NaiveBayes");
+//        RecursivePartition recursivePartition = new RecursivePartition(maxPartitionNumEachDim, 000, "LinearRegression"); // time=93329793368 pageaccess=7911393
+        String dataset = "/Users/guanli/Documents/datasets/RLRtree/raw/uniform_160000_1_2_.csv";
         System.out.println(recursivePartition.buildRtree(dataset));
-        System.out.println(recursivePartition.pointQuery(recursivePartition.getPoints()));
+        System.out.println("point query:" + recursivePartition.pointQuery(recursivePartition.getQueryPoints(0.01)));
+        System.out.println("window query:" + recursivePartition.windowQuery(Mbr.getMbrs(0.01f, 10, 2).get(0)));
+//        System.out.println("knn query:" + recursivePartition.knnQuery(new Point(0.5f, 0.5f), 10));
+//        System.out.println("insert :" + recursivePartition.insert(new Point(0.5f, 0.5f)));
 //        recursivePartition.visualize(600, 600, recursivePartition.root.getmbrFigures()).saveMBR("recursivePartition_uniform_1000000.png");
     }
 
@@ -66,17 +72,24 @@ public class RecursivePartition extends IRtree {
 
     @Override
     public ExpReturn windowQuery(Mbr window) {
-        return null;
+        return root.windowQuery(window);
     }
 
     @Override
     public ExpReturn windowQuery(List<Mbr> windows) {
-        return null;
+        ExpReturn expReturn = new ExpReturn();
+        windows.forEach(mbr -> expReturn.plus(root.windowQuery(mbr)));
+        expReturn.time /= windows.size();
+        expReturn.pageaccess /= windows.size();
+        return expReturn;
     }
 
     @Override
     public ExpReturn pointQuery(List<Point> points) {
-        return root.pointQuery(points);
+        ExpReturn expReturn = root.pointQuery(points);
+        expReturn.time /= points.size();
+        expReturn.pageaccess /= (points.size() + 0.0);
+        return expReturn;
     }
 
     @Override
@@ -119,8 +132,7 @@ public class RecursivePartition extends IRtree {
         ExpReturn expReturn = new ExpReturn();
         points.forEach(point -> {
             ExpReturn temp = knnQuery(point, k);
-            expReturn.time += temp.time;
-            expReturn.pageaccess += temp.pageaccess;
+            expReturn.plus(temp);
         });
         expReturn.time /= points.size();
         expReturn.pageaccess /= points.size();
