@@ -47,9 +47,9 @@ public class Test {
         System.out.println("partition:" + "LinearRegression");
         System.out.println("build finish:" + PRegression.buildRtree(s).time);
         System.out.println("point query:" + PRegression.pointQuery(PRegression.getPoints()));
-//        System.out.println("window query:" + PRegression.windowQuery(mbrs));
-//        System.out.println("knn query:" + PRegression.knnQuery(knnPoints, k));
-//        System.out.println("insert:" + PRegression.insert(insertedPoints));
+        System.out.println("window query:" + PRegression.windowQuery(mbrs));
+        System.out.println("knn query:" + PRegression.knnQuery(knnPoints, k));
+        System.out.println("insert:" + PRegression.insert(insertedPoints));
     }
 
     public static void testPclassification(String s, List<Point> insertedPoints, List<Mbr> mbrs, List<Point> knnPoints, int k) {
@@ -58,11 +58,10 @@ public class Test {
 //        System.out.println("partition:" + "NaiveBayes");
         System.out.println("partition:" + "NaiveBayes");
         System.out.println("build finish:" + Pclassification.buildRtree(s).time);
-//        System.out.println("point query1:" + Pclassification.pointQueryForExp());
-        System.out.println("point query2:" + Pclassification.pointQuery(Pclassification.getPoints()));
-//        System.out.println("window query:" + Pclassification.windowQuery(mbrs));
-//        System.out.println("knn query:" + Pclassification.knnQuery(knnPoints, k));
-//        System.out.println("insert:" + Pclassification.insert(insertedPoints));
+        System.out.println("point query:" + Pclassification.pointQuery(Pclassification.getPoints()));
+        System.out.println("window query:" + Pclassification.windowQuery(mbrs));
+        System.out.println("knn query:" + Pclassification.knnQuery(knnPoints, k));
+        System.out.println("insert:" + Pclassification.insert(insertedPoints));
     }
 
     public static void testRRegression(String s, List<Point> insertedPoints, List<Mbr> mbrs, List<Point> knnPoints, int k) {
@@ -90,12 +89,12 @@ public class Test {
     public static void testOriginalRecursiveModel(String s, List<Point> insertedPoints, List<Mbr> mbrs, List<Point> knnPoints, int k) {
         System.out.println("------------------------------------------------");
         System.out.println("OriginalRecursive");
-        OriginalRecursiveModel originalRecursiveModel1 = new OriginalRecursiveModel(100, false, Arrays.asList(1, 100, 10000), "Z");
+        OriginalRecursiveModel originalRecursiveModel1 = new OriginalRecursiveModel(100, false, Arrays.asList(1, 200, 40000), "Z");
         System.out.println(originalRecursiveModel1.buildRtree(s));
-        System.out.println("pointQuery:" + originalRecursiveModel1.pointQuery(originalRecursiveModel1.getQueryPoints(0.01)));
-//        System.out.println("windowQuery:" + originalRecursiveModel1.windowQuery(mbrs));
-//        System.out.println("knn query:" + originalRecursiveModel1.knnQuery(knnPoints, k));
-//        System.out.println("insert:" + originalRecursiveModel1.insert(insertedPoints));
+        System.out.println("pointQuery:" + originalRecursiveModel1.pointQuery(originalRecursiveModel1.getPoints()));
+        System.out.println("windowQuery:" + originalRecursiveModel1.windowQuery(mbrs));
+        System.out.println("knn query:" + originalRecursiveModel1.knnQuery(knnPoints, k));
+        System.out.println("insert:" + originalRecursiveModel1.insert(insertedPoints));
     }
 
     public static void testKMeans(String s, List<Point> insertedPoints, List<Mbr> mbrs, List<Point> knnPoints, int k) {
@@ -105,9 +104,9 @@ public class Test {
         System.out.println("build finish:" + unsupervisedPartitionModel.buildRtree(s).time);
 //        unsupervisedPartitionModel.visualize(600, 600, unsupervisedPartitionModel.getmbrFigures()).saveMBR("kmeans_160000.png");
         System.out.println("point query:" + unsupervisedPartitionModel.pointQuery(unsupervisedPartitionModel.getPoints()));
-//        System.out.println("window query:" + unsupervisedPartitionModel.windowQuery(mbrs));
-//        System.out.println("knn query:" + unsupervisedPartitionModel.knnQuery(knnPoints, k));
-//        System.out.println("insert:" + unsupervisedPartitionModel.insert(insertedPoints));
+        System.out.println("window query:" + unsupervisedPartitionModel.windowQuery(mbrs));
+        System.out.println("knn query:" + unsupervisedPartitionModel.knnQuery(knnPoints, k));
+        System.out.println("insert:" + unsupervisedPartitionModel.insert(insertedPoints));
     }
 
     public static void testPartitionPred(String s, List<Point> insertedPoints, List<Mbr> mbrs, List<Point> knnPoints, int k) {
@@ -117,7 +116,7 @@ public class Test {
         System.out.println("build finish:" + partitionModelByPred.buildRtree(s).time);
         partitionModelByPred.visualize(600, 600, partitionModelByPred.getmbrFigures()).saveMBR("testPartitionPred_1000000.png");
 //        System.out.println("point query1:" + partitionModelByPred.pointQueryForExp());
-        System.out.println("point query2:" + partitionModelByPred.pointQuery(partitionModelByPred.getQueryPoints(0.01)));
+        System.out.println("point query2:" + partitionModelByPred.pointQuery(partitionModelByPred.getPoints()));
 //        System.out.println("window query:" + unsupervisedPartitionModel.windowQuery(mbrs));
 //        System.out.println("knn query:" + unsupervisedPartitionModel.knnQuery(knnPoints, k));
 //        System.out.println("insert:" + unsupervisedPartitionModel.insert(insertedPoints));
@@ -129,10 +128,10 @@ public class Test {
         RecursivePartition recursivePartition = new RecursivePartition(maxPartitionNumEachDim, 5000, "MultilayerPerceptron");
         System.out.println("Partition:" + "Recursive");
         System.out.println("build finish:" + recursivePartition.buildRtree(s).time);
-        System.out.println("point query:" + recursivePartition.pointQuery(recursivePartition.getQueryPoints(0.01)));
-//        System.out.println("window query:" + recursivePartition.windowQuery(mbrs));
-//        System.out.println("knn query:" + recursivePartition.knnQuery(knnPoints, k));
-//        System.out.println("insert:" + recursivePartition.insert(insertedPoints));
+        System.out.println("point query:" + recursivePartition.pointQuery(recursivePartition.getPoints()));
+        System.out.println("window query:" + recursivePartition.windowQuery(mbrs));
+        System.out.println("knn query:" + recursivePartition.knnQuery(knnPoints, k));
+        System.out.println("insert:" + recursivePartition.insert(insertedPoints));
     }
 
     public static void testIRtree(IRtree iRtree, String s, List<Point> insertedPoints, List<Mbr> mbrs, List<Point> knnPoints, int k) {
@@ -178,9 +177,11 @@ public class Test {
     );
 
     static List<String> datasets1 = Arrays.asList(
-            "/Users/guanli/Documents/datasets/RLRtree/raw/uniform_1000000_1_2_.csv"
+//            "/Users/guanli/Documents/datasets/RLRtree/raw/uniform_1000000_1_2_.csv"
+            "/Users/guanli/Documents/datasets/RLRtree/raw/uniform_4000000_1_2_.csv"
+//            "/Users/guanli/Documents/datasets/RLRtree/raw/uniform_4000000_1_2_.csv"
 //            "D:\\datasets\\RLRtree\\raw\\real_east.csv",
-//            "D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_2_.csv"
+//              "D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_2_.csv"
 //            "D:\\datasets\\RLRtree\\raw\\uniform_2000000_1_2_.csv",
 //            "D:\\datasets\\RLRtree\\raw\\uniform_4000000_1_2_.csv",
 //            "D:\\datasets\\RLRtree\\raw\\uniform_8000000_1_2_.csv",
@@ -202,35 +203,32 @@ public class Test {
             List<Point> insertedPoints = Point.getPoints(10000, 2);
             System.out.println(s);
 
-            sides.forEach(new Consumer<Float>() {
-                @Override
-                public void accept(Float aFloat) {
-                    List<Mbr> mbrs = Mbr.getMbrs(aFloat, 10, 2);
+            sides.forEach(aFloat -> {
+                List<Mbr> mbrs = Mbr.getMbrs(aFloat, 10, 2);
 //                    testPclassification(s, insertedPoints, mbrs, knnPoints, k);
 //                    testZRtree(s, insertedPoints, mbrs, knnPoints, k);
-//                    testOriginalRecursiveModel(s, insertedPoints, mbrs, knnPoints, k);
+                testOriginalRecursiveModel(s, insertedPoints, mbrs, knnPoints, k);
 //                    pointQuery:time=14455
 //                    pageaccess=2.317
 
-//                    testHRtree(s, insertedPoints, mbrs, knnPoints, k);
+                testHRtree(s, insertedPoints, mbrs, knnPoints, k);
 //                    testPartitionPred(s, insertedPoints, mbrs, knnPoints, k);
-//                    testKMeans(s, insertedPoints, mbrs, knnPoints, k);
+                testKMeans(s, insertedPoints, mbrs, knnPoints, k);
 //                    point query:time=11847
 //                    pageaccess=2.204226
-//                    testPRegression(s, insertedPoints, mbrs, knnPoints, k);
-//                    testPclassification(s, insertedPoints, mbrs, knnPoints, k);
+                testPRegression(s, insertedPoints, mbrs, knnPoints, k);
+                testPclassification(s, insertedPoints, mbrs, knnPoints, k);
 //                    testRRegression(s, insertedPoints, mbrs, knnPoints, k);
 //                    testRclassification(s, insertedPoints, mbrs, knnPoints, k);
 //                    testKMeans(s, insertedPoints, mbrs, knnPoints, k);
-                    testRecursivePartition(s, insertedPoints, mbrs, knnPoints, k);
-                    // Partition  MLP
+                testRecursivePartition(s, insertedPoints, mbrs, knnPoints, k);
+                // Partition  MLP
 //                    point query:time=19549
 //                    pageaccess=3.1358
 //                     Partition NB
 //                    point query:time=32108
 //                    pageaccess=1.3873
 
-                }
             });
         });
 

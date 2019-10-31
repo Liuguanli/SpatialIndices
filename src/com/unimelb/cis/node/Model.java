@@ -203,24 +203,24 @@ public abstract class Model {
                 break;
             case "MultilayerPerceptron":
                 classifier = new MultilayerPerceptron();
-                try {
-                    // https://sefiks.com/2017/02/20/building-neural-networks-with-weka/
-                    //https://www.programcreek.com/java-api-examples/?aapi=weka.classifiers.functions.MultilayerPerceptron
-                    //https://blog.csdn.net/qiao1245/article/details/50924242
-                    //setHiddenLayers(“4,5”) 或者 “… -H 4,5”
-                    //代表两个隐含层，第一层4个神经元，第二层5个神经元。
-                    // https://searchcode.com/codesearch/view/21712641/ line 1627 shows the meaning of a
-                    StringBuilder builder = new StringBuilder("-L 0.3 -M 0.2 -N 500 -V 0 -S 0 -E 20 -H ");
-                    builder.append(classNum);
-                    classifier.setOptions(Utils.splitOptions(builder.toString()));
-                    ((MultilayerPerceptron) classifier).setLearningRate(0.01);
-                    ((MultilayerPerceptron) classifier).setNormalizeAttributes(true);
-                    ((MultilayerPerceptron) classifier).setNormalizeNumericClass(true);
-                    ((MultilayerPerceptron) classifier).setSeed(0);
-                    ((MultilayerPerceptron) classifier).setValidationSetSize(20);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+//                try {
+//                    // https://sefiks.com/2017/02/20/building-neural-networks-with-weka/
+//                    //https://www.programcreek.com/java-api-examples/?aapi=weka.classifiers.functions.MultilayerPerceptron
+//                    //https://blog.csdn.net/qiao1245/article/details/50924242
+//                    //setHiddenLayers(“4,5”) 或者 “… -H 4,5”
+//                    //代表两个隐含层，第一层4个神经元，第二层5个神经元。
+//                    // https://searchcode.com/codesearch/view/21712641/ line 1627 shows the meaning of a
+//                    StringBuilder builder = new StringBuilder("-L 0.3 -M 0.2 -N 500 -V 0 -S 0 -E 20 -H ");
+//                    builder.append(classNum);
+//                    classifier.setOptions(Utils.splitOptions(builder.toString()));
+//                    ((MultilayerPerceptron) classifier).setLearningRate(0.01);
+//                    ((MultilayerPerceptron) classifier).setNormalizeAttributes(true);
+//                    ((MultilayerPerceptron) classifier).setNormalizeNumericClass(true);
+//                    ((MultilayerPerceptron) classifier).setSeed(0);
+//                    ((MultilayerPerceptron) classifier).setValidationSetSize(20);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
                 break;
 //            case "NeuralNetwork":
 //                classifier = new NeuralNetwork();

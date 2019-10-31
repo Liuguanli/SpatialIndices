@@ -135,7 +135,18 @@ public class UnsupervisedModel extends Model {
 
     @Override
     public ExpReturn windowQueryByScanAll(Mbr window) {
-        return null;
+        ExpReturn expReturn = new ExpReturn();
+        if (leafModel == null) {
+            subModels.forEach((integer, unsupervisedModel) -> {
+                if (unsupervisedModel.getMbr().interact(window)) {
+                    ExpReturn temp = unsupervisedModel.windowQueryByScanAll(window);
+                    expReturn.plus(temp);
+                }
+            });
+        } else {
+            return leafModel.windowQueryByScanAll(window);
+        }
+        return expReturn;
     }
 
     @Override

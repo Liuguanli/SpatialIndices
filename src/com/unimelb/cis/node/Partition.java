@@ -293,17 +293,11 @@ public class Partition extends Model {
         int indexHigh = results.get(results.size() - 1);
         for (int i = indexLow; i <= indexHigh; i++) {
             if (partitionModels.keySet().contains(i)) {
-                Model leafModel = partitionModels.get(i);
-                ExpReturn eachExpReturn = leafModel.windowQuery(window);
+                Model model = partitionModels.get(i);
+                ExpReturn eachExpReturn = model.windowQuery(window);
                 expReturn.plus(eachExpReturn);
             }
         }
-//        partitionModels.forEach((integer, leafModel) -> {
-//            if (leafModel.getMbr().interact(window)) {
-//                ExpReturn eachExpReturn = leafModel.windowQuery(window);
-//                expReturn.plus(eachExpReturn);
-//            }
-//        });
         long end = System.nanoTime();
         expReturn.time = end - begin;
         return expReturn;
@@ -311,7 +305,14 @@ public class Partition extends Model {
 
     @Override
     public ExpReturn windowQueryByScanAll(Mbr window) {
-        return null;
+        ExpReturn expReturn = new ExpReturn();
+        partitionModels.forEach((integer, model) -> {
+            if (model.getMbr().interact(window)) {
+                ExpReturn eachExpReturn = model.windowQueryByScanAll(window);
+                expReturn.plus(eachExpReturn);
+            }
+        });
+        return expReturn;
     }
 
     @Override

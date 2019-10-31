@@ -204,54 +204,13 @@ public class HRRtree extends RLRtree {
         });
         long end = System.nanoTime();
         expReturn.time = end - begin;
+        expReturn.time /= points.size();
+        expReturn.pageaccess = expReturn.pageaccess / points.size();
         return expReturn;
     }
 
     @Override
     public ExpReturn knnQuery(Point point, int k) {
-//        ExpReturn expReturn = new ExpReturn();
-//        long begin = System.nanoTime();
-//        PriorityQueue<Object> queue = getQueue(point, k);
-//        ArrayList<Node> list = new ArrayList();
-//        list.add(root);
-//        while (list.size() > 0) {
-//            Node top = list.remove(0);
-//            if (top instanceof NonLeafNode) {
-//                NonLeafNode nonLeaf = (NonLeafNode) top;
-//                List<Node> children = nonLeaf.getChildren();
-//                for (int i = 0; i < children.size(); i++) {
-//                    Node former = children.get(i);
-//                    boolean isProne = false;
-//                    for (int j = 0; j < children.size(); j++) {
-//                        if (i == j) {
-//                            continue;
-//                        }
-//                        Node later = children.get(j);
-//                        if (former.getMbr().calMINDIST(point) > later.getMbr().calMINMAXDIST(point)) {
-//                            isProne = true;
-//                            break;
-//                        }
-//                    }
-//                    if (!isProne) {
-//                        list.add(former);
-//                    }
-//                }
-//                expReturn.pageaccess++;
-//            } else if (top instanceof LeafNode) {
-//                LeafNode leaf = (LeafNode) top;
-//                List<Point> children = leaf.getChildren();
-//                queue.addAll(children);
-//                expReturn.pageaccess++;
-//            } else {
-//                queue.add(top);
-//            }
-//        }
-//        for (int i = 0; i < k; i++) {
-//            expReturn.result.add((Point) queue.poll());
-//        }
-//        long end = System.nanoTime();
-//        expReturn.time = end - begin;
-//        return expReturn;
         float knnquerySide = (float) Math.sqrt((float) k / points.size());
         ExpReturn expReturn = new ExpReturn();
         long begin = System.nanoTime();

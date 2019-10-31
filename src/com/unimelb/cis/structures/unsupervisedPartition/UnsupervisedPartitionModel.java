@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 import static com.unimelb.cis.CSVFileReader.read;
 
@@ -33,7 +34,7 @@ public class UnsupervisedPartitionModel extends IRtree {
         unsupervisedPartitionModel.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_160000_1_2_.csv");
         ExpReturn expReturn = unsupervisedPartitionModel.pointQuery(unsupervisedPartitionModel.points);
         System.out.println("pointQuery:" + expReturn);
-        unsupervisedPartitionModel.visualize(600,600, unsupervisedPartitionModel.getmbrFigures()).saveMBR("kmeans_uniform_160000.png");
+        unsupervisedPartitionModel.visualize(600, 600, unsupervisedPartitionModel.getmbrFigures()).saveMBR("kmeans_uniform_160000.png");
     }
 
 
@@ -81,6 +82,14 @@ public class UnsupervisedPartitionModel extends IRtree {
         root.build();
         long end = System.nanoTime();
         expReturn.time = end - begin;
+        return expReturn;
+    }
+
+    public ExpReturn windowQueryByScanAll(List<Mbr> windows) {
+        ExpReturn expReturn = new ExpReturn();
+        windows.forEach(mbr -> expReturn.plus(root.windowQueryByScanAll(mbr)));
+        expReturn.time /= windows.size();
+        expReturn.pageaccess /= windows.size();
         return expReturn;
     }
 

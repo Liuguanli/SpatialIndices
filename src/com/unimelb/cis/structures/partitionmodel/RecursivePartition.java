@@ -88,7 +88,7 @@ public class RecursivePartition extends IRtree {
     public ExpReturn pointQuery(List<Point> points) {
         ExpReturn expReturn = root.pointQuery(points);
         expReturn.time /= points.size();
-        expReturn.pageaccess /= (points.size() + 0.0);
+        expReturn.pageaccess /= points.size();
         return expReturn;
     }
 

@@ -8,26 +8,16 @@
   <component name="ChangeListManager">
     <list default="true" id="ba9c8980-c90e-48aa-8dfb-ac39a52585ec" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kmeans_uniform_160000.png" beforeDir="false" afterPath="$PROJECT_DIR$/kmeans_uniform_160000.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/geometry/Boundary.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/geometry/Boundary.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/node/LeafModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/node/LeafModel.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/node/Model.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/node/Model.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/structures/RLRtree.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/structures/RLRtree.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/structures/hrtree/HRtree.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/structures/hrtree/HRtree.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/structures/partitionmodel/PartitionModelRtree.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/structures/partitionmodel/PartitionModelRtree.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/structures/zrtree/ZRtree.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/structures/zrtree/ZRtree.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/utils/ExpReturn.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/utils/ExpReturn.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/Test.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/geometry/Boundary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/geometry/Boundary.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/node/LeafModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/node/LeafModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/node/Model.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/node/Model.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/node/NonLeafModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/node/NonLeafModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/node/Partition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/node/Partition.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/node/UnsupervisedModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/node/UnsupervisedModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/structures/IRtree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/structures/IRtree.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/structures/hrtree/HRRtree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/structures/hrtree/HRRtree.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/structures/partitionmodel/PartitionModelRtree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/structures/partitionmodel/PartitionModelRtree.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/structures/partitionmodel/RecursivePartition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/structures/partitionmodel/RecursivePartition.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/structures/recursivemodel/OriginalRecursiveModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/structures/recursivemodel/OriginalRecursiveModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/structures/unsupervisedPartition/UnsupervisedPartitionModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/structures/unsupervisedPartition/UnsupervisedPartitionModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/utils/ExpReturn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/utils/ExpReturn.java" afterDir="false" />
     </list>
@@ -45,33 +35,29 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/Test.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="128" column="122" selection-start-line="128" selection-start-column="122" selection-end-line="128" selection-end-column="122" />
+            <state relative-caret-position="101">
+              <caret line="38" column="59" selection-start-line="38" selection-start-column="59" selection-end-line="38" selection-end-column="59" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/hrtree/HRRtree.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="320">
+              <caret line="213" column="24" selection-start-line="213" selection-start-column="24" selection-end-line="213" selection-end-column="24" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/IRtree.java">
+        <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/partitionmodel/PartitionModelRtree.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="166">
-              <caret line="65" column="48" selection-start-line="65" selection-start-column="48" selection-end-line="65" selection-end-column="48" />
-              <folding>
-                <element signature="e#455#456#0" expanded="true" />
-                <element signature="e#495#496#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="jar:///Library/Java/JavaVirtualMachines/jdk-12.0.1.jdk/Contents/Home/lib/src.zip!/java.base/java/util/Collections.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="421" column="7" lean-forward="true" selection-start-line="421" selection-start-column="7" selection-end-line="421" selection-end-column="7" />
+            <state relative-caret-position="502">
+              <caret line="351" column="5" selection-start-line="351" selection-start-column="5" selection-end-line="351" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -79,48 +65,20 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/recursivemodel/OriginalRecursiveModel.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="317">
-              <caret line="73" lean-forward="true" selection-start-line="73" selection-end-line="73" />
-              <folding>
-                <element signature="e#13937#13938#0" expanded="true" />
-                <element signature="e#13964#13965#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="383">
+              <caret line="398" column="21" selection-start-line="398" selection-start-column="21" selection-end-line="398" selection-end-column="21" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/node/Model.java">
+        <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/unsupervisedPartition/UnsupervisedPartitionModel.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="355">
-              <caret line="220" selection-start-line="220" selection-end-line="220" />
+            <state relative-caret-position="133">
+              <caret line="87" selection-start-line="87" selection-end-line="93" selection-end-column="5" />
               <folding>
-                <element signature="e#1525#1526#0" expanded="true" />
-                <element signature="e#1551#1552#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/node/LeafModel.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="112" column="30" lean-forward="true" selection-start-line="112" selection-start-column="30" selection-end-line="112" selection-end-column="30" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/node/NonLeafModel.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3417">
-              <caret line="208" column="13" lean-forward="true" selection-start-line="208" selection-start-column="13" selection-end-line="208" selection-end-column="13" />
-              <folding>
-                <element signature="e#853#854#0" expanded="true" />
-                <element signature="e#885#886#0" expanded="true" />
-                <element signature="e#948#949#0" expanded="true" />
-                <element signature="e#990#991#0" expanded="true" />
+                <element signature="e#3025#3026#0" expanded="true" />
+                <element signature="e#3072#3073#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -129,31 +87,42 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/partitionmodel/RecursivePartition.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="253">
-              <caret line="43" column="62" selection-start-line="43" selection-start-column="62" selection-end-line="43" selection-end-column="62" />
+            <state relative-caret-position="247">
+              <caret line="80" column="56" selection-start-line="80" selection-start-column="56" selection-end-line="80" selection-end-column="56" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#2828#2829#0" expanded="true" />
                 <element signature="e#2855#2856#0" expanded="true" />
+                <element signature="e#2917#2918#0" expanded="true" />
                 <element signature="e#2964#2965#0" expanded="true" />
-                <element signature="e#2620#2621#0" expanded="true" />
-                <element signature="e#2647#2648#0" expanded="true" />
-                <element signature="e#5474#5475#0" expanded="true" />
-                <element signature="e#5573#5574#0" expanded="true" />
-                <element signature="e#5695#5696#0" expanded="true" />
+                <element signature="e#5424#5425#0" expanded="true" />
+                <element signature="e#5466#5467#0" expanded="true" />
+                <element signature="e#5524#5525#0" expanded="true" />
+                <element signature="e#5565#5566#0" expanded="true" />
+                <element signature="e#5660#5661#0" expanded="true" />
+                <element signature="e#5687#5688#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/unsupervisedPartition/UnsupervisedPartitionModel.java">
+        <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/node/Partition.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="166">
-              <caret line="88" column="25" selection-start-line="88" selection-start-column="25" selection-end-line="88" selection-end-column="25" />
+            <state relative-caret-position="360">
+              <caret line="305" selection-start-line="305" selection-end-line="315" selection-end-column="5" />
               <folding>
-                <element signature="e#3010#3011#0" expanded="true" />
-                <element signature="e#3057#3058#0" expanded="true" />
+                <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/node/Model.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="300">
+              <caret line="359" column="30" selection-start-line="359" selection-start-column="30" selection-end-line="359" selection-end-column="30" />
             </state>
           </provider>
         </entry>
@@ -161,8 +130,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/node/UnsupervisedModel.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="127" column="17" lean-forward="true" selection-start-line="127" selection-start-column="17" selection-end-line="127" selection-end-column="17" />
+            <state relative-caret-position="296">
+              <caret line="148" column="25" lean-forward="true" selection-start-line="148" selection-start-column="25" selection-end-line="148" selection-end-column="25" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/utils/ExpReturn.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="264">
+              <caret line="49" column="34" selection-start-line="49" selection-start-column="34" selection-end-line="49" selection-end-column="34" />
             </state>
           </provider>
         </entry>
@@ -179,8 +157,8 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>classifier</find>
       <find>mbr</find>
+      <find>System.out</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -189,9 +167,13 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/com/unimelb/cis/structures/IRtree.java" />
-        <option value="$PROJECT_DIR$/src/com/unimelb/cis/node/Model.java" />
-        <option value="$PROJECT_DIR$/src/com/unimelb/cis/Test.java" />
+        <option value="$PROJECT_DIR$/src/com/unimelb/cis/node/NonLeafModel.java" />
+        <option value="$PROJECT_DIR$/src/com/unimelb/cis/node/UnsupervisedModel.java" />
+        <option value="$PROJECT_DIR$/src/com/unimelb/cis/node/Partition.java" />
+        <option value="$PROJECT_DIR$/src/com/unimelb/cis/structures/unsupervisedPartition/UnsupervisedPartitionModel.java" />
+        <option value="$PROJECT_DIR$/src/com/unimelb/cis/utils/ExpReturn.java" />
+        <option value="$PROJECT_DIR$/src/com/unimelb/cis/structures/partitionmodel/PartitionModelRtree.java" />
+        <option value="$PROJECT_DIR$/src/com/unimelb/cis/structures/hrtree/HRRtree.java" />
       </list>
     </option>
   </component>
@@ -556,7 +538,7 @@
       <window_info id="Designer" />
       <window_info id="Capture Tool" />
       <window_info id="Learn" weight="0.32960597" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16134185" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24973376" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Version Control" weight="0.3057325" />
       <window_info anchor="bottom" id="Terminal" weight="0.25265393" />
@@ -564,7 +546,7 @@
       <window_info anchor="bottom" id="Messages" weight="0.32908705" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.45753714" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.47558385" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.27070063" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.29511678" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -807,7 +789,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/Test.java</url>
-          <line>68</line>
+          <line>67</line>
           <properties />
           <option name="timeStamp" value="213" />
         </line-breakpoint>
@@ -850,13 +832,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/structures/unsupervisedPartition/UnsupervisedPartitionModel.java</url>
-          <line>68</line>
+          <line>69</line>
           <properties />
           <option name="timeStamp" value="244" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/Test.java</url>
-          <line>94</line>
+          <line>93</line>
           <properties />
           <option name="timeStamp" value="267" />
         </line-breakpoint>
@@ -924,101 +906,126 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/node/Partition.java">
+    <entry file="file://$PROJECT_DIR$/partition_uniform_1000000.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/partition_skewed_1000000.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/geometry/Boundary.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="377">
-          <caret line="180" column="42" lean-forward="true" selection-start-line="180" selection-start-column="42" selection-end-line="180" selection-end-column="42" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#796#797#0" expanded="true" />
-            <element signature="e#832#833#0" expanded="true" />
-            <element signature="e#1046#1047#0" expanded="true" />
-            <element signature="e#1080#1081#0" expanded="true" />
-            <element signature="e#10922#10923#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="378">
+          <caret line="33" lean-forward="true" selection-start-line="33" selection-end-line="33" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/partitionmodel/PartitionModelRtree.java">
+    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/node/LeafModel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="65" column="36" selection-start-line="65" selection-start-column="36" selection-end-line="65" selection-end-column="36" />
-          <folding>
-            <element signature="e#10230#10231#0" expanded="true" />
-            <element signature="e#10281#10282#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="237">
+          <caret line="276" column="27" selection-start-line="276" selection-start-column="18" selection-end-line="276" selection-end-column="27" />
         </state>
       </provider>
     </entry>
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk-12.0.1.jdk/Contents/Home/lib/src.zip!/java.base/java/util/Collections.java">
+    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/node/NonLeafModel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="421" column="7" lean-forward="true" selection-start-line="421" selection-start-column="7" selection-end-line="421" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/IRtree.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="166">
-          <caret line="65" column="48" selection-start-line="65" selection-start-column="48" selection-end-line="65" selection-end-column="48" />
+        <state relative-caret-position="470">
+          <caret line="237" column="25" lean-forward="true" selection-start-line="237" selection-start-column="25" selection-end-line="237" selection-end-column="25" />
           <folding>
-            <element signature="e#455#456#0" expanded="true" />
-            <element signature="e#495#496#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/unsupervisedPartition/UnsupervisedPartitionModel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="166">
-          <caret line="88" column="25" selection-start-line="88" selection-start-column="25" selection-end-line="88" selection-end-column="25" />
-          <folding>
-            <element signature="e#3010#3011#0" expanded="true" />
-            <element signature="e#3057#3058#0" expanded="true" />
+            <element signature="e#853#854#0" expanded="true" />
+            <element signature="e#885#886#0" expanded="true" />
+            <element signature="e#948#949#0" expanded="true" />
+            <element signature="e#990#991#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/node/UnsupervisedModel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="127" column="17" lean-forward="true" selection-start-line="127" selection-start-column="17" selection-end-line="127" selection-end-column="17" />
+        <state relative-caret-position="296">
+          <caret line="148" column="25" lean-forward="true" selection-start-line="148" selection-start-column="25" selection-end-line="148" selection-end-column="25" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/recursivemodel/OriginalRecursiveModel.java">
+    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/partitionmodel/RecursivePartition.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="317">
-          <caret line="73" lean-forward="true" selection-start-line="73" selection-end-line="73" />
+        <state relative-caret-position="247">
+          <caret line="80" column="56" selection-start-line="80" selection-start-column="56" selection-end-line="80" selection-end-column="56" />
           <folding>
-            <element signature="e#13937#13938#0" expanded="true" />
-            <element signature="e#13964#13965#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#2828#2829#0" expanded="true" />
+            <element signature="e#2855#2856#0" expanded="true" />
+            <element signature="e#2917#2918#0" expanded="true" />
+            <element signature="e#2964#2965#0" expanded="true" />
+            <element signature="e#5424#5425#0" expanded="true" />
+            <element signature="e#5466#5467#0" expanded="true" />
+            <element signature="e#5524#5525#0" expanded="true" />
+            <element signature="e#5565#5566#0" expanded="true" />
+            <element signature="e#5660#5661#0" expanded="true" />
+            <element signature="e#5687#5688#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/node/LeafModel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="112" column="30" lean-forward="true" selection-start-line="112" selection-start-column="30" selection-end-line="112" selection-end-column="30" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/node/Model.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="355">
-          <caret line="220" selection-start-line="220" selection-end-line="220" />
+        <state relative-caret-position="300">
+          <caret line="359" column="30" selection-start-line="359" selection-start-column="30" selection-end-line="359" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/node/Partition.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="305" selection-start-line="305" selection-end-line="315" selection-end-column="5" />
           <folding>
-            <element signature="e#1525#1526#0" expanded="true" />
-            <element signature="e#1551#1552#0" expanded="true" />
+            <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/unsupervisedPartition/UnsupervisedPartitionModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="87" selection-start-line="87" selection-end-line="93" selection-end-column="5" />
+          <folding>
+            <element signature="e#3025#3026#0" expanded="true" />
+            <element signature="e#3072#3073#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/recursivemodel/OriginalRecursiveModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="383">
+          <caret line="398" column="21" selection-start-line="398" selection-start-column="21" selection-end-line="398" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/utils/ExpReturn.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="49" column="34" selection-start-line="49" selection-start-column="34" selection-end-line="49" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/partitionmodel/PartitionModelRtree.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="502">
+          <caret line="351" column="5" selection-start-line="351" selection-start-column="5" selection-end-line="351" selection-end-column="5" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/Test.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="128" column="122" selection-start-line="128" selection-start-column="122" selection-end-line="128" selection-end-column="122" />
+        <state relative-caret-position="101">
+          <caret line="38" column="59" selection-start-line="38" selection-start-column="59" selection-end-line="38" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/hrtree/HRRtree.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="320">
+          <caret line="213" column="24" selection-start-line="213" selection-start-column="24" selection-end-line="213" selection-end-column="24" />
         </state>
       </provider>
     </entry>

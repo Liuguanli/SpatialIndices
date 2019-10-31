@@ -63,7 +63,7 @@ public class PartitionModelRtree extends IRtree {
 
     public Boundary getPartition(List<Point> points, int dim, int length) {
         if (dim == 0) {
-            Boundary boundary = new Boundary(modelIndex, dim - 1);
+            Boundary boundary = new Boundary(modelIndex, dim);
 //            boundary.addBoundry(new Line(points.get(0).getLocation()[dim - 1], points.get(points.size() - 1).getLocation()[dim - 1]));
             partitionModels.put(modelIndex++, addPointsAndBuild(points));
             return boundary;
@@ -191,6 +191,8 @@ public class PartitionModelRtree extends IRtree {
             expReturn.pageaccess += eachExpReturn.pageaccess;
             expReturn.time += eachExpReturn.time + end - begin;
         });
+        expReturn.time /= points.size();
+        expReturn.pageaccess = expReturn.pageaccess / points.size();
         return expReturn;
     }
 
@@ -204,9 +206,7 @@ public class PartitionModelRtree extends IRtree {
         ExpReturn expReturn = new ExpReturn();
         windows.forEach(mbr -> {
             ExpReturn temp = windowQuery(mbr);
-            expReturn.time += temp.time;
-            expReturn.pageaccess += temp.pageaccess;
-            expReturn.accuracy += temp.accuracy;
+            expReturn.plus(temp);
         });
         expReturn.time /= windows.size();
         expReturn.pageaccess /= windows.size();
@@ -340,6 +340,14 @@ public class PartitionModelRtree extends IRtree {
         ExpReturn accurate = windowQueryByScanAll(window);
         expReturn.accuracy = (double) expReturn.result.size() / accurate.result.size();
         expReturn.time = end - begin;
+        return expReturn;
+    }
+
+    public ExpReturn windowQueryByScanAll(List<Mbr> windows) {
+        ExpReturn expReturn = new ExpReturn();
+        windows.forEach(mbr -> expReturn.plus(windowQueryByScanAll(mbr)));
+        expReturn.time /= windows.size();
+        expReturn.pageaccess /= windows.size();
         return expReturn;
     }
 

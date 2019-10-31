@@ -47,6 +47,7 @@ public class ExpReturn {
     public void plus(ExpReturn temp) {
         pageaccess += temp.pageaccess;
         time += temp.time;
+        accuracy += temp.accuracy;
         result.addAll(temp.result);
 
     }
