@@ -1,6 +1,5 @@
 package com.unimelb.cis.structures;
 
-import com.unimelb.cis.HilbertCurve;
 import com.unimelb.cis.geometry.Mbr;
 import com.unimelb.cis.node.LeafNode;
 import com.unimelb.cis.node.Node;

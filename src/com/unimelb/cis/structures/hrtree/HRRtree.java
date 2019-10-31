@@ -1,23 +1,15 @@
 package com.unimelb.cis.structures.hrtree;
 
-import com.unimelb.cis.CSVFileWriter;
-import com.unimelb.cis.HilbertCurve;
-import com.unimelb.cis.ZCurve;
+import com.unimelb.cis.curve.HilbertCurve;
 import com.unimelb.cis.geometry.Mbr;
 import com.unimelb.cis.node.LeafNode;
 import com.unimelb.cis.node.Node;
 import com.unimelb.cis.node.NonLeafNode;
 import com.unimelb.cis.node.Point;
 import com.unimelb.cis.structures.RLRtree;
-import com.unimelb.cis.structures.zrtree.ZRtree;
 import com.unimelb.cis.utils.ExpReturn;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.*;
-import java.util.function.Consumer;
 
 import static com.unimelb.cis.CSVFileReader.read;
 

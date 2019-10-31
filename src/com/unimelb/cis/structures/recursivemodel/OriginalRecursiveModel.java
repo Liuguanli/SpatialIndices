@@ -1,9 +1,8 @@
 package com.unimelb.cis.structures.recursivemodel;
 
-import com.unimelb.cis.Curve;
+import com.unimelb.cis.curve.Curve;
 import com.unimelb.cis.geometry.Mbr;
 import com.unimelb.cis.node.LeafNode;
-import com.unimelb.cis.node.Model;
 import com.unimelb.cis.node.NonLeafNode;
 import com.unimelb.cis.node.Point;
 import com.unimelb.cis.structures.IRtree;
@@ -18,10 +17,9 @@ import weka.core.Instances;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Consumer;
 
 import static com.unimelb.cis.CSVFileReader.read;
-import static com.unimelb.cis.ZCurve.getZcurve;
+import static com.unimelb.cis.curve.ZCurve.getZcurve;
 
 public class OriginalRecursiveModel extends IRtree {
 
@@ -402,6 +400,14 @@ public class OriginalRecursiveModel extends IRtree {
             ExpReturn temp = windowQuery(mbr);
             expReturn.plus(temp);
         });
+        expReturn.time /= windows.size();
+        expReturn.pageaccess /= windows.size();
+        return expReturn;
+    }
+
+    public ExpReturn windowQueryByScanAll(List<Mbr> windows) {
+        ExpReturn expReturn = new ExpReturn();
+        windows.forEach(window -> expReturn.plus(windowQueryByScanAll(window)));
         expReturn.time /= windows.size();
         expReturn.pageaccess /= windows.size();
         return expReturn;

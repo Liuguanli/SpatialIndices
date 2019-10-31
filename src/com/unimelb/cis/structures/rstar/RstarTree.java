@@ -1,6 +1,5 @@
 package com.unimelb.cis.structures.rstar;
 
-import com.unimelb.cis.ZCurve;
 import com.unimelb.cis.geometry.Mbr;
 import com.unimelb.cis.node.LeafNode;
 import com.unimelb.cis.node.Node;

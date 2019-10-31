@@ -1,18 +1,14 @@
 package com.unimelb.cis.structures.partitionmodel;
 
-import com.unimelb.cis.Curve;
 import com.unimelb.cis.geometry.Mbr;
-import com.unimelb.cis.node.Model;
 import com.unimelb.cis.node.NonLeafNode;
 import com.unimelb.cis.node.Partition;
 import com.unimelb.cis.node.Point;
 import com.unimelb.cis.structures.IRtree;
 import com.unimelb.cis.utils.ExpReturn;
-import weka.classifiers.functions.SMOreg;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 
 import static com.unimelb.cis.CSVFileReader.read;
 
@@ -142,6 +138,18 @@ public class RecursivePartition extends IRtree {
     @Override
     public ExpReturn pointQuery(Point point) {
         return root.pointQuery(point);
+    }
+
+    public ExpReturn windowQueryByScanAll(List<Mbr> windows) {
+        ExpReturn expReturn = new ExpReturn();
+        windows.forEach(mbr -> expReturn.plus(windowQueryByScanAll(mbr)));
+        expReturn.time /= windows.size();
+        expReturn.pageaccess /= windows.size();
+        return expReturn;
+    }
+
+    public ExpReturn windowQueryByScanAll(Mbr window) {
+        return root.windowQueryByScanAll(window);
     }
 
     @Override

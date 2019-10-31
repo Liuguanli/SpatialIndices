@@ -1,7 +1,6 @@
 package com.unimelb.cis.structures.zrtree;
 
-import com.unimelb.cis.CSVFileWriter;
-import com.unimelb.cis.ZCurve;
+import com.unimelb.cis.curve.ZCurve;
 import com.unimelb.cis.geometry.Mbr;
 import com.unimelb.cis.node.LeafNode;
 import com.unimelb.cis.node.Node;

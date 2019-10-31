@@ -48,6 +48,7 @@ public class Test {
         System.out.println("build finish:" + PRegression.buildRtree(s).time);
         System.out.println("point query:" + PRegression.pointQuery(PRegression.getPoints()));
         System.out.println("window query:" + PRegression.windowQuery(mbrs));
+        System.out.println("windowQueryByScanAll query:" + PRegression.windowQueryByScanAll(mbrs));
         System.out.println("knn query:" + PRegression.knnQuery(knnPoints, k));
         System.out.println("insert:" + PRegression.insert(insertedPoints));
     }
@@ -60,6 +61,7 @@ public class Test {
         System.out.println("build finish:" + Pclassification.buildRtree(s).time);
         System.out.println("point query:" + Pclassification.pointQuery(Pclassification.getPoints()));
         System.out.println("window query:" + Pclassification.windowQuery(mbrs));
+        System.out.println("windowQueryByScanAll query:" + Pclassification.windowQueryByScanAll(mbrs));
         System.out.println("knn query:" + Pclassification.knnQuery(knnPoints, k));
         System.out.println("insert:" + Pclassification.insert(insertedPoints));
     }
@@ -89,10 +91,11 @@ public class Test {
     public static void testOriginalRecursiveModel(String s, List<Point> insertedPoints, List<Mbr> mbrs, List<Point> knnPoints, int k) {
         System.out.println("------------------------------------------------");
         System.out.println("OriginalRecursive");
-        OriginalRecursiveModel originalRecursiveModel1 = new OriginalRecursiveModel(100, false, Arrays.asList(1, 200, 40000), "Z");
+        OriginalRecursiveModel originalRecursiveModel1 = new OriginalRecursiveModel(100, false, Arrays.asList(1, 100, 10000), "Z");
         System.out.println(originalRecursiveModel1.buildRtree(s));
         System.out.println("pointQuery:" + originalRecursiveModel1.pointQuery(originalRecursiveModel1.getPoints()));
         System.out.println("windowQuery:" + originalRecursiveModel1.windowQuery(mbrs));
+        System.out.println("windowQueryByScanAll:" + originalRecursiveModel1.windowQueryByScanAll(mbrs));
         System.out.println("knn query:" + originalRecursiveModel1.knnQuery(knnPoints, k));
         System.out.println("insert:" + originalRecursiveModel1.insert(insertedPoints));
     }
@@ -105,6 +108,7 @@ public class Test {
 //        unsupervisedPartitionModel.visualize(600, 600, unsupervisedPartitionModel.getmbrFigures()).saveMBR("kmeans_160000.png");
         System.out.println("point query:" + unsupervisedPartitionModel.pointQuery(unsupervisedPartitionModel.getPoints()));
         System.out.println("window query:" + unsupervisedPartitionModel.windowQuery(mbrs));
+        System.out.println("windowQueryByScanAll query:" + unsupervisedPartitionModel.windowQueryByScanAll(mbrs));
         System.out.println("knn query:" + unsupervisedPartitionModel.knnQuery(knnPoints, k));
         System.out.println("insert:" + unsupervisedPartitionModel.insert(insertedPoints));
     }
@@ -130,6 +134,7 @@ public class Test {
         System.out.println("build finish:" + recursivePartition.buildRtree(s).time);
         System.out.println("point query:" + recursivePartition.pointQuery(recursivePartition.getPoints()));
         System.out.println("window query:" + recursivePartition.windowQuery(mbrs));
+        System.out.println("windowQueryByScanAll query:" + recursivePartition.windowQueryByScanAll(mbrs));
         System.out.println("knn query:" + recursivePartition.knnQuery(knnPoints, k));
         System.out.println("insert:" + recursivePartition.insert(insertedPoints));
     }
@@ -177,8 +182,8 @@ public class Test {
     );
 
     static List<String> datasets1 = Arrays.asList(
-//            "/Users/guanli/Documents/datasets/RLRtree/raw/uniform_1000000_1_2_.csv"
-            "/Users/guanli/Documents/datasets/RLRtree/raw/uniform_4000000_1_2_.csv"
+            "/Users/guanli/Documents/datasets/RLRtree/raw/uniform_1000000_1_2_.csv"
+//            "/Users/guanli/Documents/datasets/RLRtree/raw/uniform_2000000_1_2_.csv"
 //            "/Users/guanli/Documents/datasets/RLRtree/raw/uniform_4000000_1_2_.csv"
 //            "D:\\datasets\\RLRtree\\raw\\real_east.csv",
 //              "D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_2_.csv"

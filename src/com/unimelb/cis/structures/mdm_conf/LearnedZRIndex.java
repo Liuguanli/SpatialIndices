@@ -1,8 +1,7 @@
 package com.unimelb.cis.structures.mdm_conf;
 
 
-import com.unimelb.cis.Curve;
-import com.unimelb.cis.ZCurve;
+import com.unimelb.cis.curve.Curve;
 import com.unimelb.cis.geometry.Mbr;
 import com.unimelb.cis.node.*;
 import com.unimelb.cis.structures.IRtree;

@@ -1,6 +1,6 @@
 package com.unimelb.cis.node;
 
-import com.unimelb.cis.Curve;
+import com.unimelb.cis.curve.Curve;
 import com.unimelb.cis.geometry.Mbr;
 import com.unimelb.cis.utils.ExpReturn;
 import weka.clusterers.SimpleKMeans;

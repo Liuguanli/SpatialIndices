@@ -1,4 +1,4 @@
-package com.unimelb.cis;
+package com.unimelb.cis.curve;
 
 import java.math.BigInteger;
 import java.util.Arrays;

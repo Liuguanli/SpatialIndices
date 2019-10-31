@@ -1,7 +1,6 @@
 package com.unimelb.cis.geometry;
 
-import com.unimelb.cis.HilbertCurve;
-import com.unimelb.cis.ZCurve;
+import com.unimelb.cis.curve.ZCurve;
 
 import java.util.ArrayList;
 import java.util.List;
