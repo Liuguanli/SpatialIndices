@@ -152,18 +152,6 @@ public class ZRRtree extends RLRtree {
     }
 
     @Override
-    public ExpReturn pointQuery(List<Point> points) {
-        ExpReturn expReturn = new ExpReturn();
-        long begin = System.nanoTime();
-        points.forEach(point -> {
-            expReturn.pageaccess += pointQuery(point).pageaccess;
-        });
-        long end = System.nanoTime();
-        expReturn.time = end - begin;
-        return expReturn;
-    }
-
-    @Override
     public ExpReturn knnQuery(Point point, int k) {
 //        ExpReturn expReturn = new ExpReturn();
 //        long begin = System.nanoTime();
@@ -208,7 +196,7 @@ public class ZRRtree extends RLRtree {
 //        long end = System.nanoTime();
 //        expReturn.time = end - begin;
 //        return expReturn;
-        float knnquerySide = (float) Math.sqrt((float)k/points.size());
+        float knnquerySide = (float) Math.sqrt((float) k / points.size());
         ExpReturn expReturn = new ExpReturn();
         long begin = System.nanoTime();
         while (true) {
@@ -221,7 +209,7 @@ public class ZRRtree extends RLRtree {
                     double d2 = point.getDist(o2);
                     if (d1 > d2) {
                         return 1;
-                    } else if(d1 < d2) {
+                    } else if (d1 < d2) {
                         return -1;
                     } else {
                         return 0;
@@ -255,25 +243,33 @@ public class ZRRtree extends RLRtree {
 
     @Override
     public ExpReturn pointQuery(Point point) {
+        return pointQuery(Arrays.asList(point));
+    }
+
+    @Override
+    public ExpReturn pointQuery(List<Point> points) {
         ExpReturn expReturn = new ExpReturn();
         long begin = System.nanoTime();
-        List<Node> nodes = new ArrayList<>();
-        nodes.add(root);
-        while (nodes.size() > 0) {
-            Node top = nodes.remove(0);
-            if (top instanceof NonLeafNode) {
-                if (top.getMbr().contains(point)) {
-                    expReturn.pageaccess++;
-                    nodes.addAll(((NonLeafNode) top).getChildren());
-                }
-            } else if (top instanceof LeafNode) {
-                if (top.getMbr().contains(point)) {
-                    expReturn.pageaccess++;
-                    break;
+        points.forEach(point -> {
+            List<Node> nodes = new ArrayList<>();
+            nodes.add(root);
+            while (nodes.size() > 0) {
+                Node top = nodes.remove(0);
+                if (top instanceof NonLeafNode) {
+                    if (top.getMbr().contains(point)) {
+                        expReturn.pageaccess++;
+                        nodes.addAll(((NonLeafNode) top).getChildren());
+                    }
+                } else if (top instanceof LeafNode) {
+                    if (top.getMbr().contains(point)) {
+                        expReturn.pageaccess++;
+                        if (((LeafNode) top).getChildren().contains(point)) {
+                            break;
+                        }
+                    }
                 }
             }
-
-        }
+        });
         long end = System.nanoTime();
         expReturn.time = end - begin;
         return expReturn;
@@ -399,15 +395,18 @@ public class ZRRtree extends RLRtree {
     }
 
     public static void main(String[] args) {
-        ZRRtree zRRtree = new ZRRtree(10);
+        ZRRtree zRRtree = new ZRRtree(100);
 
-//        zRRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_1000_1_2_.csv");
+        zRRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_1000000_1_2_.csv");
 //        zRRtree.visualize(600, 600).save("uniform_1000_1_2_.png");
-//        zRRtree.output("/Users/guanli/Documents/datasets/RLRtree/trees/Z_uniform_10000_1_2_.csv");
+        long begin = System.nanoTime();
+        zRRtree.output("/Users/guanli/Documents/datasets/RLRtree/trees/Z_uniform_1000000_1_2_.csv");
+        long end = System.nanoTime();
+        System.out.println("time:" + (end - begin));
 
-        zRRtree = new ZRRtree(100);
-        zRRtree.buildRtreeAfterTuning("/Users/guanli/Documents/datasets/RLRtree/newtrees/H_uniform_10000_1_2_DQN.csv", 2, 3);
-        zRRtree.visualize(600, 600).save("DQN_uniform_1000_1_2_.png");
+//        zRRtree = new ZRRtree(100);
+//        zRRtree.buildRtreeAfterTuning("/Users/guanli/Documents/datasets/RLRtree/newtrees/H_uniform_10000_1_2_DQN.csv", 2, 3);
+//        zRRtree.visualize(600, 600).save("DQN_uniform_1000_1_2_.png");
 //        zRRtree.buildRtree("D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_2_.csv");
 //        zRRtree.getRoot();
 
@@ -417,7 +416,7 @@ public class ZRRtree extends RLRtree {
 
 //        zRRtree.visualize(600, 600).save("uniform_10000_1_2_.png");
 
-//        zRRtree.pointQuery(zRRtree.getPoints());
+//        System.out.println(zRRtree.pointQuery(zRRtree.getPoints()));
 
 
 //        System.out.println("point query:" + zRRtree.pointQuery(zRRtree.points));

@@ -172,18 +172,6 @@ public class HRtree extends RLRtree {
     }
 
     @Override
-    public ExpReturn pointQuery(List<Point> points) {
-        ExpReturn expReturn = new ExpReturn();
-        long begin = System.nanoTime();
-        points.forEach(point -> {
-            expReturn.pageaccess += pointQuery(point).pageaccess;
-        });
-        long end = System.nanoTime();
-        expReturn.time = end - begin;
-        return expReturn;
-    }
-
-    @Override
     public ExpReturn knnQuery(Point point, int k) {
 //        ExpReturn expReturn = new ExpReturn();
 //        long begin = System.nanoTime();
@@ -262,25 +250,33 @@ public class HRtree extends RLRtree {
 
     @Override
     public ExpReturn pointQuery(Point point) {
+        return pointQuery(Arrays.asList(point));
+    }
+
+    @Override
+    public ExpReturn pointQuery(List<Point> points) {
         ExpReturn expReturn = new ExpReturn();
         long begin = System.nanoTime();
-        List<Node> nodes = new ArrayList<>();
-        nodes.add(root);
-        while (nodes.size() > 0) {
-            Node top = nodes.remove(0);
-            if (top instanceof NonLeafNode) {
-                if (top.getMbr().contains(point)) {
-                    expReturn.pageaccess++;
-                    nodes.addAll(((NonLeafNode) top).getChildren());
-                }
-            } else if (top instanceof LeafNode) {
-                if (top.getMbr().contains(point)) {
-                    expReturn.pageaccess++;
-                    break;
+        points.forEach(point -> {
+            List<Node> nodes = new ArrayList<>();
+            nodes.add(root);
+            while (nodes.size() > 0) {
+                Node top = nodes.remove(0);
+                if (top instanceof NonLeafNode) {
+                    if (top.getMbr().contains(point)) {
+                        expReturn.pageaccess++;
+                        nodes.addAll(((NonLeafNode) top).getChildren());
+                    }
+                } else if (top instanceof LeafNode) {
+                    if (top.getMbr().contains(point)) {
+                        expReturn.pageaccess++;
+                        if (((LeafNode) top).getChildren().contains(point)) {
+                            break;
+                        }
+                    }
                 }
             }
-
-        }
+        });
         long end = System.nanoTime();
         expReturn.time = end - begin;
         return expReturn;
@@ -420,9 +416,9 @@ public class HRtree extends RLRtree {
 //        System.out.println(zRtree.windowQuery(Mbr.getMbrs(0.01f, 10, 3).get(0)));
 //        System.out.println(zRtree.windowQuery(Mbr.getMbrs(0.01f, 9, 3).get(0)));
 //        System.out.println(zRtree.windowQuery(Mbr.getMbrs(0.01f, 11, 3).get(0)));
-//        System.out.println(hRRtree.pointQuery(hRRtree.getPoints()));
+        System.out.println(hRRtree.pointQuery(hRRtree.getPoints()));
 //        hRRtree.insert(new Point(0.5f,0.5f));
-        System.out.println("knn query:" + hRRtree.knnQuery(new Point(0.5f, 0.5f), 1));
+//        System.out.println("knn query:" + hRRtree.knnQuery(new Point(0.5f, 0.5f), 1));
     }
 
 }

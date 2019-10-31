@@ -107,7 +107,7 @@ public class RecursiveModelRtree extends IRtree {
                     double d2 = point.getDist(o2);
                     if (d1 > d2) {
                         return 1;
-                    } else if(d1 < d2) {
+                    } else if (d1 < d2) {
                         return -1;
                     } else {
                         return 0;
@@ -259,27 +259,20 @@ public class RecursiveModelRtree extends IRtree {
      * @throws ParseException
      */
     public static void main(String[] args) {
-        List<String> all = new ArrayList<>();
-        all.addAll(regs);
-        all.addAll(clas);
-
-        for (int i = 0; i < all.size(); i++) {
-            long begin = System.nanoTime();
-            System.out.println("---------------" + all.get(i) + "---------------");
-            RecursiveModelRtree recursiveModelRtree = new RecursiveModelRtree(10000, "H", 100, all.get(i));
-            recursiveModelRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_10000_1_2_.csv");
+        long begin = System.nanoTime();
+        RecursiveModelRtree recursiveModelRtree = new RecursiveModelRtree(10000, "H", 100, "NaiveBayes");
+        recursiveModelRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_10000_1_2_.csv");
 //            recursiveModelRtree.buildRtree("D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_2_.csv");
 //            recursiveModelRtree.build("D:\\datasets\\RLRtree\\raw\\normal_160000_1_2_.csv", all.get(i));
-            ExpReturn expReturn = recursiveModelRtree.pointQuery(recursiveModelRtree.root.getChildren());
-            System.out.println("knn query:" + recursiveModelRtree.knnQuery(new Point(0.5f, 0.5f), 1));
+        ExpReturn expReturn = recursiveModelRtree.pointQuery(recursiveModelRtree.root.getChildren());
+        System.out.println("knn query:" + recursiveModelRtree.knnQuery(new Point(0.5f, 0.5f), 1));
 //            ExpReturn expReturn1 = recursiveModelRtree.windowQuery(new Mbr(0.1f, 0.1f, 0.6f, 0.6f));
 //            long end = System.nanoTime();
 //            System.out.println(end - begin);
-            System.out.println(expReturn);
+        System.out.println(expReturn);
 //            System.out.println(expReturn1);
-            System.out.println("insert" + recursiveModelRtree.insert(new Point(0.5f, 0.5f)));
+        System.out.println("insert" + recursiveModelRtree.insert(new Point(0.5f, 0.5f)));
 //            break;
-        }
 
 //        PrintStream var10000 = System.out;
 //        String var10001 = "MultilayerPerceptron";
@@ -294,7 +287,5 @@ public class RecursiveModelRtree extends IRtree {
 
     }
 
-    public static List<String> clas = Arrays.asList("NaiveBayes");
-    public static List<String> regs = Arrays.asList("LinearRegression");
 
 }

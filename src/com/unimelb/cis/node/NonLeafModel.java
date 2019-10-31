@@ -98,7 +98,7 @@ public class NonLeafModel extends Model {
         Instances instances = getInstances(name, points, type);
         classifier = getModels(name);
         train(classifier, instances);
-        List<Double> results = getPredVals(classifier, instances);
+        List<Double> results = getPredVals0(classifier, instances);
         for (int i = 0; i < results.size(); i++) {
             add(results.get(i).intValue(), getChildren().get(i));
         }
@@ -116,7 +116,7 @@ public class NonLeafModel extends Model {
         List<Point> points = new ArrayList<>();
         points.add(point);
         Instances instances = getInstances(name, points, type);
-        List<Double> results = getPredVals(classifier, instances);
+        List<Double> results = getPredVals0(classifier, instances);
         ExpReturn expReturn = new ExpReturn();
         long begin = System.nanoTime();
         for (int i = 0; i < results.size(); i++) {
@@ -132,7 +132,7 @@ public class NonLeafModel extends Model {
     public ExpReturn pointQuery(List<Point> points) {
 //        System.out.println("NonLeafNode pointQuery(List<Point> points)");
         Instances instances = getInstances(name, points, type);
-        List<Double> results = getPredVals(classifier, instances);
+        List<Double> results = getPredVals0(classifier, instances);
         Double index = results.get(0);
         List<Point> sameIndexPoints = new ArrayList<>();
         ExpReturn expReturn = new ExpReturn();
@@ -165,7 +165,7 @@ public class NonLeafModel extends Model {
         List<Point> sameIndexPoints = new ArrayList<>();
         ExpReturn expReturn = new ExpReturn();
         Instances instances = getInstances(name, points, type);
-        List<Double> results = getPredVals(classifier, instances);
+        List<Double> results = getPredVals0(classifier, instances);
         Double index = results.get(0);
 
         long begin = System.nanoTime();
@@ -230,9 +230,7 @@ public class NonLeafModel extends Model {
         subModels.forEach((integer, leafModel) -> {
             if (leafModel.getMbr().interact(window)) {
                 ExpReturn eachExpReturn = leafModel.windowQueryByScanAll(mbr);
-                expReturn.pageaccess += eachExpReturn.pageaccess;
-                expReturn.pageaccess++;
-                expReturn.result.addAll(eachExpReturn.result);
+                expReturn.plus(eachExpReturn);
             }
         });
         long end = System.nanoTime();

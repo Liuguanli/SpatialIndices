@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 import static com.unimelb.cis.CSVFileReader.read;
 
@@ -29,11 +30,11 @@ public class UnsupervisedPartitionModel extends IRtree {
     private int maxIteration;
 
     public static void main(String[] args) {
-        UnsupervisedPartitionModel unsupervisedPartitionModel = new UnsupervisedPartitionModel(10000, "H", 100, "NaiveBayes", 10);
+        UnsupervisedPartitionModel unsupervisedPartitionModel = new UnsupervisedPartitionModel(4000, "H", 100, "NaiveBayes", 10);
         unsupervisedPartitionModel.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_160000_1_2_.csv");
-//        ExpReturn expReturn = unsupervisedPartitionModel.pointQuery(unsupervisedPartitionModel.points);
-//        System.out.println(expReturn);
-        unsupervisedPartitionModel.visualize(600,600, unsupervisedPartitionModel.getmbrFigures()).saveMBR("kmeans_uniform_160000.png");
+        ExpReturn expReturn = unsupervisedPartitionModel.pointQuery(unsupervisedPartitionModel.points);
+        System.out.println("pointQuery:" + expReturn);
+        unsupervisedPartitionModel.visualize(600, 600, unsupervisedPartitionModel.getmbrFigures()).saveMBR("kmeans_uniform_160000.png");
     }
 
 
@@ -47,17 +48,9 @@ public class UnsupervisedPartitionModel extends IRtree {
 
     public List<Mbr> getmbrFigures() {
         List<Mbr> mbrFigures = new ArrayList<>();
-        root.getSubModels().forEach(new BiConsumer<Integer, UnsupervisedModel>() {
-            @Override
-            public void accept(Integer integer, UnsupervisedModel unsupervisedModel) {
-                mbrFigures.add(unsupervisedModel.getMbr());
-            }
-        });
+        root.getSubModels().forEach((integer, unsupervisedModel) -> mbrFigures.add(unsupervisedModel.getMbr()));
         return mbrFigures;
     }
-
-
-
 
 
     @Override
@@ -92,6 +85,14 @@ public class UnsupervisedPartitionModel extends IRtree {
         return expReturn;
     }
 
+    public ExpReturn windowQueryByScanAll(List<Mbr> windows) {
+        ExpReturn expReturn = new ExpReturn();
+        windows.forEach(mbr -> expReturn.plus(root.windowQueryByScanAll(mbr)));
+        expReturn.time /= windows.size();
+        expReturn.pageaccess /= windows.size();
+        return expReturn;
+    }
+
     @Override
     public ExpReturn windowQuery(Mbr window) {
         return root.windowQuery(window);
@@ -108,7 +109,10 @@ public class UnsupervisedPartitionModel extends IRtree {
 
     @Override
     public ExpReturn pointQuery(List<Point> points) {
-        return root.pointQuery(points);
+        ExpReturn expReturn = root.pointQuery(points);
+        expReturn.time /= points.size();
+        expReturn.pageaccess /= points.size();
+        return expReturn;
     }
 
     @Override

@@ -92,14 +92,16 @@ public class UnsupervisedModel extends Model {
         ExpReturn result = null;
         if (leafModel == null) {
             try {
+                long begin = System.nanoTime();
                 int index = kmeans.clusterInstance(new Instance(1.0, point.getLocationDouble()));
+                long end =  System.nanoTime();
                 result = subModels.get(index).pointQuery(point);
+                result.time += end - begin;
             } catch (Exception e) {
                 e.printStackTrace();
             }
         } else {
             result = leafModel.pointQuery(point);
-//            System.out.println(result);
         }
         return result;
     }
@@ -133,7 +135,18 @@ public class UnsupervisedModel extends Model {
 
     @Override
     public ExpReturn windowQueryByScanAll(Mbr window) {
-        return null;
+        ExpReturn expReturn = new ExpReturn();
+        if (leafModel == null) {
+            subModels.forEach((integer, unsupervisedModel) -> {
+                if (unsupervisedModel.getMbr().interact(window)) {
+                    ExpReturn temp = unsupervisedModel.windowQueryByScanAll(window);
+                    expReturn.plus(temp);
+                }
+            });
+        } else {
+            return leafModel.windowQueryByScanAll(window);
+        }
+        return expReturn;
     }
 
     @Override

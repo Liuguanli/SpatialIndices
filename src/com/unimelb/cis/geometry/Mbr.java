@@ -161,12 +161,11 @@ public class Mbr {
     public boolean contains(Point point) {
         int dim = this.location.length / 2;
         for (int i = 0; i < dim; i++) {
-            if (point.getLocation()[i] <= this.location[i] || point.getLocation()[i] >= this.location[i + dim])
+            if (point.getLocation()[i] < this.location[i] || point.getLocation()[i] > this.location[i + dim])
                 return false;
             else
                 continue;
         }
-
         return true;
     }
 
