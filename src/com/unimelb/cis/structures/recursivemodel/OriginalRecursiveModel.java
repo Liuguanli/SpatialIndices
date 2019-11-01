@@ -377,7 +377,7 @@ public class OriginalRecursiveModel extends IRtree {
         int indexLow = Math.max(0, results.get(0));
         int indexHigh = Math.min(leafNodes.size(), results.get(results.size() - 1));
 
-        for (int i = indexLow; i <= indexHigh; i++) {
+        for (int i = indexLow; i < indexHigh; i++) {
             if (window.interact(leafNodes.get(i).getMbr())) {
                 expReturn.pageaccess++;
                 leafNodes.get(i).getChildren().forEach(point -> {

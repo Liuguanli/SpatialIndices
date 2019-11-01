@@ -359,8 +359,9 @@ public class HRRtree extends RLRtree {
         HRRtree hRRtree = new HRRtree(100);
 
 //        hRRtree.buildRtree("D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_2_.csv");
-        hRRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_4000000_1_2_.csv");
-
+        hRRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_1000000_1_2_.csv");
+//        time=9021
+//        pageaccess=3.623869
 //        hRRtree.buildRtreeAfterTuning("/Users/guanli/Documents/datasets/RLRtree/newtrees/H_uniform_10000_1_2_DQN.csv", 2, 3);
 //        hRRtree.visualize(600, 600).save("DQN_uniform_1000_1_2_.png");
 

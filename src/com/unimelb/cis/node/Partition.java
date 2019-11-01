@@ -174,7 +174,7 @@ public class Partition extends Model {
 //            System.out.println(partition.getMbr());
             return partition;
         } else {
-            points = Curve.getPointByCurve(points, "Z", true);
+            points = Curve.getPointByCurve(points, "H", true);
             LeafModel leafModel = new LeafModel(level + 1, pageSize, this.name);
 //            LeafModel leafModel = new LeafModel(level + 1, pageSize, "NaiveBayes");
 //            LeafModel leafModel = new LeafModel(level + 1, pageSize, "Logistic");

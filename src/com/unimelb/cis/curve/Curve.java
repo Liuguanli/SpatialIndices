@@ -30,6 +30,9 @@ public abstract class Curve {
             case "H":
                 points = HilbertCurve.hilbertCurve(points, rankspace);
                 break;
+            case "P":
+                points = PeanoCurve.peanoCurve(points, rankspace);
+                break;
         }
         return points;
     }

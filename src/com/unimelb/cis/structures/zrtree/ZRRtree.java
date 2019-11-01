@@ -142,8 +142,7 @@ public class ZRRtree extends RLRtree {
         ExpReturn expReturn = new ExpReturn();
         windows.forEach(mbr -> {
             ExpReturn temp = windowQuery(mbr);
-            expReturn.time += temp.time;
-            expReturn.pageaccess += temp.pageaccess;
+            expReturn.plus(temp);
         });
         expReturn.time /= windows.size();
         expReturn.pageaccess /= windows.size();
@@ -271,6 +270,8 @@ public class ZRRtree extends RLRtree {
         });
         long end = System.nanoTime();
         expReturn.time = end - begin;
+        expReturn.time /= points.size();
+        expReturn.pageaccess = expReturn.pageaccess / points.size();
         return expReturn;
     }
 
@@ -397,11 +398,14 @@ public class ZRRtree extends RLRtree {
         ZRRtree zRRtree = new ZRRtree(100);
 
         zRRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_1000000_1_2_.csv");
+        System.out.println(zRRtree.pointQuery(zRRtree.getPoints()));
+//        time=14870
+//        pageaccess=5.760472
 //        zRRtree.visualize(600, 600).save("uniform_1000_1_2_.png");
-        long begin = System.nanoTime();
-        zRRtree.output("/Users/guanli/Documents/datasets/RLRtree/trees/Z_uniform_1000000_1_2_.csv");
-        long end = System.nanoTime();
-        System.out.println("time:" + (end - begin));
+//        long begin = System.nanoTime();
+//        zRRtree.output("/Users/guanli/Documents/datasets/RLRtree/trees/Z_uniform_1000000_1_2_.csv");
+//        long end = System.nanoTime();
+//        System.out.println("time:" + (end - begin));
 
 //        zRRtree = new ZRRtree(100);
 //        zRRtree.buildRtreeAfterTuning("/Users/guanli/Documents/datasets/RLRtree/newtrees/H_uniform_10000_1_2_DQN.csv", 2, 3);

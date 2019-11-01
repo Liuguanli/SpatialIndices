@@ -356,23 +356,8 @@ public class PeanoRtree extends RLRtree {
 
     public static void main(String[] args) {
         PeanoRtree peanoRtree = new PeanoRtree(100);
-
-//        hRRtree.buildRtree("D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_2_.csv");
-        peanoRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_4000000_1_2_.csv");
-
-//        hRRtree.buildRtreeAfterTuning("/Users/guanli/Documents/datasets/RLRtree/newtrees/H_uniform_10000_1_2_DQN.csv", 2, 3);
-//        hRRtree.visualize(600, 600).save("DQN_uniform_1000_1_2_.png");
-
-//        zRtree.output("/Users/guanli/Documents/datasets/RLRtree/trees/Z_uniform_10000_1_2_.csv");
-
-//        zRtree.buildRtreeAfterTuning("/Users/guanli/Documents/datasets/RLRtree/trees/Z_uniform_10000_1_3_.csv", zRtree.getDim(), zRtree.getLevel());
-//        zRtree.getRoot();
-
-//        System.out.println(hRRtree.windowQuery(Mbr.getMbrs(0.01f, 10, 2).get(0)));
-//        System.out.println(zRtree.windowQuery(Mbr.getMbrs(0.01f, 9, 3).get(0)));
-//        System.out.println(zRtree.windowQuery(Mbr.getMbrs(0.01f, 11, 3).get(0)));
-        System.out.println(peanoRtree.pointQuery(peanoRtree.getPoints()));
-//        hRRtree.insert(new Point(0.5f,0.5f));
-//        System.out.println("knn query:" + hRRtree.knnQuery(new Point(0.5f, 0.5f), 1));
+        peanoRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_160000_1_2_.csv");
+//        System.out.println(peanoRtree.pointQuery(peanoRtree.getPoints()));
+        System.out.println(peanoRtree.windowQuery(new Mbr(0.1f, 0.1f, 0.2f, 0.2f)));
     }
 }

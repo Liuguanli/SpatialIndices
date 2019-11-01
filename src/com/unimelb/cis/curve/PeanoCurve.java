@@ -178,7 +178,7 @@ public class PeanoCurve extends Curve {
         }
         Collections.reverse(xbits);
         Collections.reverse(ybits);
-        int result = 0;
+        long result = 0;
         List<Long> rotates = new ArrayList<>();
         rotates.add(0L);
         for (int i = 0; i < length; i++) {
@@ -195,7 +195,7 @@ public class PeanoCurve extends Curve {
 
     public static void main(String[] args) {
 
-        for (int i = 0; i < 81 * 81 * 9; i++) {
+        for (int i = 0; i < 81 * 81 * 81; i++) {
             long[] result = map(i, 9*9*9);
 //            System.out.println(result[0] + " " + result[1] + " " + i);
             if (i != getPeanoValue(result)) {
