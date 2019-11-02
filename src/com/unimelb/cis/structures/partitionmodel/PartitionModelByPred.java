@@ -158,6 +158,11 @@ public class PartitionModelByPred extends IRtree {
     }
 
     @Override
+    public ExpReturn windowQueryByScanAll(List<Mbr> windows) {
+        return null;
+    }
+
+    @Override
     public ExpReturn pointQuery(Point point) {
         ExpReturn expReturn = new ExpReturn();
         long begin = System.nanoTime();

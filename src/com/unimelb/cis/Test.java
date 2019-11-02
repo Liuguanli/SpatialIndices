@@ -15,7 +15,6 @@ import com.unimelb.cis.structures.zrtree.ZRRtree;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Consumer;
 
 public class Test {
 
@@ -128,7 +127,7 @@ public class Test {
     public static void testOriginalRecursiveModel(String s, List<Point> insertedPoints, List<Mbr> mbrs, List<Point> knnPoints, int k) {
         System.out.println("------------------------------------------------");
         System.out.println("OriginalRecursive");
-        OriginalRecursiveModel originalRecursiveModel1 = new OriginalRecursiveModel(100, false, Arrays.asList(1, 400, 80000), "Z");
+        OriginalRecursiveModel originalRecursiveModel1 = new OriginalRecursiveModel(100, false, "Z");
         System.out.println(originalRecursiveModel1.buildRtree(s));
         System.out.println("pointQuery:" + originalRecursiveModel1.pointQuery(originalRecursiveModel1.getPoints()));
         System.out.println("windowQuery:" + originalRecursiveModel1.windowQuery(mbrs));
@@ -215,14 +214,14 @@ public class Test {
 //            "D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_6_.csv"
 //            "D:\\datasets\\RLRtree\\raw\\uniform_2000000_1_2_.csv",
 //            "D:\\datasets\\RLRtree\\raw\\uniform_4000000_1_2_.csv",
-//            "D:\\datasets\\RLRtree\\raw\\uniform_160000_1_2_.csv"
-            "D:\\datasets\\RLRtree\\raw\\skewed_8000000_9_2_.csv",
+            "D:\\datasets\\RLRtree\\raw\\uniform_160000_1_2_.csv"
+//            "D:\\datasets\\RLRtree\\raw\\skewed_8000000_9_2_.csv",
 //            "D:\\datasets\\RLRtree\\raw\\uniform_16000000_1_2_.csv",
 //            "D:\\datasets\\RLRtree\\raw\\uniform_32000000_1_2_.csv"
 //            "D:\\datasets\\RLRtree\\raw\\uniform_64000000_1_2_.csv",
 //            "D:\\datasets\\RLRtree\\raw\\uniform_100000000_1_2_.csv",
 //            "D:\\datasets\\RLRtree\\raw\\real_east.csv"
-            "D:\\datasets\\RLRtree\\raw\\uniform_8000000_1_2_.csv"
+//            "D:\\datasets\\RLRtree\\raw\\uniform_8000000_1_2_.csv"
 //            "D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_2_.csv",
 //            "D:\\datasets\\RLRtree\\raw\\uniform_2000000_1_2_.csv",
 //            "D:\\datasets\\RLRtree\\raw\\uniform_4000000_1_2_.csv",
@@ -263,7 +262,7 @@ public class Test {
                 List<Mbr> mbrs = Mbr.getMbrs(aFloat, 100, 2);
 //                    testPclassification(s, insertedPoints, mbrs, knnPoints, k);
 //                    testZRtree(s, insertedPoints, mbrs, knnPoints, k);
-                testOriginalRecursiveModel(s, insertedPoints, mbrs, knnPoints, k);
+//                testOriginalRecursiveModel(s, insertedPoints, mbrs, knnPoints, k);
 //                    pointQuery:time=14455
 //                    pageaccess=2.317
 
@@ -283,7 +282,7 @@ public class Test {
 //                    testRRegression(s, insertedPoints, mbrs, knnPoints, k);
 //                    testRclassification(s, insertedPoints, mbrs, knnPoints, k);
 //                    testKMeans(s, insertedPoints, mbrs, knnPoints, k);
-//                testRecursivePartition(s, insertedPoints, mbrs, knnPoints, k);
+                testRecursivePartition(s, insertedPoints, mbrs, knnPoints, k);
                 // Partition  MLP
 //                    point query:time=19549
 //                    pageaccess=3.1358

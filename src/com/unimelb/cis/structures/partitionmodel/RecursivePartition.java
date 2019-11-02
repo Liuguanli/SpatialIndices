@@ -33,10 +33,10 @@ public class RecursivePartition extends IRtree {
 //        RecursivePartition recursivePartition = new RecursivePartition(maxPartitionNumEachDim, 10000, "SMOreg");
         RecursivePartition recursivePartition = new RecursivePartition(maxPartitionNumEachDim, 2000, "NaiveBayes");
 //        RecursivePartition recursivePartition = new RecursivePartition(maxPartitionNumEachDim, 000, "LinearRegression"); // time=93329793368 pageaccess=7911393
-        String dataset = "/Users/guanli/Documents/datasets/RLRtree/raw/uniform_160000_1_2_.csv";
-        System.out.println(recursivePartition.buildRtree(dataset));
-        System.out.println("point query:" + recursivePartition.pointQuery(recursivePartition.getQueryPoints(0.01)));
-        System.out.println("window query:" + recursivePartition.windowQuery(Mbr.getMbrs(0.01f, 10, 2).get(0)));
+//        String dataset = "/Users/guanli/Documents/datasets/RLRtree/raw/uniform_160000_1_2_.csv";
+//        System.out.println(recursivePartition.buildRtree(dataset));
+//        System.out.println("point query:" + recursivePartition.pointQuery(recursivePartition.getQueryPoints(0.01)));
+//        System.out.println("window query:" + recursivePartition.windowQuery(Mbr.getMbrs(0.01f, 10, 2).get(0)));
 //        System.out.println("knn query:" + recursivePartition.knnQuery(new Point(0.5f, 0.5f), 10));
 //        System.out.println("insert :" + recursivePartition.insert(new Point(0.5f, 0.5f)));
 //        recursivePartition.visualize(600, 600, recursivePartition.root.getmbrFigures()).saveMBR("recursivePartition_uniform_1000000.png");

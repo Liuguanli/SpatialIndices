@@ -68,6 +68,11 @@ public class LearnedZRIndex extends IRtree  {
     }
 
     @Override
+    public ExpReturn windowQueryByScanAll(List<Mbr> windows) {
+        return null;
+    }
+
+    @Override
     public ExpReturn knnQuery(Point point, int k) {
         // 4 side * side = 4k/data set size
         float knnquerySide = (float) Math.sqrt((float) k / points.size());

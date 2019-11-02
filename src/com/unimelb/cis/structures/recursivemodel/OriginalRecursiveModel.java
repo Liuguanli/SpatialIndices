@@ -31,11 +31,28 @@ public class OriginalRecursiveModel extends IRtree {
 
     List<LeafNode> leafNodes = new ArrayList<>();
 
-    public OriginalRecursiveModel(int pagesize, boolean rankspace, List<Integer> stages, String curveType) {
+    public OriginalRecursiveModel(int pagesize, boolean rankspace, String curveType) {
         super(pagesize);
         this.rankspace = rankspace;
-        this.stages = stages;
         this.curveType = curveType;
+    }
+
+    private List<Integer> getDefaultStages(int datasetSize) {
+        if (datasetSize <=1000000) {
+            return Arrays.asList(1, 100, datasetSize/100);
+        } else if (datasetSize <=4000000) {
+            return Arrays.asList(1, 400, datasetSize/100);
+        } else if (datasetSize <=8000000) {
+            return Arrays.asList(1, 40, 2000, datasetSize/100);
+        } else if (datasetSize <=16000000) {
+            return Arrays.asList(1, 40, 3000, datasetSize/100);
+        } else if (datasetSize <=32000000) {
+            return Arrays.asList(1, 80, 5000, datasetSize/100);
+        } else if (datasetSize <=64000000) {
+            return Arrays.asList(1, 80, 6400, datasetSize/100);
+        } else {
+            return Arrays.asList(1, 100, 10000, datasetSize/100);
+        }
     }
 
     /**
@@ -70,7 +87,7 @@ public class OriginalRecursiveModel extends IRtree {
 //        insert :time=181629
 //        pageaccess=2.0
 
-        OriginalRecursiveModel originalRecursiveModel1 = new OriginalRecursiveModel(100, false, Arrays.asList(1, 100, 1600), "Z");
+        OriginalRecursiveModel originalRecursiveModel1 = new OriginalRecursiveModel(100, false, "Z");
         System.out.println(originalRecursiveModel1.buildRtree(dataset));
         System.out.println("pointQuery:" + originalRecursiveModel1.pointQuery(originalRecursiveModel1.getQueryPoints(0.01)));
         System.out.println("window query:" + originalRecursiveModel1.windowQuery(Mbr.getMbrs(0.01f, 10, 2).get(0)));
@@ -113,6 +130,9 @@ public class OriginalRecursiveModel extends IRtree {
         }
 
         tmp_records.add(Arrays.asList(points));
+
+        stages = getDefaultStages(points.size());
+
 
         int N = stages.get(stages.size() - 1);
 
@@ -405,6 +425,7 @@ public class OriginalRecursiveModel extends IRtree {
         return expReturn;
     }
 
+    @Override
     public ExpReturn windowQueryByScanAll(List<Mbr> windows) {
         ExpReturn expReturn = new ExpReturn();
         windows.forEach(window -> expReturn.plus(windowQueryByScanAll(window)));

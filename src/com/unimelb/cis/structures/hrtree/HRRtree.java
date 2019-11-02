@@ -202,6 +202,11 @@ public class HRRtree extends RLRtree {
     }
 
     @Override
+    public ExpReturn windowQueryByScanAll(List<Mbr> windows) {
+        return null;
+    }
+
+    @Override
     public ExpReturn knnQuery(Point point, int k) {
         float knnquerySide = (float) Math.sqrt((float) k / points.size());
         ExpReturn expReturn = new ExpReturn();

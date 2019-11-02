@@ -280,6 +280,11 @@ public class HRtree extends RLRtree {
         return expReturn;
     }
 
+    @Override
+    public ExpReturn windowQueryByScanAll(List<Mbr> windows) {
+        return null;
+    }
+
 
     @Override
     public NonLeafNode buildRtreeAfterTuning(String path, int dim, int level) {

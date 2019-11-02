@@ -133,6 +133,11 @@ public class RstarTree extends RLRtree {
     }
 
     @Override
+    public ExpReturn windowQueryByScanAll(List<Mbr> windows) {
+        return null;
+    }
+
+    @Override
     public ExpReturn pointQuery(Point point) {
         return pointQuery(Arrays.asList(point));
     }

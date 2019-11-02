@@ -275,6 +275,11 @@ public class ZRRtree extends RLRtree {
         return expReturn;
     }
 
+    @Override
+    public ExpReturn windowQueryByScanAll(List<Mbr> windows) {
+        return null;
+    }
+
     public ExpReturn insert(List<Point> points) {
         ExpReturn expReturn = new ExpReturn();
         long begin = System.nanoTime();

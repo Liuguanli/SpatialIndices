@@ -80,6 +80,8 @@ public abstract class IRtree {
 
     public abstract ExpReturn pointQuery(List<Point> points);
 
+    public abstract ExpReturn windowQueryByScanAll(List<Mbr> windows);
+
     public abstract ExpReturn knnQuery(Point point, int k);
 
     public abstract ExpReturn knnQuery(List<Point> points, int k);

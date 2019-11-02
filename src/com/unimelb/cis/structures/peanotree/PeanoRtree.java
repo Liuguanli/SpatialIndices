@@ -7,7 +7,6 @@ import com.unimelb.cis.node.Node;
 import com.unimelb.cis.node.NonLeafNode;
 import com.unimelb.cis.node.Point;
 import com.unimelb.cis.structures.RLRtree;
-import com.unimelb.cis.structures.hrtree.HRRtree;
 import com.unimelb.cis.utils.ExpReturn;
 
 import java.util.ArrayList;
@@ -198,6 +197,11 @@ public class PeanoRtree extends RLRtree {
         expReturn.time /= points.size();
         expReturn.pageaccess = expReturn.pageaccess / points.size();
         return expReturn;
+    }
+
+    @Override
+    public ExpReturn windowQueryByScanAll(List<Mbr> windows) {
+        return null;
     }
 
     @Override
