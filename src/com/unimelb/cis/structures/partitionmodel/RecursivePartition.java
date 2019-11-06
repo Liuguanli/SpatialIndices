@@ -22,7 +22,10 @@ public class RecursivePartition extends IRtree {
 
     int maxPartitionNumEachDim;
 
-    public RecursivePartition(int maxPartitionNumEachDim, int threshold, String algorithm) {
+    String curve;
+
+    public RecursivePartition(String curve, int maxPartitionNumEachDim, int threshold, String algorithm) {
+        this.curve = curve;
         this.maxPartitionNumEachDim = maxPartitionNumEachDim;
         this.threshold = threshold;
         this.algorithm = algorithm;
@@ -31,7 +34,7 @@ public class RecursivePartition extends IRtree {
     public static void main(String[] args) {
         int maxPartitionNumEachDim = 8;
 //        RecursivePartition recursivePartition = new RecursivePartition(maxPartitionNumEachDim, 10000, "SMOreg");
-        RecursivePartition recursivePartition = new RecursivePartition(maxPartitionNumEachDim, 2000, "NaiveBayes");
+        RecursivePartition recursivePartition = new RecursivePartition("H", maxPartitionNumEachDim, 2000, "NaiveBayes");
 //        RecursivePartition recursivePartition = new RecursivePartition(maxPartitionNumEachDim, 000, "LinearRegression"); // time=93329793368 pageaccess=7911393
 //        String dataset = "/Users/guanli/Documents/datasets/RLRtree/raw/uniform_160000_1_2_.csv";
 //        System.out.println(recursivePartition.buildRtree(dataset));
@@ -53,7 +56,7 @@ public class RecursivePartition extends IRtree {
             Point point = new Point(line);
             points.add(point);
         }
-        root = new Partition(0, 100, algorithm, maxPartitionNumEachDim, threshold, points);
+        root = new Partition(curve, 0, 100, algorithm, maxPartitionNumEachDim, threshold, points);
         root.build();
 
         long end = System.nanoTime();
@@ -68,15 +71,19 @@ public class RecursivePartition extends IRtree {
 
     @Override
     public ExpReturn windowQuery(Mbr window) {
-        return root.windowQuery(window);
+        ExpReturn expReturn = root.windowQuery(window);
+        ExpReturn accurate = windowQueryByScanAll(window);
+        expReturn.accuracy = (double) expReturn.result.size() / accurate.result.size();
+        return expReturn;
     }
 
     @Override
     public ExpReturn windowQuery(List<Mbr> windows) {
         ExpReturn expReturn = new ExpReturn();
-        windows.forEach(mbr -> expReturn.plus(root.windowQuery(mbr)));
+        windows.forEach(mbr -> expReturn.plus(windowQuery(mbr)));
         expReturn.time /= windows.size();
         expReturn.pageaccess /= windows.size();
+        expReturn.accuracy /= windows.size();
         return expReturn;
     }
 
@@ -88,13 +95,23 @@ public class RecursivePartition extends IRtree {
         return expReturn;
     }
 
-    @Override
-    public ExpReturn knnQuery(Point point, int k) {
+    public ExpReturn accurateKnnQuery(List<Point> points, int k) {
+        ExpReturn expReturn = new ExpReturn();
+        points.forEach(point -> {
+            ExpReturn temp = accurateKnnQuery(point, k);
+            expReturn.plus(temp);
+        });
+        expReturn.time /= points.size();
+        expReturn.pageaccess /= points.size();
+        return expReturn;
+    }
+
+    public ExpReturn accurateKnnQuery(Point point, int k) {
         float knnquerySide = (float) Math.sqrt((float) k / points.size());
         ExpReturn expReturn = new ExpReturn();
         while (true) {
             Mbr window = Mbr.getMbr(point, knnquerySide);
-            ExpReturn tempExpReturn = windowQuery(window);
+            ExpReturn tempExpReturn = windowQueryByScanAll(window);
             List<Point> tempResult = tempExpReturn.result;
             expReturn.time += tempExpReturn.time;
             long begin = System.nanoTime();
@@ -124,6 +141,44 @@ public class RecursivePartition extends IRtree {
     }
 
     @Override
+    public ExpReturn knnQuery(Point point, int k) {
+        float knnquerySide = (float) Math.sqrt((float) k / points.size());
+        ExpReturn expReturn = new ExpReturn();
+        while (true) {
+            Mbr window = Mbr.getMbr(point, knnquerySide);
+            ExpReturn tempExpReturn = windowQuery(window);
+            List<Point> tempResult = tempExpReturn.result;
+            expReturn.time = tempExpReturn.time;
+            long begin = System.nanoTime();
+            if (tempResult.size() >= k) {
+                tempResult.sort((o1, o2) -> {
+                    double d1 = point.getDist(o1);
+                    double d2 = point.getDist(o2);
+                    if (d1 > d2) {
+                        return 1;
+                    } else if (d1 < d2) {
+                        return -1;
+                    } else {
+                        return 0;
+                    }
+                });
+                if (tempResult.get(k - 1).getDist(point) <= knnquerySide) {
+                    long end = System.nanoTime();
+                    expReturn.result = tempResult.subList(0, k);
+                    expReturn.pageaccess += tempExpReturn.pageaccess;
+                    expReturn.time = end - begin;
+                    break;
+                }
+            }
+            knnquerySide = knnquerySide * 2;
+            expReturn.pageaccess = 0;
+        }
+        ExpReturn accurate = accurateKnnQuery(point, k);
+        expReturn.accuracy = claAcc(expReturn.result, accurate.result);
+        return expReturn;
+    }
+
+    @Override
     public ExpReturn knnQuery(List<Point> points, int k) {
         ExpReturn expReturn = new ExpReturn();
         points.forEach(point -> {
@@ -132,6 +187,7 @@ public class RecursivePartition extends IRtree {
         });
         expReturn.time /= points.size();
         expReturn.pageaccess /= points.size();
+        expReturn.accuracy /= points.size();
         return expReturn;
     }
 

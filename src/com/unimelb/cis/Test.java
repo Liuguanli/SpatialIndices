@@ -127,7 +127,7 @@ public class Test {
     public static void testOriginalRecursiveModel(String s, List<Point> insertedPoints, List<Mbr> mbrs, List<Point> knnPoints, int k) {
         System.out.println("------------------------------------------------");
         System.out.println("OriginalRecursive");
-        OriginalRecursiveModel originalRecursiveModel1 = new OriginalRecursiveModel(100, false, "Z");
+        OriginalRecursiveModel originalRecursiveModel1 = new OriginalRecursiveModel(100, false, "Z", 2);
         System.out.println(originalRecursiveModel1.buildRtree(s));
         System.out.println("pointQuery:" + originalRecursiveModel1.pointQuery(originalRecursiveModel1.getPoints()));
         System.out.println("windowQuery:" + originalRecursiveModel1.windowQuery(mbrs));
@@ -177,8 +177,8 @@ public class Test {
 
     public static void testRecursivePartition(String s, List<Point> insertedPoints, List<Mbr> mbrs, List<Point> knnPoints, int k) {
         System.out.println("------------------------------------------------");
-        int maxPartitionNumEachDim = 8;  // LinearRegression
-        RecursivePartition recursivePartition = new RecursivePartition(maxPartitionNumEachDim, 5000, "MultilayerPerceptron");
+        int maxPartitionNumEachDim = 256;  // LinearRegression
+        RecursivePartition recursivePartition = new RecursivePartition("H", maxPartitionNumEachDim, 5000, "MultilayerPerceptron");
         System.out.println("Partition:" + "Recursive");
         System.out.println("build finish:" + recursivePartition.buildRtree(s).time);
         System.out.println("point query:" + recursivePartition.pointQuery(recursivePartition.getPoints()));
@@ -214,7 +214,7 @@ public class Test {
 //            "D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_6_.csv"
 //            "D:\\datasets\\RLRtree\\raw\\uniform_2000000_1_2_.csv",
 //            "D:\\datasets\\RLRtree\\raw\\uniform_4000000_1_2_.csv",
-            "D:\\datasets\\RLRtree\\raw\\uniform_160000_1_2_.csv"
+            "D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_2_.csv"
 //            "D:\\datasets\\RLRtree\\raw\\skewed_8000000_9_2_.csv",
 //            "D:\\datasets\\RLRtree\\raw\\uniform_16000000_1_2_.csv",
 //            "D:\\datasets\\RLRtree\\raw\\uniform_32000000_1_2_.csv"
@@ -248,18 +248,18 @@ public class Test {
 
     public static void main(String[] args) {
 
-        int k = 25;
+        int k = 1;
         int dim = 2;
 
         List<Float> sides = Arrays.asList(0.04f);
 
         datasets.forEach(s -> {
-            List<Point> knnPoints = Point.getPoints(100, 2);
+            List<Point> knnPoints = Point.getPoints(10, 2);
             List<Point> insertedPoints = Point.getPoints(10000, 2);
             System.out.println(s);
 
             sides.forEach(aFloat -> {
-                List<Mbr> mbrs = Mbr.getMbrs(aFloat, 100, 2);
+                List<Mbr> mbrs = Mbr.getMbrs(aFloat, 10, 2);
 //                    testPclassification(s, insertedPoints, mbrs, knnPoints, k);
 //                    testZRtree(s, insertedPoints, mbrs, knnPoints, k);
 //                testOriginalRecursiveModel(s, insertedPoints, mbrs, knnPoints, k);

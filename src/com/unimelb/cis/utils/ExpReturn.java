@@ -49,7 +49,6 @@ public class ExpReturn {
         time += temp.time;
         accuracy += temp.accuracy;
         result.addAll(temp.result);
-
     }
 
 //    @Override

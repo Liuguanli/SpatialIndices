@@ -277,6 +277,8 @@ public class HRtree extends RLRtree {
         });
         long end = System.nanoTime();
         expReturn.time = end - begin;
+        expReturn.time /= points.size();
+        expReturn.pageaccess = expReturn.pageaccess / points.size();
         return expReturn;
     }
 

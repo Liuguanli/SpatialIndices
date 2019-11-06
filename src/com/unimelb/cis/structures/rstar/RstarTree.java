@@ -9,7 +9,6 @@ import com.unimelb.cis.structures.RLRtree;
 import com.unimelb.cis.utils.ExpReturn;
 
 import java.util.*;
-import java.util.function.Consumer;
 
 import static com.unimelb.cis.CSVFileReader.read;
 
@@ -74,32 +73,34 @@ public class RstarTree extends RLRtree {
     @Override
     public ExpReturn windowQuery(Mbr window) {
         ExpReturn expReturn = new ExpReturn();
+        int pageAccessNum = 0;
         long begin = System.nanoTime();
-            List<Node> nodes = new ArrayList<>();
-            nodes.add(root);
-            while (nodes.size() > 0) {
-                Node top = nodes.remove(0);
-                if (top instanceof NonLeafNode) {
-                    if (window.interact(top.getMbr())) {
-                        expReturn.pageaccess++;
-                        nodes.addAll(((NonLeafNode) top).getChildren());
+        ArrayList<Node> list = new ArrayList();
+        list.add(root);
+        while (list.size() > 0) {
+            Node top = list.remove(0);
+            if (top instanceof NonLeafNode) {
+                NonLeafNode nonLeaf = (NonLeafNode) top;
+                if (nonLeaf.getMbr().interact(window)) {
+                    List<Node> children = nonLeaf.getChildren();
+                    list.addAll(list.size(), children);
+                    pageAccessNum++;
+                }
+            } else if (top instanceof LeafNode) {
+                LeafNode leaf = (LeafNode) top;
+                if (leaf.getMbr().interact(window)) {
+                    List<Point> children = leaf.getChildren();
+                    for (int i = 0; i < children.size(); i++) {
+                        if (window.contains(children.get(i))) {
+                            expReturn.result.add(children.get(i));
+                        }
                     }
-                } else if (top instanceof LeafNode) {
-                    if (window.interact(top.getMbr())) {
-                        expReturn.pageaccess++;
-                        List<Point> children = ((LeafNode) top).getChildren();
-                        children.forEach(new Consumer<Point>() {
-                            @Override
-                            public void accept(Point point) {
-                                if (window.contains(point)) {
-                                    expReturn.result.add(point);
-                                }
-                            }
-                        });
-                    }
+                    pageAccessNum++;
                 }
             }
+        }
         long end = System.nanoTime();
+        expReturn.pageaccess = pageAccessNum;
         expReturn.time = end - begin;
         return expReturn;
     }
@@ -129,6 +130,8 @@ public class RstarTree extends RLRtree {
         });
         long end = System.nanoTime();
         expReturn.time = end - begin;
+        expReturn.time /= points.size();
+        expReturn.pageaccess = expReturn.pageaccess / points.size();
         return expReturn;
     }
 
@@ -517,45 +520,75 @@ public class RstarTree extends RLRtree {
 
     @Override
     public ExpReturn knnQuery(Point point, int k) {
+//        ExpReturn expReturn = new ExpReturn();
+//        long begin = System.nanoTime();
+//        PriorityQueue<Object> queue = getQueue(point, k);
+//        ArrayList<Node> list = new ArrayList();
+//        list.add(root);
+//        while (list.size() > 0) {
+//            Node top = list.remove(0);
+//            if (top instanceof NonLeafNode) {
+//                NonLeafNode nonLeaf = (NonLeafNode) top;
+//                List<Node> children = nonLeaf.getChildren();
+//                for (int i = 0; i < children.size(); i++) {
+//                    Node former = children.get(i);
+//                    boolean isProne = false;
+//                    for (int j = 0; j < children.size(); j++) {
+//                        if (i == j) {
+//                            continue;
+//                        }
+//                        Node later = children.get(j);
+//                        if (former.getMbr().calMINMAXDIST(point) > later.getMbr().calMINMAXDIST(point)) {
+//                            isProne = true;
+//                            break;
+//                        }
+//                    }
+//                    if (!isProne) {
+//                        list.add(former);
+//                    }
+//                }
+//                expReturn.pageaccess++;
+//            } else if (top instanceof LeafNode) {
+//                LeafNode leaf = (LeafNode) top;
+//                List<Point> children = leaf.getChildren();
+//                queue.addAll(children);
+//                expReturn.pageaccess++;
+//            } else if (top instanceof Point){
+//                expReturn.result.add((Point) top);
+//                if (expReturn.result.size() == k) {
+//                    break;
+//                }
+//            }
+//        }
+//        long end = System.nanoTime();
+//        expReturn.time = end - begin;
+//        return expReturn;
+        float knnquerySide = (float) Math.sqrt((float) k / points.size());
         ExpReturn expReturn = new ExpReturn();
         long begin = System.nanoTime();
-        PriorityQueue<Object> queue = getQueue(point, k);
-        ArrayList<Node> list = new ArrayList();
-        list.add(root);
-        while (list.size() > 0) {
-            Node top = list.remove(0);
-            if (top instanceof NonLeafNode) {
-                NonLeafNode nonLeaf = (NonLeafNode) top;
-                List<Node> children = nonLeaf.getChildren();
-                for (int i = 0; i < children.size(); i++) {
-                    Node former = children.get(i);
-                    boolean isProne = false;
-                    for (int j = 0; j < children.size(); j++) {
-                        if (i == j) {
-                            continue;
-                        }
-                        Node later = children.get(j);
-                        if (former.getMbr().calMINMAXDIST(point) > later.getMbr().calMINMAXDIST(point)) {
-                            isProne = true;
-                            break;
-                        }
+        while (true) {
+            Mbr window = Mbr.getMbr(point, knnquerySide);
+            ExpReturn tempExpReturn = windowQuery(window);
+            List<Point> tempResult = tempExpReturn.result;
+            if (tempResult.size() >= k) {
+                tempResult.sort((o1, o2) -> {
+                    double d1 = point.getDist(o1);
+                    double d2 = point.getDist(o2);
+                    if (d1 > d2) {
+                        return 1;
+                    } else if (d1 < d2) {
+                        return -1;
+                    } else {
+                        return 0;
                     }
-                    if (!isProne) {
-                        list.add(former);
-                    }
-                }
-                expReturn.pageaccess++;
-            } else if (top instanceof LeafNode) {
-                LeafNode leaf = (LeafNode) top;
-                List<Point> children = leaf.getChildren();
-                queue.addAll(children);
-                expReturn.pageaccess++;
-            } else if (top instanceof Point){
-                expReturn.result.add((Point) top);
-                if (expReturn.result.size() == k) {
+                });
+                if (tempResult.get(k - 1).getDist(point) <= knnquerySide) {
+                    expReturn.result = tempResult.subList(0, k);
+                    expReturn.pageaccess += tempExpReturn.pageaccess;
                     break;
                 }
             }
+            knnquerySide = knnquerySide * 2;
         }
         long end = System.nanoTime();
         expReturn.time = end - begin;
@@ -570,7 +603,7 @@ public class RstarTree extends RLRtree {
         System.out.println("knn query:" + rstarTree.knnQuery(new Point(0.5f, 0.5f), 1));
 
 //        System.out.println(rstarTree.root);
-        rstarTree.insert(new Point(0.5f,0.5f));
+        rstarTree.insert(new Point(0.5f, 0.5f));
 //        rstarTree.visualize(600, 600).save("rstar_revisit.png");
 //        rstarTree.output("/Users/guanli/Documents/datasets/RLRtree/trees/Z_uniform_10000_1_3_.csv");
 //
