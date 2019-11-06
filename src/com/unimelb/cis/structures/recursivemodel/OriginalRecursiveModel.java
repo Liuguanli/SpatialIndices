@@ -1,9 +1,8 @@
 package com.unimelb.cis.structures.recursivemodel;
 
-import com.unimelb.cis.Curve;
+import com.unimelb.cis.curve.Curve;
 import com.unimelb.cis.geometry.Mbr;
 import com.unimelb.cis.node.LeafNode;
-import com.unimelb.cis.node.Model;
 import com.unimelb.cis.node.NonLeafNode;
 import com.unimelb.cis.node.Point;
 import com.unimelb.cis.structures.IRtree;
@@ -18,10 +17,9 @@ import weka.core.Instances;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Consumer;
 
 import static com.unimelb.cis.CSVFileReader.read;
-import static com.unimelb.cis.ZCurve.getZcurve;
+import static com.unimelb.cis.curve.ZCurve.getZcurve;
 
 public class OriginalRecursiveModel extends IRtree {
 
@@ -33,11 +31,53 @@ public class OriginalRecursiveModel extends IRtree {
 
     List<LeafNode> leafNodes = new ArrayList<>();
 
-    public OriginalRecursiveModel(int pagesize, boolean rankspace, List<Integer> stages, String curveType) {
+    int levelNum;
+
+    public OriginalRecursiveModel(int pagesize, boolean rankspace, String curveType, int levelNum) {
         super(pagesize);
         this.rankspace = rankspace;
-        this.stages = stages;
         this.curveType = curveType;
+        this.levelNum = levelNum;
+    }
+
+    private List<Integer> getDefaultStages(int datasetSize, int levelNum) {
+        if (levelNum == 2) {
+            if (datasetSize <=1000000) {
+                return Arrays.asList(1, 100, datasetSize/100);
+            } else if (datasetSize <=2000000) {
+                return Arrays.asList(1, 200, datasetSize/100);
+            } else if (datasetSize <=4000000) {
+                return Arrays.asList(1, 400, datasetSize/100);
+            } else if (datasetSize <=8000000) {
+                return Arrays.asList(1, 800, datasetSize/100);
+            } else if (datasetSize <=16000000) {
+                return Arrays.asList(1, 1600, datasetSize/100);
+            } else if (datasetSize <=32000000) {
+                return Arrays.asList(1, 3200, datasetSize/100);
+            } else if (datasetSize <=64000000) {
+                return Arrays.asList(1, 6400, datasetSize/100);
+            } else {
+                return Arrays.asList(1, 10000, datasetSize/100);
+            }
+        } else{
+            if (datasetSize <=1000000) {
+                return Arrays.asList(1, 20, 100, datasetSize/100);
+            } else if (datasetSize <=2000000) {
+                return Arrays.asList(1, 40, 200, datasetSize/100);
+            } else if (datasetSize <=4000000) {
+                return Arrays.asList(1, 40, 400, datasetSize/100);
+            } else if (datasetSize <=8000000) {
+                return Arrays.asList(1, 40, 800, datasetSize/100);
+            } else if (datasetSize <=16000000) {
+                return Arrays.asList(1, 40, 1600, datasetSize/100);
+            } else if (datasetSize <=32000000) {
+                return Arrays.asList(1, 80, 3200, datasetSize/100);
+            } else if (datasetSize <=64000000) {
+                return Arrays.asList(1, 80, 6400, datasetSize/100);
+            } else {
+                return Arrays.asList(1, 100, 10000, datasetSize/100);
+            }
+        }
     }
 
     /**
@@ -72,7 +112,7 @@ public class OriginalRecursiveModel extends IRtree {
 //        insert :time=181629
 //        pageaccess=2.0
 
-        OriginalRecursiveModel originalRecursiveModel1 = new OriginalRecursiveModel(100, false, Arrays.asList(1, 100, 1600), "Z");
+        OriginalRecursiveModel originalRecursiveModel1 = new OriginalRecursiveModel(100, false, "Z", 2);
         System.out.println(originalRecursiveModel1.buildRtree(dataset));
         System.out.println("pointQuery:" + originalRecursiveModel1.pointQuery(originalRecursiveModel1.getQueryPoints(0.01)));
         System.out.println("window query:" + originalRecursiveModel1.windowQuery(Mbr.getMbrs(0.01f, 10, 2).get(0)));
@@ -115,6 +155,9 @@ public class OriginalRecursiveModel extends IRtree {
         }
 
         tmp_records.add(Arrays.asList(points));
+
+        stages = getDefaultStages(points.size(),levelNum);
+
 
         int N = stages.get(stages.size() - 1);
 
@@ -347,6 +390,54 @@ public class OriginalRecursiveModel extends IRtree {
             long end = System.nanoTime();
             expReturn.time += end - begin;
         }
+        ExpReturn accurate = accurateKnnQuery(point, k);
+        expReturn.accuracy = claAcc(expReturn.result, accurate.result);
+        return expReturn;
+    }
+
+    public ExpReturn accurateKnnQuery(List<Point> points, int k) {
+        ExpReturn expReturn = new ExpReturn();
+        points.forEach(point -> {
+            ExpReturn temp = accurateKnnQuery(point, k);
+            expReturn.plus(temp);
+        });
+        expReturn.time /= points.size();
+        expReturn.pageaccess /= points.size();
+        return expReturn;
+    }
+
+    public ExpReturn accurateKnnQuery(Point point, int k) {
+        float knnquerySide = (float) Math.sqrt((float) k / points.size());
+        ExpReturn expReturn = new ExpReturn();
+        while (true) {
+            Mbr window = Mbr.getMbr(point, knnquerySide);
+            ExpReturn tempExpReturn = windowQueryByScanAll(window);
+            List<Point> tempResult = tempExpReturn.result;
+            expReturn.time = tempExpReturn.time;
+            long begin = System.nanoTime();
+            if (tempResult.size() >= k) {
+                tempResult.sort((o1, o2) -> {
+                    double d1 = point.getDist(o1);
+                    double d2 = point.getDist(o2);
+                    if (d1 > d2) {
+                        return 1;
+                    } else if (d1 < d2) {
+                        return -1;
+                    } else {
+                        return 0;
+                    }
+                });
+                if (tempResult.get(k - 1).getDist(point) <= knnquerySide) {
+                    expReturn.result = tempResult.subList(0, k);
+                    expReturn.pageaccess += tempExpReturn.pageaccess;
+                    long end = System.nanoTime();
+                    expReturn.time = end - begin;
+                    break;
+                }
+            }
+            knnquerySide = knnquerySide * 2;
+            expReturn.pageaccess = 0;
+        }
         return expReturn;
     }
 
@@ -359,6 +450,7 @@ public class OriginalRecursiveModel extends IRtree {
         });
         expReturn.time /= points.size();
         expReturn.pageaccess /= points.size();
+        expReturn.accuracy /= points.size();
         return expReturn;
     }
 
@@ -379,7 +471,7 @@ public class OriginalRecursiveModel extends IRtree {
         int indexLow = Math.max(0, results.get(0));
         int indexHigh = Math.min(leafNodes.size(), results.get(results.size() - 1));
 
-        for (int i = indexLow; i <= indexHigh; i++) {
+        for (int i = indexLow; i < indexHigh; i++) {
             if (window.interact(leafNodes.get(i).getMbr())) {
                 expReturn.pageaccess++;
                 leafNodes.get(i).getChildren().forEach(point -> {
@@ -391,7 +483,8 @@ public class OriginalRecursiveModel extends IRtree {
         }
         long end = System.nanoTime();
         expReturn.time = end - begin;
-//        System.out.println("windowQuery:" + expReturn.result.size());
+        ExpReturn accurate = windowQueryByScanAll(window);
+        expReturn.accuracy = (double) expReturn.result.size() / accurate.result.size();
         return expReturn;
     }
 
@@ -404,6 +497,16 @@ public class OriginalRecursiveModel extends IRtree {
         });
         expReturn.time /= windows.size();
         expReturn.pageaccess /= windows.size();
+        expReturn.accuracy /= windows.size();
+        return expReturn;
+    }
+
+    @Override
+    public ExpReturn windowQueryByScanAll(List<Mbr> windows) {
+        ExpReturn expReturn = new ExpReturn();
+        windows.forEach(window -> expReturn.plus(windowQueryByScanAll(window)));
+        expReturn.time /= windows.size();
+        expReturn.pageaccess /= windows.size();
         return expReturn;
     }
 
@@ -413,7 +516,10 @@ public class OriginalRecursiveModel extends IRtree {
         leafNodes.forEach(leafNode -> {
             if (leafNode.getMbr().interact(window)) {
                 expReturn.pageaccess++;
-                leafNode.getChildren().forEach(point -> expReturn.result.add(point));
+                leafNode.getChildren().forEach(point -> {
+                    if (window.contains(point))
+                    expReturn.result.add(point);
+                });
             }
         });
         long end = System.nanoTime();

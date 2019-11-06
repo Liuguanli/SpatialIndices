@@ -1,17 +1,15 @@
 package com.unimelb.cis.structures.recursivemodel;
 
-import com.unimelb.cis.Curve;
+import com.unimelb.cis.curve.Curve;
 import com.unimelb.cis.geometry.Mbr;
 import com.unimelb.cis.node.*;
 import com.unimelb.cis.structures.IRtree;
 import com.unimelb.cis.utils.ExpReturn;
 
-import java.io.PrintStream;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Consumer;
 
 import static com.unimelb.cis.CSVFileReader.read;
 
@@ -88,6 +86,11 @@ public class RecursiveModelRtree extends IRtree {
         if (root != null) {
             return root.pointQuery(points);
         }
+        return null;
+    }
+
+    @Override
+    public ExpReturn windowQueryByScanAll(List<Mbr> windows) {
         return null;
     }
 

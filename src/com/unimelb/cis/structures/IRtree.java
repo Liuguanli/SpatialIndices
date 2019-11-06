@@ -1,6 +1,5 @@
 package com.unimelb.cis.structures;
 
-import com.unimelb.cis.HilbertCurve;
 import com.unimelb.cis.geometry.Mbr;
 import com.unimelb.cis.node.LeafNode;
 import com.unimelb.cis.node.Node;
@@ -81,6 +80,8 @@ public abstract class IRtree {
 
     public abstract ExpReturn pointQuery(List<Point> points);
 
+    public abstract ExpReturn windowQueryByScanAll(List<Mbr> windows);
+
     public abstract ExpReturn knnQuery(Point point, int k);
 
     public abstract ExpReturn knnQuery(List<Point> points, int k);
@@ -92,6 +93,15 @@ public abstract class IRtree {
     public abstract ExpReturn insert(Point point);
 
     public abstract NonLeafNode buildRtreeAfterTuning(String path, int dim, int level);
+
+    public double claAcc(List<Point> result, List<Point> accurateResult) {
+        final int[] num = {0};
+        result.forEach(point -> {
+            if (accurateResult.contains(point))
+                num[0]++;
+        });
+        return ((double) num[0]) / result.size();
+    }
 
     public Visualizer visualize(int width, int height) {
         Mbr view = new Mbr(0, 0, 1, 1);

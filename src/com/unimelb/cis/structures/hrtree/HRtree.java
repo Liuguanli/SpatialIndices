@@ -1,8 +1,6 @@
 package com.unimelb.cis.structures.hrtree;
 
-import com.unimelb.cis.CSVFileWriter;
-import com.unimelb.cis.HilbertCurve;
-import com.unimelb.cis.ZCurve;
+import com.unimelb.cis.curve.HilbertCurve;
 import com.unimelb.cis.geometry.Mbr;
 import com.unimelb.cis.node.LeafNode;
 import com.unimelb.cis.node.Node;
@@ -279,7 +277,14 @@ public class HRtree extends RLRtree {
         });
         long end = System.nanoTime();
         expReturn.time = end - begin;
+        expReturn.time /= points.size();
+        expReturn.pageaccess = expReturn.pageaccess / points.size();
         return expReturn;
+    }
+
+    @Override
+    public ExpReturn windowQueryByScanAll(List<Mbr> windows) {
+        return null;
     }
 
 

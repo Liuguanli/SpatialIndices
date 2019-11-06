@@ -1,6 +1,6 @@
 package com.unimelb.cis.structures.partitionmodel;
 
-import com.unimelb.cis.Curve;
+import com.unimelb.cis.curve.Curve;
 import com.unimelb.cis.geometry.Boundary;
 import com.unimelb.cis.geometry.Line;
 import com.unimelb.cis.geometry.Mbr;
@@ -11,7 +11,6 @@ import com.unimelb.cis.structures.IRtree;
 import com.unimelb.cis.utils.ExpReturn;
 
 import java.util.*;
-import java.util.function.BiConsumer;
 
 import static com.unimelb.cis.CSVFileReader.read;
 

@@ -1,23 +1,15 @@
 package com.unimelb.cis.structures.hrtree;
 
-import com.unimelb.cis.CSVFileWriter;
-import com.unimelb.cis.HilbertCurve;
-import com.unimelb.cis.ZCurve;
+import com.unimelb.cis.curve.HilbertCurve;
 import com.unimelb.cis.geometry.Mbr;
 import com.unimelb.cis.node.LeafNode;
 import com.unimelb.cis.node.Node;
 import com.unimelb.cis.node.NonLeafNode;
 import com.unimelb.cis.node.Point;
 import com.unimelb.cis.structures.RLRtree;
-import com.unimelb.cis.structures.zrtree.ZRtree;
 import com.unimelb.cis.utils.ExpReturn;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.*;
-import java.util.function.Consumer;
 
 import static com.unimelb.cis.CSVFileReader.read;
 
@@ -210,6 +202,11 @@ public class HRRtree extends RLRtree {
     }
 
     @Override
+    public ExpReturn windowQueryByScanAll(List<Mbr> windows) {
+        return null;
+    }
+
+    @Override
     public ExpReturn knnQuery(Point point, int k) {
         float knnquerySide = (float) Math.sqrt((float) k / points.size());
         ExpReturn expReturn = new ExpReturn();
@@ -367,8 +364,9 @@ public class HRRtree extends RLRtree {
         HRRtree hRRtree = new HRRtree(100);
 
 //        hRRtree.buildRtree("D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_2_.csv");
-        hRRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_4000000_1_2_.csv");
-
+        hRRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_1000000_1_2_.csv");
+//        time=9021
+//        pageaccess=3.623869
 //        hRRtree.buildRtreeAfterTuning("/Users/guanli/Documents/datasets/RLRtree/newtrees/H_uniform_10000_1_2_DQN.csv", 2, 3);
 //        hRRtree.visualize(600, 600).save("DQN_uniform_1000_1_2_.png");
 

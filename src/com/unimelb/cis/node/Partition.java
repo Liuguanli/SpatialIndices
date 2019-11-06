@@ -1,6 +1,6 @@
 package com.unimelb.cis.node;
 
-import com.unimelb.cis.Curve;
+import com.unimelb.cis.curve.Curve;
 import com.unimelb.cis.geometry.Boundary;
 import com.unimelb.cis.geometry.Line;
 import com.unimelb.cis.geometry.Mbr;
@@ -24,14 +24,17 @@ public class Partition extends Model {
 
     private int bitNum;
 
+    private String curve;
+
     String modelName = "LRM";
 
     Map<Integer, List<Point>> partitionPoints = new HashMap<>();
 
     Map<Integer, Model> partitionModels = new HashMap<>();
 
-    public Partition(int index, int pageSize, String algorithm, int maxPartitionNumEachDim, int threshold, List<Point> points) {
+    public Partition(String curve, int index, int pageSize, String algorithm, int maxPartitionNumEachDim, int threshold, List<Point> points) {
         super(index, pageSize, algorithm);
+        this.curve = curve;
         this.maxPartitionNumEachDim = maxPartitionNumEachDim;
         this.threshold = threshold;
         this.children = points;
@@ -168,13 +171,13 @@ public class Partition extends Model {
 
     private Model addPointsAndBuild(List<Point> points) {
         if (points.size() >= threshold * 2) {
-            Partition partition = new Partition(0, 100, this.name, maxPartitionNumEachDim, threshold, points);
+            Partition partition = new Partition(curve,0, 100, this.name, maxPartitionNumEachDim, threshold, points);
             partition.setChildren(points);
             partition.build();
 //            System.out.println(partition.getMbr());
             return partition;
         } else {
-            points = Curve.getPointByCurve(points, "Z", true);
+            points = Curve.getPointByCurve(points, curve, true);
             LeafModel leafModel = new LeafModel(level + 1, pageSize, this.name);
 //            LeafModel leafModel = new LeafModel(level + 1, pageSize, "NaiveBayes");
 //            LeafModel leafModel = new LeafModel(level + 1, pageSize, "Logistic");
