@@ -1,5 +1,7 @@
 package com.unimelb.cis;
 
+import com.unimelb.cis.geometry.Mbr;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -58,32 +60,32 @@ public class CSVFileWriter {
 //        }
 //    }
 //
-//    public void writeQueryProfile(List<Mbr> mbrs, String fileName) {
-//        File csv = new File(fileName);  // CSV文件路径
-//        FileWriter fw = null;
-//        try {
-//            fw = new FileWriter(csv);
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        for (Mbr mbr : mbrs) {
-//            StringBuilder builder = new StringBuilder();
-//            builder.append(mbr.printFormat());
-//            builder.append("\r\n");
-//            try {
-//                fw.write(builder.toString());
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        try {
-//            fw.close();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
+    public void writeQueryProfile(List<Mbr> mbrs, String fileName) {
+        File csv = new File(fileName);  // CSV文件路径
+        FileWriter fw = null;
+        try {
+            fw = new FileWriter(csv);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        for (Mbr mbr : mbrs) {
+            StringBuilder builder = new StringBuilder();
+            builder.append(mbr.printFormat());
+            builder.append("\r\n");
+            try {
+                fw.write(builder.toString());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 //
 //    public void write(List<PointForCurve> points, String fileName) {
 //        File csv = new File(fileName);  // CSV文件路径

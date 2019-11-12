@@ -4,7 +4,6 @@ package com.unimelb.cis.geometry;
 import com.unimelb.cis.node.Point;
 
 import java.util.*;
-import java.util.function.Consumer;
 
 public class Mbr {
 
@@ -512,5 +511,14 @@ public class Mbr {
 //        }
 //        return mbrs;
 //    }
+
+    public String printFormat() {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < location.length - 1; i++) {
+            builder.append(location[i]).append(",");
+        }
+        builder.append(location[location.length - 1]);
+        return builder.toString();
+    }
 
 }
