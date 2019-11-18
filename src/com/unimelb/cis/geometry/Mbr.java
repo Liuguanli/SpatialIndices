@@ -34,8 +34,12 @@ public class Mbr {
     }
 
     public Mbr(float... location) {
-        this.location = location;
-        dim = location.length / 2;
+        if (location == null || location.length == 0) {
+            dim = 2;
+        } else {
+            this.location = location;
+            dim = location.length / 2;
+        }
     }
 
     public static Mbr getMbrFromPoint(Point point) {
@@ -406,13 +410,21 @@ public class Mbr {
     }
 
     public void updateMbr(Point point, int dim) {
-        for (int i = 0; i < dim; i++) {
-            float val = point.getLocation()[i];
-            if (this.getLocation()[i] > val) {
-                this.getLocation()[i] = val;
+        if (location == null || location.length == 0) {
+            location = new float[dim * 2];
+            for (int i = 0; i < dim; i++) {
+                location[i] = point.getLocation()[i];
+                location[i + dim] = point.getLocation()[i];
             }
-            if (this.getLocation()[i + dim] < val) {
-                this.getLocation()[i + dim] = val;
+        } else {
+            for (int i = 0; i < dim; i++) {
+                float val = point.getLocation()[i];
+                if (this.getLocation()[i] > val) {
+                    this.getLocation()[i] = val;
+                }
+                if (this.getLocation()[i + dim] < val) {
+                    this.getLocation()[i + dim] = val;
+                }
             }
         }
     }

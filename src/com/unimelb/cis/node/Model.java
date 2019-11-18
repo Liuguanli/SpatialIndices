@@ -1,21 +1,23 @@
 package com.unimelb.cis.node;
 
 import com.unimelb.cis.geometry.Mbr;
-import com.unimelb.cis.structures.recursivemodel.RecursiveModelRtree;
 import com.unimelb.cis.utils.ExpReturn;
 import weka.classifiers.Classifier;
-import weka.classifiers.Evaluation;
 import weka.classifiers.bayes.NaiveBayes;
 import weka.classifiers.functions.*;
 import weka.classifiers.meta.FilteredClassifier;
 import weka.core.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public abstract class Model {
 
     int maxError = 0;
     int minError = 0;
+
+    List<LeafNode> leafNodesForAccurateQuery;
 
     public static List<String> clas = Arrays.asList("NaiveBayes", "Logistic");
     public static List<String> regs = Arrays.asList("LinearRegression");
@@ -25,12 +27,14 @@ public abstract class Model {
         this.pageSize = pageSize;
         this.name = name;
         this.children = new ArrayList<>();
+        leafNodesForAccurateQuery = new ArrayList<>();
     }
 
     public Model(int index, String name) {
         this.index = index;
         this.name = name;
         this.children = new ArrayList<>();
+        leafNodesForAccurateQuery = new ArrayList<>();
     }
 
     String type = "LRM";

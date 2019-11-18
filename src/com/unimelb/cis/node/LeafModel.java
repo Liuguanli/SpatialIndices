@@ -5,8 +5,6 @@ import com.unimelb.cis.utils.ExpReturn;
 import weka.core.Instances;
 
 import java.util.*;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 public class LeafModel extends Model {
 
@@ -52,12 +50,9 @@ public class LeafModel extends Model {
 //        System.out.println("LeafNode is Building");
         List<Point> points = getChildren();
         if (points.size() < pageSize) {
-            points.forEach(new Consumer<Point>() {
-                @Override
-                public void accept(Point point) {
-                    point.setIndex(0);
-                    add(0, point);
-                }
+            points.forEach(point -> {
+                point.setIndex(0);
+                add(0, point);
             });
             return;
         }
@@ -65,6 +60,8 @@ public class LeafModel extends Model {
             points.get(i).setIndex(i / pageSize);
             add(i / pageSize, points.get(i));
         }
+
+
 
         classNum = points.size() / pageSize + (points.size() % pageSize == 0 ? 0 : 1);
 //        System.out.println("classNum:" +classNum +" points.size()" + points.size());
@@ -292,4 +289,6 @@ public class LeafModel extends Model {
         expReturn.time = end - begin;
         return expReturn;
     }
+
+    // TODO output all the data to a
 }

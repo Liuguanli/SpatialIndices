@@ -1,5 +1,7 @@
 package com.unimelb.cis;
 
+import com.unimelb.cis.node.Point;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,5 +33,18 @@ public class CSVFileReader {
             e.printStackTrace();
         }
         return allString;
+    }
+
+    public static List<Point> readPoints(String fileName) {
+        List<String> lines = read(fileName);
+
+        List<Point> points = new ArrayList<>(lines.size());
+        for (int i = 0; i < lines.size(); i++) {
+            String line = lines.get(i);
+            Point point = new Point(line);
+            points.add(point);
+        }
+
+        return points;
     }
 }

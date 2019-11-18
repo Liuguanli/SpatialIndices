@@ -242,7 +242,7 @@ public class HRRtree extends RLRtree {
 
     @Override
     public NonLeafNode buildRtreeAfterTuning(String path, int dim, int level) {
-        level--;
+//        level--;
         this.dataFile = path;
         this.setDim(dim);
         this.setLevel(level);
@@ -317,8 +317,8 @@ public class HRRtree extends RLRtree {
         points = HilbertCurve.hilbertCurve(points);
         points.forEach(point -> curveValues.add(point.getCurveValue()));
         root.add(nodes[level - 1]);
-        this.root = root;
-        return root;
+        this.root = root.getChildren().get(0);
+        return (NonLeafNode) this.root;
     }
 
     public ExpReturn insert(List<Point> points) {

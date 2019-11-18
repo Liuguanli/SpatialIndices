@@ -3,7 +3,6 @@ package com.unimelb.cis.structures.queryadaptive;
 
 import com.unimelb.cis.CSVFileReader;
 import com.unimelb.cis.curve.HilbertCurve;
-import com.unimelb.cis.curve.ZCurve;
 import com.unimelb.cis.geometry.Mbr;
 import com.unimelb.cis.node.LeafNode;
 import com.unimelb.cis.node.Node;
@@ -13,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static com.unimelb.cis.CSVFileReader.readPoints;
 
 
 public class Opt {
@@ -28,8 +28,13 @@ public class Opt {
     private List<Mbr> queryProfiles;
 
     public static void main(String args[]) {
-        Opt opt = new Opt("0.01%");
-        opt.exp("Z_uniform_1000000", 96, 102, "0.01%");
+//        Opt opt = new Opt("0.01%");
+        Opt opt = new Opt();
+        String dataset = "/Users/guanli/Documents/datasets/RLRtree/raw/uniform_10000_1_2_.csv";
+        List<Point> points = readPoints(dataset);
+        points = HilbertCurve.hilbertCurve(points);
+//        points = ZCurve.zCurve(points);
+        opt.exp(points, 50, 102);
 //        opt.exp("firstPage", 96, 102, "0.01%");
 //        opt.compare();
     }
@@ -52,14 +57,28 @@ public class Opt {
         return cost;
     }
 
-    public void calOriginCost(List<List<Point>> pointGroups) {
+    public void calOriginCost(List<List<Point>> pointGroups, int B) {
         for (int i = 0; i < pointGroups.size(); i++) {
             List<Point> temp = pointGroups.get(i);
             float cost = 0;
-            int num = temp.size() / 96;
+            int num = temp.size() / B;
             int pointNum = 0;
+
             for (int j = 0; j < num; j++) {
-                List<Point> points = temp.subList(j * 96, (j + 1) * 96);
+                List<Point> points = temp.subList(j * B, (j + 1) * B);
+                Mbr rectangle = new Mbr();
+                for (int k = 0; k < points.size(); k++) {
+                    Point point = points.get(k);
+                    rectangle.updateMbr(point, point.getDim());
+                    pointNum += 1;
+                }
+                float tempCost = weightFunc(rectangle);
+//                System.out.println(tempCost);
+                cost += tempCost;
+            }
+
+            if (temp.size() > num * B) {
+                List<Point> points = temp.subList(num * B, temp.size());
                 Mbr rectangle = new Mbr();
                 for (int k = 0; k < points.size(); k++) {
                     Point point = points.get(k);
@@ -68,19 +87,20 @@ public class Opt {
                 }
                 cost += weightFunc(rectangle);
             }
+
             System.out.println("calOriginCost:" + cost);
             System.out.println("pointNum:" + pointNum);
         }
 //        System.out.println("calOriginCost:" + cost);
     }
 
-    public void exp(String tag, int b, int B, String profileFileTag) {
+    public void exp(List<Point> points, int b, int B) {
 //        opt.gopt(opt.getPoints(), 80, 110);
         costVal = 0;
-        List<Point> points = getPoints(tag);
+//        List<Point> points = getPoints(tag);
         List<List<Point>> pointGroups = new ArrayList<>();
         List<Integer> pageSizes = new ArrayList<>();
-        int bucketSize = b * B;
+        int bucketSize = B * B;
         boolean isExactDivision = true;
         int length = points.size() / bucketSize;
         if (length * bucketSize != points.size()) {
@@ -95,10 +115,10 @@ public class Opt {
             pointGroups.add(points.subList(length * bucketSize, points.size()));
         }
 
-        calOriginCost(pointGroups);
+        calOriginCost(pointGroups, b);
 
         for (int i = 0; i < pointGroups.size(); i++) {
-            pageSizes.addAll(opt(pointGroups.get(i), B / 2, B, B, bucketSize));
+            pageSizes.addAll(opt(pointGroups.get(i), b, B, B, bucketSize));
         }
         System.out.println(pageSizes.size());
         System.out.println("costVal:" + costVal);
@@ -112,14 +132,14 @@ public class Opt {
             if (i >= pointsNum) {
                 index++;
                 pointsNum += pageSizes.get(index);
-//                System.out.println(pageSizes.get(index));
             }
             points.get(i).setIndex(index);
         }
-        System.out.println(points.get(0));
-        System.out.println(points.get(points.size() - 1));
-        System.out.println("pageSizes:");
-        System.out.println(pageSizes);
+//        System.out.println(points.get(0));
+//        System.out.println(points.get(points.size() - 1));
+//        System.out.println("pageSizes:");
+//        System.out.println(pageSizes.size());
+//        System.out.println(pageSizes);
 
 //        CSVFileWriter writer = new CSVFileWriter();
 //        writer.write(points, "..\\dataset\\_" + tag + ".csv");
@@ -157,26 +177,29 @@ public class Opt {
         return childrenNodes;
     }
 
-    public List<Point> getPoints(String tag) {
-        String dataset = String.format("D:\\\\UniMelbourne\\\\DL_index4R_tree\\\\RL_gen_dataset\\\\%s_.csv", tag);
-        CSVFileReader reader = new CSVFileReader();
-        List<String> lines = reader.read(dataset);
-        List<Point> points = new ArrayList<>();
-
-        for (int i = 0; i < lines.size(); i++) {
-            String line = lines.get(i);
-            String[] items = line.split(",");
-            points.add(new Point(Float.valueOf(items[0]), Float.valueOf(items[1])));
-        }
-        if (tag.startsWith("H")) {
-            points = HilbertCurve.hilbertCurve(points);
-        } else {
-            points = ZCurve.zCurve(points);
-        }
-        return points;
-    }
+//    public List<Point> getPoints(String tag) {
+//        String dataset = String.format("D:\\\\UniMelbourne\\\\DL_index4R_tree\\\\RL_gen_dataset\\\\%s_.csv", tag);
+//        CSVFileReader reader = new CSVFileReader();
+//        List<String> lines = reader.read(dataset);
+//        List<Point> points = new ArrayList<>();
+//
+//        for (int i = 0; i < lines.size(); i++) {
+//            String line = lines.get(i);
+//            String[] items = line.split(",");
+//            points.add(new Point(Float.valueOf(items[0]), Float.valueOf(items[1])));
+//        }
+//        if (tag.startsWith("H")) {
+//            points = HilbertCurve.hilbertCurve(points);
+//        } else {
+//            points = ZCurve.zCurve(points);
+//        }
+//        return points;
+//    }
 
     public float weightFunc(Mbr mbr) {
+        if (queryProfiles == null || queryProfiles.size() == 0) {
+            return mbr.volume();
+        }
         float sum = 0;
         for (int i = 0; i < queryProfiles.size(); i++) {
             sum += queryProfiles.get(i).calInteract(mbr);
@@ -185,30 +208,21 @@ public class Opt {
     }
 
     public Mbr getMbr(List<Point> points, int from, int to) {
-        float x1 = Integer.MAX_VALUE;
-        float x2 = Integer.MIN_VALUE;
-        float y1 = Integer.MAX_VALUE;
-        float y2 = Integer.MIN_VALUE;
+        int dim = points.get(0).getDim();
+        Mbr mbr = new Mbr(dim);
         for (int i = from; i < to; i++) {
             Point point = points.get(i);
-            if (x1 > point.getLongitude()) {
-                x1 = point.getLongitude();
-            }
-            if (x2 < point.getLongitude()) {
-                x2 = point.getLongitude();
-            }
-            if (y1 > point.getLatitude()) {
-                y1 = point.getLatitude();
-            }
-            if (y2 < point.getLatitude()) {
-                y2 = point.getLatitude();
-            }
+            mbr.updateMbr(point, dim);
         }
-        return new Mbr(x1, x2, y1, y2);
+        return mbr;
     }
 
     public List<Integer> opt(List<Point> points, int b, int B, int m, int bucketSize) {
         int N = points.size();
+//        int m = points.size() / b;
+//        if (m * b < points.size()) {
+//            m++;
+//        }
         float[][] cost = new float[N + 1][m + 1];
         int[][] indices = new int[N + 1][m + 1];
         for (int i = 1; i <= B; i++) {
@@ -218,13 +232,16 @@ public class Opt {
         }
         for (int i = 2; i <= m; i++) {
             int length = i * B > N ? N : i * B;
+//            if (N < (i + 1) * b) {
+//                length = N;
+//            }
             for (int j = i * b; j <= length; j++) {
                 int maxB = (j - B) > 0 ? B : j - B + 1;
                 float Rp[] = new float[maxB + 1];
                 Mbr rectangle = new Mbr();
                 for (int k = 1; k <= maxB; k++) {
                     Point point = points.get(j - k);
-                    rectangle.merge(point.getLongitude(), point.getLatitude());
+                    rectangle.updateMbr(point, point.getDim());
                     Rp[k] = weightFunc(rectangle);
                 }
                 int minIndex = 0;
@@ -276,7 +293,7 @@ public class Opt {
             Mbr rectangle = new Mbr();
             for (int k = 1; k <= B; k++) {
                 Point point = points.get(i - k);
-                rectangle.merge(point.getLongitude(), point.getLatitude());
+                rectangle.updateMbr(point, point.getDim());
                 Rp[k] = weightFunc(rectangle);
             }
             float minValue = Float.MAX_VALUE;
