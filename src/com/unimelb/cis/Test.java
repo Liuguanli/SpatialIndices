@@ -232,7 +232,7 @@ public class Test {
     );
 
     static List<String> datasets1 = Arrays.asList(
-            "/Users/guanli/Documents/datasets/RLRtree/raw/uniform_1000000_1_2_.csv"
+            "/Users/guanli/Documents/datasets/RLRtree/raw/uniform_10000_1_2_.csv"
 //            "/Users/guanli/Documents/datasets/RLRtree/raw/uniform_2000000_1_2_.csv"
 //            "/Users/guanli/Documents/datasets/RLRtree/raw/uniform_4000000_1_2_.csv"
 //            "D:\\datasets\\RLRtree\\raw\\real_east.csv",
@@ -253,7 +253,7 @@ public class Test {
 
         List<Float> sides = Arrays.asList(0.04f);
 
-        datasets.forEach(s -> {
+        datasets1.forEach(s -> {
             List<Point> knnPoints = Point.getPoints(10, 2);
             List<Point> insertedPoints = Point.getPoints(10000, 2);
             System.out.println(s);

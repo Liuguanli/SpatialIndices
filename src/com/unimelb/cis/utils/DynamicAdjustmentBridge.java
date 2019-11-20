@@ -1,6 +1,7 @@
 package com.unimelb.cis.utils;
 
 import com.unimelb.cis.curve.HilbertCurve;
+import com.unimelb.cis.node.LeafNode;
 import com.unimelb.cis.node.NonLeafNode;
 import com.unimelb.cis.node.Point;
 import com.unimelb.cis.structures.hrtree.HRRtree;
@@ -9,7 +10,9 @@ import com.unimelb.cis.structures.queryadaptive.Opt;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.unimelb.cis.CSVFileReader.readPoints;
 
@@ -20,30 +23,27 @@ public class DynamicAdjustmentBridge {
         List<Point> points = readPoints(dataset);
 //        points = ZCurve.zCurve(points);
 
-        adjustbyDP(points, 50, 102);
+        adjustbyDP(points, 50, 102, 100);
 
 //        adjustbyRL(points, 50, 102, "/Users/guanli/Documents/datasets/RLRtree/trees/build_temp_file.csv", "/Users/guanli/Documents/datasets/RLRtree/trees/build_temp_file_after_tuning.csv");
-        adjustbyRL(points, 50, 102, "build_temp_file.csv", "build_temp_file_after_tuning.csv");
+        adjustbyRL(points, 50, 102, 100, "build_temp_file.csv", "build_temp_file_after_tuning.csv");
     }
 
-    public static void adjustbyDP(List<Point> points, int b, int B) {
+    public static void adjustbyDP(List<Point> points, int b, int B, int initialSize) {
         points = HilbertCurve.hilbertCurve(points);
         Opt opt = new Opt();
-        opt.exp(points, b, B);
+        opt.exp(points, b, B, initialSize);
     }
 
-    public static void adjustbyRL(List<Point> points, int b, int B, String outputFile, String buildFile) {
-        HRRtree rtree = new HRRtree(100);
+    public static void adjustbyRL(List<Point> points, int b, int B, int initialSize, String outputFile, String buildFile) {
+        HRRtree rtree = new HRRtree(initialSize);
         rtree.buildRtree(points);
-
-        final float[] area = {0};
+        final float[] area = {0, 0};
         ((NonLeafNode) rtree.getRoot()).getChildren().forEach(node -> {
-//                    System.out.println(node.getMbr().volume());
                     area[0] += node.getMbr().volume();
                 }
         );
-        System.out.println(area[0]);
-
+//        System.out.println(area[0]);
         rtree.output(outputFile);
         int dim = 2;
         int level = rtree.getLevel();
@@ -63,9 +63,9 @@ public class DynamicAdjustmentBridge {
             //用输入输出流来截取结果
             BufferedReader in = new BufferedReader(new InputStreamReader(proc.getInputStream()));
             String line;
-            while ((line = in.readLine()) != null) {
-                System.err.println("from python:" + line);
-            }
+//            while ((line = in.readLine()) != null) {
+//                System.err.println("from python:" + line);
+//            }
             in.close();
             proc.waitFor();
         } catch (IOException e) {
@@ -77,9 +77,18 @@ public class DynamicAdjustmentBridge {
         rtree = new HRRtree(B);
         rtree.buildRtreeAfterTuning(buildFile, dim, level);
         System.out.println(rtree);
-        area[0] = 0;
-        ((NonLeafNode) rtree.getRoot()).getChildren().forEach(node -> area[0] += node.getMbr().volume());
-        System.out.println(area[0]);
+        List<Integer> pagesizes = new ArrayList<>();
+        AtomicInteger sum = new AtomicInteger();
+        ((NonLeafNode) rtree.getRoot()).getChildren().forEach(node -> {
+            area[1] += node.getMbr().volume();
+            pagesizes.add(((LeafNode) node).getChildren().size());
+            sum.addAndGet(((LeafNode) node).getChildren().size());
+        });
+//        System.out.println(pagesizes.size());
+//        System.out.println(pagesizes);
+        System.out.println("RL opt rate:" + (1 - area[1] / area[0]) * 100 + "%");
+//        System.out.println(area[0]);
+//        System.out.println(sum);
     }
 
 }

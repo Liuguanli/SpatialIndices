@@ -1,7 +1,9 @@
 package com.unimelb.cis.node;
 
+import com.unimelb.cis.curve.HilbertCurve;
 import com.unimelb.cis.geometry.Mbr;
 import com.unimelb.cis.utils.ExpReturn;
+import com.unimelb.cis.utils.Search;
 import weka.core.Instances;
 
 import java.util.*;
@@ -45,10 +47,97 @@ public class LeafModel extends Model {
         }
     }
 
+    Map<Integer, List<Float>> coordinates = new HashMap<>();
+
+    Map<Integer, List<Long>> coordinateOrders = new HashMap<>();
+
+    public List<Point> findPoints(List<Point> vertexes) {
+        int length = getChildren().size();
+        int bitNum = (int) (Math.log(length) / Math.log(2.0)) + 1;
+
+        vertexes.forEach(point -> {
+            float[] location = point.getLocation();
+            for (int i = 0; i < location.length; i++) {
+                long order = Search.binarySearch(coordinates.get(i), location[i]);
+                if (!coordinateOrders.containsKey(i)) {
+                    coordinateOrders.put(i, new ArrayList<>());
+                }
+                coordinateOrders.get(i).add(order);
+            }
+        });
+
+        int dim = coordinateOrders.keySet().size();
+        coordinateOrders.forEach((integer, longs) -> Collections.sort(longs));
+        long[] lowerbound = new long[dim];
+        long[] upperbound = new long[dim];
+        for (int i = 0; i < dim; i++) {
+            lowerbound[i] = coordinateOrders.get(i).get(0);
+            upperbound[i] = coordinateOrders.get(i).get(vertexes.size() - 1);
+        }
+
+        long minCurveValue = Integer.MAX_VALUE;
+        long maxCurveValue = Integer.MIN_VALUE;
+
+        long[] minOrder = new long[dim];
+        long[] maxOrder = new long[dim];
+
+        for (long i = lowerbound[0]; i < upperbound[0]; i++) {
+            for (long j = lowerbound[1]; j < upperbound[1]; j++) {
+                long[] orders = new long[]{i, j};
+                long temp = HilbertCurve.getHilbertValue(bitNum, orders);
+                if (temp < minCurveValue) {
+                    minCurveValue = temp;
+                    minOrder = orders;
+                }
+                if (temp > maxCurveValue) {
+                    maxCurveValue = temp;
+                    maxOrder = orders;
+                }
+            }
+        }
+
+        float[] locations1 = new float[dim];
+        for (int i = 0; i < minOrder.length; i++) {
+            locations1[i] = coordinates.get(i).get((int) minOrder[i]);
+        }
+
+        Point lowPoint = new Point(locations1);
+
+        float[] locations2 = new float[dim];
+        for (int i = 0; i < maxOrder.length; i++) {
+            locations2[i] = coordinates.get(i).get((int) maxOrder[i]);
+        }
+
+        Point highPoint = new Point(locations2);
+
+//        System.out.println(lowPoint);
+//        System.out.println(Arrays.toString(minOrder));
+//        System.out.println(highPoint);
+//        System.out.println(Arrays.toString(maxOrder));
+
+        return new ArrayList<>(){{
+            add(lowPoint);
+            add(highPoint);
+        }};
+    }
+
+
     @Override
     public void build() {
 //        System.out.println("LeafNode is Building");
         List<Point> points = getChildren();
+
+        getChildren().forEach(point -> {
+            float[] location = point.getLocation();
+            for (int i = 0; i < location.length; i++) {
+                if (!coordinates.containsKey(i)) {
+                    coordinates.put(i, new ArrayList<>());
+                }
+                coordinates.get(i).add(location[i]);
+            }
+        });
+        coordinates.forEach((integer, floats) -> Collections.sort(floats));
+
         if (points.size() < pageSize) {
             points.forEach(point -> {
                 point.setIndex(0);
@@ -60,8 +149,6 @@ public class LeafModel extends Model {
             points.get(i).setIndex(i / pageSize);
             add(i / pageSize, points.get(i));
         }
-
-
 
         classNum = points.size() / pageSize + (points.size() % pageSize == 0 ? 0 : 1);
 //        System.out.println("classNum:" +classNum +" points.size()" + points.size());
@@ -222,12 +309,14 @@ public class LeafModel extends Model {
 
     @Override
     public ExpReturn windowQuery(Mbr window) {
-
 //        ExpReturn old = windowQueryByScanAll(window);
 //        System.out.println("windowQueryByScanAll:" + old.result.size());
         ExpReturn expReturn = new ExpReturn();
         final int[] pageAccessArray = {0};
         List<Point> vertexes = window.getAllPoints();
+
+        findPoints(vertexes);
+
         Instances instances = getInstances(name, vertexes, type);
         ExpReturn predictExpReturn = getPredVals(classifier, instances);
         List<Double> results = predictExpReturn.predictResults;

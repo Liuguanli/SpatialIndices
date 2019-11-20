@@ -2,11 +2,17 @@ package com.unimelb.cis.structures.zrtree;
 
 import com.unimelb.cis.curve.ZCurve;
 import com.unimelb.cis.geometry.Mbr;
-import com.unimelb.cis.node.*;
+import com.unimelb.cis.node.LeafNode;
+import com.unimelb.cis.node.Node;
+import com.unimelb.cis.node.NonLeafNode;
+import com.unimelb.cis.node.Point;
 import com.unimelb.cis.structures.RLRtree;
 import com.unimelb.cis.utils.ExpReturn;
+import com.unimelb.cis.utils.Search;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static com.unimelb.cis.CSVFileReader.read;
 
@@ -286,7 +292,7 @@ public class ZRRtree extends RLRtree {
         points.forEach(point -> {
             long[] indexOrder = new long[dim];
             for (int i = 0; i < dim; i++) {
-                indexOrder[i] = binarySearch(axisLocations.get(i), point.getLocation()[i]);
+                indexOrder[i] = Search.binarySearch(axisLocations.get(i), point.getLocation()[i]);
             }
             int pos = binarySearch(curveValues, ZCurve.getZcurve(indexOrder, bitNum));
             int index = pos / pagesize;

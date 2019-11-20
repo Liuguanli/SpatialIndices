@@ -8,6 +8,7 @@ import com.unimelb.cis.node.NonLeafNode;
 import com.unimelb.cis.node.Point;
 import com.unimelb.cis.structures.RLRtree;
 import com.unimelb.cis.utils.ExpReturn;
+import com.unimelb.cis.utils.Search;
 
 import java.util.*;
 
@@ -247,7 +248,6 @@ public class HRRtree extends RLRtree {
         this.setDim(dim);
         this.setLevel(level);
         List<String> lines = read(path);
-//        List<Point> points = new ArrayList<>(lines.size());
         int[] levelIndex = new int[level];
         Node[] nodes = new Node[level];
         NonLeafNode root = new NonLeafNode(pagesize, dim);
@@ -327,7 +327,7 @@ public class HRRtree extends RLRtree {
         points.forEach(point -> {
             long[] indexOrder = new long[dim];
             for (int i = 0; i < dim; i++) {
-                indexOrder[i] = binarySearch(axisLocations.get(i), point.getLocation()[i]);
+                indexOrder[i] = Search.binarySearch(axisLocations.get(i), point.getLocation()[i]);
             }
             int pos = binarySearch(curveValues, HilbertCurve.getHilbertValue(bitNum, indexOrder));
             int index = pos / pagesize;

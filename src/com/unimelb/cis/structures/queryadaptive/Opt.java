@@ -34,7 +34,7 @@ public class Opt {
         List<Point> points = readPoints(dataset);
         points = HilbertCurve.hilbertCurve(points);
 //        points = ZCurve.zCurve(points);
-        opt.exp(points, 50, 102);
+        opt.exp(points, 50, 102, 100);
 //        opt.exp("firstPage", 96, 102, "0.01%");
 //        opt.compare();
     }
@@ -57,10 +57,10 @@ public class Opt {
         return cost;
     }
 
-    public void calOriginCost(List<List<Point>> pointGroups, int B) {
+    public float calOriginCost(List<List<Point>> pointGroups, int B) {
+        float cost = 0;
         for (int i = 0; i < pointGroups.size(); i++) {
             List<Point> temp = pointGroups.get(i);
-            float cost = 0;
             int num = temp.size() / B;
             int pointNum = 0;
 
@@ -87,14 +87,13 @@ public class Opt {
                 }
                 cost += weightFunc(rectangle);
             }
-
-            System.out.println("calOriginCost:" + cost);
-            System.out.println("pointNum:" + pointNum);
+//            System.out.println("calOriginCost:" + cost);
+//            System.out.println("pointNum:" + pointNum);
         }
-//        System.out.println("calOriginCost:" + cost);
+        return cost;
     }
 
-    public void exp(List<Point> points, int b, int B) {
+    public void exp(List<Point> points, int b, int B, int initialSize) {
 //        opt.gopt(opt.getPoints(), 80, 110);
         costVal = 0;
 //        List<Point> points = getPoints(tag);
@@ -115,17 +114,16 @@ public class Opt {
             pointGroups.add(points.subList(length * bucketSize, points.size()));
         }
 
-        calOriginCost(pointGroups, b);
+        float originalCost = calOriginCost(pointGroups, b);
 
         for (int i = 0; i < pointGroups.size(); i++) {
-            pageSizes.addAll(opt(pointGroups.get(i), b, B, B, bucketSize));
+            pageSizes.addAll(opt(pointGroups.get(i), b, B, initialSize, bucketSize));
         }
-        System.out.println(pageSizes.size());
-        System.out.println("costVal:" + costVal);
-
+//        System.out.println(pageSizes.size());
+//        System.out.println("costVal:" + costVal);
+        System.out.println("DP opt rate:" + (1 - costVal / originalCost) * 100 + "%");
 //        String fileName = new FileNameBuilder().buildType(FileNameBuilder.TYPE_OPT).buildDataset(tag).buildWindowSize(Float.valueOf(profileFileTag.split("%")[0])).buildTime().build();
 //        FileRecoder.write(fileName, "costVal:" + costVal);
-
         int index = 0;
         int pointsNum = pageSizes.get(index);
         for (int i = 0; i < points.size(); i++) {
@@ -140,7 +138,6 @@ public class Opt {
 //        System.out.println("pageSizes:");
 //        System.out.println(pageSizes.size());
 //        System.out.println(pageSizes);
-
 //        CSVFileWriter writer = new CSVFileWriter();
 //        writer.write(points, "..\\dataset\\_" + tag + ".csv");
 
@@ -269,7 +266,7 @@ public class Opt {
                 if (!isGetCost) {
                     float temp = cost[start][i];
                     costVal += temp;
-                    System.out.println("cost:" + temp);
+//                    System.out.println("cost:" + temp);
                     isGetCost = true;
                 }
                 result.add(index);
@@ -317,7 +314,7 @@ public class Opt {
         while (index > 0) {
             result.add(index);
             start -= index;
-            System.out.println(index);
+//            System.out.println(index);
             index = indices[start];
         }
         Collections.reverse(result);
