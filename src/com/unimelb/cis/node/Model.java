@@ -361,6 +361,8 @@ public abstract class Model {
 
     public abstract ExpReturn windowQuery(Mbr window);
 
+    public abstract ExpReturn windowQueryOpt(Mbr window);
+
     public abstract ExpReturn windowQueryByScanAll(Mbr window);
 
     public abstract ExpReturn insert(Point point);

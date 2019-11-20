@@ -177,15 +177,17 @@ public class Test {
 
     public static void testRecursivePartition(String s, List<Point> insertedPoints, List<Mbr> mbrs, List<Point> knnPoints, int k) {
         System.out.println("------------------------------------------------");
-        int maxPartitionNumEachDim = 256;  // LinearRegression
+        int maxPartitionNumEachDim = 64;  // LinearRegression
         RecursivePartition recursivePartition = new RecursivePartition("H", maxPartitionNumEachDim, 5000, "MultilayerPerceptron");
         System.out.println("Partition:" + "Recursive");
         System.out.println("build finish:" + recursivePartition.buildRtree(s).time);
-        System.out.println("point query:" + recursivePartition.pointQuery(recursivePartition.getPoints()));
+//        System.out.println("point query:" + recursivePartition.pointQuery(recursivePartition.getPoints()));
         System.out.println("window query:" + recursivePartition.windowQuery(mbrs));
+        System.out.println("window query:" + recursivePartition.windowQueryByOpt(mbrs));
+
         System.out.println("windowQueryByScanAll query:" + recursivePartition.windowQueryByScanAll(mbrs));
-        System.out.println("knn query:" + recursivePartition.knnQuery(knnPoints, k));
-        System.out.println("insert:" + recursivePartition.insert(insertedPoints));
+//        System.out.println("knn query:" + recursivePartition.knnQuery(knnPoints, k));
+//        System.out.println("insert:" + recursivePartition.insert(insertedPoints));
     }
 
     public static void testIRtree(IRtree iRtree, String s, List<Point> insertedPoints, List<Mbr> mbrs, List<Point> knnPoints, int k) {
@@ -232,7 +234,7 @@ public class Test {
     );
 
     static List<String> datasets1 = Arrays.asList(
-            "/Users/guanli/Documents/datasets/RLRtree/raw/uniform_10000_1_2_.csv"
+            "/Users/guanli/Documents/datasets/RLRtree/raw/uniform_1000000_1_2_.csv"
 //            "/Users/guanli/Documents/datasets/RLRtree/raw/uniform_2000000_1_2_.csv"
 //            "/Users/guanli/Documents/datasets/RLRtree/raw/uniform_4000000_1_2_.csv"
 //            "D:\\datasets\\RLRtree\\raw\\real_east.csv",

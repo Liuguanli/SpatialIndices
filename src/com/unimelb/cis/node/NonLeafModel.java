@@ -5,7 +5,6 @@ import com.unimelb.cis.utils.ExpReturn;
 import weka.core.Instances;
 
 import java.util.*;
-import java.util.function.BiConsumer;
 
 public class NonLeafModel extends Model {
 
@@ -213,6 +212,23 @@ public class NonLeafModel extends Model {
         subModels.forEach((integer, leafModel) -> {
             if (leafModel.getMbr().interact(window)) {
                 ExpReturn eachExpReturn = leafModel.windowQuery(mbr);
+                expReturn.pageaccess += eachExpReturn.pageaccess;
+                expReturn.pageaccess++;
+                expReturn.result.addAll(eachExpReturn.result);
+            }
+        });
+        long end = System.nanoTime();
+        expReturn.time = end - begin;
+        return expReturn;
+    }
+
+    @Override
+    public ExpReturn windowQueryOpt(Mbr window) {
+        ExpReturn expReturn = new ExpReturn();
+        long begin = System.nanoTime();
+        subModels.forEach((integer, leafModel) -> {
+            if (leafModel.getMbr().interact(window)) {
+                ExpReturn eachExpReturn = leafModel.windowQueryOpt(mbr);
                 expReturn.pageaccess += eachExpReturn.pageaccess;
                 expReturn.pageaccess++;
                 expReturn.result.addAll(eachExpReturn.result);

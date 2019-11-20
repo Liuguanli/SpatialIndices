@@ -1,6 +1,7 @@
 package com.unimelb.cis.utils;
 
 import com.unimelb.cis.curve.HilbertCurve;
+import com.unimelb.cis.geometry.Mbr;
 import com.unimelb.cis.node.LeafNode;
 import com.unimelb.cis.node.NonLeafNode;
 import com.unimelb.cis.node.Point;
@@ -21,21 +22,23 @@ public class DynamicAdjustmentBridge {
     public static void main(String[] args) {
         String dataset = "/Users/guanli/Documents/datasets/RLRtree/raw/uniform_10000_1_2_.csv";
         List<Point> points = readPoints(dataset);
-//        points = ZCurve.zCurve(points);
 
-        adjustbyDP(points, 50, 102, 100);
-
+        HRRtree hrRtree1 = adjustbyDP(points, 50, 102, 100);
+        System.out.println("finish adjustbyDP");
 //        adjustbyRL(points, 50, 102, "/Users/guanli/Documents/datasets/RLRtree/trees/build_temp_file.csv", "/Users/guanli/Documents/datasets/RLRtree/trees/build_temp_file_after_tuning.csv");
-        adjustbyRL(points, 50, 102, 100, "build_temp_file.csv", "build_temp_file_after_tuning.csv");
+        HRRtree hrRtree2 = adjustbyRL("/Users/guanli/Dropbox/shared/RLR-trees/codes/python/RLRtree/structure/rtree.py", "DQN", points, 102, 100, "build_temp_file.csv", "build_temp_file_after_tuning.csv");
+        System.out.println("finish adjustbyRL");
+        System.out.println(hrRtree1.windowQuery(new Mbr(0.2f, 0.2f, 0.5f, 0.5f)));
+        System.out.println(hrRtree2.windowQuery(new Mbr(0.2f, 0.2f, 0.5f, 0.5f)));
     }
 
-    public static void adjustbyDP(List<Point> points, int b, int B, int initialSize) {
+    public static HRRtree adjustbyDP(List<Point> points, int b, int B, int initialSize) {
         points = HilbertCurve.hilbertCurve(points);
         Opt opt = new Opt();
-        opt.exp(points, b, B, initialSize);
+        return opt.exp(points, b, B, initialSize);
     }
 
-    public static void adjustbyRL(List<Point> points, int b, int B, int initialSize, String outputFile, String buildFile) {
+    public static HRRtree adjustbyRL(String pyFile, String method, List<Point> points, int B, int initialSize, String outputFile, String buildFile) {
         HRRtree rtree = new HRRtree(initialSize);
         rtree.buildRtree(points);
         final float[] area = {0, 0};
@@ -48,13 +51,13 @@ public class DynamicAdjustmentBridge {
         int dim = 2;
         int level = rtree.getLevel();
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("python ").append("/Users/guanli/Dropbox/shared/RLR-trees/codes/python/RLRtree/structure/rtree.py")
+        stringBuilder.append("python ").append(pyFile)
                 .append(" -l ").append(level)
                 .append(" -i ").append(outputFile)
                 .append(" -o ").append(buildFile)
                 .append(" -d ").append(dim)
                 .append(" -p ").append(B)
-                .append(" -a ").append("DQN");
+                .append(" -a ").append(method);
         String command = stringBuilder.toString();
 //        System.out.println(command);
         Process proc;
@@ -76,7 +79,6 @@ public class DynamicAdjustmentBridge {
 
         rtree = new HRRtree(B);
         rtree.buildRtreeAfterTuning(buildFile, dim, level);
-        System.out.println(rtree);
         List<Integer> pagesizes = new ArrayList<>();
         AtomicInteger sum = new AtomicInteger();
         ((NonLeafNode) rtree.getRoot()).getChildren().forEach(node -> {
@@ -84,11 +86,8 @@ public class DynamicAdjustmentBridge {
             pagesizes.add(((LeafNode) node).getChildren().size());
             sum.addAndGet(((LeafNode) node).getChildren().size());
         });
-//        System.out.println(pagesizes.size());
-//        System.out.println(pagesizes);
-        System.out.println("RL opt rate:" + (1 - area[1] / area[0]) * 100 + "%");
-//        System.out.println(area[0]);
-//        System.out.println(sum);
+//        System.out.println("RL opt rate:" + (1 - area[1] / area[0]) * 100 + "%");
+        return rtree;
     }
 
 }

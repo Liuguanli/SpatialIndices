@@ -18,6 +18,12 @@ public abstract class RLRtree extends IRtree {
         super(pagesize);
     }
 
+    public void build(List<LeafNode> leafnodes, int B, int dim) {
+        NonLeafNode nonLeafNode = new NonLeafNode(B, dim);
+        leafnodes.forEach(leafNode -> nonLeafNode.add(leafNode));
+        this.root = nonLeafNode;
+    }
+
     public void output(String file) {
 
         File csv = new File(file);  // CSV文件路径
@@ -30,8 +36,6 @@ public abstract class RLRtree extends IRtree {
             e.printStackTrace();
         }
 
-
-        List<String> lines = new ArrayList<>();
         List<Node> nodes = new ArrayList<>();
         nodes.add(root);
         int lineNum = 1;

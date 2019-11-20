@@ -134,6 +134,23 @@ public class UnsupervisedModel extends Model {
     }
 
     @Override
+    public ExpReturn windowQueryOpt(Mbr window) {
+        ExpReturn expReturn = new ExpReturn();
+        if (leafModel == null) {
+            subModels.forEach((integer, unsupervisedModel) -> {
+                if (unsupervisedModel.getMbr().interact(window)) {
+                    ExpReturn temp = unsupervisedModel.windowQuery(window);
+                    expReturn.plus(temp);
+//                    System.out.println("expReturn.pageaccess" + expReturn.pageaccess);
+                }
+            });
+        } else {
+            return leafModel.windowQuery(window);
+        }
+        return expReturn;
+    }
+
+    @Override
     public ExpReturn windowQueryByScanAll(Mbr window) {
         ExpReturn expReturn = new ExpReturn();
         if (leafModel == null) {

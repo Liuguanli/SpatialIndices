@@ -208,6 +208,14 @@ public class RecursivePartition extends IRtree {
         return root.windowQueryByScanAll(window);
     }
 
+    public ExpReturn windowQueryByOpt(List<Mbr> windows) {
+        ExpReturn expReturn = new ExpReturn();
+        windows.forEach(mbr -> expReturn.plus(root.windowQueryOpt(mbr)));
+        expReturn.time /= windows.size();
+        expReturn.pageaccess /= windows.size();
+        return expReturn;
+    }
+
     @Override
     public ExpReturn insert(List<Point> points) {
         return root.insert(points);

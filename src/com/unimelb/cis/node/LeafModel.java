@@ -2,6 +2,8 @@ package com.unimelb.cis.node;
 
 import com.unimelb.cis.curve.HilbertCurve;
 import com.unimelb.cis.geometry.Mbr;
+import com.unimelb.cis.structures.hrtree.HRRtree;
+import com.unimelb.cis.utils.DynamicAdjustmentBridge;
 import com.unimelb.cis.utils.ExpReturn;
 import com.unimelb.cis.utils.Search;
 import weka.core.Instances;
@@ -115,7 +117,7 @@ public class LeafModel extends Model {
 //        System.out.println(highPoint);
 //        System.out.println(Arrays.toString(maxOrder));
 
-        return new ArrayList<>(){{
+        return new ArrayList<>() {{
             add(lowPoint);
             add(highPoint);
         }};
@@ -138,6 +140,8 @@ public class LeafModel extends Model {
         });
         coordinates.forEach((integer, floats) -> Collections.sort(floats));
 
+        optByRL(100, 102, "");
+//        optByDP(100, 51, 102);
         if (points.size() < pageSize) {
             points.forEach(point -> {
                 point.setIndex(0);
@@ -379,5 +383,21 @@ public class LeafModel extends Model {
         return expReturn;
     }
 
-    // TODO output all the data to a
+    HRRtree rtree;
+
+    public void optByRL(int initialPageSize, int maximizePageSize, String method) {
+        rtree = DynamicAdjustmentBridge.adjustbyRL("/Users/guanli/Dropbox/shared/RLR-trees/codes/python/RLRtree/structure/rtree.py",
+                "DQN", getChildren(), maximizePageSize, initialPageSize, "build_temp_file.csv",
+                "build_temp_file_after_tuning.csv");
+    }
+
+    public void optByDP(int initialPageSize, int minimizePageSize, int maximizePageSize) {
+        rtree = DynamicAdjustmentBridge.adjustbyDP(getChildren(), minimizePageSize, maximizePageSize, initialPageSize);
+    }
+
+    @Override
+    public ExpReturn windowQueryOpt(Mbr window) {
+        return rtree.windowQuery(window);
+    }
+
 }

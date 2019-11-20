@@ -18,6 +18,7 @@ public class NonLeafNode extends Node {
     public NonLeafNode() {
         super();
         children = new ArrayList<>();
+        mbr = new Mbr(dim);
     }
 
     public NonLeafNode(int pageSize, int dim) {
@@ -258,6 +259,12 @@ public class NonLeafNode extends Node {
     }
 
     public void add(Node node) {
+        node.parent = this;
+        children.add(node);
+        updateMbr(node, dim);
+    }
+
+    public void addAll(Node node) {
         node.parent = this;
         children.add(node);
         updateMbr(node, dim);

@@ -7,6 +7,7 @@ import com.unimelb.cis.geometry.Mbr;
 import com.unimelb.cis.node.LeafNode;
 import com.unimelb.cis.node.Node;
 import com.unimelb.cis.node.Point;
+import com.unimelb.cis.structures.hrtree.HRRtree;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -93,11 +94,12 @@ public class Opt {
         return cost;
     }
 
-    public void exp(List<Point> points, int b, int B, int initialSize) {
+    public HRRtree exp(List<Point> points, int b, int B, int initialSize) {
 //        opt.gopt(opt.getPoints(), 80, 110);
         costVal = 0;
 //        List<Point> points = getPoints(tag);
         List<List<Point>> pointGroups = new ArrayList<>();
+        int dim = points.get(0).getDim();
         List<Integer> pageSizes = new ArrayList<>();
         int bucketSize = B * B;
         boolean isExactDivision = true;
@@ -126,6 +128,19 @@ public class Opt {
 //        FileRecoder.write(fileName, "costVal:" + costVal);
         int index = 0;
         int pointsNum = pageSizes.get(index);
+        List<LeafNode> leafNodes = new ArrayList<>();
+
+        LeafNode leafNode = new LeafNode(B, dim);
+        leafNode.addAll(points.subList(0, pageSizes.get(0)));
+        leafNodes.add(leafNode);
+        int sum = pageSizes.get(0);
+        for (int i = 1; i < pageSizes.size(); i++) {
+            leafNode = new LeafNode(B, dim);
+            leafNode.addAll(points.subList(sum, sum + pageSizes.get(i)));
+            sum += pageSizes.get(i);
+            leafNodes.add(leafNode);
+        }
+
         for (int i = 0; i < points.size(); i++) {
             if (i >= pointsNum) {
                 index++;
@@ -133,6 +148,11 @@ public class Opt {
             }
             points.get(i).setIndex(index);
         }
+
+        HRRtree rlRtree = new HRRtree(B);
+        rlRtree.build(leafNodes, B, dim);
+        return rlRtree;
+
 //        System.out.println(points.get(0));
 //        System.out.println(points.get(points.size() - 1));
 //        System.out.println("pageSizes:");
@@ -318,8 +338,8 @@ public class Opt {
             index = indices[start];
         }
         Collections.reverse(result);
-        System.out.println(result);
-        System.out.println(result.size());
+//        System.out.println(result);
+//        System.out.println(result.size());
     }
 
 }

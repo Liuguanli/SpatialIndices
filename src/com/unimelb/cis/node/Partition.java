@@ -307,6 +307,31 @@ public class Partition extends Model {
     }
 
     @Override
+    public ExpReturn windowQueryOpt(Mbr window) {
+        ExpReturn expReturn = new ExpReturn();
+        long begin = System.nanoTime();
+
+        List<Integer> results = new ArrayList<>();
+        window.getAllPoints().forEach(point -> {
+            int modelIndex = getModelIndex(point);
+            results.add(modelIndex);
+        });
+        results.sort(Integer::compareTo);
+        int indexLow = results.get(0);
+        int indexHigh = results.get(results.size() - 1);
+        for (int i = indexLow; i <= indexHigh; i++) {
+            if (partitionModels.keySet().contains(i)) {
+                Model model = partitionModels.get(i);
+                ExpReturn eachExpReturn = model.windowQueryOpt(window);
+                expReturn.plus(eachExpReturn);
+            }
+        }
+        long end = System.nanoTime();
+        expReturn.time = end - begin;
+        return expReturn;
+    }
+
+    @Override
     public ExpReturn windowQueryByScanAll(Mbr window) {
         ExpReturn expReturn = new ExpReturn();
         partitionModels.forEach((integer, model) -> {
