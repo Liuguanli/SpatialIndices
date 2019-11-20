@@ -11,6 +11,7 @@
 *.iml
 .idea
 .DS_Store
+.csv
 */target
 .svn
 .project
