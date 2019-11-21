@@ -255,7 +255,7 @@ public class Test {
 
         List<Float> sides = Arrays.asList(0.04f);
 
-        datasets1.forEach(s -> {
+        datasets.forEach(s -> {
             List<Point> knnPoints = Point.getPoints(10, 2);
             List<Point> insertedPoints = Point.getPoints(10000, 2);
             System.out.println(s);

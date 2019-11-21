@@ -210,7 +210,11 @@ public class RecursivePartition extends IRtree {
 
     public ExpReturn windowQueryByOpt(List<Mbr> windows) {
         ExpReturn expReturn = new ExpReturn();
-        windows.forEach(mbr -> expReturn.plus(root.windowQueryOpt(mbr)));
+        windows.forEach(mbr -> {
+            ExpReturn temp = root.windowQueryOpt(mbr);
+            expReturn.plus(temp);
+            System.out.println(temp);
+        });
         expReturn.time /= windows.size();
         expReturn.pageaccess /= windows.size();
         return expReturn;

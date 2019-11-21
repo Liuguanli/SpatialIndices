@@ -11,7 +11,6 @@ import com.unimelb.cis.structures.queryadaptive.Opt;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -41,6 +40,7 @@ public class DynamicAdjustmentBridge {
     public static HRRtree adjustbyRL(String pyFile, String method, List<Point> points, int B, int initialSize, String outputFile, String buildFile) {
         HRRtree rtree = new HRRtree(initialSize);
         rtree.buildRtree(points);
+
         final float[] area = {0, 0};
         ((NonLeafNode) rtree.getRoot()).getChildren().forEach(node -> {
                     area[0] += node.getMbr().volume();
@@ -59,13 +59,12 @@ public class DynamicAdjustmentBridge {
                 .append(" -p ").append(B)
                 .append(" -a ").append(method);
         String command = stringBuilder.toString();
-//        System.out.println(command);
         Process proc;
         try {
             proc = Runtime.getRuntime().exec(command);// 执行py文件
             //用输入输出流来截取结果
             BufferedReader in = new BufferedReader(new InputStreamReader(proc.getInputStream()));
-            String line;
+//            String line;
 //            while ((line = in.readLine()) != null) {
 //                System.err.println("from python:" + line);
 //            }
@@ -79,14 +78,22 @@ public class DynamicAdjustmentBridge {
 
         rtree = new HRRtree(B);
         rtree.buildRtreeAfterTuning(buildFile, dim, level);
-        List<Integer> pagesizes = new ArrayList<>();
+
         AtomicInteger sum = new AtomicInteger();
-        ((NonLeafNode) rtree.getRoot()).getChildren().forEach(node -> {
+        NonLeafNode rootNode;
+        if (((NonLeafNode) rtree.getRoot()).getChildren().get(0) instanceof NonLeafNode) {
+            rootNode = (NonLeafNode) ((NonLeafNode) rtree.getRoot()).getChildren().get(0);
+        } else {
+            rootNode = (NonLeafNode) rtree.getRoot();
+        }
+        rootNode.getChildren().forEach(node -> {
             area[1] += node.getMbr().volume();
-            pagesizes.add(((LeafNode) node).getChildren().size());
+//            pagesizes.add(((LeafNode) node).getChildren().size());
             sum.addAndGet(((LeafNode) node).getChildren().size());
         });
-//        System.out.println("RL opt rate:" + (1 - area[1] / area[0]) * 100 + "%");
+//        System.out.println(Arrays.toString(area));
+//        System.out.println(sum);
+        System.out.println("RL opt rate:" + (1 - area[1] / area[0]) * 100 + "%");
         return rtree;
     }
 

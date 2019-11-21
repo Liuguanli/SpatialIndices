@@ -397,6 +397,7 @@ public class LeafModel extends Model {
 
     @Override
     public ExpReturn windowQueryOpt(Mbr window) {
+//        System.out.println(" LeafModel windowQueryOpt");
         return rtree.windowQuery(window);
     }
 

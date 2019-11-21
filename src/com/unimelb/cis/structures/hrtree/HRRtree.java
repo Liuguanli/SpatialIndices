@@ -255,7 +255,7 @@ public class HRRtree extends RLRtree {
         for (int i = 1; i < level; i++) {
             nodes[i] = new NonLeafNode(pagesize, dim);
         }
-
+        ((NonLeafNode)nodes[1]).add(nodes[0]);
         List<Point> points = new ArrayList<>();
 //        root.add(nodes[level - 1]);
         for (int i = 0; i < lines.size(); i++) {
@@ -317,8 +317,9 @@ public class HRRtree extends RLRtree {
         points = HilbertCurve.hilbertCurve(points);
         points.forEach(point -> curveValues.add(point.getCurveValue()));
         root.add(nodes[level - 1]);
-        this.root = root.getChildren().get(0);
-        return (NonLeafNode) this.root;
+//        this.root = root.getChildren().get(0);
+        this.root = root;
+        return root;
     }
 
     public ExpReturn insert(List<Point> points) {
@@ -378,7 +379,7 @@ public class HRRtree extends RLRtree {
 //        System.out.println(hRRtree.windowQuery(Mbr.getMbrs(0.01f, 10, 2).get(0)));
 //        System.out.println(zRtree.windowQuery(Mbr.getMbrs(0.01f, 9, 3).get(0)));
 //        System.out.println(zRtree.windowQuery(Mbr.getMbrs(0.01f, 11, 3).get(0)));
-        System.out.println(hRRtree.pointQuery(hRRtree.getPoints()));
+//        System.out.println(hRRtree.pointQuery(hRRtree.getPoints()));
 //        hRRtree.insert(new Point(0.5f,0.5f));
 //        System.out.println("knn query:" + hRRtree.knnQuery(new Point(0.5f, 0.5f), 1));
     }

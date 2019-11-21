@@ -92,7 +92,7 @@ public abstract class IRtree {
 
     public abstract ExpReturn insert(Point point);
 
-    public abstract NonLeafNode buildRtreeAfterTuning(String path, int dim, int level);
+    public abstract Node buildRtreeAfterTuning(String path, int dim, int level);
 
     public double claAcc(List<Point> result, List<Point> accurateResult) {
         final int[] num = {0};

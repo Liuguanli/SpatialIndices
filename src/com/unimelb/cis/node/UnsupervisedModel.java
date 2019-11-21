@@ -139,13 +139,12 @@ public class UnsupervisedModel extends Model {
         if (leafModel == null) {
             subModels.forEach((integer, unsupervisedModel) -> {
                 if (unsupervisedModel.getMbr().interact(window)) {
-                    ExpReturn temp = unsupervisedModel.windowQuery(window);
+                    ExpReturn temp = unsupervisedModel.windowQueryOpt(window);
                     expReturn.plus(temp);
-//                    System.out.println("expReturn.pageaccess" + expReturn.pageaccess);
                 }
             });
         } else {
-            return leafModel.windowQuery(window);
+            return leafModel.windowQueryOpt(window);
         }
         return expReturn;
     }

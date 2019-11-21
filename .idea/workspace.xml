@@ -9,20 +9,19 @@
     <list default="true" id="ba9c8980-c90e-48aa-8dfb-ac39a52585ec" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/node/LeafModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/node/LeafModel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/node/Model.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/node/Model.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/node/NonLeafModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/node/NonLeafModel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/node/NonLeafNode.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/node/NonLeafNode.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/structures/RLRtree.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/structures/RLRtree.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/structures/IRtree.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/structures/IRtree.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/structures/hrtree/HRtree.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/structures/hrtree/HRtree.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/structures/partitionmodel/PartitionModelRtree.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/structures/partitionmodel/PartitionModelRtree.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/structures/recursivemodel/RecursiveModelRtree.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/structures/recursivemodel/RecursiveModelRtree.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/structures/rstar/RstarTree.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/structures/rstar/RstarTree.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/structures/zrtree/ZRtree.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SpatialIndices/com/unimelb/cis/structures/zrtree/ZRtree.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/Test.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/node/LeafModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/node/LeafModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/node/Model.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/node/Model.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/node/NonLeafModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/node/NonLeafModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/node/NonLeafNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/node/NonLeafNode.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/node/Partition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/node/Partition.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/node/UnsupervisedModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/node/UnsupervisedModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/structures/RLRtree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/structures/RLRtree.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/structures/IRtree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/structures/IRtree.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/structures/hrtree/HRRtree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/structures/hrtree/HRRtree.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/structures/partitionmodel/RecursivePartition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/structures/partitionmodel/RecursivePartition.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/structures/queryadaptive/Opt.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/structures/queryadaptive/Opt.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/unimelb/cis/utils/DynamicAdjustmentBridge.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/unimelb/cis/utils/DynamicAdjustmentBridge.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -43,32 +42,10 @@
   <component name="FileEditorManager">
     <leaf>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/node/LeafModel.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="133">
-              <caret line="388" column="43" lean-forward="true" selection-start-line="388" selection-start-column="43" selection-end-line="388" selection-end-column="43" />
-              <folding>
-                <element signature="e#14990#14991#0" expanded="true" />
-                <element signature="e#15038#15039#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/node/NonLeafModel.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="233">
-              <caret line="224" selection-start-line="224" selection-end-line="239" selection-end-column="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/node/UnsupervisedModel.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="415">
-              <caret line="141" column="54" selection-start-line="141" selection-start-column="37" selection-end-line="141" selection-end-column="54" />
+            <state relative-caret-position="352">
+              <caret line="231" column="65" lean-forward="true" selection-start-line="231" selection-start-column="65" selection-end-line="231" selection-end-column="65" />
             </state>
           </provider>
         </entry>
@@ -76,8 +53,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/node/Partition.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="401">
-              <caret line="328" column="37" selection-start-line="328" selection-start-column="37" selection-end-line="328" selection-end-column="37" />
+            <state relative-caret-position="551">
+              <caret line="317" column="25" selection-start-line="317" selection-start-column="25" selection-end-line="317" selection-end-column="25" />
             </state>
           </provider>
         </entry>
@@ -86,7 +63,7 @@
         <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/partitionmodel/RecursivePartition.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="657">
-              <caret line="216" column="5" lean-forward="true" selection-start-line="216" selection-start-column="5" selection-end-line="216" selection-end-column="5" />
+              <caret line="220" column="5" lean-forward="true" selection-start-line="220" selection-start-column="5" selection-end-line="220" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -112,8 +89,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/utils/DynamicAdjustmentBridge.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="283">
-              <caret line="20" lean-forward="true" selection-start-line="20" selection-end-line="20" />
+            <state relative-caret-position="223">
+              <caret line="49" selection-start-line="49" selection-end-line="49" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -124,8 +101,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/queryadaptive/Opt.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="493">
-              <caret line="248" column="9" selection-start-line="248" selection-start-column="9" selection-end-line="248" selection-end-column="9" />
+            <state relative-caret-position="411">
+              <caret line="151" selection-start-line="151" selection-end-line="151" />
             </state>
           </provider>
         </entry>
@@ -133,13 +110,25 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/hrtree/HRRtree.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="359">
-              <caret line="120" column="33" selection-start-line="120" selection-start-column="33" selection-end-line="120" selection-end-column="33" />
+            <state relative-caret-position="2199">
+              <caret line="382" column="47" lean-forward="true" selection-start-line="382" selection-start-column="47" selection-end-line="382" selection-end-column="47" />
               <folding>
                 <element signature="e#575#576#0" expanded="true" />
                 <element signature="e#606#607#0" expanded="true" />
               </folding>
             </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/build_temp_file_after_tuning.csv">
+          <provider selected="true" editor-type-id="csv-text-editor">
+            <state relative-caret-position="257">
+              <caret line="203" column="24" selection-start-line="203" selection-start-column="24" selection-end-line="203" selection-end-column="24" />
+            </state>
+          </provider>
+          <provider editor-type-id="csv-table-editor">
+            <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
           </provider>
         </entry>
       </file>
@@ -159,6 +148,7 @@
       <find>cost</find>
       <find>System</find>
       <find>leafNodes</find>
+      <find>0.083693646</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -167,25 +157,7 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/com/unimelb/cis/node/Point.java" />
-        <option value="$PROJECT_DIR$/src/com/unimelb/cis/structures/IRtree.java" />
-        <option value="$PROJECT_DIR$/src/com/unimelb/cis/utils/Search.java" />
-        <option value="$PROJECT_DIR$/src/com/unimelb/cis/structures/zrtree/ZRRtree.java" />
         <option value="$PROJECT_DIR$/src/com/unimelb/cis/structures/hrtree/HRRtree.java" />
-        <option value="$PROJECT_DIR$/src/com/unimelb/cis/structures/hrtree/HRtree.java" />
-        <option value="$PROJECT_DIR$/src/com/unimelb/cis/structures/peanotree/PeanoRtree.java" />
-        <option value="$PROJECT_DIR$/src/com/unimelb/cis/structures/zrtree/ZRtree.java" />
-        <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/src/com/unimelb/cis/structures/RLRtree.java" />
-        <option value="$PROJECT_DIR$/src/com/unimelb/cis/node/NonLeafNode.java" />
-        <option value="$PROJECT_DIR$/src/com/unimelb/cis/structures/queryadaptive/Opt.java" />
-        <option value="$PROJECT_DIR$/src/com/unimelb/cis/node/Model.java" />
-        <option value="$PROJECT_DIR$/src/com/unimelb/cis/node/NonLeafModel.java" />
-        <option value="$PROJECT_DIR$/src/com/unimelb/cis/node/Partition.java" />
-        <option value="$PROJECT_DIR$/src/com/unimelb/cis/node/UnsupervisedModel.java" />
-        <option value="$PROJECT_DIR$/src/com/unimelb/cis/Test.java" />
-        <option value="$PROJECT_DIR$/src/com/unimelb/cis/structures/partitionmodel/RecursivePartition.java" />
-        <option value="$PROJECT_DIR$/src/com/unimelb/cis/node/LeafModel.java" />
         <option value="$PROJECT_DIR$/src/com/unimelb/cis/utils/DynamicAdjustmentBridge.java" />
       </list>
     </option>
@@ -334,7 +306,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.Test">
+  <component name="RunManager" selected="Application.DynamicAdjustmentBridge">
     <configuration name="DynamicAdjustmentBridge" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.unimelb.cis.utils.DynamicAdjustmentBridge" />
       <module name="SpatialIndices" />
@@ -409,10 +381,10 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Test" />
         <item itemvalue="Application.DynamicAdjustmentBridge" />
-        <item itemvalue="Application.Opt" />
+        <item itemvalue="Application.Test" />
         <item itemvalue="Application.RecursivePartition" />
+        <item itemvalue="Application.Opt" />
         <item itemvalue="Application.PeanoRtree" />
       </list>
     </recent_temporary>
@@ -488,8 +460,8 @@
       <window_info anchor="bottom" id="Messages" weight="0.32908705" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.26433122" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3481953" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.3747346" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.42144373" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.19002123" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32908705" />
@@ -564,19 +536,19 @@
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/node/NonLeafNode.java</url>
-          <line>109</line>
+          <line>110</line>
           <properties />
           <option name="timeStamp" value="92" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/node/NonLeafNode.java</url>
-          <line>143</line>
+          <line>144</line>
           <properties />
           <option name="timeStamp" value="93" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/node/NonLeafNode.java</url>
-          <line>221</line>
+          <line>222</line>
           <properties />
           <option name="timeStamp" value="96" />
         </line-breakpoint>
@@ -625,44 +597,38 @@
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/node/NonLeafModel.java</url>
-          <line>90</line>
+          <line>89</line>
           <properties />
           <option name="timeStamp" value="151" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/node/Model.java</url>
-          <line>125</line>
+          <line>129</line>
           <properties />
           <option name="timeStamp" value="153" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/node/Model.java</url>
-          <line>134</line>
+          <line>138</line>
           <properties />
           <option name="timeStamp" value="162" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <condition expression="node.mbr == null" language="JAVA" />
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/node/NonLeafNode.java</url>
-          <line>274</line>
+          <line>281</line>
           <properties />
           <option name="timeStamp" value="203" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/unimelb/cis/node/LeafModel.java</url>
-          <line>315</line>
-          <properties />
-          <option name="timeStamp" value="212" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/node/NonLeafModel.java</url>
-          <line>79</line>
+          <line>78</line>
           <properties />
           <option name="timeStamp" value="217" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/node/NonLeafModel.java</url>
-          <line>96</line>
+          <line>95</line>
           <properties />
           <option name="timeStamp" value="221" />
         </line-breakpoint>
@@ -692,7 +658,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/node/Model.java</url>
-          <line>323</line>
+          <line>327</line>
           <properties />
           <option name="timeStamp" value="283" />
         </line-breakpoint>
@@ -710,33 +676,33 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/node/Model.java</url>
-          <line>103</line>
+          <line>107</line>
           <properties />
           <option name="timeStamp" value="308" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/unimelb/cis/utils/DynamicAdjustmentBridge.java</url>
-          <line>80</line>
-          <properties />
-          <option name="timeStamp" value="342" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/unimelb/cis/structures/hrtree/HRRtree.java</url>
-          <line>258</line>
-          <properties />
-          <option name="timeStamp" value="344" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/unimelb/cis/node/LeafModel.java</url>
-          <line>129</line>
+          <line>215</line>
           <properties />
           <option name="timeStamp" value="346" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/unimelb/cis/structures/queryadaptive/Opt.java</url>
-          <line>151</line>
+          <url>file://$PROJECT_DIR$/src/com/unimelb/cis/Test.java</url>
+          <line>184</line>
           <properties />
-          <option name="timeStamp" value="347" />
+          <option name="timeStamp" value="349" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/unimelb/cis/structures/hrtree/HRRtree.java</url>
+          <line>318</line>
+          <properties />
+          <option name="timeStamp" value="351" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/unimelb/cis/structures/hrtree/HRRtree.java</url>
+          <line>309</line>
+          <properties />
+          <option name="timeStamp" value="353" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>jar://$PROJECT_DIR$/../../weka-3.7.0.jar!/weka/classifiers/Classifier.class</url>
@@ -754,6 +720,33 @@
     </breakpoint-manager>
   </component>
   <component name="debuggerHistoryManager">
+    <expressions id="breakpointCondition">
+      <expression>
+        <expression-string>i == 101 || i == 203</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>i == 101 or i == 203</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>i == 101 or 1</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>i == 101</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>i=101</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
     <expressions id="evaluateExpression">
       <expression>
         <expression-string>xbits.get(i)</expression-string>
@@ -763,216 +756,10 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/CSVFileReader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="291">
-          <caret line="37" column="40" selection-start-line="37" selection-start-column="30" selection-end-line="37" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/partitionmodel/PartitionModelByPred.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="19" column="13" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build_temp_file.csv">
-      <provider selected="true" editor-type-id="csv-text-editor" />
-      <provider editor-type-id="csv-table-editor">
-        <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build_temp_file_after_tuning.csv">
-      <provider selected="true" editor-type-id="csv-text-editor">
-        <state relative-caret-position="200">
-          <caret line="9984" column="25" lean-forward="true" selection-start-line="9984" selection-start-column="25" selection-end-line="9984" selection-end-column="25" />
-        </state>
-      </provider>
-      <provider editor-type-id="csv-table-editor">
-        <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/recursivemodel/OriginalRecursiveModel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2714">
-          <caret line="47" column="62" selection-start-line="47" selection-start-column="62" selection-end-line="47" selection-end-column="62" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/zrtree/ZRRtree.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="294" column="39" selection-start-line="294" selection-start-column="32" selection-end-line="294" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/hrtree/HRtree.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="202">
-          <caret line="378" column="39" selection-start-line="378" selection-start-column="39" selection-end-line="378" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/peanotree/PeanoRtree.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="202">
-          <caret line="328" column="39" selection-start-line="328" selection-start-column="39" selection-end-line="328" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/zrtree/ZRtree.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="202">
-          <caret line="250" column="98" selection-start-line="250" selection-start-column="98" selection-end-line="250" selection-end-column="98" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/utils/Search.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="22" selection-start-line="6" selection-start-column="22" selection-end-line="6" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/node/Point.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="215">
-          <caret line="36" column="18" selection-start-line="36" selection-start-column="18" selection-end-line="36" selection-end-column="18" />
-          <folding>
-            <element signature="e#892#893#0" expanded="true" />
-            <element signature="e#928#929#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/curve/HilbertCurve.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="142">
-          <caret line="27" column="66" selection-start-line="26" selection-start-column="8" selection-end-line="27" selection-end-column="66" />
-          <folding>
-            <element signature="e#2068#2069#0" expanded="true" />
-            <element signature="e#2117#2118#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="13" column="1" selection-start-line="13" selection-start-column="1" selection-end-line="13" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk-12.0.1.jdk/Contents/Home/lib/src.zip!/java.base/java/util/List.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="222">
-          <caret line="264" column="12" selection-start-line="264" selection-start-column="12" selection-end-line="264" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/IRtree.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="21" column="19" selection-start-line="21" selection-start-column="19" selection-end-line="21" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/geometry/Mbr.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="196">
-          <caret line="26" column="11" selection-start-line="26" selection-start-column="11" selection-end-line="26" selection-end-column="11" />
-          <folding>
-            <element signature="e#13804#13805#0" expanded="true" />
-            <element signature="e#13864#13865#0" expanded="true" />
-            <element signature="e#14301#14302#0" expanded="true" />
-            <element signature="e#14367#14368#0" expanded="true" />
-            <element signature="e#14417#14418#0" expanded="true" />
-            <element signature="e#14477#14478#0" expanded="true" />
-            <element signature="e#15221#15222#0" expanded="true" />
-            <element signature="e#15288#15289#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/RLRtree.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="22" column="50" selection-start-line="22" selection-start-column="50" selection-end-line="22" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/node/NonLeafNode.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="261">
-          <caret line="274" column="32" selection-start-line="274" selection-start-column="32" selection-end-line="274" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/node/LeafNode.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="15" column="11" selection-start-line="15" selection-start-column="11" selection-end-line="15" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/queryadaptive/Opt.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="248" column="9" selection-start-line="248" selection-start-column="9" selection-end-line="248" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/hrtree/HRRtree.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="359">
-          <caret line="120" column="33" selection-start-line="120" selection-start-column="33" selection-end-line="120" selection-end-column="33" />
-          <folding>
-            <element signature="e#575#576#0" expanded="true" />
-            <element signature="e#606#607#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/node/NonLeafModel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="233">
-          <caret line="224" selection-start-line="224" selection-end-line="239" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/node/Model.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="211">
-          <caret line="363" column="30" selection-start-line="363" selection-start-column="30" selection-end-line="363" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/node/UnsupervisedModel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="415">
-          <caret line="141" column="54" selection-start-line="141" selection-start-column="37" selection-end-line="141" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/node/Partition.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="401">
-          <caret line="328" column="37" selection-start-line="328" selection-start-column="37" selection-end-line="328" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/partitionmodel/RecursivePartition.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="657">
-          <caret line="216" column="5" lean-forward="true" selection-start-line="216" selection-start-column="5" selection-end-line="216" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/Test.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="603">
-          <caret line="251" lean-forward="true" selection-start-line="251" selection-end-line="251" />
+        <state relative-caret-position="411">
+          <caret line="151" selection-start-line="151" selection-end-line="151" />
         </state>
       </provider>
     </entry>
@@ -987,10 +774,48 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/node/NonLeafModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="352">
+          <caret line="231" column="65" lean-forward="true" selection-start-line="231" selection-start-column="65" selection-end-line="231" selection-end-column="65" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/node/UnsupervisedModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="415">
+          <caret line="141" column="54" selection-start-line="141" selection-start-column="37" selection-end-line="141" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DQN_uniform_1000_1_2_.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build_temp_file_after_tuning.csv">
+      <provider selected="true" editor-type-id="csv-text-editor">
+        <state relative-caret-position="257">
+          <caret line="203" column="24" selection-start-line="203" selection-start-column="24" selection-end-line="203" selection-end-column="24" />
+        </state>
+      </provider>
+      <provider editor-type-id="csv-table-editor">
+        <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/structures/hrtree/HRRtree.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2199">
+          <caret line="382" column="47" lean-forward="true" selection-start-line="382" selection-start-column="47" selection-end-line="382" selection-end-column="47" />
+          <folding>
+            <element signature="e#575#576#0" expanded="true" />
+            <element signature="e#606#607#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/unimelb/cis/utils/DynamicAdjustmentBridge.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="283">
-          <caret line="20" lean-forward="true" selection-start-line="20" selection-end-line="20" />
+        <state relative-caret-position="223">
+          <caret line="49" selection-start-line="49" selection-end-line="49" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
