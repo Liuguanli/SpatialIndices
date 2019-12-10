@@ -4,7 +4,6 @@ import com.unimelb.cis.geometry.Mbr;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Consumer;
 
 import static java.lang.Math.E;
 

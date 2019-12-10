@@ -92,6 +92,10 @@ public abstract class IRtree {
 
     public abstract ExpReturn insert(Point point);
 
+    public abstract ExpReturn insertByLink(List<Point> points);
+
+    public abstract ExpReturn delete(List<Point> points);
+
     public abstract Node buildRtreeAfterTuning(String path, int dim, int level);
 
     public double claAcc(List<Point> result, List<Point> accurateResult) {
@@ -184,6 +188,21 @@ public abstract class IRtree {
             }
         });
         return queue;
+    }
+
+    public List<Point> getPoints(int num) {
+        List<Point> result = new ArrayList<>();
+        Random random = new Random(42);
+        int min = 0;
+        int max = points.size();
+        while (result.size() < num) {
+            int index = min + ((int) (random.nextFloat() * (max - min)));
+            Point temp = points.get(index);
+            if (!result.contains(temp)) {
+                result.add(temp);
+            }
+        }
+        return result;
     }
 
 //    public double calMINDIST(Point point, Geometry geometry) {

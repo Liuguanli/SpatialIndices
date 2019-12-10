@@ -33,6 +33,8 @@ public class OriginalRecursiveModel extends IRtree {
 
     int levelNum;
 
+    int datasetSize = 0;
+
     public OriginalRecursiveModel(int pagesize, boolean rankspace, String curveType, int levelNum) {
         super(pagesize);
         this.rankspace = rankspace;
@@ -133,6 +135,7 @@ public class OriginalRecursiveModel extends IRtree {
         ExpReturn expReturn = new ExpReturn();
         long begin = System.nanoTime();
         List<String> lines = read(path);
+        datasetSize = lines.size();
         points = new ArrayList<>(lines.size());
         for (int i = 0; i < lines.size(); i++) {
             String line = lines.get(i);
@@ -279,7 +282,6 @@ public class OriginalRecursiveModel extends IRtree {
 
         int bitNum = (int) (Math.log(width) / Math.log(2.0)) + 1;
 
-
         long zValue = getZcurve(point.getLocationOrder(), bitNum);
         point.setCurveValue(zValue);
 
@@ -297,9 +299,11 @@ public class OriginalRecursiveModel extends IRtree {
             Classifier classifier = classifiers.get(predictedVal);
 //            System.out.println("stages:" + i + " predictedVal:" + predictedVal + " classifier:" + classifier);
             List<Double> results = getPredVals(classifier, instances);
+            if (results.size() == 0) {
+                continue;
+            }
             int lengthOfNextStage = stages.get(i + 1);
             predictedVal = results.get(0).intValue() * lengthOfNextStage / N;
-
             if (predictedVal < 0) {
                 predictedVal = 0;
             }
@@ -532,7 +536,7 @@ public class OriginalRecursiveModel extends IRtree {
         ExpReturn expReturn = new ExpReturn();
         long begin = System.nanoTime();
 
-        int width = points.size();
+        int width = datasetSize;
         int dimension = point.getDim();
         for (int i = 0; i < dimension; i++) {
             point.getLocationOrder()[i] = (long) (point.getLocation()[i] * width);
@@ -580,8 +584,30 @@ public class OriginalRecursiveModel extends IRtree {
                 minErr = minErrors.get(predictedVal);
             }
         }
+//        this.getPoints().add(point);
         long end = System.nanoTime();
         expReturn.time = end - begin;
+        return expReturn;
+    }
+
+    @Override
+    public ExpReturn insertByLink(List<Point> points) {
+        return insert(points);
+    }
+
+    @Override
+    public ExpReturn delete(List<Point> points) {
+        ExpReturn expReturn = new ExpReturn();
+//        long begin = System.nanoTime();
+//        points.forEach(new Consumer<Point>() {
+//            @Override
+//            public void accept(Point point) {
+//                root.delete(point);
+//            }
+//        });
+//        this.getPoints().removeAll(points);
+//        long end = System.nanoTime();
+//        expReturn.time = end - begin;
         return expReturn;
     }
 

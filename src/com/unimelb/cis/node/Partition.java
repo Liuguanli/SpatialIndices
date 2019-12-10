@@ -30,7 +30,7 @@ public class Partition extends Model {
 
     Map<Integer, List<Point>> partitionPoints = new HashMap<>();
 
-    Map<Integer, Model> partitionModels = new HashMap<>();
+    public Map<Integer, Model> partitionModels = new HashMap<>();
 
     public Partition(String curve, int index, int pageSize, String algorithm, int maxPartitionNumEachDim, int threshold, List<Point> points) {
         super(index, pageSize, algorithm);
@@ -171,7 +171,7 @@ public class Partition extends Model {
 
     private Model addPointsAndBuild(List<Point> points) {
         if (points.size() >= threshold * 2) {
-            Partition partition = new Partition(curve,0, 100, this.name, maxPartitionNumEachDim, threshold, points);
+            Partition partition = new Partition(curve, 0, 100, this.name, maxPartitionNumEachDim, threshold, points);
             partition.setChildren(points);
             partition.build();
 //            System.out.println(partition.getMbr());
@@ -226,6 +226,13 @@ public class Partition extends Model {
             e.printStackTrace();
         }
         return pos;
+    }
+
+    public int getIndex(Point point) {
+        Instances instances = getInstances(this.name, Arrays.asList(point), modelName);
+        Instance instance = instances.instance(0);
+        int modelIndex = getModelIndex(instance);
+        return modelIndex;
     }
 
     @Override
@@ -348,6 +355,51 @@ public class Partition extends Model {
         points.forEach(point -> expReturn.pageaccess += insert(point).pageaccess);
         long end = System.nanoTime();
         expReturn.time = end - begin;
+        return expReturn;
+    }
+
+    @Override
+    public ExpReturn insertByLink(List<Point> points) {
+        ExpReturn expReturn = new ExpReturn();
+        long begin = System.nanoTime();
+        points.forEach(point -> {
+            int modelIndex = getModelIndex(point);
+            Model model = partitionModels.get(modelIndex);
+            if (model != null) {
+                ExpReturn temp = model.insert(point);
+                expReturn.plus(temp);
+            }
+        });
+        long end = System.nanoTime();
+        expReturn.time = end - begin;
+        return expReturn;
+    }
+
+    @Override
+    public ExpReturn delete(Point point) {
+        ExpReturn expReturn = new ExpReturn();
+        Instances instances = getInstances(this.name, Arrays.asList(point), modelName);
+//        Instances instances = getInstances(Arrays.asList(point));
+        Instance instance = instances.instance(0);
+        long begin = System.nanoTime();
+        int modelIndex = getModelIndex(instance);
+//        modelIndex = Math.max(modelIndex, 0);
+//        modelIndex = Math.min(modelIndex, classNum - 1);
+        long end = System.nanoTime();
+//        System.out.println("level:" + level);
+//        System.out.println("getModelIndex time:" + (end - begin));
+        long gap = end - begin;
+        Model model = partitionModels.get(modelIndex);
+        if (model == null) {
+//            System.out.println("partitionModels:" + partitionModels);
+//            System.out.println("points.size()" + children.size());
+//            System.out.println("modelIndex" + modelIndex);
+//            System.out.println("classNum" + classNum);
+        } else {
+            ExpReturn eachExpReturn = model.delete(point);
+            expReturn.pageaccess += eachExpReturn.pageaccess;
+            expReturn.time += eachExpReturn.time + gap;
+        }
         return expReturn;
     }
 

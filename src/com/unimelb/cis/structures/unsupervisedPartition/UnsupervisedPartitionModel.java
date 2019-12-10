@@ -10,7 +10,6 @@ import com.unimelb.cis.utils.ExpReturn;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 import static com.unimelb.cis.CSVFileReader.read;
@@ -182,6 +181,27 @@ public class UnsupervisedPartitionModel extends IRtree {
     @Override
     public ExpReturn insert(Point point) {
         return root.insert(point);
+    }
+
+    @Override
+    public ExpReturn insertByLink(List<Point> points) {
+        return root.insertByLink(points);
+    }
+
+    @Override
+    public ExpReturn delete(List<Point> points) {
+        ExpReturn expReturn = new ExpReturn();
+        long begin = System.nanoTime();
+        points.forEach(new Consumer<Point>() {
+            @Override
+            public void accept(Point point) {
+                root.delete(point);
+            }
+        });
+        this.getPoints().removeAll(points);
+        long end = System.nanoTime();
+        expReturn.time = end - begin;
+        return expReturn;
     }
 
     @Override

@@ -199,6 +199,64 @@ public class NonLeafModel extends Model {
         return expReturn;
     }
 
+    @Override
+    public ExpReturn insertByLink(List<Point> points) {
+        List<Point> sameIndexPoints = new ArrayList<>();
+        ExpReturn expReturn = new ExpReturn();
+        Instances instances = getInstances(name, points, type);
+        List<Double> results = getPredVals0(classifier, instances);
+        Double index = results.get(0);
+
+        long begin = System.nanoTime();
+        results.sort((Double::compareTo));
+        for (int i = 0; i < results.size(); i++) {
+//            subModels.get(results.get(i).intValue()).pointQuery(points.get(i));
+            if (results.get(i).intValue() == index.intValue()) {
+//                sameIndexPoints.add(points.get(i));
+            } else {
+                if (subModels.containsKey(index.intValue())) {
+                    ExpReturn eachExpReturn = subModels.get(index.intValue()).insertByLink(sameIndexPoints);
+                    expReturn.pageaccess += eachExpReturn.pageaccess;
+                } else {
+                    add(results.get(i).intValue(), sameIndexPoints);
+                }
+                index = results.get(i);
+                sameIndexPoints = new ArrayList<>();
+//                sameIndexPoints.add(points.get(i));
+            }
+            sameIndexPoints.add(points.get(i));
+            if (i == results.size() - 1) {
+                if (subModels.containsKey(index.intValue())) {
+                    ExpReturn eachExpReturn = subModels.get(index.intValue()).insertByLink(sameIndexPoints);
+                    expReturn.pageaccess += eachExpReturn.pageaccess;
+                } else {
+                    add(results.get(i).intValue(), sameIndexPoints);
+                }
+            }
+        }
+        long end = System.nanoTime();
+        expReturn.time = end - begin;
+        return expReturn;
+    }
+
+    @Override
+    public ExpReturn delete(Point point) {
+        List<Point> points = new ArrayList<>();
+        points.add(point);
+        Instances instances = getInstances(name, points, type);
+        List<Double> results = getPredVals0(classifier, instances);
+        ExpReturn expReturn = new ExpReturn();
+        long begin = System.nanoTime();
+        for (int i = 0; i < results.size(); i++) {
+            ExpReturn eachExpReturn = subModels.get(results.get(i).intValue()).delete(points.get(i));
+            expReturn.pageaccess += eachExpReturn.pageaccess;
+        }
+        this.getChildren().remove(point);
+        long end = System.nanoTime();
+        expReturn.time = end - begin;
+        return expReturn;
+    }
+
     public ExpReturn insert(Point point) {
         List<Point> points = Arrays.asList(point);
         return insert(points);

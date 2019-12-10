@@ -9,6 +9,7 @@ import com.unimelb.cis.structures.RLRtree;
 import com.unimelb.cis.utils.ExpReturn;
 
 import java.util.*;
+import java.util.function.Consumer;
 
 import static com.unimelb.cis.CSVFileReader.read;
 
@@ -209,6 +210,7 @@ public class RstarTree extends RLRtree {
         ExpReturn expReturn = new ExpReturn();
         long begin = System.nanoTime();
         points.forEach(point -> rstarInsert(point));
+        this.points.addAll(points);
         long end = System.nanoTime();
         expReturn.time = end - begin;
         return expReturn;
@@ -217,6 +219,63 @@ public class RstarTree extends RLRtree {
     @Override
     public ExpReturn insert(Point point) {
         return insert(Arrays.asList(point));
+    }
+
+    @Override
+    public ExpReturn insertByLink(List<Point> points) {
+        return insert(points);
+    }
+
+    public ExpReturn delete(Point point) {
+        ExpReturn expReturn = new ExpReturn();
+        long begin = System.nanoTime();
+        List<Node> nodes = new ArrayList<>();
+        nodes.add(root);
+        while (nodes.size() > 0) {
+            Node top = nodes.remove(0);
+            if (top instanceof NonLeafNode) {
+                if (top.getMbr().contains(point)) {
+                    expReturn.pageaccess++;
+                    nodes.addAll(((NonLeafNode) top).getChildren());
+                }
+            } else if (top instanceof LeafNode) {
+                if (top.getMbr().contains(point)) {
+                    expReturn.pageaccess++;
+                    ((LeafNode) top).delete(point);
+                    // if the size of leafnode less than m. delete all and re-insert
+                    if (((LeafNode) top).getChildren().size() < m) {
+                        NonLeafNode parent = (NonLeafNode) top.getParent();
+                        parent.getChildren().remove(top);
+                        ((LeafNode) top).getChildren().forEach(new Consumer<Point>() {
+                            @Override
+                            public void accept(Point point) {
+                                rstarInsert(point);
+                            }
+                        });
+                    }
+                    break;
+                }
+            }
+        }
+        long end = System.nanoTime();
+        expReturn.time = end - begin;
+        return expReturn;
+    }
+
+    @Override
+    public ExpReturn delete(List<Point> points) {
+        ExpReturn expReturn = new ExpReturn();
+        long begin = System.nanoTime();
+        points.forEach(new Consumer<Point>() {
+            @Override
+            public void accept(Point point) {
+                delete(point);
+            }
+        });
+        this.getPoints().removeAll(points);
+        long end = System.nanoTime();
+        expReturn.time = end - begin;
+        return expReturn;
     }
 
     private Set<Integer> overflowtreatmentSet = new HashSet<>();

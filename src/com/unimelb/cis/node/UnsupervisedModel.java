@@ -94,7 +94,7 @@ public class UnsupervisedModel extends Model {
             try {
                 long begin = System.nanoTime();
                 int index = kmeans.clusterInstance(new Instance(1.0, point.getLocationDouble()));
-                long end =  System.nanoTime();
+                long end = System.nanoTime();
                 result = subModels.get(index).pointQuery(point);
                 result.time += end - begin;
             } catch (Exception e) {
@@ -187,5 +187,31 @@ public class UnsupervisedModel extends Model {
         ExpReturn expReturn = new ExpReturn();
         points.forEach(point -> expReturn.plus(insert(point)));
         return expReturn;
+    }
+
+    @Override
+    public ExpReturn insertByLink(List<Point> points) {
+        ExpReturn expReturn = new ExpReturn();
+        points.forEach(point -> {
+            ExpReturn result;
+            if (leafModel == null) {
+                int index = 0;
+                try {
+                    index = kmeans.clusterInstance(new Instance(1.0, point.getLocationDouble()));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                result = subModels.get(index).insert(point);
+            } else {
+                result = leafModel.insert(point);
+            }
+            expReturn.plus(result);
+        });
+        return expReturn;
+    }
+
+    @Override
+    public ExpReturn delete(Point point) {
+        return null;
     }
 }

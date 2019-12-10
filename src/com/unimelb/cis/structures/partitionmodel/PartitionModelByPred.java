@@ -280,6 +280,27 @@ public class PartitionModelByPred extends IRtree {
     }
 
     @Override
+    public ExpReturn insertByLink(List<Point> points) {
+        return insert(points);
+    }
+
+    @Override
+    public ExpReturn delete(List<Point> points) {
+        ExpReturn expReturn = new ExpReturn();
+//        long begin = System.nanoTime();
+//        points.forEach(new Consumer<Point>() {
+//            @Override
+//            public void accept(Point point) {
+//                root.delete(point);
+//            }
+//        });
+//        this.getPoints().removeAll(points);
+//        long end = System.nanoTime();
+//        expReturn.time = end - begin;
+        return expReturn;
+    }
+
+    @Override
     public NonLeafNode buildRtreeAfterTuning(String path, int dim, int level) {
         return null;
     }

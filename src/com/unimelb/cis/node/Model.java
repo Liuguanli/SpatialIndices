@@ -369,6 +369,10 @@ public abstract class Model {
 
     public abstract ExpReturn insert(List<Point> points);
 
+    public abstract ExpReturn insertByLink(List<Point> points);
+
+    public abstract ExpReturn delete(Point point);
+
     public void updateMbr(Point point) {
         if (mbr == null) {
             mbr = new Mbr(point.getDim());

@@ -10,6 +10,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Consumer;
 
 import static com.unimelb.cis.CSVFileReader.read;
 
@@ -229,6 +230,27 @@ public class RecursiveModelRtree extends IRtree {
     @Override
     public ExpReturn insert(Point point) {
         return insert(Arrays.asList(point));
+    }
+
+    @Override
+    public ExpReturn insertByLink(List<Point> points) {
+        return insert(points);
+    }
+
+    @Override
+    public ExpReturn delete(List<Point> points) {
+        ExpReturn expReturn = new ExpReturn();
+        long begin = System.nanoTime();
+        points.forEach(new Consumer<Point>() {
+            @Override
+            public void accept(Point point) {
+                root.delete(point);
+            }
+        });
+        this.getPoints().removeAll(points);
+        long end = System.nanoTime();
+        expReturn.time = end - begin;
+        return expReturn;
     }
 
     @Override

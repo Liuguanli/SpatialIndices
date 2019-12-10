@@ -15,6 +15,16 @@ public class NonLeafNode extends Node {
         return children.size() == pageSize;
     }
 
+    /**
+     * only update the mbr!
+     */
+    public void delete() {
+        updateMbr();
+        NonLeafNode parent = (NonLeafNode)this.getParent();
+        if (parent != null)
+            parent.delete();
+    }
+
     public NonLeafNode() {
         super();
         children = new ArrayList<>();

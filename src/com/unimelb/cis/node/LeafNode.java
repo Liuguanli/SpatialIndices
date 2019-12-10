@@ -1,17 +1,17 @@
 package com.unimelb.cis.node;
 
 import com.unimelb.cis.geometry.Mbr;
-import com.unimelb.cis.utils.ExpReturn;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import static java.lang.Math.E;
-
 public class LeafNode extends Node {
 
     private List<Point> children;
+
+    public LeafNode next;
+
 
     public LeafNode() {
         children = new ArrayList<>();
@@ -34,6 +34,14 @@ public class LeafNode extends Node {
 //        updateMbr(point);
         updateMbr(point, dim);
         return true;
+    }
+
+    public void delete(Point point) {
+        children.remove(point);
+        updateMbr();
+        NonLeafNode parent = (NonLeafNode) this.getParent();
+        if (parent != null)
+            parent.delete();
     }
 
     public boolean add(Point point) {

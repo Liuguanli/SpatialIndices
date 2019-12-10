@@ -140,7 +140,7 @@ public class LeafModel extends Model {
         });
         coordinates.forEach((integer, floats) -> Collections.sort(floats));
 
-        optByRL(100, 102, "");
+//        optByRL(100, 102, "");
 //        optByDP(100, 51, 102);
         if (points.size() < pageSize) {
             points.forEach(point -> {
@@ -191,23 +191,31 @@ public class LeafModel extends Model {
             index = leafNodes.size() - 1;
         }
         expReturn.pageaccess++;
-        if (!leafNodes.get(index).getChildren().contains(point)) {
-            while (true) {
+
+        if (leafNodes.containsKey(index)) {
+            LeafNode leafNode = leafNodes.get(index);
+            while (leafNode != null && leafNode.getChildren() != null && !leafNode.getChildren().contains(point)) {
                 int real = index - gap;
-                LeafNode leafNode = leafNodes.get(real);
-                if (real >= min && leafNode.getMbr().contains(point)) {
-                    expReturn.pageaccess++;
-                    if (leafNode.getChildren().contains(point)) {
-                        break;
+                leafNode = leafNodes.get(real);
+                while (leafNode != null) {
+                    if (real >= min && leafNode.getMbr().contains(point)) {
+                        expReturn.pageaccess++;
+                        if (leafNode.getChildren().contains(point)) {
+                            break;
+                        }
                     }
+                    leafNode = leafNode.next;
                 }
                 real = index + gap;
                 leafNode = leafNodes.get(real);
-                if (real < max && leafNode.getMbr().contains(point)) {
-                    expReturn.pageaccess++;
-                    if (leafNode.getChildren().contains(point)) {
-                        break;
+                while (leafNode != null) {
+                    if (real < max && leafNode.getMbr().contains(point)) {
+                        expReturn.pageaccess++;
+                        if (leafNode.getChildren().contains(point)) {
+                            break;
+                        }
                     }
+                    leafNode = leafNode.next;
                 }
                 gap++;
                 if (index - gap < min && index + gap > max) {
@@ -217,7 +225,6 @@ public class LeafModel extends Model {
         }
         long end = System.nanoTime();
         expReturn.time = end - begin + predictExpReturn.time;
-//        System.out.println("Total search time:" + (end - begin));
         return expReturn;
     }
 
@@ -247,14 +254,116 @@ public class LeafModel extends Model {
                     for (int j = last; j > index + 1; j--) {
                         leafNodes.put(j, leafNodes.get(j - 1));
                     }
+                    target.next = newLeafNode;
+//                    leafNodes.put(index + 1, newLeafNode);
+                } else {
+                    target.add(point);
+                }
+            }
+        }
+        long end = System.nanoTime();
+        expReturn.time = end - begin + predictExpReturn.time;
+        return expReturn;
+    }
+
+    @Override
+    public ExpReturn insertByLink(List<Point> points) {
+        ExpReturn expReturn = new ExpReturn();
+        Instances instances = getInstances(name, points, type);
+        ExpReturn predictExpReturn = getPredVals(classifier, instances);
+        List<Double> results = predictExpReturn.predictResults;
+        long begin = System.nanoTime();
+        for (int i = 0; i < results.size(); i++) {
+            int index = results.get(i).intValue();
+            Point point = points.get(i);
+            LeafNode target = leafNodes.get(index);
+            if (target == null) {
+                LeafNode newLeafNode = new LeafNode(pageSize, point.getDim());
+                newLeafNode.add(point);
+                leafNodes.put(index, newLeafNode);
+            } else {
+                if (target.isFull()) {
+                    LeafNode newLeafNode = target.split();
+
+                    target.next = newLeafNode;
+
+                    expReturn.pageaccess++;
+                    int last = leafNodes.size();
+                    for (int j = last; j > index + 1; j--) {
+                        leafNodes.put(j, leafNodes.get(j - 1));
+                    }
                     leafNodes.put(index + 1, newLeafNode);
                 } else {
                     target.add(point);
                 }
             }
         }
-
         long end = System.nanoTime();
+        expReturn.time = end - begin + predictExpReturn.time;
+        return expReturn;
+    }
+
+    @Override
+    public ExpReturn delete(Point point) {
+        Instances instances = getInstances(name, Arrays.asList(point), type);
+        ExpReturn expReturn = new ExpReturn();
+
+        ExpReturn predictExpReturn = getPredVals(classifier, instances);
+
+//        System.out.println("predictExpReturn.time:" + predictExpReturn.time);
+//        System.out.println("getPredVals time:" + (e1 - b1));
+        List<Double> results = predictExpReturn.predictResults;
+        long begin = System.nanoTime();
+        int max = leafNodes.size();
+        int min = 0;
+        int result = results.get(0).intValue();
+        int index = Math.min(Math.max(result, 0), leafNodes.size() - 1);
+        int gap = 1;
+        if (index < 0) {
+            index = 0;
+        } else if (index >= leafNodes.size()) {
+            index = leafNodes.size() - 1;
+        }
+        expReturn.pageaccess++;
+
+        if (leafNodes.containsKey(index)) {
+            LeafNode leafNode = leafNodes.get(index);
+
+            if (leafNode != null && leafNode.getChildren() != null && leafNode.getChildren().contains(point)) {
+                leafNode.delete(point);
+            } else {
+                while (leafNode != null && leafNode.getChildren() != null && !leafNode.getChildren().contains(point)) {
+                    int real = index - gap;
+                    leafNode = leafNodes.get(real);
+                    if (real >= min && leafNode.getMbr().contains(point)) {
+                        expReturn.pageaccess++;
+                        if (leafNode.getChildren().contains(point)) {
+                            leafNode.delete(point);
+                            break;
+                        }
+                    }
+                    real = index + gap;
+                    leafNode = leafNodes.get(real);
+                    while (leafNode != null) {
+                        if (real < max && leafNode.getMbr().contains(point)) {
+                            expReturn.pageaccess++;
+                            if (leafNode.getChildren().contains(point)) {
+                                leafNode.delete(point);
+                                break;
+                            }
+                        }
+                        leafNode = leafNode.next;
+                    }
+                    gap++;
+                    if (index - gap < min && index + gap > max) {
+                        break;
+                    }
+                }
+            }
+
+        }
+        long end = System.nanoTime();
+        getChildren().remove(point);
         expReturn.time = end - begin + predictExpReturn.time;
         return expReturn;
     }
@@ -291,15 +400,18 @@ public class LeafModel extends Model {
                     }
                     real = index + gap;
                     leafNode = leafNodes.get(real);
-                    if (real < max && leafNode.getMbr().contains(queryPoint)) {
-                        if (leafNode.getChildren().contains(queryPoint)) {
-                            pageAccess++;
+                    while (leafNode.next != null) {
+                        if (real < max && leafNode.getMbr().contains(queryPoint)) {
+                            if (leafNode.getChildren().contains(queryPoint)) {
+                                pageAccess++;
+                                break;
+                            }
+                        }
+                        gap++;
+                        if (index - gap < min && index + gap > max) {
                             break;
                         }
-                    }
-                    gap++;
-                    if (index - gap < min && index + gap > max) {
-                        break;
+                        leafNode = leafNode.next;
                     }
                 }
             }
@@ -333,7 +445,7 @@ public class LeafModel extends Model {
 //        System.out.println("indexLow:" + indexLow + " indexHigh:" + indexHigh);
         for (int i = indexLow; i < indexHigh; i++) {
             LeafNode leafNode = leafNodes.get(i);
-            if (leafNode.getMbr().interact(window)) {
+            if (leafNode != null && leafNode.getMbr().interact(window)) {
                 pageAccessArray[0]++;
                 leafNode.getChildren().forEach(point -> {
                     if (window.contains(point)) {
@@ -368,7 +480,7 @@ public class LeafModel extends Model {
         final int[] pageAccessArray = {0};
         long begin = System.nanoTime();
         leafNodes.forEach((integer, leafNode) -> {
-            if (leafNode.getMbr().interact(window)) {
+            if (leafNode != null && leafNode.getMbr().interact(window)) {
                 pageAccessArray[0]++;
                 leafNode.getChildren().forEach(point -> {
                     if (window.contains(point)) {

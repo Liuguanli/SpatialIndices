@@ -284,6 +284,38 @@ public class PartitionModelRtree extends IRtree {
     }
 
     @Override
+    public ExpReturn insertByLink(List<Point> points) {
+        ExpReturn expReturn = new ExpReturn();
+        long begin = System.nanoTime();
+
+        points.forEach(point -> {
+            int modelIndex = getModelIndex(boundary, point, point.getDim());
+            LeafModel model = partitionModels.get(modelIndex);
+            expReturn.pageaccess += model.insertByLink(Arrays.asList(point)).pageaccess;
+        });
+
+        long end = System.nanoTime();
+        expReturn.time = end - begin;
+        return expReturn;
+    }
+
+    @Override
+    public ExpReturn delete(List<Point> points) {
+        ExpReturn expReturn = new ExpReturn();
+//        long begin = System.nanoTime();
+//        points.forEach(new Consumer<Point>() {
+//            @Override
+//            public void accept(Point point) {
+//                root.delete(point);
+//            }
+//        });
+//        this.getPoints().removeAll(points);
+//        long end = System.nanoTime();
+//        expReturn.time = end - begin;
+        return expReturn;
+    }
+
+    @Override
     public NonLeafNode buildRtreeAfterTuning(String path, int dim, int level) {
         return null;
     }

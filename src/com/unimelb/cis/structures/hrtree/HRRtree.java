@@ -350,6 +350,7 @@ public class HRRtree extends RLRtree {
                 }
             }
         });
+        this.points.addAll(points);
         long end = System.nanoTime();
         expReturn.time = end - begin;
         return expReturn;
@@ -360,12 +361,113 @@ public class HRRtree extends RLRtree {
         return insert(Arrays.asList(point));
     }
 
+    @Override
+    public ExpReturn insertByLink(List<Point> points) {
+        return insert(points);
+    }
+
+    @Override
+    public ExpReturn delete(List<Point> points) {
+        ExpReturn expReturn = new ExpReturn();
+        long begin = System.nanoTime();
+
+        points.forEach(point -> {
+            // pointQuery
+            List<Node> nodes = new ArrayList<>();
+            nodes.add(root);
+            while (nodes.size() > 0) {
+                Node top = nodes.remove(0);
+                if (top instanceof NonLeafNode) {
+                    if (top.getMbr().contains(point)) {
+                        expReturn.pageaccess++;
+                        nodes.addAll(((NonLeafNode) top).getChildren());
+                    }
+                } else if (top instanceof LeafNode) {
+                    if (top.getMbr().contains(point)) {
+                        expReturn.pageaccess++;
+                        if (((LeafNode) top).getChildren().contains(point)) {
+                            // 1 delete from nodes
+                            ((LeafNode) top).delete(point);
+                            break;
+                        }
+                    }
+                }
+            }
+        });
+        // 2 delete from all points
+        this.getPoints().removeAll(points);
+        long end = System.nanoTime();
+        expReturn.time = end - begin;
+        return expReturn;
+    }
+
+    public ExpReturn buildRtreeAfterSwaping(String path, int dim) {
+        ExpReturn expReturn = new ExpReturn();
+        long begin = System.nanoTime();
+        this.dataFile = path;
+        List<String> lines = read(path);
+
+        List<Point> points = new ArrayList<>(lines.size());
+        for (int i = 0; i < lines.size(); i++) {
+            String line = lines.get(i);
+            Point point = new Point(line);
+            points.add(point);
+        }
+        this.points = points;
+        LeafNode leafNode = null;
+        List<Node> childrenNodes = new ArrayList<>();
+        int currentLevel = 0;
+        for (int i = 0; i < points.size(); i++) {
+            if (i % pagesize == 0) {
+                leafNode = new LeafNode(pagesize, dim);
+                leafNode.setLevel(currentLevel);
+                childrenNodes.add(leafNode);
+            }
+            Point point = points.get(i);
+            leafNode.add(point);
+            point.setParent(leafNode);
+            point.setOrderInLevel(i);
+        }
+        currentLevel++;
+        leafNodes = new ArrayList<>(childrenNodes);
+
+        List<Node> nonLeafNodes = new ArrayList<>();
+        NonLeafNode nonLeafNode = null;
+        while (childrenNodes.size() != 1) {
+            for (int i = 0; i < childrenNodes.size(); i++) {
+                if (i % pagesize == 0) {
+                    nonLeafNode = new NonLeafNode(pagesize, dim);
+                    nonLeafNode.setLevel(currentLevel);
+                    nonLeafNodes.add(nonLeafNode);
+                }
+                Node temp = childrenNodes.get(i);
+                nonLeafNode.add(temp);
+                temp.setOrderInLevel(i);
+                temp.setParent(nonLeafNode);
+            }
+            currentLevel++;
+            childrenNodes = new ArrayList<>(nonLeafNodes);
+            nonLeafNodes.clear();
+        }
+
+        root = childrenNodes.get(0);
+        this.setLevel(currentLevel);
+        this.setDim(dim);
+        long end = System.nanoTime();
+        expReturn.time = end - begin;
+        return expReturn;
+    }
 
     public static void main(String[] args) {
         HRRtree hRRtree = new HRRtree(100);
+        hRRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_20000_1_2_.csv");
 
-//        hRRtree.buildRtree("D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_2_.csv");
-        hRRtree.buildRtree("/Users/guanli/Documents/datasets/RLRtree/raw/uniform_1000000_1_2_.csv");
+
+        HRRtree newhRRtree = new HRRtree(100);
+        newhRRtree.buildRtreeAfterSwaping("/Users/guanli/Documents/datasets/RLRtree/newtrees/Z_uniform_20000_1_2_DQN.csv", 2);
+
+        System.out.println(hRRtree.windowQuery(new Mbr(0.2f, 0.2f, 0.5f, 0.5f)));
+        System.out.println(newhRRtree.windowQuery(new Mbr(0.2f, 0.2f, 0.5f, 0.5f)));
 //        time=9021
 //        pageaccess=3.623869
 //        hRRtree.buildRtreeAfterTuning("/Users/guanli/Documents/datasets/RLRtree/newtrees/H_uniform_10000_1_2_DQN.csv", 2, 3);

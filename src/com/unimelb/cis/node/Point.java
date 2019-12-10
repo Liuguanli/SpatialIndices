@@ -251,6 +251,20 @@ public class Point extends Node implements Comparable {
 
     static Map<Integer, Map<Integer, List<Point>>> pointCache = new HashMap<>();
 
+    public static List<Point> generatePoints(List<Point> dataset, int num, int dim) {
+        int min = 0;
+        int max = dataset.size();
+        int index;
+        float[] locations = new float[dim];
+        List<Point> points = new ArrayList<>();
+        for (int i = 0; i < num; i++) {
+            index = min + ((int) (random.nextFloat() * (max - min)));
+            locations = dataset.get(index).getLocation();
+            points.add(new Point(locations));
+        }
+        return points;
+    }
+
     public static List<Point> generatePoints(int num, int dim) {
         List<Point> points = new ArrayList<>();
         for (int i = 0; i < num; i++) {
@@ -259,6 +273,25 @@ public class Point extends Node implements Comparable {
                 locations[j] = random.nextFloat();
             }
             points.add(new Point(locations));
+        }
+        return points;
+    }
+
+    public static List<Point> getPoints(List<Point> dataset, int num, int dim) {
+        List<Point> points;
+        if (pointCache.containsKey(dim)) {
+            if (pointCache.get(dim).containsKey(num)) {
+                points = pointCache.get(dim).get(num);
+                return points;
+            } else {
+                points = generatePoints(dataset, num, dim);
+                pointCache.get(dim).put(num, points);
+            }
+        } else {
+            points = generatePoints(dataset, num, dim);
+            Map<Integer, List<Point>> item = new HashMap<>();
+            item.put(num, points);
+            pointCache.put(dim, item);
         }
         return points;
     }

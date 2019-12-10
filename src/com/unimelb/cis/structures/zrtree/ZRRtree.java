@@ -325,6 +325,46 @@ public class ZRRtree extends RLRtree {
     }
 
     @Override
+    public ExpReturn insertByLink(List<Point> points) {
+        return insert(points);
+    }
+
+    @Override
+    public ExpReturn delete(List<Point> points) {
+        ExpReturn expReturn = new ExpReturn();
+        long begin = System.nanoTime();
+
+        points.forEach(point -> {
+            // pointQuery
+            List<Node> nodes = new ArrayList<>();
+            nodes.add(root);
+            while (nodes.size() > 0) {
+                Node top = nodes.remove(0);
+                if (top instanceof NonLeafNode) {
+                    if (top.getMbr().contains(point)) {
+                        expReturn.pageaccess++;
+                        nodes.addAll(((NonLeafNode) top).getChildren());
+                    }
+                } else if (top instanceof LeafNode) {
+                    if (top.getMbr().contains(point)) {
+                        expReturn.pageaccess++;
+                        if (((LeafNode) top).getChildren().contains(point)) {
+                            // 1 delete from nodes
+                            ((LeafNode) top).delete(point);
+                            break;
+                        }
+                    }
+                }
+            }
+        });
+        // 2 delete from all points
+        this.getPoints().removeAll(points);
+        long end = System.nanoTime();
+        expReturn.time = end - begin;
+        return expReturn;
+    }
+
+    @Override
     public NonLeafNode buildRtreeAfterTuning(String path, int dim, int level) {
         level--;
         this.dataFile = path;

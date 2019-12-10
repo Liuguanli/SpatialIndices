@@ -1,7 +1,7 @@
 package com.unimelb.cis.structures.partitionmodel;
 
 import com.unimelb.cis.geometry.Mbr;
-import com.unimelb.cis.node.NonLeafNode;
+import com.unimelb.cis.node.Node;
 import com.unimelb.cis.node.Partition;
 import com.unimelb.cis.node.Point;
 import com.unimelb.cis.structures.IRtree;
@@ -9,6 +9,7 @@ import com.unimelb.cis.utils.ExpReturn;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 import static com.unimelb.cis.CSVFileReader.read;
 
@@ -140,9 +141,46 @@ public class RecursivePartition extends IRtree {
         return expReturn;
     }
 
+
+    /**
+     * cal index of partition which point belongs to
+     *
+     * @param point
+     * @return
+     */
+    public float calRho(Point point) {
+        int index = root.getIndex(point);
+        if (root.partitionModels.size() == 1) {
+            return 1;
+        }
+        if (index == 0) {
+            return 1;
+        }
+        int bk = 0;
+        for (int i = 0; i < index; i++) {
+            if (!root.partitionModels.keySet().contains(i)) {
+                return 1;
+            }
+            bk += root.partitionModels.get(i).getChildren().size();
+        }
+        if (!root.partitionModels.keySet().contains(index)) {
+            return 1;
+        }
+        int bk1 = bk + root.partitionModels.get(index).getChildren().size();
+//        System.out.println(bk);
+//        System.out.println(bk1);
+//        System.out.println((float) bk / bk1);
+//        System.out.println((float) bk1 / (bk + 1));
+        float result = (float) bk1 / bk;
+        result = Math.max(result, 1);
+        result = Math.min(4, result);
+        return result;
+    }
+
     @Override
     public ExpReturn knnQuery(Point point, int k) {
         float knnquerySide = (float) Math.sqrt((float) k / points.size());
+        knnquerySide *= calRho(point);
         ExpReturn expReturn = new ExpReturn();
         while (true) {
             Mbr window = Mbr.getMbr(point, knnquerySide);
@@ -162,12 +200,15 @@ public class RecursivePartition extends IRtree {
                         return 0;
                     }
                 });
-                if (tempResult.get(k - 1).getDist(point) <= knnquerySide) {
+                float dist = (float) tempResult.get(k - 1).getDist(point);
+                if (dist <= knnquerySide) {
                     long end = System.nanoTime();
                     expReturn.result = tempResult.subList(0, k);
                     expReturn.pageaccess += tempExpReturn.pageaccess;
                     expReturn.time = end - begin;
                     break;
+//                } else {
+//                    knnquerySide = dist;
                 }
             }
             knnquerySide = knnquerySide * 2;
@@ -222,16 +263,41 @@ public class RecursivePartition extends IRtree {
 
     @Override
     public ExpReturn insert(List<Point> points) {
+        this.getPoints().addAll(points);
         return root.insert(points);
     }
 
     @Override
     public ExpReturn insert(Point point) {
+        this.getPoints().add(point);
         return root.insert(point);
     }
 
     @Override
-    public NonLeafNode buildRtreeAfterTuning(String path, int dim, int level) {
+    public ExpReturn insertByLink(List<Point> points) {
+        this.getPoints().addAll(points);
+        return root.insertByLink(points);
+    }
+
+    @Override
+    public ExpReturn delete(List<Point> points) {
+        ExpReturn expReturn = new ExpReturn();
+        long begin = System.nanoTime();
+        points.forEach(new Consumer<Point>() {
+            @Override
+            public void accept(Point point) {
+                root.delete(point);
+            }
+        });
+        this.getPoints().removeAll(points);
+        long end = System.nanoTime();
+        expReturn.time = end - begin;
+        return expReturn;
+    }
+
+    @Override
+    public Node buildRtreeAfterTuning(String path, int dim, int level) {
         return null;
     }
+
 }

@@ -10,6 +10,7 @@ import com.unimelb.cis.structures.partitionmodel.RecursivePartition;
 import com.unimelb.cis.structures.peanotree.PeanoRtree;
 import com.unimelb.cis.structures.recursivemodel.OriginalRecursiveModel;
 import com.unimelb.cis.structures.recursivemodel.RecursiveModelRtree;
+import com.unimelb.cis.structures.rstar.RstarTree;
 import com.unimelb.cis.structures.unsupervisedPartition.UnsupervisedPartitionModel;
 import com.unimelb.cis.structures.zrtree.ZRRtree;
 
@@ -38,7 +39,18 @@ public class Test {
         System.out.println("point query:" + hRRtree.pointQuery(hRRtree.getPoints()));
         System.out.println("window query:" + hRRtree.windowQuery(mbrs));
         System.out.println("knn query:" + hRRtree.knnQuery(knnPoints, k));
-        System.out.println("insert:" + hRRtree.insert(insertedPoints));
+//        System.out.println("insert:" + hRRtree.insert(insertedPoints));
+    }
+
+    public static void testRstartree(String s, List<Point> insertedPoints, List<Mbr> mbrs, List<Point> knnPoints, int k) {
+        System.out.println("------------------------------------------------");
+        RstarTree rstarTree = new RstarTree(100);
+        System.out.println("Rstartree:");
+        System.out.println("build finish:" + rstarTree.buildRtree(s).time);
+        System.out.println("point query:" + rstarTree.pointQuery(rstarTree.getPoints()));
+        System.out.println("window query:" + rstarTree.windowQuery(mbrs));
+        System.out.println("knn query:" + rstarTree.knnQuery(knnPoints, k));
+//        System.out.println("insert:" + hRRtree.insert(insertedPoints));
     }
 
     public static void testPeanoRtree(String s, List<Point> insertedPoints, List<Mbr> mbrs, List<Point> knnPoints, int k) {
@@ -126,13 +138,23 @@ public class Test {
 
     public static void testOriginalRecursiveModel(String s, List<Point> insertedPoints, List<Mbr> mbrs, List<Point> knnPoints, int k) {
         System.out.println("------------------------------------------------");
-        System.out.println("OriginalRecursive");
+        System.out.println("OriginalRecursive level 2");
         OriginalRecursiveModel originalRecursiveModel1 = new OriginalRecursiveModel(100, false, "Z", 2);
         System.out.println(originalRecursiveModel1.buildRtree(s));
+//        System.out.println("pointQuery:" + originalRecursiveModel1.pointQuery(originalRecursiveModel1.getPoints()));
+//        System.out.println("windowQuery:" + originalRecursiveModel1.windowQuery(mbrs));
+//        System.out.println("windowQueryByScanAll:" + originalRecursiveModel1.windowQueryByScanAll(mbrs));
+//        System.out.println("knn query:" + originalRecursiveModel1.knnQuery(knnPoints, k));
+        System.out.println("insert:" + originalRecursiveModel1.insert(insertedPoints));
         System.out.println("pointQuery:" + originalRecursiveModel1.pointQuery(originalRecursiveModel1.getPoints()));
-        System.out.println("windowQuery:" + originalRecursiveModel1.windowQuery(mbrs));
-        System.out.println("windowQueryByScanAll:" + originalRecursiveModel1.windowQueryByScanAll(mbrs));
-        System.out.println("knn query:" + originalRecursiveModel1.knnQuery(knnPoints, k));
+        System.out.println("------------------------------------------------");
+        System.out.println("OriginalRecursive level 3");
+        originalRecursiveModel1 = new OriginalRecursiveModel(100, false, "Z", 3);
+        System.out.println(originalRecursiveModel1.buildRtree(s));
+//        System.out.println("pointQuery:" + originalRecursiveModel1.pointQuery(originalRecursiveModel1.getPoints()));
+//        System.out.println("windowQuery:" + originalRecursiveModel1.windowQuery(mbrs));
+//        System.out.println("windowQueryByScanAll:" + originalRecursiveModel1.windowQueryByScanAll(mbrs));
+//        System.out.println("knn query:" + originalRecursiveModel1.knnQuery(knnPoints, k));
         System.out.println("insert:" + originalRecursiveModel1.insert(insertedPoints));
     }
 
@@ -181,13 +203,25 @@ public class Test {
         RecursivePartition recursivePartition = new RecursivePartition("H", maxPartitionNumEachDim, 5000, "MultilayerPerceptron");
         System.out.println("Partition:" + "Recursive");
         System.out.println("build finish:" + recursivePartition.buildRtree(s).time);
+//        recursivePartition.calRho(new Point(0.5f, 0.5f));
 //        System.out.println("point query:" + recursivePartition.pointQuery(recursivePartition.getPoints()));
-        System.out.println("window query:" + recursivePartition.windowQuery(mbrs));
-        System.out.println("window query:" + recursivePartition.windowQueryByOpt(mbrs));
+//        System.out.println("window query:" + recursivePartition.windowQuery(mbrs));
+//        System.out.println("window query:" + recursivePartition.windowQueryByOpt(mbrs));
 
-        System.out.println("windowQueryByScanAll query:" + recursivePartition.windowQueryByScanAll(mbrs));
+//        System.out.println("windowQueryByScanAll query:" + recursivePartition.windowQueryByScanAll(mbrs));
 //        System.out.println("knn query:" + recursivePartition.knnQuery(knnPoints, k));
-//        System.out.println("insert:" + recursivePartition.insert(insertedPoints));
+        System.out.println("insert:" + recursivePartition.insert(insertedPoints));
+        System.out.println("point query:" + recursivePartition.pointQuery(recursivePartition.getPoints()));
+        System.out.println("window query:" + recursivePartition.windowQuery(mbrs));
+        System.out.println("knn query:" + recursivePartition.knnQuery(knnPoints, k));
+
+        recursivePartition = new RecursivePartition("H", maxPartitionNumEachDim, 5000, "MultilayerPerceptron");
+        System.out.println("Partition:" + "Recursive");
+        System.out.println("build finish:" + recursivePartition.buildRtree(s).time);
+        System.out.println("delete:" + recursivePartition.delete(insertedPoints));
+        System.out.println("point query:" + recursivePartition.pointQuery(recursivePartition.getPoints()));
+        System.out.println("window query:" + recursivePartition.windowQuery(mbrs));
+        System.out.println("knn query:" + recursivePartition.knnQuery(knnPoints, k));
     }
 
     public static void testIRtree(IRtree iRtree, String s, List<Point> insertedPoints, List<Mbr> mbrs, List<Point> knnPoints, int k) {
@@ -204,25 +238,25 @@ public class Test {
 
 
     static List<String> datasets = Arrays.asList(
-//            "/Users/guanli/Documents/datasets/RLRtree/raw/uniform_1000000_1_2_.csv"
+//            "/Users/guanli/Documents/datasets/RLRtree/raw/uniform_160000_1_2_.csv"
 //            "/Users/guanli/Documents/datasets/RLRtree/raw/uniform_1000000_1_3_.csv",
 //            "/Users/guanli/Documents/datasets/RLRtree/raw/uniform_1000000_1_4_.csv",
 //            "/Users/guanli/Documents/datasets/RLRtree/raw/uniform_1000000_1_5_.csv",
 //            "/Users/guanli/Documents/datasets/RLRtree/raw/uniform_1000000_1_6_.csv"
-//            "D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_2_.csv",
+//            "D:\\datasets\\RLRtree\\raw\\uniform_10000_1_2_.csv"
 //            "D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_3_.csv",
 //            "D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_4_.csv",
 //            "D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_5_.csv",
 //            "D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_6_.csv"
 //            "D:\\datasets\\RLRtree\\raw\\uniform_2000000_1_2_.csv",
 //            "D:\\datasets\\RLRtree\\raw\\uniform_4000000_1_2_.csv",
-            "D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_2_.csv"
+            "D:\\datasets\\RLRtree\\raw\\uniform_16000000_1_2_.csv"
 //            "D:\\datasets\\RLRtree\\raw\\skewed_8000000_9_2_.csv",
 //            "D:\\datasets\\RLRtree\\raw\\uniform_16000000_1_2_.csv",
 //            "D:\\datasets\\RLRtree\\raw\\uniform_32000000_1_2_.csv"
 //            "D:\\datasets\\RLRtree\\raw\\uniform_64000000_1_2_.csv",
 //            "D:\\datasets\\RLRtree\\raw\\uniform_100000000_1_2_.csv",
-//            "D:\\datasets\\RLRtree\\raw\\real_east.csv"
+//            "D:\\datasets\\RLRtree\\raw\\real_16000000_1_2_.csv"
 //            "D:\\datasets\\RLRtree\\raw\\uniform_8000000_1_2_.csv"
 //            "D:\\datasets\\RLRtree\\raw\\uniform_1000000_1_2_.csv",
 //            "D:\\datasets\\RLRtree\\raw\\uniform_2000000_1_2_.csv",
@@ -250,18 +284,19 @@ public class Test {
 
     public static void main(String[] args) {
 
-        int k = 1;
+//        625, , 15625
+        int k = 25;
         int dim = 2;
 
-        List<Float> sides = Arrays.asList(0.04f);
+        List<Float> sides = Arrays.asList(0.01f);
 
         datasets.forEach(s -> {
-            List<Point> knnPoints = Point.getPoints(10, 2);
+            List<Point> knnPoints = Point.getPoints(50, 2);
             List<Point> insertedPoints = Point.getPoints(10000, 2);
             System.out.println(s);
 
             sides.forEach(aFloat -> {
-                List<Mbr> mbrs = Mbr.getMbrs(aFloat, 10, 2);
+                List<Mbr> mbrs = Mbr.getMbrs(aFloat, 50, 2);
 //                    testPclassification(s, insertedPoints, mbrs, knnPoints, k);
 //                    testZRtree(s, insertedPoints, mbrs, knnPoints, k);
 //                testOriginalRecursiveModel(s, insertedPoints, mbrs, knnPoints, k);
@@ -270,6 +305,7 @@ public class Test {
 
 //                testZRtree(s, insertedPoints, mbrs, knnPoints, k);
 //                testHRtree(s, insertedPoints, mbrs, knnPoints, k);
+//                testRstartree(s, insertedPoints, mbrs, knnPoints, k);
 //                testPeanoRtree(s, insertedPoints, mbrs, knnPoints, k);
 //                    testPartitionPred(s, insertedPoints, mbrs, knnPoints, k);
 //                testKMeans(s, insertedPoints, mbrs, knnPoints, k);

@@ -359,6 +359,34 @@ public class Mbr {
         return new Mbr(result);
     }
 
+    public static Mbr getMbr(List<Point> points, float side, int dim) {
+        side = side / 2;
+        float[] result = new float[dim * 2];
+
+        int min = 0;
+        int max = points.size();
+        int index;
+        float[] locations = new float[dim];
+
+        boolean isMbrAvailable = false;
+        while (!isMbrAvailable) {
+            index = min + ((int) (random.nextFloat() * (max - min)));
+            locations = points.get(index).getLocation();
+            isMbrAvailable = true;
+            for (int i = 0; i < dim; i++) {
+                if (locations[i] - side < 0 || locations[i] + side > 1) {
+                    isMbrAvailable = false;
+                    break;
+                }
+            }
+        }
+        for (int i = 0; i < dim; i++) {
+            result[i] = locations[i] - side;
+            result[i + dim] = locations[i] + side;
+        }
+        return new Mbr(result);
+    }
+
     public static Mbr getMbr2D(float side) {
         side = side / 2;
         float x = random.nextFloat();
@@ -387,6 +415,26 @@ public class Mbr {
                 z = random.nextFloat();
             }
         }
+    }
+
+    public static List<Mbr> getMbrs(List<Point> points, float side, int num, int dim) {
+        List<Mbr> mbrs = new ArrayList<>(num);
+        if (mbrCache.containsKey(dim)) {
+            if (mbrCache.get(dim).containsKey(side)) {
+                List<Mbr> temp = mbrCache.get(dim).get(side);
+                if (temp != null && temp.size() >= num) {
+                    mbrs = temp.subList(0, num);
+                    return mbrs;
+                }
+            }
+        }
+        for (int i = 0; i < num; i++) {
+            mbrs.add(getMbr(points, side, dim));
+        }
+        Map temp = new HashMap<>();
+        temp.put(side, mbrs);
+        mbrCache.put(dim, temp);
+        return mbrs;
     }
 
     public static List<Mbr> getMbrs(float side, int num, int dim) {
